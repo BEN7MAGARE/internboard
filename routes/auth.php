@@ -12,16 +12,22 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+
     Route::get('employer/create', [RegisteredUserController::class, 'employer'])
                 ->name('employer.create');
 
-    Route::get('university/create', [RegisteredUserController::class, 'institution'])
-                ->name('university.create');
+    Route::get('college/create', [RegisteredUserController::class, 'institution'])
+                ->name('college.create');
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+    Route::post('/college', [RegisteredUserController::class, 'institutioncreate']);
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::get('student/create', [RegisteredUserController::class, 'create'])
+                ->name('student.create');
+    Route::middleware('role');
+    Route::get('getstarted', [RegisteredUserController::class, 'getstarted'])
+                ->name('getstarted');
+
+    Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
@@ -39,6 +45,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+    Route::post('/corporate', [RegisteredUserController::class, 'corporateCreate'])->name('corporate.create');
 });
 
 Route::middleware('auth')->group(function () {

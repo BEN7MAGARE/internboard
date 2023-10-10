@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,8 @@ Route::middleware('auth')->group(function () {
 
 Route::view('contact', 'contact')->name('contact');
 
+Route::resource('jobs', JobsController::class);
+Route::post('jobs/start', [JobsController::class, 'start']);
+Route::get('categories', [JobsController::class, 'categories']);
 
 require __DIR__.'/auth.php';

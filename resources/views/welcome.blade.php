@@ -11,14 +11,22 @@
     <section id="hero" class="hero">
         <div class="container position-relative">
             <div class="row gy-5" data-aos="fade-in">
-                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-                    <h2>Intern<span>Board</span></h2>
+                <div class="col-lg-7 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+                    <h2>Get Interns and Employees to fill any position you have. </h2>
                     <p>Get the best talent from a pull of top institutions of higher learning in Kenya. This platform
                         enables your organization to get aplications from talented students for any internship or employment
                         position and select the most suitable talent. </p>
+                    {{-- <p>Get the best talent from a pull of top institutions of higher learning in Kenya. This platform
+                        enables your organization to get aplications from talented students for any internship or employment
+                        position and select the most suitable talent. </p> --}}
+
+                        <div class="d-flex justify-content-center justify-content-lg-start">
+
+                            <a href="{{ route('getstarted') }}" class="btn-get-started">Get Started</a>
+                        </div>
                 </div>
-                <div class="col-lg-6 order-1 order-lg-2">
-                    <img src="assets/img/hero-img.svg" class="img-fluid" alt="" data-aos="zoom-out"
+                <div class="col-lg-5 order-1 order-lg-2">
+                    <img src="{{ asset('assets/img/heroimg.png') }}" class="img-fluid" alt="" data-aos="zoom-out"
                         data-aos-delay="100">
                 </div>
             </div>
@@ -30,10 +38,13 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon-box">
-                            <h4 class="title"><i class="fa-solid fa-building" style="color: #008d7d;font-size: 23px;"></i><a href="{{ route('employer.create') }}"
-                                    class="stretched-link">Corporate</a> </h4>
-                            <p class="text">Do you have any internship / employment vacancy and you are seeking students with skill and talent to fill those
-                                position?</p>
+                            <h4 class="title"><a href="{{ route('employer.create') }}" class="stretched-link">Corporate</a> </h4>
+
+                            <p class="text">You have internship, employment position your want to get the best employee?</p>
+
+                            {{-- <p class="text">Do you have any internship / employment vacancy and you are seeking students with skill and talent to fill those
+                                position?</p> --}}
+
                             <a href="{{ route('employer.create') }}">Post it here <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
 
@@ -42,11 +53,9 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="200">
                         <div class="icon-box">
-                            <h4 class="title"><i class="fa-solid fa-building-columns" style="color: #008d7d;font-size: 23px;"></i><a href=""
-                                    class="stretched-link">University / College</a></h4>
-                            <p class="text">Are you an institution of higher learning looking to present your students with industry
-                                experience through internships and emplyment? </p>
-                            <a href="{{ route('university.create') }}">Get notified of
+                            <h4 class="title"><a href="" class="stretched-link">University / College</a></h4>
+                            <p class="text">Get first notified of opportunities when they are available so you can connect your students. </p>
+                            <a href="{{ route('college.create') }}">Get notified of
                                 openings <i class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>
@@ -54,11 +63,11 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="300">
                         <div class="icon-box">
-                            <h4 class="title"><i class="fa-solid fa-graduation-cap" style="color: #008d7d;font-size: 23px;"></i><a href=""
-                                    class="stretched-link">Students</a></h4>
-                            <p class="text">Are you pursuing undergraduate/post-graduate degree or diploma and would like to get access
-                                to internship/employment opportunities at a top institution? </p>
-                            <a href="{{ route('register') }}">Register to apply <i
+                            <h4 class="title"><a href="" class="stretched-link">Students</a></h4>
+                            <p>Access internship and employment opporunities from leading companies in Kenya and Beyond. </p>
+                            {{-- <p class="text">Are you pursuing undergraduate/post-graduate degree or diploma and would like to get access
+                                to internship/employment opportunities at a top institution? </p> --}}
+                            <a href="{{ route('student.create') }}">Register to apply <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>
@@ -69,158 +78,90 @@
         </div>
     </section>
 
+    {{-- <section class="call-to-action">
+        <div class="container">
+            <div class="text-center">
+                <a href="{{ route('getstarted') }}" class="btn btn-primary btn-lg">Get started <i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section> --}}
+
+
     <main id="main">
 
-        <section id="about" class="about">
+        {{-- <section id="about" class="about">
             <div class="container" data-aos="fade-up">
-
-                <div class="section-header">
-                    <h2>About Us</h2>
-                    <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id
-                        nobis omnis tiledo stran delop</p>
-                </div>
 
                 <div class="row gy-4">
                     <div class="col-lg-6">
-                        <h3>Voluptatem dignissimos provident quasi corporis</h3>
+                        <h3>The Platform</h3>
                         <img src="assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
-                        <p>Ut fugiat ut sunt quia veniam. Voluptate perferendis perspiciatis quod nisi et. Placeat debitis
-                            quia recusandae odit et consequatur voluptatem. Dignissimos pariatur consectetur fugiat voluptas
-                            ea.</p>
-                        <p>Temporibus nihil enim deserunt sed ea. Provident sit expedita aut cupiditate nihil vitae quo
-                            officia vel. Blanditiis eligendi possimus et in cum. Quidem eos ut sint rem veniam qui. Ut ut
-                            repellendus nobis tempore doloribus debitis explicabo similique sit. Accusantium sed ut omnis
-                            beatae neque deleniti repellendus.</p>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="content ps-0 ps-lg-5">
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore
-                                magna aliqua.
+                            <p style="width: 100%;">
+
                             </p>
                             <ul>
-                                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat.</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Duis aute irure dolor in reprehenderit in
-                                    voluptate velit.</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda
-                                    mastiro dolore eu fugiat nulla pariatur.</li>
+                                <li><i class="bi bi-check-circle-fill"></i> </li>
+                                <li><i class="bi bi-check-circle-fill"></i> </li>
+                                <li><i class="bi bi-check-circle-fill"></i> </li>
                             </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident
-                            </p>
-
-                            <div class="position-relative mt-4">
-                                <img src="assets/img/about-2.jpg" class="img-fluid rounded-4" alt="">
-                                <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
-                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section> --}}
+
+        <section id="services" class="services sections-bg">
+            <div class="container" data-aos="fade-up">
+                <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item  position-relative">
+                            <h3>Internship Advertisement</h3>
+                            <p>We provide a a plartform to get the best students for intership opportunities in your institution. You can access hundreds of applicants and sieve the best fit for you. </p>
+                            <a href="#" class="readmore stretched-link">Read more <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item position-relative">
+
+                            <h3>Job Advertisement</h3>
+                            <p>Hire recent undergraduates, graduates, masters and doctorate students conveniently by advertising you job on our platform and choose the most qualified employee for your organization </p>
+                            <a href="#" class="readmore stretched-link">Read more <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item position-relative">
+                            <h3>Access to opportunities</h3>
+                            <p>Students and graduates can access, apply and get job opportunities as soon as they are advertised on our platform. </p>
+                            <a href="#" class="readmore stretched-link">Read more <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item position-relative">
+                            <h3>Institutions / Universities </h3>
+                            <p>Institutions can connect their students to opportunities in various industries through this robust platform. They can receive</p>
+                            <a href="#" class="readmore stretched-link">Read more <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+
                 </div>
 
             </div>
         </section>
 
-        <section id="services" class="services sections-bg">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-header">
-                    <h2>Our Services</h2>
-                    <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id
-                        nobis omnis tiledo stran delop</p>
-                </div>
-
-                <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item  position-relative">
-                            <div class="icon">
-                                <i class="bi bi-activity"></i>
-                            </div>
-                            <h3>Nesciunt Mete</h3>
-                            <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure
-                                perferendis tempore et consequatur.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item position-relative">
-                            <div class="icon">
-                                <i class="bi bi-broadcast"></i>
-                            </div>
-                            <h3>Eosle Commodi</h3>
-                            <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic
-                                non ut nesciunt dolorem.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item position-relative">
-                            <div class="icon">
-                                <i class="bi bi-easel"></i>
-                            </div>
-                            <h3>Ledo Markt</h3>
-                            <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas
-                                adipisci eos earum corrupti.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item position-relative">
-                            <div class="icon">
-                                <i class="bi bi-bounding-box-circles"></i>
-                            </div>
-                            <h3>Asperiores Commodit</h3>
-                            <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit
-                                provident adipisci neque.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item position-relative">
-                            <div class="icon">
-                                <i class="bi bi-calendar4-week"></i>
-                            </div>
-                            <h3>Velit Doloremque</h3>
-                            <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi
-                                at autem alias eius labore.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item position-relative">
-                            <div class="icon">
-                                <i class="bi bi-chat-square-text"></i>
-                            </div>
-                            <h3>Dolori Architecto</h3>
-                            <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure.
-                                Corrupti recusandae ducimus enim.</p>
-                            <a href="#" class="readmore stretched-link">Read more <i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                </div>
-
-            </div>
-        </section><!-- End Our Services Section -->
-
-        <section id="faq" class="faq">
+        {{-- <section id="faq" class="faq">
             <div class="container" data-aos="fade-up">
 
                 <div class="row gy-4">
@@ -229,8 +170,7 @@
                         <div class="content px-xl-5">
                             <h3>Frequently Asked <strong>Questions</strong></h3>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                                You can also get started by browsing answers for common challenges that users may encounter on our platform.
                             </p>
                         </div>
                     </div>
@@ -254,7 +194,7 @@
                                         purus non.
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
+                            </div>
 
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
@@ -272,7 +212,7 @@
                                         cursus turpis massa tincidunt dui.
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
+                            </div>
 
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
@@ -290,7 +230,7 @@
                                         tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
+                            </div>
 
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
@@ -308,7 +248,7 @@
                                         cursus turpis massa tincidunt dui.
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
+                            </div>
 
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
@@ -325,15 +265,17 @@
                                         suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
+                            </div>
 
                         </div>
 
                     </div>
+
+
                 </div>
 
             </div>
-        </section>
+        </section> --}}
 
     </main>
 @endsection

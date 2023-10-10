@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\College;
+use App\Models\Corporate;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +15,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->foreignIdFor(Corporate::class)->nullable();
+            $table->foreignIdFor(College::class)->nullable();
+            $table->string('first_name',60);
+            $table->string('last_name',60);
+            $table->string('email',80)->unique();
+            $table->string('phone',16)->unique();
+            $table->string('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

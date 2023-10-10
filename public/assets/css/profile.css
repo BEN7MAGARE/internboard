@@ -1,0 +1,105 @@
+.card-img-top {
+    margin: 10px;
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+    float: center;
+}
+
+.dashboard-content,
+.dashboard-nav {
+    flex: 1;
+}
+
+.dashboard-content {
+    position: relative;
+    z-index: 10;
+}
+
+.dashboard-form {
+    /* background: #fff; */
+    padding: 30px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.dashboard-form:after {
+    display: none;
+}
+
+.dashboard-wrapper.dash-add .edit-profile-photo {
+    margin: 0 0 15px;
+}
+
+.edit-profile-photo img {
+    border-radius: 4px;
+    max-width: 180px;
+    width: 100%;
+}
+
+.edit-profile-photo {
+    position: relative;
+    display: block;
+    margin-bottom: 35px;
+}
+
+.change-photo-btn {
+    font-weight: 600;
+    padding: 5px 6px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    font-size: 13px;
+    width: auto;
+    transition: 0.3s;
+    cursor: pointer;
+    line-height: 20px;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: auto;
+}
+
+
+.change-photo-btn:hover {
+    color: #fff;
+    background-color: #006544;
+}
+
+.change-photo-btn i {
+    margin-right: 2px;
+}
+
+.my-profile {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.my-profile label i {
+    margin-right: 3px;
+}
+
+.my-profile textarea {
+    height: 200px;
+}
+
+@media(max-width: 767px) {
+    .dashboard-list-static {
+        margin-bottom: 1rem;
+    }
+}
+
+.dashboard-wrapper.dash-add .edit-profile-photo {
+    margin-bottom: 0px;
+}
+
+.dashboard-wrapper.dash-add .edit-profile-photo img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+/* #updateDealerButton {
+    display: none;
+} */

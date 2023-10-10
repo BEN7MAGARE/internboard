@@ -17,13 +17,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
   <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
   <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/some.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
 
-<script src="https://kit.fontawesome.com/4930f74824.js" crossorigin="anonymous"></script>
+
+  <script src="https://kit.fontawesome.com/4930f74824.js" crossorigin="anonymous"></script>
+
 
   @yield('header_styles')
 
@@ -31,7 +36,7 @@
 
 <body>
 
-  <!-- <section id="topbar" class="topbar d-flex align-items-center">
+  {{-- <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
         <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
@@ -44,7 +49,7 @@
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
       </div>
     </div>
-  </section> -->
+  </section> --}}
 
   <header id="header" class="header d-flex align-items-center">
 
@@ -58,7 +63,9 @@
         <ul>
           <li><a  class="{{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
 
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li><a  class="{{ Request::is('jobs') ? 'active' : '' }}" href="{{ url('/') }}">Opportunities</a></li>
+
+          {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -68,22 +75,37 @@
               </li>
               <li><a href="#">Drop Down 2</a></li>
             </ul>
-          </li>
+          </li> --}}
+          
           <li><a href="{{ route('contact') }}" class="{{ Request::is('contact') ? 'active' : '' }}">Contact</a></li>
+
+          @guest
+          <li>
+            <a href="{{ route('login') }}" class="{{ Request::is('login') ? 'active' : '' }}">Login &nbsp;<i class="fa fa-sign-in"></i></a>
+          </li>
+              @else
+              <li class="dropdown"><a href="#"><span>{{ auth()->user()->first_name }}</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+
+              <li><a href="{{ route('profile.edit') }}">My Profile</a></li>
+              <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <a href="route('logout')"
+                        onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
+              </li>
+            </ul>
+          </li>
+          @endguest
         </ul>
       </nav>
-
-      <div id="navbar" class="navbar-mini">
-        <ul class="mt-2">
-            <li>
-                <a href="{{ route('login') }}" class="btn btn-lg btn-outline-primary" style="border-radius: 15px;">Login &nbsp;<i class="fa fa-sign-in"></i></a>
-            </li>
-        </ul>
-      </div>
-
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-
     </div>
   </header>
 
@@ -121,11 +143,11 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Job Advertisement</a></li>
+            <li><a href="#">Applications for jobs</a></li>
+            {{-- <li><a href="#"></a></li>
             <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Graphic Design</a></li> --}}
           </ul>
         </div>
 
@@ -154,17 +176,16 @@
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  {{-- <div id="preloader"></div> --}}
-
+  <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
   <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-
+  <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
   <script src="{{ asset('assets/js/main.js') }}"></script>
-
+    @yield('footer_scripts')
 </body>
 
 </html>
