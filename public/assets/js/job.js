@@ -50,11 +50,16 @@
                 $.each(value.skills, function (kee, item) {
                     skill += "<span>" + item.name + "</span>";
                 });
-                job += "<div class=\"job\"><div class=\"title mt-2 mb-2\"><h3>" + value.title + "</h3></div><div class=\"salary mb-2\"><span>Monthly: "+value.salary_range+"</span></div><div class=\"desciption\"><p>" + value.description + "</p></div><div class=\"skills\">" + skill + "</div><div class=\"location mt-3\"><i class=\"fa-solid fa-location-dot\"></i> <span>" + value.location + "</span></div></div>"
+                job += "<div class=\"job\" data-id="+value.id+"><div class=\"title mt-2 mb-2\"><h3>" + value.title + "</h3></div><div class=\"salary mb-2\"><span>Monthly: "+value.salary_range+"</span></div><div class=\"desciption\"><p>" + value.description + "</p></div><div class=\"skills\">" + skill + "</div><div class=\"location mt-3\"><i class=\"fa-solid fa-location-dot\"></i> <span>" + value.location + "</span></div></div>"
             });
             $("#jobrendersection").html(job);
         });
     }
     getJobs();
+
+    $("body").on("click", ".job", function () {
+        let job_id = $(this).val();
+        console.log(job_id);
+    });
 
 })();

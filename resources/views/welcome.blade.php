@@ -44,12 +44,7 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon-box">
-<<<<<<< HEAD
                             <h4 class="title"><a href="{{ route('jobs.create') }}" class="stretched-link">Corporate</a> </h4>
-=======
-                            <h4 class="title"><a href="{{ route('employer.create') }}" class="stretched-link">Corporate</a>
-                            </h4>
->>>>>>> 14b3a1021229186ab0c0927020c101abeeafae1f
 
                             <p class="text">You have internship, employment position your want to get the best employee?
                             </p>
@@ -65,16 +60,9 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="200">
                         <div class="icon-box">
-<<<<<<< HEAD
                             <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">University / College</a></h4>
                             <p class="text">Get first notified of opportunities when they are available so you can connect your students. </p>
                             <a href="{{ route('jobs.index') }}">Get notified of
-=======
-                            <h4 class="title"><a href="" class="stretched-link">University / College</a></h4>
-                            <p class="text">Get first notified of opportunities when they are available so you can connect
-                                your students. </p>
-                            <a href="{{ route('college.create') }}">Get notified of
->>>>>>> 14b3a1021229186ab0c0927020c101abeeafae1f
                                 openings <i class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>
@@ -82,14 +70,8 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="300">
                         <div class="icon-box">
-<<<<<<< HEAD
                             <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">Students</a></h4>
                             <p>Access internship and employment opporunities from leading companies in Kenya and Beyond. </p>
-=======
-                            <h4 class="title"><a href="" class="stretched-link">Students</a></h4>
-                            <p>Access internship and employment opporunities from leading companies in Kenya and Beyond.
-                            </p>
->>>>>>> 14b3a1021229186ab0c0927020c101abeeafae1f
                             {{-- <p class="text">Are you pursuing undergraduate/post-graduate degree or diploma and would like to get access
                                 to internship/employment opportunities at a top institution? </p> --}}
                             <a href="{{ route('jobs.index') }}">Register to apply <i
