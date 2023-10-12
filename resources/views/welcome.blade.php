@@ -21,7 +21,6 @@
                         position and select the most suitable talent. </p> --}}
 
                         <div class="d-flex justify-content-center justify-content-lg-start">
-
                             <a href="{{ route('getstarted') }}" class="btn-get-started">Get Started</a>
                         </div>
                 </div>
@@ -38,14 +37,14 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon-box">
-                            <h4 class="title"><a href="{{ route('employer.create') }}" class="stretched-link">Corporate</a> </h4>
+                            <h4 class="title"><a href="{{ route('jobs.create') }}" class="stretched-link">Corporate</a> </h4>
 
                             <p class="text">You have internship, employment position your want to get the best employee?</p>
 
                             {{-- <p class="text">Do you have any internship / employment vacancy and you are seeking students with skill and talent to fill those
                                 position?</p> --}}
 
-                            <a href="{{ route('employer.create') }}">Post it here <i
+                            <a href="{{ route('jobs.create') }}">Post it here <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>
@@ -53,9 +52,9 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="200">
                         <div class="icon-box">
-                            <h4 class="title"><a href="" class="stretched-link">University / College</a></h4>
+                            <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">University / College</a></h4>
                             <p class="text">Get first notified of opportunities when they are available so you can connect your students. </p>
-                            <a href="{{ route('college.create') }}">Get notified of
+                            <a href="{{ route('jobs.index') }}">Get notified of
                                 openings <i class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>
@@ -63,11 +62,11 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="300">
                         <div class="icon-box">
-                            <h4 class="title"><a href="" class="stretched-link">Students</a></h4>
+                            <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">Students</a></h4>
                             <p>Access internship and employment opporunities from leading companies in Kenya and Beyond. </p>
                             {{-- <p class="text">Are you pursuing undergraduate/post-graduate degree or diploma and would like to get access
                                 to internship/employment opportunities at a top institution? </p> --}}
-                            <a href="{{ route('student.create') }}">Register to apply <i
+                            <a href="{{ route('jobs.index') }}">Register to apply <i
                                     class="fa-solid fa-arrow-right-long"></i></a>
 
                         </div>

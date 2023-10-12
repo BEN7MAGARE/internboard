@@ -28,8 +28,18 @@ class RegisteredUserController extends Controller
         return view('auth.employer', compact('role'));
     }
 
-    public function getstarted() : View {
-        return view('auth.register');
+    public function getstarted() {
+
+        if (auth()->user()) {
+            if (auth()->user()->role === "corporate") {
+                return redirect()->route('jobs.create');
+            }else {
+                return redirect()->route('jobs.index');
+            }
+        } else {
+            return view('auth.register');
+        }
+
     }
 
     /**

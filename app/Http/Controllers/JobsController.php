@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JobRequest;
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\Skill;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JobsController extends Controller
 {
@@ -13,13 +17,14 @@ class JobsController extends Controller
         $this->middleware('auth');
         $this->category = new Category();
         $this->job = new Job();
+        $this->skill = new Skill();
     }
 
 
     public function index()
     {
         $jobs = $this->job->latest()->get();
-        return view('jobs.create', compact('jobs'));
+        return view('jobs.index', compact('jobs'));
     }
 
     public function categories() {
@@ -27,51 +32,37 @@ class JobsController extends Controller
         return json_encode($categories);
     }
 
+    public function skills()  {
+        $skills = $this->skill->get();
+        return json_encode($skills);
+    }
 
     public function create()
     {
         return view('jobs.create');
     }
 
-    public function start(Request $request)
-    {
-        $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'type' => ['required', 'max:80'],
-            'job_type' => ['required', 'max:100'],
-            'experience_level' => ['required', 'max:100'],
-            'location' => ['required', 'max:255'],
-        ]);
 
-        if (isset($request->job_id) && !is_null($request->job_id)) {
-            $job = $this->job->find($request->job_id);
-            $job->update($validated);
-        }else {
-            $job = $this->job->create($validated);
+    public function store(JobRequest $request) {
+        $validated = $request->validated();
+        DB::beginTransaction();
+        $job = $this->job->create($validated);
+        foreach (explode(',', json_decode($validated["skills"], true)) as $value) {
+            DB::table('job_skill')->insert(['job_id'=>$job->id, 'skill_id'=>$value]);
         }
-
-        return json_encode(['status'=>'success', 'job'=> $job]);
-    }
-
-    public function store(Request $request) {
-        $job = $this->job->find($request->job_id);
-        $validated = $request->validate([
-            'education_level' => ['required'],
-            'skills' => ['required'],
-            'salary_range' => ['required'],
-            'title' => ['required'],
-            'description' => ['required'],
-            'start_date' => ['required'],
-        ]);
-        if (!is_null($job)) {
-            $job->update($validated);
-        }
+        DB::commit();
         return json_encode(['status'=>'success', 'message'=> 'Job post added successfully']);
     }
 
     public function show(string $id)
     {
-        //
+        $job = $this->job->find($id);
+        return json_encode($job);
+    }
+
+    public function jobs() {
+        $jobs = $this->job->latest()->get();
+        return json_encode($jobs);
     }
 
     public function edit(string $id)

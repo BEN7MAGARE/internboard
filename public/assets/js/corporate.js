@@ -41,6 +41,7 @@
         phoneInput = $("#phone"),
         passwordInput = $("#password"),
         passwordConfirmation = $("#passwordConfirmation");
+    // companyName.on('change', )
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
@@ -155,4 +156,6 @@
                 });
         }
     });
+
+
 })();

@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
 Route::view('contact', 'contact')->name('contact');
 
 Route::resource('jobs', JobsController::class);
-Route::post('jobs/start', [JobsController::class, 'start']);
+Route::get('jobs-get', [JobsController::class, 'jobs']);
 Route::get('categories', [JobsController::class, 'categories']);
+
+Route::get('skills', [JobsController::class, 'skills'])->name('skils');
 
 require __DIR__.'/auth.php';

@@ -11,6 +11,7 @@
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
+                        <img src="{{ asset('assets/img/tuk.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2">Send password reset link</h4>
                     </div>
 
