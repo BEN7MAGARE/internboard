@@ -33,6 +33,7 @@ class JobRequest extends FormRequest
             'title' => ['required','string'],
             'description' => ['required','string'],
             'start_date' => ['required','string'],
+            'no_of_positions' => ['required', 'numeric']
         ];
     }
 }

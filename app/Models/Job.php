@@ -15,6 +15,7 @@ class Job extends Model
 
     protected $fillable = [
         'user_id',
+        'ref_no',
         'category_id',
         'organization_id',
         'type',
@@ -45,7 +46,7 @@ class Job extends Model
     {
         return $this->belongsToMany(Skill::class, 'job_skill', 'job_id', 'skill_id');
     }
-    
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -9,6 +9,8 @@ use App\Models\Skill;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class JobsController extends Controller
 {
@@ -46,7 +48,7 @@ class JobsController extends Controller
     public function store(JobRequest $request) {
         $validated = $request->validated();
         DB::beginTransaction();
-        $job = $this->job->create($validated);
+        $job = $this->job->create(['ref_no'=>strtoupper(Str::random(3)).strtotime(now())]+$validated);
         foreach (explode(',', json_decode($validated["skills"], true)) as $value) {
             DB::table('job_skill')->insert(['job_id'=>$job->id, 'skill_id'=>$value]);
         }
