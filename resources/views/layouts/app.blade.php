@@ -63,7 +63,7 @@
         <ul>
           <li><a  class="{{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a></li>
 
-          <li><a  class="{{ Request::is('jobs') ? 'active' : '' }}" href="{{ route('jobs.index') }}">Jobs</a></li>
+          <li><a  class="{{ Request::is('jobs') ? 'active' : '' }}" href="{{ route('jobs.index') }}">Opportunities</a></li>
 
           {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>

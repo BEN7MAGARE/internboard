@@ -55,6 +55,10 @@
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
+                    <hr>
+                    <div class="p-2">
+                        <p >Do not have Account? <a href="{{ route('getstarted') }}">Get Started</a></p>
+                    </div>
                 </div>
             </div>
         </div>
