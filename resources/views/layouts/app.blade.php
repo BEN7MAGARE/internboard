@@ -56,9 +56,9 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a href="{{ url('/') }}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{{ asset('assets/img/tuk.png') }}" alt="">
-        <img src="{{ asset('assets/img/aiccad_logo.png') }}" alt="">
-        <img src="{{ asset('assets/img/msdp.jpg') }}" alt="">
+        <img src="{{ asset('assets/img/logo.png') }}" alt="">
+        {{-- <img src="{{ asset('assets/img/aiccad_logo.png') }}" alt="">
+        <img src="{{ asset('assets/img/msdp.jpg') }}" alt=""> --}}
         <h1>Intern<span>Board</span></h1>
       </a>
       <nav id="navbar" class="navbar">
@@ -113,6 +113,20 @@
   </header>
 
     @yield('content')
+
+    <section id="clients" class="clients">
+      <div class="container" data-aos="zoom-out">
+
+        <h3 class="mb-2"><b>Partners</b></h3>
+
+        <div class="clients-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><img src="{{ asset('assets/img/aiccad_logo.png') }}" class="img-fluid" alt="" height="300px"></div>
+            <div class="swiper-slide"><img src="{{ asset('assets/img/msdp.jpg') }}" class="img-fluid" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

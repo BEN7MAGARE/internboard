@@ -39,7 +39,7 @@
         } else if (userroleselection === "corporate") {
             window.location.href = "/employer/create";
         } else if (userroleselection === "college") {
-            window.location.href = "/university/create";
+            window.location.href = "/college/create";
         }
     });
 

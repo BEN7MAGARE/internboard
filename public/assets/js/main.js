@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   new Swiper('.clients-slider', {
     speed: 400,
-    loop: true,
+    // loop: true,
     autoplay: {
       delay: 5000,
       disableOnInteraction: false

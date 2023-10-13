@@ -33,7 +33,7 @@
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('assets/img/tuk.png') }}" alt="" height="80px">
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2"><strong>Sign up to proceed</strong></h4>
                     </div>
                     <br>
@@ -80,7 +80,7 @@
                             <button type="submit" class="btn btn-primary">Next <i class="fa fa-arrow-right"></i></button>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>

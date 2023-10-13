@@ -116,7 +116,6 @@
             showError(p, "#corporateFeedback");
             submit.prop({ disabled: false });
         } else {
-            console.log(data);
             showSpiner("#corporateFeedback");
             $.post("/college", data)
                 .done(function (params) {

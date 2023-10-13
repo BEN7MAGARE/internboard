@@ -47,8 +47,7 @@ class RegisteredUserController extends Controller
      */
 
     public function institution() : View {
-        return "here";
-        $role = "coll";
+        $role = "college";
         return view('auth.institution', compact('role'));
     }
 
@@ -123,7 +122,7 @@ class RegisteredUserController extends Controller
             'last_name' => $request->user["last_name"],
             'email' => $request->user["email"],
             'phone' => $request->user["phone"],
-            'role' => 'corporate',
+            'role' => $request->user["role"],
             'password' => Hash::make($request->user["password"]),
         ]);
         DB::commit();
