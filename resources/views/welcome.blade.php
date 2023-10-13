@@ -12,17 +12,13 @@
         <div class="container position-relative">
             <div class="row gy-5" data-aos="fade-in">
                 <div class="col-lg-7 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-                    <h2>Career resources are top priority for your members, so don’t hold back. </h2>
-                    <p>Transform your job board into a career center with the career development resources your members
-                        expect. Members look to their associations as a trusted place to help them on their career journey.
-                        Offer them career resources for every step along the way:
-                        Boost member engagement with relevant and valuable career articles that speak directly to your
-                        members.
-                        Deliver additional member value with industry-specific career coaches.
-                        Increase retention with career paths to help members plan their next career step.
-                        Build up your members by offering one centralized location for resume/CV review, LinkedIn profile
-                        makeover, and interview prep.
-                        Learn how to provide the career benefits your members have wanted all along.
+                    <h2>Career resources are top priority for your students and graduates, so don’t hold back! </h2>
+                    <p>Transform your careers guide board into a career center with the career development resources your
+                        students and graduates expect.
+                        Students and Alumni look to their collesges as a trusted place to help them on their career journey.
+                        Offer them career resources for every step along the way: Boost students and graduates engagement
+                        with relevant and valuable
+                        Opportunities while in college and beyond...
                     </p>
 
 
@@ -44,7 +40,8 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon-box">
-                            <h4 class="title"><a href="{{ route('jobs.create') }}" class="stretched-link">Corporate</a> </h4>
+                            <h4 class="title"><a href="{{ route('jobs.create') }}" class="stretched-link">Corporate</a>
+                            </h4>
 
                             <p class="text">You have internship, employment position your want to get the best employee?
                             </p>
@@ -60,8 +57,10 @@
 
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="200">
                         <div class="icon-box">
-                            <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">University / College</a></h4>
-                            <p class="text">Get first notified of opportunities when they are available so you can connect your students. </p>
+                            <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">University /
+                                    College</a></h4>
+                            <p class="text">Get first notified of opportunities when they are available so you can connect
+                                your students. </p>
                             <a href="{{ route('jobs.index') }}">Get notified of
                                 openings <i class="fa-solid fa-arrow-right-long"></i></a>
 
@@ -71,7 +70,8 @@
                     <div class="col-lg-4 col-md-6" id="intro-divs" data-aos="fade-up" data-aos-delay="300">
                         <div class="icon-box">
                             <h4 class="title"><a href="{{ route('jobs.index') }}" class="stretched-link">Students</a></h4>
-                            <p>Access internship and employment opporunities from leading companies in Kenya and Beyond. </p>
+                            <p>Access internship and employment opporunities from leading companies in Kenya and Beyond.
+                            </p>
                             {{-- <p class="text">Are you pursuing undergraduate/post-graduate degree or diploma and would like to get access
                                 to internship/employment opportunities at a top institution? </p> --}}
                             <a href="{{ route('jobs.index') }}">Register to apply <i
