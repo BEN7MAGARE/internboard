@@ -17,16 +17,7 @@
 @section('content')
     <main id="main">
         <div class="breadcrumbs">
-            {{-- <div class="page-header d-flex align-items-center" style="background-image: url('');">
-                <div class="container position-relative">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-lg-6 text-center">
-                            <h2>Portfolio Details</h2>
-                            <p></p>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+            
             <nav>
                 <div class="container">
                     <ol>
@@ -39,7 +30,7 @@
 
         <section class="job-section">
             <div class="container d-flex align-items-center justify-content-center">
-                
+
             </div>
         </section>
     </main>
