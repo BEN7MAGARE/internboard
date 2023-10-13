@@ -57,6 +57,8 @@
       <a href="{{ url('/') }}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="{{ asset('assets/img/tuk.png') }}" alt="">
+        <img src="{{ asset('assets/img/aiccad_logo.png') }}" alt="">
+        <img src="{{ asset('assets/img/msdp.jpg') }}" alt="">
         <h1>Intern<span>Board</span></h1>
       </a>
       <nav id="navbar" class="navbar">
@@ -104,7 +106,7 @@
           @endguest
         </ul>
       </nav>
-      
+
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>

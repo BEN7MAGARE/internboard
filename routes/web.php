@@ -33,6 +33,7 @@ Route::view('contact', 'contact')->name('contact');
 
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
+Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::get('categories', [JobsController::class, 'categories']);
 
 Route::get('skills', [JobsController::class, 'skills'])->name('skils');

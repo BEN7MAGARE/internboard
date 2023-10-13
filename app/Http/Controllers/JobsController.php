@@ -67,6 +67,12 @@ class JobsController extends Controller
         return json_encode($jobs);
     }
 
+    public function apply($ref_no) {
+        $job = $this->job->where('ref_no', $ref_no)->orWhere('id',$ref_no)->first();
+        
+        return view('jobs.apply');
+    }
+
     public function edit(string $id)
     {
         //

@@ -78,7 +78,7 @@
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + job_id, function (value) {
             $("#jobModalTitle").html("<b>" + value.title + "</b>");
-            let skill = '';
+            let skill = '', ref_no = (value.ref_no == null) ? value.id : value.ref_no;
                 $.each(value.skills, function (kee, item) {
                     skill += "<span>" + item.name + "</span>";
                 });
@@ -106,7 +106,7 @@
                 "</div></div></div>";
             $('#jobDetailsSection').html(details);
             $("#jobActionSection").html(
-                '<a href="/jobs/'+value.ref_no+'/apply" class="btn btn-primary">Apply Now <i class="fa-solid fa-angles-right"></i></a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
+                '<a href="/jobs/'+ref_no+'/apply" class="btn btn-primary">Apply Now <i class="fa-solid fa-angles-right"></i></a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
             );
         });
     });
