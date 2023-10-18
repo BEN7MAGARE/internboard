@@ -40,7 +40,7 @@
                     <input type="text" class="form-control" placeholder="Search">
                     <div class="input-group-append">
                         <span class="input-group-text" style="background: #C70039; color: #fff;">
-                            <i class="fa fa-search"></i> <!-- Replace with your desired icon class -->
+                            <i class="fa fa-search"></i> 
                         </span>
                     </div>
                 </div>

@@ -59,7 +59,7 @@
         <img src="{{ asset('assets/img/logo.png') }}" alt="">
         {{-- <img src="{{ asset('assets/img/aiccad_logo.png') }}" alt="">
         <img src="{{ asset('assets/img/msdp.jpg') }}" alt=""> --}}
-        {{-- <h1>Intern<span>Board</span></h1> --}}
+        <h1>Intern<span>Board</span></h1>
       </a>
       <nav id="navbar" class="navbar">
         <ul>
