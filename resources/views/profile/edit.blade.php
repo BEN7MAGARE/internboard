@@ -9,26 +9,39 @@
 @endsection
 
 @section('content')
-    <section class="section profile">
+    <section class="section profile" style="background:#EAFAF1;">
         <div class="container">
             <div class="row">
-                <div class="col-xl-3">
+                <div class="col-xl-3 mb-4">
 
                     <div class="card">
+
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
                             <img src="assets/img/avatar.png" alt="Profile" class="rounded-circle">
-                            <h2>{{ auth()->user()->first_name.' '.auth()->user()->last_name }}</h2>
+                            <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+                            </h2>
 
-                            <h3></h3>
+                            <h3>{{ auth()->user()->profile?->specialization }}</h3>
 
-                            {{-- <div class="social-links mt-2">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                            </div> --}}
+                            <div class="social-links mt-2">
+                                <a href="{{ auth()->user()->twitter }}" class="twitter text-primary"><i class="bi bi-twitter"></i></a>
+                                <a href="{{ auth()->user()->facebook }}" class="facebook text-primary"><i class="bi bi-facebook"></i></a>
+                                <a href="{{ auth()->user()->instagram }}" class="instagram text-primary"><i
+                                        class="bi bi-instagram"></i></a>
+                                <a href="{{ auth()->user()->linkedin }}" class="linkedin text-primary"><i class="bi bi-linkedin"></i></a>
+                            </div>
                         </div>
+
+                        <div class="card-footer bg-white">
+                            <div class="list-group">
+                                <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action active" aria-current="true">My Profile</a>
+                                <a href="#" class="list-group-item list-group-item-action">My Applications</a>
+                                <a href="#" class="list-group-item list-group-item-action">My Jobs</a>
+                                <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-sign-out text-warning"></i> Logout</a>
+                                
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -41,10 +54,6 @@
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Overview</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
-                                        Profile</button>
                                 </li>
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
@@ -60,207 +69,42 @@
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">About</h5>
-                                    <p class="small fst-italic"></p>
+                                    <h5 class="card-title">Summary</h5>
+                                    <p class="small fst-italic">{{ auth()->user()->profile?->summary }}</p>
 
                                     <h5 class="card-title">Profile Details</h5>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                        <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Company</div>
-                                        <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            {{ auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+                                        </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Job</div>
-                                        <div class="col-lg-9 col-md-8">Web Designer</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Country</div>
-                                        <div class="col-lg-9 col-md-8">USA</div>
+                                        <div class="col-lg-9 col-md-8">{{ auth()->user()->profile?->specialization }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Address</div>
-                                        <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                        <div class="col-lg-9 col-md-8">{{ auth()->user()->address }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Phone</div>
-                                        <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                        <div class="col-lg-9 col-md-8">{{ auth()->user()->phone }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
-                                        <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                        <div class="col-lg-9 col-md-8">{{ auth()->user()->email }}</div>
                                     </div>
 
                                     <div class="mt-2 text-center">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="updateProdileDetailsModal" class="btn btn-primary">UpdateDetails</a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateProdileDetailsModal"
+                                            class="btn btn-primary">Update Details</a>
                                     </div>
-                                </div>
-
-                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                    <form action="{{ route('profile.update') }}" id="profileUpdateForm">
-                                        @csrf
-
-                                        <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile
-                                                Image</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input type="file" name="profile" id="ProfileImage">
-                                                <img src="assets/img/profile-img.jpg" alt="{{ auth()->user()->first_name.' '.auth()->user()->last_name }}">
-                                                <div class="pt-2">
-                                                    <a href="#" class="btn btn-primary btn-sm"
-                                                        title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-sm"
-                                                        title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="firstName" class="col-md-4 col-lg-3 col-form-label">Full
-                                                First Name</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="first_name" type="text" class="form-control" id="firstName"
-                                                    value="{{ auth()->user()->last_name }}">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Full
-                                                Last Name</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="last_name" type="text" class="form-control" id="lastName"
-                                                    value="{{auth()->user()->last_name }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="title" class="col-md-4 col-lg-3 col-form-label">
-                                                Title</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <select name="title" class="form-select" id="title">
-                                                    <option value="">Select One</option>
-                                                    <option value="Miss">Miss</option>
-                                                    <option value="Mrs">Mrs</option>
-                                                    <option value="Mr">Mr</option>
-                                                    <option value="Dr">Dr</option>
-                                                    <option value="Pst">Pst</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Education Level</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <select class="form-select" name="education_level" id="educationLevel">
-                                                    <option value="">Select One</option>
-                                                    <option value="Highschool">Highschool</option>
-                                                    <option value="Certificate">Certificate</option>
-                                                    <option value="Diploma">Diploma</option>
-                                                    <option value="Higher Diploma">Higher Diploma</option>
-                                                    <option value="Degree">Degree</option>
-                                                    <option value="Masters">Masters</option>
-                                                    <option value="Doctorate">Doctorate</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="course" class="col-md-4 col-lg-3 col-form-label">Course</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="course" type="text" class="form-control" id="course">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="specialization" class="col-md-4 col-lg-3 col-form-label">Specialization</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="specialization" type="text" class="form-control" id="specialization"
-                                                    placeholder="eg Web Designer">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="summary" class="col-md-4 col-lg-3 col-form-label">Proffessional Summary</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <textarea name="summary" class="form-control" id="summary" style="height: 100px"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="address" type="text" class="form-control" id="Address"
-                                                    placeholder="{{ auth()->user()->address }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="phone" type="text" class="form-control" id="Phone"
-                                                    value="{{ auth()->user()->phone }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control" id="Email"
-                                                    value="{{ auth()->user()->email }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control" id="Twitter"
-                                                    value="https://twitter.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control"
-                                                    id="Facebook" value="https://facebook.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control"
-                                                    id="Instagram" value="https://instagram.com/#">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
-                                                Profile</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control"
-                                                    id="Linkedin" value="https://linkedin.com/#">
-                                            </div>
-                                        </div>
-                                        
-                                        <div id="profileUpdateFeedback"></div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </form>
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-settings">
@@ -357,7 +201,180 @@
         </div>
     </section>
 
-    <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="financeModalLabel"
+    <div class="modal fade" id="updateProdileDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('profile.update') }}" id="profileUpdateForm">
+
+                    <div class="modal-body">
+                        @csrf
+                        <div class="row">
+
+                            <div class="col-md-6    form-group mb-3">
+                                <label for="profileImage">Profile
+                                    Image</label>
+                                <div class="input-group">
+                                    <input type="file" name="profile" id="ProfileImage">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="title">
+                                    Title</label>
+                                <div class="input-group">
+                                    <select name="title" class="form-select" id="title">
+                                        <option value="">Select One</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Dr">Dr</option>
+                                        <option value="Pst">Pst</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="firstName">Full
+                                    First Name</label>
+                                <div class="input-group">
+                                    <input name="first_name" type="text" class="form-control" id="firstName"
+                                        value="{{ auth()->user()->last_name }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="lastName">Full
+                                    Last Name</label>
+                                <div class="input-group">
+                                    <input name="last_name" type="text" class="form-control" id="lastName"
+                                        value="{{ auth()->user()->last_name }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="company">Education
+                                    Level</label>
+                                <div class="input-group">
+                                    <select class="form-select" name="education_level" id="educationLevel">
+                                        <option value="">Select One</option>
+                                        <option value="Highschool">Highschool</option>
+                                        <option value="Certificate">Certificate</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Higher Diploma">Higher Diploma</option>
+                                        <option value="Degree">Degree</option>
+                                        <option value="Masters">Masters</option>
+                                        <option value="Doctorate">Doctorate</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="specialization">Specialization</label>
+                                <div class="input-group">
+                                    <input name="specialization" value="{{ auth()->user()->profile?->specialization }}"
+                                        type="text" class="form-control" id="specialization"
+                                        placeholder="eg Web Designer">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="course">Course</label>
+                                <div class="input-group">
+                                    <input name="course" type="text" class="form-control" id="course"
+                                        value="{{ auth()->user()->profile?->course }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="summary">Proffessional
+                                    Summary</label>
+                                <div class="input-group">
+                                    <textarea name="summary" value="{{ auth()->user()->profile?->summary }}" class="form-control" id="summary"
+                                        style="height: 100px"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Address">Address</label>
+                                <div class="input-group">
+                                    <input name="address" type="text" class="form-control" id="Address"
+                                        placeholder="{{ auth()->user()->address }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Phone">Phone</label>
+                                <div class="input-group">
+                                    <input name="phone" type="text" class="form-control" id="Phone"
+                                        value="{{ auth()->user()->phone }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Email">Email</label>
+                                <div class="input-group">
+                                    <input name="email" type="email" class="form-control" id="Email"
+                                        value="{{ auth()->user()->email }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Twitter">Twitter
+                                    Profile</label>
+                                <div class="input-group">
+                                    <input name="twitter" type="text" class="form-control" id="Twitter"
+                                        value="{{ auth()->user()->twitter ?? 'https://twitter.com/#' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Facebook">Facebook
+                                    Profile</label>
+                                <div class="input-group">
+                                    <input name="facebook" type="text" class="form-control" id="Facebook"
+                                        value="{{ auth()->user()->facebook ?? 'https://facebook.com/#' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Instagram">Instagram
+                                    Profile</label>
+                                <div class="input-group">
+                                    <input name="instagram" type="text" class="form-control" id="Instagram"
+                                        value="{{ auth()->user()->instagram ?? 'https://instagram.com/#' }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="Linkedin">Linkedin
+                                    Profile</label>
+                                <div class="input-group">
+                                    <input name="linkedin" type="text" class="form-control" id="Linkedin"
+                                        value="{{ auth()->user()->linkedin ?? 'https://linkedin.com/#' }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profileUpdateFeedback"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="financeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content" id="vehiclePreviewSection">
@@ -420,5 +437,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
