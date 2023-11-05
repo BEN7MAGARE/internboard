@@ -55,10 +55,7 @@
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a href="{{ url('/') }}" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="{{ asset('assets/img/logo.png') }}" alt="">
-        {{-- <img src="{{ asset('assets/img/aiccad_logo.png') }}" alt="">
-        <img src="{{ asset('assets/img/msdp.jpg') }}" alt=""> --}}
         <h1>Intern<span>Board</span></h1>
       </a>
       <nav id="navbar" class="navbar">

@@ -2287,3 +2287,30 @@ section {
 .footer .credits a {
   color: #fff;
 }
+
+.skills span {
+    background: #E5E7E9;
+    padding: 4px 5px 5px 5px;
+    border-radius: 10px;
+    margin-right: .5em;
+}
+
+.location i {
+    color: #C70039;
+}
+
+.job {
+    margin-bottom: .5em;
+    padding: 5px 10px;
+    /* border-radius: 10px; */
+    border-bottom: 1px solid #EAEDED;
+}
+
+.job:hover {
+    background: #F2F4F4;
+    cursor: pointer;
+}
+
+.salary span {
+    margin-right: 2em;
+}

@@ -5,30 +5,7 @@
 @endsection
 
 @section('header_styles')
-    <style>
-        .skills span {
-            background: #E5E7E9;
-            padding: 4px 5px 5px 5px;
-            border-radius: 10px;
-            margin-right: .5em;
-        }
-        .location i {
-            color: #C70039;
-        }
-        .job {
-            margin-bottom: .5em;
-            padding: 5px 10px;
-            /* border-radius: 10px; */
-            border-bottom: 1px solid #EAEDED;
-        }
-        .job:hover {
-            background: #F2F4F4;
-            cursor: pointer;
-        }
-        .salary span {
-            margin-right: 2em;
-        }
-    </style>
+    
 @endsection
 
 @section('content')
@@ -40,7 +17,7 @@
                     <input type="text" class="form-control" placeholder="Search">
                     <div class="input-group-append">
                         <span class="input-group-text" style="background: #C70039; color: #fff;">
-                            <i class="fa fa-search"></i> 
+                            <i class="fa fa-search"></i>
                         </span>
                     </div>
                 </div>

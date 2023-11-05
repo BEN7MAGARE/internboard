@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Corporate::class);
             $table->foreignIdFor(Category::class);
+            $table->string('ref_no')->unique();
             $table->string('type')->nullable();
             $table->string('job_type')->nullable();
             $table->string('experience_level')->nullable();
