@@ -29,12 +29,6 @@
         $(target).children().remove();
     }
 
-    $("#skills").select2({
-        tags: true,
-        tokenSeparators: [",", " "],
-        maximumSelectionLength: 10,
-    });
-
     function getSkills() {
         $.getJSON("/skills", function (skills) {
             let option = "<option value=''>Select One</option>";
@@ -46,11 +40,18 @@
                     value.name +
                     "</option>";
             });
-            $("#skills").html(option);
+            $("#skillsSelect").html(option);
+
+            $("#skillsSelect").select2({
+                tags: true,
+                tokenSeparators: [",", " "],
+                maximumSelectionLength: 10,
+                dropdownParent: $("#updateProdileDetailsModal"),
+            });
         });
     }
-
     getSkills();
+
 
     const profileUpdateForm = $("#profileUpdateForm"),
         firstName = $("#firstName"),
@@ -71,7 +72,7 @@
         ProfileInformation = window.sessionStorage,
         level = $("#level"),
         yearsOfExperience = $("#yearsOfExperience"),
-        skills = $("#skills");
+        skills = $("#skillsSelect");
 
     firstName.on("change", function () {
         ProfileInformation.setItem("first_name", $(this).val());
@@ -115,13 +116,13 @@
     Linkedin.on("change", function () {
         ProfileInformation.setItem("linkedin", $(this).val());
     });
-    level.on('change', function() {
-        ProfileInformation.setItem('level', $(this).val());
+    level.on("change", function () {
+        ProfileInformation.setItem("level", $(this).val());
     });
-    yearsOfExperience.on('change', function() {
+    yearsOfExperience.on("change", function () {
         ProfileInformation.setItem("years_of_experience", $(this).val());
     });
-    skills.on('change', function() {
+    skills.on("change", function () {
         ProfileInformation.setItem("skills", $(this).val());
     });
 
@@ -165,8 +166,11 @@
             "specialization",
             ProfileInformation.getItem("specialization")
         );
-        data.append('level',ProfileInformation.getItem('level'));
-        data.append('years_of_experience',ProfileInformation.getItem('years_of_experience'));
+        data.append("level", ProfileInformation.getItem("level"));
+        data.append(
+            "years_of_experience",
+            ProfileInformation.getItem("years_of_experience")
+        );
         data.append("skills", ProfileInformation.getItem("skills"));
         data.append("summary", ProfileInformation.getItem("summary"));
         data.append("address", ProfileInformation.getItem("address"));
@@ -177,7 +181,6 @@
         data.append("instagram", ProfileInformation.getItem("instagram"));
         data.append("linkedin", ProfileInformation.getItem("linkedin"));
         data.append("image", ProfileImage.files[0]);
-        
 
         showSpiner("#profileUpdateFeedback");
 

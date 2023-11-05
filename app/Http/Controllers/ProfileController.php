@@ -51,7 +51,7 @@ class ProfileController extends Controller
             'linkedin' => ['string', 'nullable', 'max:255'],
             'level' => ['string','nullable'],
             'years_of_experience' => ['string','nullable'],
-            'skills' => ['array']
+            // 'skills' => ['json']
         ]);
 
         $user = User::find(auth()->id());
@@ -92,7 +92,9 @@ class ProfileController extends Controller
             ]);
         }
 
-        foreach ($validated["skills"] as $key => $value) {
+        $skills = explode(',', $request->skills);
+// return $skills;
+        foreach ($skills as $value) {
             User_Skill::create([
                 'user_id' => $user->id,
                 'skill_id' => $value,

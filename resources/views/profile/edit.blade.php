@@ -7,6 +7,9 @@
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+    <script>
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    </script>
 @endsection
 
 @section('content')
@@ -39,7 +42,7 @@
                                 <a href="#" class="list-group-item list-group-item-action">My Applications</a>
                                 <a href="#" class="list-group-item list-group-item-action">My Jobs</a>
                                 <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-sign-out text-warning"></i> Logout</a>
-                                
+
                             </div>
                         </div>
 
@@ -204,11 +207,11 @@
 
     <div class="modal fade" id="updateProdileDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('profile.update') }}" id="profileUpdateForm">
 
@@ -258,6 +261,8 @@
                                 </div>
                             </div>
 
+                            <hr>
+
                             <div class="col-md-6 form-group mb-3">
                                 <label for="company">Education
                                     Level</label>
@@ -283,7 +288,7 @@
                                         placeholder="eg Web Designer">
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6 form-group mb-3">
                                 <label for="level">Level of seniority</label>
                                 <div class="input-group">
@@ -322,16 +327,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 form-group">
+                            <div class="form-group mb-3">
                                 <label for="skills">Skills</label>
 
                                 <div class="form-group">
-                                    <select name="skills" id="skills" class="form-control form-control-lg" multiple
+                                    <select name="skills" id="skillsSelect" class="form-control form-control-lg" multiple
                                         style="width:100%;">
 
                                     </select>
                                 </div>
                             </div>
+                            <hr>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="Address">Address</label>
