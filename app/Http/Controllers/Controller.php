@@ -14,4 +14,5 @@ class Controller extends BaseController
     protected $job;
     protected $skill;
     protected $application;
+    protected $profile;
 }

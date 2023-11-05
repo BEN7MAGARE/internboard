@@ -5,6 +5,7 @@
 @endsection
 
 @section('header_styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
 @endsection
 
@@ -220,6 +221,7 @@
                                     Image</label>
                                 <div class="input-group">
                                     <input type="file" name="profile" id="ProfileImage">
+                                    <div id="imageError"></div>
                                 </div>
                             </div>
 
@@ -281,6 +283,27 @@
                                         placeholder="eg Web Designer">
                                 </div>
                             </div>
+                            
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="level">Level of seniority</label>
+                                <div class="input-group">
+                                    <select name="level" id="level" class="form-select">
+                                        <option value=" ">Select One</option>
+                                        <option value="Beginner">Beginner / Amature</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Expert">Expert</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="yearsOfExperience">Years of experience</label>
+                                <div class="input-group">
+                                    <input name="years_of_experience" value="{{ auth()->user()->profile?->years_of_experience }}"
+                                        type="text" class="form-control" id="yearsOfExperience"
+                                        placeholder="eg Web Designer">
+                                </div>
+                            </div>
 
                             <div class="form-group mb-3">
                                 <label for="course">Course</label>
@@ -296,6 +319,17 @@
                                 <div class="input-group">
                                     <textarea name="summary" value="{{ auth()->user()->profile?->summary }}" class="form-control" id="summary"
                                         style="height: 100px"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="skills">Skills</label>
+
+                                <div class="form-group">
+                                    <select name="skills" id="skills" class="form-control form-control-lg" multiple
+                                        style="width:100%;">
+
+                                    </select>
                                 </div>
                             </div>
 
@@ -438,4 +472,9 @@
             </div>
         </div>
     </div> --}}
+@endsection
+
+@section('footer_scripts')
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/profile.js') }}"></script>
 @endsection

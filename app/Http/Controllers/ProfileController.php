@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\User_Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,11 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth");
+        $this->profile = new Profile();
+    }
     /**
      * Display the user's profile form.
      */
@@ -43,9 +49,12 @@ class ProfileController extends Controller
             'facebook' => ['string', 'nullable', 'max:255'],
             'instagram' => ['string', 'nullable', 'max:255'],
             'linkedin' => ['string', 'nullable', 'max:255'],
+            'level' => ['string','nullable'],
+            'years_of_experience' => ['string','nullable'],
+            'skills' => ['array']
         ]);
+
         $user = User::find(auth()->id());
-        return $user;
         $user->title = $validated['title'];
         $user->first_name = $validated['first_name'];
         $user->last_name = $validated["last_name"];
@@ -56,20 +65,39 @@ class ProfileController extends Controller
         $user->facebook = $validated["facebook"];
         $user->instagram = $validated["instagram"];
         $user->linkedin = $validated["linkedin"];
-        
+
         if ($request->hasFile("image")) {
-            $fileName = 'pr'.strtotime(now()).auth()->id().'.'.$request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move('profiles/',$fileName);
+            $fileName = 'pr' . strtotime(now()) . auth()->id() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move('profiles/', $fileName);
             $user->image = $fileName;
         }
         $user->update();
+        if (is_null($user->profile)) {
+            $this->profile->create([
+                'user_id' => $user->id,
+                'education_level' => $validated["education_level"],
+                'course' => $validated["course"],
+                'specialization' => $validated["specialization"],
+                'summary' => $validated["summary"], 'level' => $validated["level"],
+                'years_of_experience' => $validated["years_of_experience"],
+            ]);
+        } else {
+            $user->profile->update([
+                'education_level' => $validated["education_level"],
+                'course' => $validated["course"],
+                'specialization' => $validated["specialization"],
+                'summary' => $validated["summary"],
+                'level' => $validated["level"],
+                'years_of_experience' => $validated["years_of_experience"],
+            ]);
+        }
 
-        $user->profile()->createOrUpdate([
-            'education_level' => $validated["education_level"],
-            'course' => $validated["course"],
-            'specialization' => $validated["specialization"],
-            'summary' => $validated["summary"]
-        ]);
+        foreach ($validated["skills"] as $key => $value) {
+            User_Skill::create([
+                'user_id' => $user->id,
+                'skill_id' => $value,
+            ]);
+        }
 
         return json_encode(['status' => 'success', 'message' => 'Profile information updated successfully.']);
     }

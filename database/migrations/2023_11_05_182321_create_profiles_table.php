@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('title');
             $table->string('education_level');
             $table->string('course');
             $table->string('specialization');
