@@ -29,6 +29,8 @@
     function removeSpiner(target) {
         $(target).children().remove();
     }
+
+    
     let getStartedForm = $("#getStartedForm");
     getStartedForm.on("submit", function (event) {
         event.preventDefault();

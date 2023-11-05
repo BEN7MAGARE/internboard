@@ -27,6 +27,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 p-3" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
+                        @if ($applied)
+                            <div class="alert alert-info" role="alert">
+                                <p>Applied <i class="fa fa-check-circle"></i></p>
+                            </div>
+                        @endif
                         <div class="job-details-section">
                             <h4><b>{{ $job->corporate->name }}</b></h4>
                             <hr>
@@ -64,41 +69,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mt-4">
                         <div class="card">
                             <div class="card-header bg-white text-center">
                                 <h4 class="m-2">Apply by filling this form</h4>
                             </div>
-                            <form action="{{ route('job.apply') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('job.apply') }}" method="post" enctype="multipart/form-data"
+                                id="jobApplicationForm">
+                                @csrf
+                                <input type="hidden" name="job_id" id="jobID" value="{{ $job->id }}">
                                 <div class="card-body">
+
                                     <div class="row mb-2">
 
-                                        {{-- <div class="col-md-12 form-group mb-4">
-                                        <label for="applicationReason" class="mb-2">Why are you applying for this job</label>
-                                        <input type="text" class="form-control form-control-lg" name="reason" id="applicationReason">
-                                    </div> --}}
-
-                                        <div class="quill-editor-default">
-                                            <p>Hello World!</p>
-                                            <p>This is Quill <strong>default</strong> editor</p>
+                                        <div class="col-md-12 form-group mb-4">
+                                            <label for="applicationReason" class="mb-2">Why are you applying for this
+                                                job</label>
+                                            <input type="text" class="form-control form-control-lg" name="reason"
+                                                id="applicationReason">
                                         </div>
 
-                                        <div class="col-md-12 form-group mb-4">
-                                            <label for="applicationDescription" class="mb-2">Cover letter</label>
-                                            <textarea class="form-control form-control-lg" name="description" id="applicationDescription"></textarea>
+                                        <div class="col-md-12 mb-4" style="max-height: 10em;">
+                                            <label for="cover_letter" class="mb-2">Cover letter</label>
+                                            <textarea name="cover_letter" id="cover_letter" class="form-control form-control-lg"></textarea>
+                                            {{-- <div class="quill-editor-default" id="cover_letter">
+                                            </div> --}}
                                         </div>
 
                                         <div class="col-md-12 form-group mb-4">
                                             <label for="curriculumVitae" class="mb-2">Attach your CV</label><br>
                                             <input type="file" name="curriculum_vitae" id="curriculumVitae" required>
+                                            <div id="cvError"></div>
                                         </div>
 
                                         <div class="col-md-12 form-group">
                                             <label for="otherFiles" class="mb-2">Attach other relavant
                                                 documents</label><br>
                                             <input type="file" name="files" id="otherFiles" multiple>
+                                            <div id="filesError"></div>
                                         </div>
                                     </div>
+                                    <div id="applyFeedback"></div>
                                 </div>
 
                                 <div class="card-footer bg-white d-flex justify-content-end">
@@ -117,5 +128,5 @@
 
 @section('footer_scripts')
     <script src="{{ asset('quill/quill.min.js') }}"></script>
-    <script src="{{ asset('assets/js/apply.js') }}"></script>
+    <script src="{{ asset('assets/js/application.js') }}"></script>
 @endsection

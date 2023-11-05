@@ -10,6 +10,7 @@ use App\Models\Skill;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -21,6 +22,7 @@ class JobsController extends Controller
         $this->category = new Category();
         $this->job = new Job();
         $this->skill = new Skill();
+        $this->application = new Application();
     }
 
 
@@ -70,37 +72,50 @@ class JobsController extends Controller
 
     public function apply($ref_no) {
         $job = $this->job->where('ref_no', $ref_no)->orWhere('id',$ref_no)->with('corporate')->first();
-        // return $job;
-        return view('jobs.apply', compact('job'));
+        $application = $this->application->where('job_id',$job->id)->where('user_id',auth()->id())->first();
+        $applied = false;
+        if (!is_null($application)) {
+            $applied = true;
+        }
+        return view('jobs.apply', compact('job', 'applied'));
     }
 
     function applicationCreate(Request $request) {
         $validated = $request->validate([
             'job_id' => ['required','exists:jobs,id'],
-            'description' => ['required','max:1000'],
-            'curriculum_vitae' => ['nullable','mimes:pdf','max:500'],
+            'reason' => ['required','string'],
+            'cover_letter' => ['required','max:1000'],
+            'curriculum_vitae' => ['nullable','max:500'],
             'files' => ['nullable'],
         ]);
-        $job = $this->find($validated["job_id"]);
+        $application = $this->application->where('user_id',auth()->id())->where('job_id',$validated["job_id"])->first();
+        if (!is_null($application)) {
+            return json_encode(['status'=>'success','message'=> "You have already applied for this job. Thank you"]);
+        }
+        $job = $this->job->find($validated["job_id"]);
         $filename = "";
         if ($request->hasFile('curriculum_vitae')) {
-            $filename .= 'CV'.auth()->id() .$job->ref_no. strtotime(now()).$request->file('curriculum_vitae')->getClientOriginalExtension();
-            $request->file('curriculum_vitae')->save(public_path('applications/'.$filename));
+            $filename .= 'CV'.auth()->id() .$job->ref_no. strtotime(now()).'.'.$request->file('curriculum_vitae')->getClientOriginalExtension();
+            $request->file('curriculum_vitae')->storeAs('applications/', $filename);
         }
-        $files = [];
+        $fileNames = [];
         if (isset($request->files)) {
-            foreach ($request->files as $key => $value) {
-                $file = auth()->id() .$job->ref_no. strtotime(now()).$value->getClientOriginalExtension(); // or any other desired file name
-                $value->save(public_path('applications/' . $file));
-                array_push($files, $file);
+            foreach ($request->file('files') as $file) {
+                $fileName = auth()->id() .$job->ref_no. strtotime(now()).'.'.$file->getClientOriginalExtension(); // or any other desired file name
+                $file->move('applications/', $fileName);
+                array_push($fileNames, $fileName);
             }
         }
+
         $application = new Application();
         $application->user_id = auth()->id();
         $application->job_id = $validated['job_id'];
-        $application->curriculum_vitae = $filename??null;
-        $application->files = (!isset($files)) ? json_encode($files) : null;
+        $application->reason = $validated['reason'];
+        $application->cover_letter = $validated['cover_letter'];
+        $application->curriculum_vitae = $filename;
+        $application->files = json_encode($fileNames);
         $application->save();
+
         return json_encode(['status'=>'success', 'message'=>'Job application saved successfully']);
     }
 

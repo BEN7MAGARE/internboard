@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Job;
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('user__skills', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Job::class);
-            $table->foreignIdFor(User::class);
-            $table->text('reason',1000);
-            $table->text('cover_letter',1000);
-            $table->string('curriculum_vitae',100);
-            $table->string('files',200);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Skill::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applications');
+        Schema::dropIfExists('user__skills');
     }
 };
