@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    
+
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class, 'user_id', 'id');
@@ -48,5 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class, 'user_id', 'id');
     }
 }

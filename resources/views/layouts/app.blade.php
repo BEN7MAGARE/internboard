@@ -54,9 +54,9 @@
   <header id="header" class="header d-flex align-items-center">
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a href="{{ url('/') }}" class="logo d-flex align-items-center">
-        <img src="{{ asset('assets/img/logo.png') }}" alt="">
-        <h1>Intern<span>Board</span></h1>
+      <a href="{{ url('/') }}" class="logo">
+        <img src="{{ asset('assets/img/logo.png') }}" alt=""><br>
+        <p style="margin: 0 0 1em 4em;">Intern<span>Board</span></p>
       </a>
       <nav id="navbar" class="navbar">
         <ul>

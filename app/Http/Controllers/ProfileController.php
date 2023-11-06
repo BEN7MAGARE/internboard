@@ -9,6 +9,7 @@ use App\Models\User_Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -18,6 +19,7 @@ class ProfileController extends Controller
     {
         $this->middleware("auth");
         $this->profile = new Profile();
+        $this->user = new User();
     }
     /**
      * Display the user's profile form.
@@ -123,5 +125,19 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    function password(Request $request) {
+        $validated = $request->validate([
+            'password'=>['required','min:8','confirmed'],
+        ]);
+        $user = $this->user->fins(auth()->id());
+        $user->update([
+            'password' => Hash::make($validated["password"]),
+        ]);
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
     }
 }

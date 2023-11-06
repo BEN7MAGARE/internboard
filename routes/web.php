@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ApplicationsController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/password/change', [ProfileController::class, 'password'])->name('password.change');
 });
 
 Route::view('contact', 'contact')->name('contact');
@@ -38,5 +41,7 @@ Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('jo
 Route::get('categories', [JobsController::class, 'categories']);
 
 Route::get('skills', [JobsController::class, 'skills'])->name('skils');
+
+Route::resource('applications', ApplicationsController::class);
 
 require __DIR__.'/auth.php';
