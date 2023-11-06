@@ -71,16 +71,16 @@
 
                                 <div class="accordion" id="accordionExample">
                                     @foreach ($applications as $application)
-                                        <div class="accordion-item">
+                                        <div class="accordion-item mb-4">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne" aria-expanded="true"
-                                                    aria-controls="collapseOne">
+                                                    data-bs-target="#collapse{{ $loop->iteration }}" aria-expanded="true"
+                                                    aria-controls="collapse{{ $loop->iteration }}">
                                                     {!! '<strong>' . $application->job->corporate->name . '</strong>' . ': &nbsp;&nbsp;' . $application->job->title !!}
                                                 </button>
                                             </h2>
 
-                                            <div id="collapseOne" class="accordion-collapse collapse"
+                                            <div id="collapse{{ $loop->iteration }}" class="accordion-collapse collapse"
                                                 data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
                                                     <div class="reason mb-2">
@@ -92,7 +92,7 @@
                                                         <p>{{ $application->cover_letter }}</p>
                                                     </div>
                                                     <div class="section-action d-flex justify-content-between">
-                                                        <a href="" class="btn btn-outline-primary">Edit</a>
+                                                        <a href="" class="btn btn-outline-primary">Edit <i class="fa fa-pen"></i></a>
                                                         <a href="" class="btn btn-outline-danger">Cancel</a>
                                                     </div>
                                                 </div>

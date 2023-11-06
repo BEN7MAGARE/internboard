@@ -53,15 +53,15 @@
                 job +=
                     '<div class="job" data-id=' +
                     value.id +
-                    '><div class="title mt-2 mb-2"><h3>' +
+                    '><div class="title mt-2 mb-2 p-2"><h3>' +
                     value.title +
-                    '</h3></div><div class="salary mb-2"><span>Monthly: ' +
+                    '</h3></div><div class="salary mb-2 p-2"><span>Monthly: ' +
                     value.salary_range +
-                    '</span></div><div class="desciption"><p>' +
+                    '</span></div><div class="desciption p-2"><p>' +
                     value.description +
-                    '</p></div><div class="skills">' +
+                    '</p></div><div class="skills p-2">' +
                     skill +
-                    '</div><div class="location mt-3 d-flex justify-content-between"><div><i class="fa-solid fa-location-dot"></i> <span>' +
+                    '</div><div class="location mt-3 d-flex justify-content-between  p-2"><div><i class="fa-solid fa-location-dot"></i> <span>' +
                     value.location +
                     "</span></div><div>" +
                     moment(value.created_at).fromNow() +

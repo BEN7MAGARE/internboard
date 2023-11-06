@@ -18,6 +18,9 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+    public function __construct(){
+        $this->college = new College();
+    }
 
     /**
      * Show emplyer creation form
@@ -57,7 +60,8 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $role = 'student';
-        return view('auth.student', compact('role'));
+        $colleges = $this->college->get();
+        return view('auth.student', compact('role', 'colleges'));
     }
 
     /**
@@ -67,7 +71,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
+            'college_id' => ['required','exists:colleges,id'],
             'first_name' => ['required', 'string', 'max:60'],
             'last_name' => ['required', 'string', 'max:60'],
             'email' => ['required', 'string', 'email', 'max:80', 'unique:'.User::class],
@@ -77,15 +82,14 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
+            'college_id' => $validated["college_id"],
+            'first_name' => $validated["first_name"],
+            'last_name' => $validated["last_name"],
+            'email' => $validated["email"],
+            'phone' => $validated["phone"],
+            'role' => $validated["role"],
+            'password' => Hash::make($validated["password"]),
         ]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
@@ -106,8 +110,6 @@ class RegisteredUserController extends Controller
         ]);
         DB::commit();
 
-        event(new Registered($user));
-
         Auth::login($user);
 
         return json_encode(['status'=>"success", 'message'=>'Corporate account created successfully. Check your email and verify before you proceed.', 'url'=>'/jobs/create']);
@@ -126,8 +128,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->user["password"]),
         ]);
         DB::commit();
-
-        event(new Registered($user));
 
         Auth::login($user);
 

@@ -4,7 +4,6 @@
     Sign up as student @parent
 @endsection
 
-
 @section('content')
     <main>
         <div class="container d-flex justify-content-center align-items-center">
@@ -21,6 +20,16 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label for="college_id">College</label>
+                                    <select name="college_id" id="college_id" class="form-select form-select-lg" required>
+                                        <option value="">Select One</option>
+                                        @foreach ($colleges as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="col-md-6 form-group">
                                     <label for="firstName">First name</label>
                                     <input type="text" class="form-control form-control-lg" name="first_name"

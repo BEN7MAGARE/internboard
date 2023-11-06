@@ -30,7 +30,7 @@
         $(target).children().remove();
     }
 
-    
+
     let getStartedForm = $("#getStartedForm");
     getStartedForm.on("submit", function (event) {
         event.preventDefault();
@@ -52,7 +52,7 @@
         emailInput = $("#email"),
         phoneInput = $("#phone"),
         passwordInput = $("#password"),
-        passwordConfirmation = $("#passwordConfirmation");
+        passwordConfirmation = $("#passwordConfirmation"), collegeID = $('#college_id');
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
@@ -65,13 +65,14 @@
             password = passwordInput.val(),
             password_confirmation = passwordConfirmation.val(),
             submit = $this.find("button[type='submit']"),
-            errors = [],
+            errors = [], college_id = collegeID.val(),
             emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
             phoneNumberRegex = /^(\+254|0)[17]\d{8}$/,
             token = $this.find("input[name='_token']").val();
         submit.prop({ disabled: false });
         let data = {
             _token: token,
+            college_id:college_id,
             first_name: first_name,
             last_name: last_name,
             role: role,
@@ -107,6 +108,7 @@
             showSpiner("#studentfeedbackfeedback");
             $.post("/register", data)
                 .done(function (params) {
+                    console.log(params);
                     submit.prop({ disabled: false });
                     removeSpiner("#studentfeedbackfeedback");
                     let result = JSON.parse(params);
@@ -121,6 +123,7 @@
                     }
                 })
                 .fail(function (error) {
+                    console.log(error);
                     submit.prop({ disabled: false });
                     removeSpiner("#studentfeedbackfeedback");
                     if (error.status == 422) {
