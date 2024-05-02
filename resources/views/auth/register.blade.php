@@ -45,7 +45,7 @@
                                     <input class="form-check-input" type="radio" name="userroleselection"
                                         id="corporateSelectionRadio" required value="corporate">
                                     <label class="form-check-label" for="corporateSelectionRadio">
-                                        Join us corporate <br>
+                                        Join as corporate <br>
                                         <span>Looking to hire or employ the best talent.</span>
                                     </label>
                                 </div>
@@ -56,7 +56,7 @@
                                     <input class="form-check-input" type="radio" name="userroleselection"
                                         id="collegeSelectionRadio" required value="college">
                                     <label class="form-check-label" for="collegeSelectionRadio">
-                                        Join us University / College <br>
+                                        Join as University / College <br>
                                         <span>Looking to get notified of opportunities when they arise.</span>
                                     </label>
                                 </div>
@@ -67,7 +67,7 @@
                                     <input class="form-check-input" type="radio" name="userroleselection"
                                         id="userRoleSelection" required value="student">
                                     <label class="form-check-label" for="userRoleSelection">
-                                        Join us Student <br>
+                                        Join as Student <br>
                                         <span>Seeking access to internship / employment opportunities.</span>
                                     </label>
                                 </div>

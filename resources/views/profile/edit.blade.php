@@ -41,7 +41,7 @@
                                 <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action active" aria-current="true">My Profile</a>
                                 <a href="{{ route('applications.index') }}" class="list-group-item list-group-item-action">My Applications</a>
 
-                                <a href="" class="list-group-item list-group-item-action">My Jobs</a>
+                                <a href="{{ route('profile.jobs') }}" class="list-group-item list-group-item-action">My Jobs</a>
 
                                 <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-sign-out text-warning"></i> Logout</a>
 

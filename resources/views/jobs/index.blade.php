@@ -5,7 +5,7 @@
 @endsection
 
 @section('header_styles')
-    
+
 @endsection
 
 @section('content')
@@ -58,6 +58,7 @@
         </div>
     </div>
 @endsection
+
 
 @section('footer_scripts')
     <script src="{{ asset('assets/js/moment.min.js') }}"></script>

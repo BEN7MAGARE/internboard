@@ -117,7 +117,7 @@
                         $this.trigger("reset");
                         window.setTimeout(function() {
                             window.location.href = result.url;
-                        }, 5000)
+                        }, 1000)
                     } else {
                         showError(result.message, "#studentfeedbackfeedback");
                     }

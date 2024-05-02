@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Job;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\User_Skill;
@@ -20,6 +21,7 @@ class ProfileController extends Controller
         $this->middleware("auth");
         $this->profile = new Profile();
         $this->user = new User();
+        $this->job = new Job();
     }
     /**
      * Display the user's profile form.
@@ -29,6 +31,16 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+    }
+
+    function jobs()
+    {
+        if (auth()->user()->role === "corporate") {
+            $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->get();
+            return view('profile.jobs', compact('jobs'));
+        } else {
+            abort(405, "You are not authorised to access this resource");
+        }
     }
 
     /**
@@ -51,8 +63,8 @@ class ProfileController extends Controller
             'facebook' => ['string', 'nullable', 'max:255'],
             'instagram' => ['string', 'nullable', 'max:255'],
             'linkedin' => ['string', 'nullable', 'max:255'],
-            'level' => ['string','nullable'],
-            'years_of_experience' => ['string','nullable'],
+            'level' => ['string', 'nullable'],
+            'years_of_experience' => ['string', 'nullable'],
             // 'skills' => ['json']
         ]);
 
@@ -95,7 +107,7 @@ class ProfileController extends Controller
         }
 
         $skills = explode(',', $request->skills);
-// return $skills;
+        // return $skills;
         foreach ($skills as $value) {
             User_Skill::create([
                 'user_id' => $user->id,
@@ -127,9 +139,10 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    function password(Request $request) {
+    function password(Request $request)
+    {
         $validated = $request->validate([
-            'password'=>['required','min:8','confirmed'],
+            'password' => ['required', 'min:8', 'confirmed'],
         ]);
         $user = $this->user->fins(auth()->id());
         $user->update([

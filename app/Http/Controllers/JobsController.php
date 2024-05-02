@@ -32,12 +32,14 @@ class JobsController extends Controller
         return view('jobs.index', compact('jobs'));
     }
 
-    public function categories() {
+    public function categories()
+    {
         $categories = $this->category->latest()->get();
         return json_encode($categories);
     }
 
-    public function skills()  {
+    public function skills()
+    {
         $skills = $this->skill->get();
         return json_encode($skills);
     }
@@ -48,15 +50,16 @@ class JobsController extends Controller
     }
 
 
-    public function store(JobRequest $request) {
+    public function store(JobRequest $request)
+    {
         $validated = $request->validated();
         DB::beginTransaction();
-        $job = $this->job->create(['ref_no'=>strtoupper(Str::random(3)).strtotime(now())]+$validated);
+        $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
         foreach (explode(',', json_decode($validated["skills"], true)) as $value) {
-            DB::table('job_skill')->insert(['job_id'=>$job->id, 'skill_id'=>$value]);
+            DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
         }
         DB::commit();
-        return json_encode(['status'=>'success', 'message'=> 'Job post added successfully']);
+        return json_encode(['status' => 'success', 'message' => 'Job post added successfully']);
     }
 
     public function show(string $id)
@@ -65,14 +68,16 @@ class JobsController extends Controller
         return json_encode($job);
     }
 
-    public function jobs() {
+    public function jobs()
+    {
         $jobs = $this->job->latest()->get();
         return json_encode($jobs);
     }
 
-    public function apply($ref_no) {
-        $job = $this->job->where('ref_no', $ref_no)->orWhere('id',$ref_no)->with('corporate')->first();
-        $application = $this->application->where('job_id',$job->id)->where('user_id',auth()->id())->first();
+    public function apply($ref_no)
+    {
+        $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
+        $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
         $applied = false;
         if (!is_null($application)) {
             $applied = true;
@@ -80,28 +85,29 @@ class JobsController extends Controller
         return view('jobs.apply', compact('job', 'applied'));
     }
 
-    function applicationCreate(Request $request) {
+    function applicationCreate(Request $request)
+    {
         $validated = $request->validate([
-            'job_id' => ['required','exists:jobs,id'],
-            'reason' => ['required','string'],
-            'cover_letter' => ['required','max:1000'],
-            'curriculum_vitae' => ['nullable','max:500'],
+            'job_id' => ['required', 'exists:jobs,id'],
+            'reason' => ['required', 'string'],
+            'cover_letter' => ['required', 'max:1000'],
+            'curriculum_vitae' => ['nullable', 'max:2000'],
             'files' => ['nullable'],
         ]);
-        $application = $this->application->where('user_id',auth()->id())->where('job_id',$validated["job_id"])->first();
+        $application = $this->application->where('user_id', auth()->id())->where('job_id', $validated["job_id"])->first();
         if (!is_null($application)) {
-            return json_encode(['status'=>'success','message'=> "You have already applied for this job. Thank you"]);
+            return json_encode(['status' => 'success', 'message' => "You have already applied for this job. Thank you"]);
         }
         $job = $this->job->find($validated["job_id"]);
         $filename = "";
         if ($request->hasFile('curriculum_vitae')) {
-            $filename .= 'CV'.auth()->id() .$job->ref_no. strtotime(now()).'.'.$request->file('curriculum_vitae')->getClientOriginalExtension();
+            $filename .= 'CV' . auth()->id() . $job->ref_no . strtotime(now()) . '.' . $request->file('curriculum_vitae')->getClientOriginalExtension();
             $request->file('curriculum_vitae')->storeAs('applicant_resources/', $filename);
         }
         $fileNames = [];
         if (isset($request->files)) {
             foreach ($request->file('files') as $file) {
-                $fileName = auth()->id() .$job->ref_no. strtotime(now()).'.'.$file->getClientOriginalExtension(); // or any other desired file name
+                $fileName = auth()->id() . $job->ref_no . strtotime(now()) . '.' . $file->getClientOriginalExtension(); // or any other desired file name
                 $file->move('applicant_resources/', $fileName);
                 array_push($fileNames, $fileName);
             }
@@ -116,8 +122,10 @@ class JobsController extends Controller
         $application->files = json_encode($fileNames);
         $application->save();
 
-        return json_encode(['status'=>'success', 'message'=>'Job application saved successfully']);
+        return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
     }
+
+
 
     public function edit(string $id)
     {
@@ -135,5 +143,17 @@ class JobsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    function applications($job_id)
+    {
+        $job = $this->job->with('applications')->find($job_id);
+        // return $job->corporate_id;
+        // return auth()->user()->corporate_id;
+        if ($job->corporate_id ==auth()->user()->corporate_id) {
+            return view('profile.applicants', compact('job'));
+        } else {
+            abort(405,'You are not authorised to access this resource');
+        }
     }
 }
