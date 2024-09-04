@@ -18,52 +18,17 @@
             <div class="row">
                 <div class="col-xl-3 mb-4">
 
-                    <div class="card">
-
-                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <img src="assets/img/avatar.png" alt="Profile" class="rounded-circle">
-                            <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
-                            </h2>
-
-                            <h3>{{ auth()->user()->profile?->specialization }}</h3>
-
-                            <div class="social-links mt-2">
-                                <a href="{{ auth()->user()->twitter }}" class="twitter text-primary"><i
-                                        class="bi bi-twitter"></i></a>
-                                <a href="{{ auth()->user()->facebook }}" class="facebook text-primary"><i
-                                        class="bi bi-facebook"></i></a>
-                                <a href="{{ auth()->user()->instagram }}" class="instagram text-primary"><i
-                                        class="bi bi-instagram"></i></a>
-                                <a href="{{ auth()->user()->linkedin }}" class="linkedin text-primary"><i
-                                        class="bi bi-linkedin"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="card-footer bg-white">
-                            <div class="list-group">
-                                <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action"
-                                    aria-current="true">My Profile</a>
-                                <a href="{{ route('applications.index') }}"
-                                    class="list-group-item list-group-item-action">My Applications</a>
-
-                                <a href="{{ route('profile.jobs') }}"
-                                    class="list-group-item list-group-item-action active">My Jobs</a>
-
-                                <a href="#" class="list-group-item list-group-item-action"><i
-                                        class="fa fa-sign-out text-warning"></i> Logout</a>
-
-                            </div>
-                        </div>
-
-                    </div>
+                    @include('profile.partials.sidebarnav')
 
                 </div>
 
                 <div class="col-xl-9">
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-white d-flex justify-content-between">
                             <h4 class="card-title">My Jobs</h4>
+                            <a href="{{ route('jobs.create') }}" class="btn btn-primary btn-md"><i
+                                    class="fa fa-plus"></i>&nbsp;Add new job</a>
                         </div>
 
                         <div class="card-body pt-3">

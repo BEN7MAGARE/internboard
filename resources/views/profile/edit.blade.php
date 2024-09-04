@@ -22,8 +22,7 @@
 
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             <img src="assets/img/avatar.png" alt="Profile" class="rounded-circle">
-                            <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. '.auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' .auth()->user()->first_name . ' ' . auth()->user()->last_name  }}
-                            </h2>
+                            <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. '.auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' .auth()->user()->first_name . ' ' . auth()->user()->last_name  }}</h2>
 
                             <h3>{{ auth()->user()->profile?->specialization }}</h3>
 
@@ -39,6 +38,7 @@
                         <div class="card-footer bg-white">
                             <div class="list-group">
                                 <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action active" aria-current="true">My Profile</a>
+
                                 <a href="{{ route('applications.index') }}" class="list-group-item list-group-item-action">My Applications</a>
 
                                 <a href="{{ route('profile.jobs') }}" class="list-group-item list-group-item-action">My Jobs</a>

@@ -30,7 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/password/change', [ProfileController::class, 'password'])->name('password.change');
-    Route::get('profile-jobs', [ProfileController::class,'jobs'])->name('profile.jobs');
+    Route::get('profile-jobs', [ProfileController::class, 'jobs'])->name('profile.jobs');
+    Route::get('students', [ProfileController::class, 'students'])->name('profile.students');
+    Route::get('corporates', [ProfileController::class, 'corporates'])->name('profile.corporates');
+    Route::get('opportunities', [ProfileController::class, 'opportunities'])->name('profile.opportunities');
 });
 
 Route::view('contact', 'contact')->name('contact');
@@ -39,11 +42,11 @@ Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
 Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
-Route::get('job-applications/{job_id}',[JobsController::class,'applications'])->name('job.applications');
+Route::get('job-applications/{job_id}', [JobsController::class, 'applications'])->name('job.applications');
 Route::get('categories', [JobsController::class, 'categories']);
 
 Route::get('skills', [JobsController::class, 'skills'])->name('skils');
 
 Route::resource('applications', ApplicationsController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

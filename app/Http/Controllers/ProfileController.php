@@ -26,7 +26,7 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
         return view('profile.edit', [
             'user' => $request->user(),
@@ -39,7 +39,7 @@ class ProfileController extends Controller
             $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->get();
             return view('profile.jobs', compact('jobs'));
         } else {
-            abort(405, "You are not authorised to access this resource");
+            return redirect()->route('profile.edit');
         }
     }
 
@@ -92,7 +92,8 @@ class ProfileController extends Controller
                 'education_level' => $validated["education_level"],
                 'course' => $validated["course"],
                 'specialization' => $validated["specialization"],
-                'summary' => $validated["summary"], 'level' => $validated["level"],
+                'summary' => $validated["summary"],
+                'level' => $validated["level"],
                 'years_of_experience' => $validated["years_of_experience"],
             ]);
         } else {
@@ -152,5 +153,32 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login');
+    }
+
+    function students(): View
+    {
+        if (auth()->user()->role !== "admin") {
+            return redirect()->route('profile.edit');
+        }
+        $students = $this->user()->where('role', 'student')->paginate(10);
+        return view('profile.students', compact('students'));
+    }
+
+    function corporates(): View
+    {
+        if (auth()->user()->role !== "admin") {
+            return redirect()->route('profile.edit');
+        }
+        $corporates = $this->user()->where('role', 'corporate')->paginate(10);
+        return view('profile.corporates', compact('corporates'));
+    }
+
+    function opportunities(): View
+    {
+        if (auth()->user()->role !== "admin") {
+            return redirect()->route('profile.edit');
+        }
+        $opportunities = $this->job->latest()->paginate(10);
+        return view('profile.opportunities', compact('opportunities'));
     }
 }
