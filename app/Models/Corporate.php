@@ -16,4 +16,14 @@ class Corporate extends Model
     {
         return $this->hasMany(Job::class, 'corporate_id', 'id');
     }
+
+    /**
+     * Get all of the users for the Corporate
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'corporate_id', 'id');
+    }
 }

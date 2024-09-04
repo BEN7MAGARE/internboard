@@ -29,7 +29,40 @@
                         </div>
 
                         <div class="card-body pt-3">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <th>#</th>
+                                    <th>Ref</th>
+                                    <th>Type</th>
+                                    <th>Job Type</th>
+                                    <th>Experience</th>
+                                    <th>Location</th>
+                                    <th>Education</th>
+                                    <th>Title</th>
+                                    <th>Posted By</th>
+                                    <th>Action</th>
+                                </thead>
 
+                                <tbody>
+                                    @foreach ($opportunities as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->ref_no }}</td>
+                                            <td>{{ $item->type }}</td>
+                                            <td>{{ $item->job_type }}</td>
+                                            <td>{{ $item->experience_level }}</td>
+                                            <td>{{ $item->location }}</td>
+                                            <td>{{ $item->education_level }}</td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->user->first_name.' '.$item->user->last_name }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                                <tfoot class="text-end">{{ $opportunities->links() }}</tfoot>
+
+                            </table>
                         </div>
                     </div>
                 </div>

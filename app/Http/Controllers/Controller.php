@@ -17,4 +17,5 @@ class Controller extends BaseController
     protected $profile;
     protected $user;
     protected $college;
+    protected $corporate;
 }

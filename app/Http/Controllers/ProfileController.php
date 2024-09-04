@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Corporate;
 use App\Models\Job;
 use App\Models\Profile;
 use App\Models\User;
@@ -22,6 +23,7 @@ class ProfileController extends Controller
         $this->profile = new Profile();
         $this->user = new User();
         $this->job = new Job();
+        $this->corporate = new Corporate();
     }
     /**
      * Display the user's profile form.
@@ -155,30 +157,30 @@ class ProfileController extends Controller
         return redirect()->route('login');
     }
 
-    function students(): View
+    function students()
     {
         if (auth()->user()->role !== "admin") {
             return redirect()->route('profile.edit');
         }
-        $students = $this->user()->where('role', 'student')->paginate(10);
+        $students = $this->user->where('role', 'student')->with('college:id,name')->paginate(10);
         return view('profile.students', compact('students'));
     }
 
-    function corporates(): View
+    function corporates()
     {
         if (auth()->user()->role !== "admin") {
             return redirect()->route('profile.edit');
         }
-        $corporates = $this->user()->where('role', 'corporate')->paginate(10);
+        $corporates = $this->corporate->with('users:id,first_name,last_name')->paginate(10);
         return view('profile.corporates', compact('corporates'));
     }
 
-    function opportunities(): View
+    function opportunities()
     {
         if (auth()->user()->role !== "admin") {
             return redirect()->route('profile.edit');
         }
-        $opportunities = $this->job->latest()->paginate(10);
+        $opportunities = $this->job->latest()->with(['user:id,first_name,last_name','corporate:id,name','category:id,name'])->paginate(10);
         return view('profile.opportunities', compact('opportunities'));
     }
 }

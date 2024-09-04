@@ -3,12 +3,14 @@
     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
         @if (auth()->user()->image !== null && auth()->user()->image !== '')
-            <img src="{{ asset('assets/profilepictures/' . auth()->user()->image) }}" alt="Profile" class="rounded-circle">
+            <img src="{{ asset('assets/profilepictures/' . auth()->user()->image) }}" alt="Profile"
+                class="rounded-circle">
         @else
             <img src="{{ asset('assets/img/avatar.png') }}" alt="Profile" class="rounded-circle">
         @endif
 
-        <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}</h2>
+        <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+        </h2>
 
         <h3>{{ auth()->user()->profile?->specialization }}</h3>
 
@@ -21,36 +23,50 @@
 
     </div>
 
-    <div class="card-footer bg-white">
+    <div class="bg-white">
         <div class="list-group">
 
             @if (auth()->user()->role === 'student')
-                <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action"
-                    aria-current="true">My
-                    Profile</a>
-
-                <a href="{{ route('applications.index') }}" class="list-group-item list-group-item-action">My
-                    Applications</a>
+                <li class="list-group-item">
+                    <a href="{{ route('profile.edit') }}" class="list-group-item-action" aria-current="true">My
+                        Profile</a>
+                </li>
+                <li class="list-group-item {!! (Request::is('applications') ? 'active' : '') !!}">
+                    <a href="{{ route('applications.index') }}" class="list-group-item-action">My
+                        Applications</a>
+                </li>
             @endif
 
             @if (auth()->user()->role === 'corporate')
-                <a href="{{ route('profile.jobs') }}"
-                    class="list-group-item list-group-item-action {!! Request::url() === 'profile-jobs' ? 'active' : '' !!}">My Jobs</a>
+                <li class="list-group-item  {!! (Request::is('profile-jobs') ? 'active' : '') !!}">
+                    <a href="{{ route('profile.jobs') }}" class="list-group-item-action">My
+                        Jobs</a>
+                </li>
             @endif
 
             @if (auth()->user()->role === 'admin')
-                <a href="{{ route('profile.students') }}"
-                    class="list-group-item list-group-item-action {!! Request::url() === 'students' ? 'active' : '' !!}">Job Seekers</a>
 
-                <a href="{{ route('profile.corporates') }}"
-                    class="list-group-item list-group-item-action {!! Request::url() === 'corporates' ? 'active' : '' !!}">Employers/Corporates</a>
+                <li class="list-group-item {!! (Request::is('students') ? 'active' : '') !!}">
+                    <a href="{{ route('profile.students') }}"
+                        class="list-group-item-action">Job Seekers</a>
+                </li>
 
-                <a href="{{ route('profile.opportunities') }}"
-                    class="list-group-item list-group-item-action {!! Request::url() === 'opportunities' ? 'active' : '' !!}">Job Opportunities</a>
+                <li class="list-group-item {!! (Request::is('corporates') ? 'active' : '') !!}">
+                    <a href="{{ route('profile.corporates') }}"
+                        class=" list-group-item-action">Employers/Corporates</a>
+                </li>
+
+                <li class="list-group-item {!! (Request::is('opportunities') ? 'active' : '') !!}">
+                    <a href="{{ route('profile.opportunities') }}"
+                        class="list-group-item-action">Job Opportunities</a>
+                </li>
+
             @endif
 
-            <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-sign-out text-warning"></i>
-                Logout</a>
+            <li class="list-group-item">
+                <a href="#" class="list-group-item-action"><i class="fa fa-sign-out text-warning"></i>
+                    Logout</a>
+            </li>
 
         </div>
     </div>

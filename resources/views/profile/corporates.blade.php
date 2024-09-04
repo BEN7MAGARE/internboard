@@ -30,7 +30,32 @@
                         </div>
 
                         <div class="card-body pt-3">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Contact Person</th>
+                                    <th>Action</th>
+                                </thead>
 
+                                <tbody>
+                                    @foreach ($corporates as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td>{{ $item->address }}</td>
+                                            <td>{{ @$item->users[0]->first_name." ".@$item->users[0]->last_name }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot class="text-end">{{ $corporates->links() }}</tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>

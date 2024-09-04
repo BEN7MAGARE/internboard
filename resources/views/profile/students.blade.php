@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Profile @parent
+    Students @parent
 @endsection
 
 @section('header_styles')
@@ -26,11 +26,34 @@
 
                     <div class="card">
                         <div class="card-header bg-white">
-                            <h4 class="card-title">Corporates</h4>
+                            <h4 class="card-title">Job Seekers</h4>
                         </div>
 
                         <div class="card-body pt-3">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>College</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </thead>
 
+                                <tbody>
+                                    @foreach ($students as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->title." ".$item->first_name." ".$item->last_name }}</td>
+                                            <td>{{ $item->college->name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot class="text-end">{{ $students->links() }}</tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
