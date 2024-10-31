@@ -44,6 +44,17 @@
                 </li>
             @endif
 
+            @if (auth()->user()->role === 'college')
+
+                <li class="list-group-item  {!! (Request::is('college-dashboard') ? 'active' : '') !!}">
+                    <a href="{{ route('college.dashboard') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> Dashboard</a>
+                </li>
+
+                <li class="list-group-item  {!! (Request::is('college-students') ? 'active' : '') !!}">
+                    <a href="{{ route('college.students') }}" class="list-group-item-action"><i class="fa fa-users text-warning"></i> My Students</a>
+                </li>
+            @endif
+
             @if (auth()->user()->role === 'admin')
 
                 <li class="list-group-item {!! (Request::is('students') ? 'active' : '') !!}">

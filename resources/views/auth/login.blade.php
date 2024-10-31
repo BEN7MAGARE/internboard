@@ -17,7 +17,7 @@
 
                     <form action="{{ route('login') }}" method="post">
 
-                    @csrf
+                        @csrf
                         <div class="card-body">
 
                             <div class="row">
@@ -46,18 +46,18 @@
                         </div>
 
                         <div class="card-footer bg-white d-flex align-items-center justify-content-between p-2">
-                            @if (Route::has('password.request'))
-                                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-red-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                    href="{{ route('password.request') }}">
-                                    {{ __('Forgot your password?') }}
-                                </a>
-                            @endif
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
                         </div>
                     </form>
                     <hr>
-                    <div class="p-2">
-                        <p >Do not have Account? <a href="{{ route('getstarted') }}">Get Started</a></p>
+                    <div class="d-flex justify-content-between p-2">
+                        <p>Do not have Account? <a href="{{ route('getstarted') }}">Get Started</a></p>
+                        @if (Route::has('password.request'))
+                            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-red-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                href="{{ route('password.request') }}">
+                                {{ __('Forgot your password?') }}
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

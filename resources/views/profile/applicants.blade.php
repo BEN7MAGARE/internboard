@@ -7,9 +7,7 @@
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-    <script>
-        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-    </script>
+   
 @endsection
 
 @section('content')

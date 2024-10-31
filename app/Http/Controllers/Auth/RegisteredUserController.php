@@ -117,9 +117,9 @@ class RegisteredUserController extends Controller
 
     public function institutioncreate(Request $request) {
         DB::beginTransaction();
-        $corporate = College::create($request->company);
+        $college = College::create($request->company);
         $user = User::create([
-            'corporate_id' => $corporate->id,
+            'college_id' => $college->id,
             'first_name' => $request->user["first_name"],
             'last_name' => $request->user["last_name"],
             'email' => $request->user["email"],
