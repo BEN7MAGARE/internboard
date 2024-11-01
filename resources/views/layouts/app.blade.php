@@ -90,9 +90,9 @@
                         <li class="dropdown"><a href="#"><span>{{ auth()->user()->first_name }}</span> <i
                                     class="bi bi-chevron-down dropdown-indicator"></i></a>
                             <ul>
-                                @if (auth()->user()->role === 'college')
+                                {{-- @if (auth()->user()->role === 'college')
                                     <li><a href="{{ route('dashboard') }}">My Profile</a></li>
-                                @endif
+                                @endif --}}
                                 <li><a href="{{ route('profile.edit') }}">My Profile</a></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -228,6 +228,7 @@
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
+    <script src="{{ asset('assets/js/functions.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @yield('footer_scripts')
 </body>

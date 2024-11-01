@@ -7,7 +7,6 @@
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-    
 @endsection
 
 @section('content')
@@ -15,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 mb-4">
-                   @include('profile.partials.sidebarnav')
+                    @include('profile.partials.sidebarnav')
                 </div>
 
                 <div class="col-xl-9">
@@ -38,64 +37,73 @@
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">Summary</h5>
                                     <p class="small">{{ auth()->user()->profile?->summary }}</p>
 
                                     <h5 class="card-title">Profile Details</h5>
-
                                     <div class="row">
-                                        <div class="col-lg-2 col-md-4 label ">Full Name</div>
-                                        <div class="col-lg-10 col-md-10">
-                                            {{ auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+                                        <div class="col-md-7">
+                                            <div class="mt-2">
+                                                <table class="table table-hover">
+                                                    <tr>
+                                                        <td><b>Full Name</b></td>
+                                                        <td>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Education</b></td>
+                                                        <td>{{ auth()->user()->profile?->education_level . ' ' . auth()->user()->profile?->course }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Specialization</b></td>
+                                                        <td>{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . ' with ' . auth()->user()->profile?->years_of_experience }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Address</b></td>
+                                                        <td>{{ auth()->user()->address }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Phone</b></td>
+                                                        <td>{{ auth()->user()->phone }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Email</b></td>
+                                                        <td>{{ auth()->user()->email }}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="mt-2 text-center">
+                                                <a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#updateProdileDetailsModal"
+                                                    class="btn btn-primary">Update Details</a>
+                                            </div>
                                         </div>
+
+                                        <div class="col-md-5">
+
+                                        </div>
+                                        
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-3 label">Education</div>
-                                        <div class="col-lg-10 col-md-8">{{ auth()->user()->profile?->education_level.' '.auth()->user()->profile?->course }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-4 label">Job</div>
-                                        <div class="col-lg-10 col-md-6">{{ auth()->user()->profile?->level.' '.auth()->user()->profile?->specialization.' with '.auth()->user()->profile?->years_of_experience." years of experience. " }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-4 label">Address</div>
-                                        <div class="col-lg-10 col-md-8">{{ auth()->user()->address }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-4 label">Phone</div>
-                                        <div class="col-lg-10 col-md-8">{{ auth()->user()->phone }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-2 col-md-4 label">Email</div>
-                                        <div class="col-lg-10 col-md-8">{{ auth()->user()->email }}</div>
-                                    </div>
-
-                                    <div class="mt-2 text-center">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateProdileDetailsModal"
-                                            class="btn btn-primary">Update Details</a>
-                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
                                     <form action="{{ route('password.change') }}" method="post">
-                                    @csrf
+                                        @csrf
 
                                         <div class="row mb-3">
                                             <label for="password" class="col-md-4 col-lg-3 col-form-label">New
                                                 Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="password">
+                                                <input name="password" type="password" class="form-control" id="password">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="passwordConfirmation" class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                            <label for="passwordConfirmation"
+                                                class="col-md-4 col-lg-3 col-form-label">Re-enter
                                                 New
                                                 Password</label>
                                             <div class="col-md-8 col-lg-9">
@@ -127,7 +135,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <form action="{{ route('profile.update') }}" id="profileUpdateForm">
 
@@ -220,9 +229,9 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="yearsOfExperience">Years of experience</label>
                                 <div class="input-group">
-                                    <input name="years_of_experience" value="{{ auth()->user()->profile?->years_of_experience }}"
-                                        type="text" class="form-control" id="yearsOfExperience"
-                                        placeholder="eg Web Designer">
+                                    <input name="years_of_experience"
+                                        value="{{ auth()->user()->profile?->years_of_experience }}" type="text"
+                                        class="form-control" id="yearsOfExperience" placeholder="eg Web Designer">
                                 </div>
                             </div>
 
@@ -247,8 +256,8 @@
                                 <label for="skills">Skills</label>
 
                                 <div class="form-group">
-                                    <select name="skills" id="skillsSelect" class="form-control form-control-lg" multiple
-                                        style="width:100%;">
+                                    <select name="skills" id="skillsSelect" class="form-control form-control-lg"
+                                        multiple style="width:100%;">
 
                                     </select>
                                 </div>

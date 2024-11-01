@@ -28,55 +28,59 @@
 
             @if (auth()->user()->role === 'student')
                 <li class="list-group-item">
-                    <a href="{{ route('profile.edit') }}" class="list-group-item-action" aria-current="true">My
+                    <a href="{{ route('profile.edit') }}" class="list-group-item-action" aria-current="true"><i class="bi bi-grid text-warning"></i> My
                         Profile</a>
                 </li>
-                <li class="list-group-item {!! (Request::is('applications') ? 'active' : '') !!}">
-                    <a href="{{ route('applications.index') }}" class="list-group-item-action">My
+                <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
+                    <a href="{{ route('applications.index') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> My
                         Applications</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'corporate')
-                <li class="list-group-item  {!! (Request::is('profile-jobs') ? 'active' : '') !!}">
-                    <a href="{{ route('profile.jobs') }}" class="list-group-item-action">My
+                <li class="list-group-item  {!! Request::is('profile-jobs') ? 'active' : '' !!}">
+                    <a href="{{ route('profile.jobs') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> My
                         Jobs</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'college')
-
-                <li class="list-group-item  {!! (Request::is('college-dashboard') ? 'active' : '') !!}">
+                <li class="list-group-item  {!! Request::is('college-dashboard') ? 'active' : '' !!}">
                     <a href="{{ route('college.dashboard') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> Dashboard</a>
                 </li>
 
-                <li class="list-group-item  {!! (Request::is('college-students') ? 'active' : '') !!}">
-                    <a href="{{ route('college.students') }}" class="list-group-item-action"><i class="fa fa-users text-warning"></i> My Students</a>
+                <li class="list-group-item  {!! Request::is('college-students') ? 'active' : '' !!}">
+                    <a href="{{ route('college.students') }}" class="list-group-item-action"><i
+                            class="fa fa-users text-warning"></i> My Students</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'admin')
-
-                <li class="list-group-item {!! (Request::is('students') ? 'active' : '') !!}">
-                    <a href="{{ route('profile.students') }}"
-                        class="list-group-item-action">Job Seekers</a>
+                <li class="list-group-item {!! Request::is('students') ? 'active' : '' !!}">
+                    <a href="{{ route('profile.students') }}" class="list-group-item-action">Job Seekers</a>
                 </li>
 
-                <li class="list-group-item {!! (Request::is('corporates') ? 'active' : '') !!}">
+                <li class="list-group-item {!! Request::is('corporates') ? 'active' : '' !!}">
                     <a href="{{ route('profile.corporates') }}"
                         class=" list-group-item-action">Employers/Corporates</a>
                 </li>
 
-                <li class="list-group-item {!! (Request::is('opportunities') ? 'active' : '') !!}">
-                    <a href="{{ route('profile.opportunities') }}"
-                        class="list-group-item-action">Job Opportunities</a>
+                <li class="list-group-item {!! Request::is('opportunities') ? 'active' : '' !!}">
+                    <a href="{{ route('profile.opportunities') }}" class="list-group-item-action">Job Opportunities</a>
                 </li>
-
             @endif
 
             <li class="list-group-item">
-                <a href="#" class="list-group-item-action"><i class="fa fa-sign-out text-warning"></i>
-                    Logout</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <a href="route('logout')" class="list-group-item-action"
+                        onclick="event.preventDefault();
+                                this.closest('form').submit();"><i
+                            class="fa fa-sign-out text-warning"></i>
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
             </li>
 
         </div>

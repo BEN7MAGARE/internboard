@@ -1,9 +1,5 @@
 (function () {
-    function showSpiner(target) {
-        $(target).html(
-            '<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
-        );
-    }
+    
 
     function getCategories() {
         $.getJSON("/categories", function (categories) {

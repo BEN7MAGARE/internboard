@@ -53,4 +53,5 @@ Route::get('college-students', [ApplicationsController::class, 'collegeStudents'
 Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoolStudentApplications'])->name('college.applicants');
 Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
 
+
 require __DIR__ . '/auth.php';

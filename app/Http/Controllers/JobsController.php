@@ -76,13 +76,17 @@ class JobsController extends Controller
 
     public function apply($ref_no)
     {
-        $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
-        $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
-        $applied = false;
-        if (!is_null($application)) {
-            $applied = true;
+        if (auth()->user()->role === "student") {
+            $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
+            $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
+            $applied = false;
+            if (!is_null($application)) {
+                $applied = true;
+            }
+            return view('jobs.apply', compact('job', 'applied'));
+        } else {
+            return redirect()->back()->with('errors', 'You are not authorised to access this resource.');
         }
-        return view('jobs.apply', compact('job', 'applied'));
     }
 
     function applicationCreate(Request $request)
@@ -150,10 +154,10 @@ class JobsController extends Controller
         $job = $this->job->with('applications')->find($job_id);
         // return $job->corporate_id;
         // return auth()->user()->corporate_id;
-        if ($job->corporate_id ==auth()->user()->corporate_id) {
+        if ($job->corporate_id == auth()->user()->corporate_id) {
             return view('profile.applicants', compact('job'));
         } else {
-            abort(405,'You are not authorised to access this resource');
+            abort(405, 'You are not authorised to access this resource');
         }
     }
 }

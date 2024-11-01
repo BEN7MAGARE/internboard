@@ -99,11 +99,40 @@
                         </div>
 
                     </div>
+                    <div class="row mt-4">
+                        <h4>Latest Opportunities</h4>
+                        {{-- <div class="swiper"> --}}
+                        <div class="row" id="latestJobsSection"></div>
+                        {{-- <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-scrollbar"></div> --}}
+                        {{-- </div> --}}
+                    </div>
                 </div>
 
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="jobDetailsModalToggle" aria-hidden="true" aria-labelledby="jobDetailsModalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="jobModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="jobDetailsSection">
+
+                </div>
+
+                <div class="modal-footer" id="jobActionSection">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('footer_scripts')
