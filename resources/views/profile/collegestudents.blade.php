@@ -25,35 +25,40 @@
                         <div class="card-header bg-white">
                             <h4 class="card-title">Our Students</h4>
                         </div>
-
-                        <div class="row">
-                            <!-- Example applicant card -->
-                            <div class="col-md-6 mb-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">John Doe</h5>
-                                        <p class="card-text">
-                                            <strong>Applied for:</strong> Software Developer<br>
-                                            <strong>Company:</strong> Tech Solutions Inc.
-                                        </p>
-                                        <button type="button" class="btn btn-primary">View Details</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Repeat the card for each applicant -->
-                            <div class="col-md-6 mb-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Jane Smith</h5>
-                                        <p class="card-text">
-                                            <strong>Applied for:</strong> Data Analyst<br>
-                                            <strong>Company:</strong> Data Insights LLC
-                                        </p>
-                                        <button type="button" class="btn btn-primary">View Details</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Qualification</th>
+                                    <th>Level</th>
+                                    <th>Experience</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($students as $item)
+                                        @php
+                                            $education = json_decode($item->profile?->education);
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $item->first_name . ' ' . $item->last_name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            @if (!is_null($education))
+                                                <td>{{ $education[0]->course }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                            <td>{{ $item->profile?->level }}</td>
+                                            <td>{{ $item->profile?->years_of_experience.' yrs' }}</td>
+                                            <td><a href="{{ route('student.details', $item->id) }}" target="_blank"
+                                                    class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> View</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

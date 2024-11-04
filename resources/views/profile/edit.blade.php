@@ -57,9 +57,14 @@
                                                 @if (auth()->user()->role === 'student')
                                                     <tr>
                                                         <td><b>Education</b></td>
-                                                        <td>
-                                                            {{ $education[0]->level . ' in ' . $education[0]->course }}
-                                                        </td>
+                                                        @if (!is_null($education) && !empty($education))
+                                                            <td>
+                                                                {{ $education[0]?->level . ' in ' . $education[0]?->course }}
+                                                            </td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
                                                     </tr>
                                                     <tr>
                                                         <td><b>Specialization</b></td>
@@ -85,8 +90,8 @@
 
                                         @if (auth()->user()->role === 'student')
                                             <div class="col-md-6">
-                                                <h5 class="text-info">Work Experience</h5>
-                                                @if (!empty($jobs))
+                                                @if (!empty($jobs) && !is_null($jobs))
+                                                    <h5 class="text-info">Work Experience</h5>
                                                     @foreach ($jobs as $job)
                                                         <div class="card alert alert-primary">
                                                             <div class="card-body">
@@ -104,7 +109,7 @@
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
-                                                @if (!empty($education))
+                                                @if (!empty($education) && !is_null($education))
                                                     <h5 class="text-info">Education Background</h5>
                                                     @foreach ($education as $item)
                                                         <div class="card alert alert-warning">
@@ -211,11 +216,31 @@
                                 <div class="input-group">
                                     <select name="title" class="form-select" id="studentTitle">
                                         <option value="">Select One</option>
-                                        <option value="Miss">Miss</option>
-                                        <option value="Mrs">Mrs</option>
-                                        <option value="Mr">Mr</option>
-                                        <option value="Dr">Dr</option>
-                                        <option value="Pst">Pst</option>
+                                        @if (auth()->user()->title == 'Miss')
+                                            <option value="Miss" selected>Miss</option>
+                                        @else
+                                            <option value="Miss">Miss</option>
+                                        @endif
+                                        @if (auth()->user()->title == 'Mrs')
+                                            <option value="Mrs" selected>Mrs</option>
+                                        @else
+                                            <option value="Mrs">Mrs</option>
+                                        @endif
+                                        @if (auth()->user()->title == 'Mr')
+                                            <option value="Mr" selected>Mr</option>
+                                        @else
+                                            <option value="Mr">Mr</option>
+                                        @endif
+                                        @if (auth()->user()->title == 'Dr')
+                                            <option value="Dr" selected>Dr</option>
+                                        @else
+                                            <option value="Dr">Dr</option>
+                                        @endif
+                                        @if (auth()->user()->title == 'Pst')
+                                            <option value="Pst" selected>Pst</option>
+                                        @else
+                                            <option value="Pst">Pst</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -340,7 +365,7 @@
 
                             <div class="alert alert-info" id="jobsListSection">
 
-                                @if (!empty($jobs))
+                                @if (!empty($jobs) && !is_null($jobs))
                                     @foreach ($jobs as $item)
                                         <div class="jobExperience row">
                                             <div class="col-md-4">
@@ -419,7 +444,7 @@
 
                             <div class="alert alert-info" id="educationListSection">
 
-                                @if (!empty($education))
+                                @if (!empty($education) && !is_null($education))
                                     @foreach ($education as $item)
                                         <div class="educationExperience row  p-2">
                                             <div class="col-md-4">
@@ -524,13 +549,13 @@
 
     <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="financeModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title">
                         <h4 class="text-black">Profile Details</h4>
                     </div>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -541,42 +566,50 @@
                         @csrf
                         <input type="hidden" name="user_id" id="userId" value="{{ auth()->id() }}">
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label>First Name *</label>
                             <input value="{{ $user->first_name }}" type="text" name="first_name"
                                 class="form-control" id="firstName">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label>Last Name *</label>
                             <input value="{{ $user->last_name }}" type="text" name="last_name" class="form-control"
                                 id="lastName">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label>Phone *</label>
                             <input value="{{ $user->phone }}" type="text" name="phone" class="form-control"
                                 id="userphone">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label>Email *</label>
-                            <input value="{{ $user->email }}" type="text" name="email" class="form-control"
+                            <input value="{{ $user->email }}" type="email" name="email" class="form-control"
                                 id="useremail">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-2">
+                            <label>Address *</label>
+                            <input value="{{ $user->address }}" type="text" name="address" class="form-control"
+                                id="userAddress">
+                        </div>
+
+                        <div class="form-group mb-2">
                             <label>Profile Photo / Logo </label><br>
                             <div class="input-group">
-                                <input type="file" name="profile" id="profilePhoto">
+                                <input type="file" class="form-control" name="profile" id="userProfilePhoto">
                             </div>
                         </div>
+
                         <div id="userProfileFeedback"></div>
-                        <div class="form-group">
-                            <button class='btn btn-success btn-md' type="submit"><i class="fa fa-save fa-lg fa-fw"></i>
+
+                        <div class="form-group text-end">
+                            <button class='btn btn-primary btn-md' type="submit"><i class="fa fa-save fa-lg fa-fw"></i>
                                 Save
                             </button>
-                            <button class='btn btn-outline-warning btn-md'><i class="fa fa-broom fa-lg fa-fw"></i>
+                            <button class='btn btn-outline-warning btn-md' type="reset"><i class="fa fa-broom fa-lg fa-fw"></i>
                                 Clear Fields</button>
                         </div>
                     </form>

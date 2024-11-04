@@ -22,11 +22,11 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
+            'title' => ['nullable', 'string'],
             'education' => ['nullable', 'string'],
             'work' => ['nullable', 'string'],
-            'specialization' => ['required', 'string'],
-            'summary' => ['required', 'string'],
+            'specialization' => ['nullable', 'string'],
+            'summary' => ['nullable', 'string'],
             'first_name' => ['string', 'nullable', ''],
             'last_name' => ['string', 'nullable', ''],
             'address' => ['string', 'nullable'],

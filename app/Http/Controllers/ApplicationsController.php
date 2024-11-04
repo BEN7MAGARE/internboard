@@ -42,7 +42,7 @@ class ApplicationsController extends Controller
     public function collegeStudents()
     {
         if (auth()->user()->role === "college") {
-            $students = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->paginate(10);
+            $students = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->with('profile')->paginate(10);
             return view('profile.collegestudents', compact('students'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
@@ -84,43 +84,10 @@ class ApplicationsController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function studentDetails($id)
     {
-        //
+        $student = $this->user->with('profile')->find($id);
+        return view('profile.student',compact('student'));
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 }

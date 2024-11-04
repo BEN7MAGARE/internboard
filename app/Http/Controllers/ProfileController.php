@@ -57,40 +57,44 @@ class ProfileController extends Controller
         $image = $user->image;
         if ($request->hasFile("image")) {
             $fileName = 'pr' . strtotime(now()) . auth()->id() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move('profiles/', $fileName);
             if (Storage::disk('public')->exists('profilepictures/' . $user->image)) {
                 Storage::disk('public')->delete('profilepictures/' . $user->image);
             }
+            $request->file('image')->move('profilepictures/', $fileName);
             $image = $fileName;
+        } else {
+            return "Halleluiah";
         }
         $user->update($validated + ['image' => $image]);
-        if (is_null($user->profile)) {
-            $this->profile->create([
-                'user_id' => $user->id,
-                'level' => $validated['level'],
-                'education' => $validated["education"],
-                'work' => $validated["work"],
-                'specialization' => $validated["specialization"],
-                'summary' => $validated["summary"],
-                'years_of_experience' => $validated["years_of_experience"],
-            ]);
-        } else {
-            $user->profile->update([
-                'education' => $validated["education"],
-                'work' => $validated["work"],
-                'level' => $validated['level'],
-                'specialization' => $validated["specialization"],
-                'summary' => $validated["summary"],
-                'level' => $validated["level"],
-                'years_of_experience' => $validated["years_of_experience"],
-            ]);
-        }
-        $skills = explode(',', $request->skills);
-        foreach ($skills as $value) {
-            User_Skill::create([
-                'user_id' => $user->id,
-                'skill_id' => $value,
-            ]);
+        if (auth()->user()->role == "student") {
+            if (is_null($user->profile)) {
+                $this->profile->create([
+                    'user_id' => $user->id,
+                    'level' => $validated['level'],
+                    'education' => $validated["education"],
+                    'work' => $validated["work"],
+                    'specialization' => $validated["specialization"],
+                    'summary' => $validated["summary"],
+                    'years_of_experience' => $validated["years_of_experience"],
+                ]);
+            } else {
+                $user->profile->update([
+                    'education' => $validated["education"],
+                    'work' => $validated["work"],
+                    'level' => $validated['level'],
+                    'specialization' => $validated["specialization"],
+                    'summary' => $validated["summary"],
+                    'level' => $validated["level"],
+                    'years_of_experience' => $validated["years_of_experience"],
+                ]);
+            }
+            $skills = explode(',', $request->skills);
+            foreach ($skills as $value) {
+                User_Skill::create([
+                    'user_id' => $user->id,
+                    'skill_id' => $value,
+                ]);
+            }
         }
         return json_encode(['status' => 'success', 'message' => 'Profile information updated successfully.']);
     }

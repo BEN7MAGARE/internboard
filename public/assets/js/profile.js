@@ -103,7 +103,8 @@
         userId = $('#userId'),
         userphone = $('#userphone'),
         useremail = $('#useremail'),
-        profilePhoto = $('#profilePhoto')[0];
+        userAddress = $('#userAddress'),
+        profilePhoto = $('#userProfilePhoto')[0];
 
 
 
@@ -146,7 +147,7 @@
     Linkedin.on("change", function () {
         ProfileInformation.setItem("linkedin", $(this).val());
     });
-    
+
     yearsOfExperience.on("change", function () {
         ProfileInformation.setItem("years_of_experience", $(this).val());
     });
@@ -180,7 +181,6 @@
 
     jobAddToggle.on('click', function (event) {
         event.preventDefault();
-        console.log('I have been clicked');
         const data = {
             title: jobTittle.val(),
             company: jobCompanyName.val(),
@@ -219,7 +219,6 @@
 
     educationAddToggle.on('click', function (event) {
         event.preventDefault();
-        console.log('Halleluiah');
         const data = {
             course: educationCourse.val(),
             institution: educationInstitution.val(),
@@ -348,15 +347,14 @@
         data.append('level', jobLevel.val());
 
         showSpiner("#profileUpdateFeedback");
-        // for (var pair of data.entries()) {
-        //     console.log(pair[0] + ": " + pair[1]);
-        // }
+        for (var pair of data.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+        }
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
             },
         });
-
         $.ajax({
             method: "POST",
             url: "/profile",
@@ -393,15 +391,23 @@
         });
     });
 
+
+
     userUpdateForm.on('submit', function (event) {
         event.preventDefault();
-        const data = new FormData();
+        const data = new FormData(), $this = $(this);
         data.append('user_id', userId.val());
         data.append('first_name', firstName.val());
         data.append('last_name', lastName.val());
         data.append('phone', userphone.val());
         data.append('email', useremail.val());
+        data.append('address', userAddress.val());
         data.append('image', profilePhoto.files[0]);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+            },
+        });
         $.ajax({
             method: "POST",
             url: "/profile",

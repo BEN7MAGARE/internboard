@@ -3,7 +3,7 @@
     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
         @if (auth()->user()->image !== null && auth()->user()->image !== '')
-            <img src="{{ asset('assets/profilepictures/' . auth()->user()->image) }}" alt="Profile"
+            <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="Profile"
                 class="rounded-circle">
         @else
             <img src="{{ asset('assets/img/avatar.png') }}" alt="Profile" class="rounded-circle">
@@ -26,11 +26,11 @@
     <div class="bg-white">
         <div class="list-group">
 
-            @if (auth()->user()->role === 'student')
-                <li class="list-group-item">
+                <li class="list-group-item {!! Request::is('profile') ? 'active' : '' !!}">
                     <a href="{{ route('profile.edit') }}" class="list-group-item-action" aria-current="true"><i class="bi bi-grid text-warning"></i> My
                         Profile</a>
                 </li>
+            @if (auth()->user()->role === 'student')
                 <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
                     <a href="{{ route('applications.index') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> My
                         Applications</a>

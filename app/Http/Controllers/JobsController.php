@@ -129,29 +129,9 @@ class JobsController extends Controller
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
     }
 
-
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
     function applications($job_id)
     {
-        $job = $this->job->with('applications')->find($job_id);
+        $job = $this->job->with('applications.applicant.profile')->find($job_id);
         // return $job->corporate_id;
         // return auth()->user()->corporate_id;
         if ($job->corporate_id == auth()->user()->corporate_id) {

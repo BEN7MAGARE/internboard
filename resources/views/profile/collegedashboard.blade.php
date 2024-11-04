@@ -14,9 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 mb-4">
-
                     @include('profile.partials.sidebarnav')
-
                 </div>
 
                 <div class="col-xl-9">
@@ -28,7 +26,6 @@
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0">
                                                 <i class="bi bi-people-fill text-secondary fs-2"></i>
-                                                <!-- Bootstrap Icon -->
                                             </div>
                                             <div class="ms-3">
                                                 <h6 class="card-title mb-0">Total Students</h6>
@@ -99,16 +96,12 @@
                         </div>
 
                     </div>
-                    <div class="row mt-4">
+                    {{-- <div class="row mt-4">
                         <h4>Latest Opportunities</h4>
-                        {{-- <div class="swiper"> --}}
-                        <div class="row" id="latestJobsSection"></div>
-                        {{-- <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-scrollbar"></div> --}}
-                        {{-- </div> --}}
-                    </div>
+                        <div class="swiper">
+                            <div class="row" id="latestJobsSection"></div>
+                        </div>
+                    </div> --}}
                 </div>
 
             </div>

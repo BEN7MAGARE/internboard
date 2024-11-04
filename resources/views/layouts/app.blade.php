@@ -118,7 +118,7 @@
 
     @yield('content')
 
-    <section id="clients" class="clients">
+    {{-- <section id="clients" class="clients">
         <div class="container" data-aos="zoom-out">
 
             <h3 class="mb-2"><b>Partners</b></h3>
@@ -140,7 +140,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
