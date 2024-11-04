@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Corporate;
 use App\Models\Job;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -48,76 +50,48 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
-        $validated = request()->validate([
-            'title' => ['required', 'string'],
-            'education_level' => ['required', 'string'],
-            'course' => ['required', 'string'],
-            'specialization' => ['required', 'string'],
-            'summary' => ['required', 'string'],
-            'first_name' => ['string', 'nullable', ''],
-            'last_name' => ['string', 'nullable', ''],
-            'address' => ['string', 'nullable'],
-            'phone' => ['string', 'nullable', 'max:16', 'unique:users,phone,' . auth()->id()],
-            'email' => ['string', 'required', 'unique:users,email,' . auth()->id()],
-            'twitter' => ['string', 'nullable', 'max:255'],
-            'facebook' => ['string', 'nullable', 'max:255'],
-            'instagram' => ['string', 'nullable', 'max:255'],
-            'linkedin' => ['string', 'nullable', 'max:255'],
-            'level' => ['string', 'nullable'],
-            'years_of_experience' => ['string', 'nullable'],
-            // 'skills' => ['json']
-        ]);
-
+        $validated = $request->validated();
         $user = User::find(auth()->id());
-        $user->title = $validated['title'];
-        $user->first_name = $validated['first_name'];
-        $user->last_name = $validated["last_name"];
-        $user->address = $validated["address"];
-        $user->phone = $validated["phone"];
-        $user->email = $validated["email"];
-        $user->twitter = $validated["twitter"];
-        $user->facebook = $validated["facebook"];
-        $user->instagram = $validated["instagram"];
-        $user->linkedin = $validated["linkedin"];
-
+        $image = $user->image;
         if ($request->hasFile("image")) {
             $fileName = 'pr' . strtotime(now()) . auth()->id() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move('profiles/', $fileName);
-            $user->image = $fileName;
+            if (Storage::disk('public')->exists('profilepictures/' . $user->image)) {
+                Storage::disk('public')->delete('profilepictures/' . $user->image);
+            }
+            $image = $fileName;
         }
-        $user->update();
+        $user->update($validated + ['image' => $image]);
         if (is_null($user->profile)) {
             $this->profile->create([
                 'user_id' => $user->id,
-                'education_level' => $validated["education_level"],
-                'course' => $validated["course"],
+                'level' => $validated['level'],
+                'education' => $validated["education"],
+                'work' => $validated["work"],
                 'specialization' => $validated["specialization"],
                 'summary' => $validated["summary"],
-                'level' => $validated["level"],
                 'years_of_experience' => $validated["years_of_experience"],
             ]);
         } else {
             $user->profile->update([
-                'education_level' => $validated["education_level"],
-                'course' => $validated["course"],
+                'education' => $validated["education"],
+                'work' => $validated["work"],
+                'level' => $validated['level'],
                 'specialization' => $validated["specialization"],
                 'summary' => $validated["summary"],
                 'level' => $validated["level"],
                 'years_of_experience' => $validated["years_of_experience"],
             ]);
         }
-
         $skills = explode(',', $request->skills);
-        // return $skills;
         foreach ($skills as $value) {
             User_Skill::create([
                 'user_id' => $user->id,
                 'skill_id' => $value,
             ]);
         }
-
         return json_encode(['status' => 'success', 'message' => 'Profile information updated successfully.']);
     }
 
@@ -129,16 +103,11 @@ class ProfileController extends Controller
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
-
         $user = $request->user();
-
         Auth::logout();
-
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return Redirect::to('/');
     }
 
@@ -180,7 +149,7 @@ class ProfileController extends Controller
         if (auth()->user()->role !== "admin") {
             return redirect()->route('profile.edit');
         }
-        $opportunities = $this->job->latest()->with(['user:id,first_name,last_name','corporate:id,name','category:id,name'])->paginate(10);
+        $opportunities = $this->job->latest()->with(['user:id,first_name,last_name', 'corporate:id,name', 'category:id,name'])->paginate(10);
         return view('profile.opportunities', compact('opportunities'));
     }
 }

@@ -21,7 +21,6 @@
                         Opportunities while in college and beyond...
                     </p>
 
-
                     <div class="d-flex justify-content-center justify-content-lg-start">
 
                         <a href="{{ route('getstarted') }}" class="btn-get-started">Get Started</a>
@@ -96,30 +95,7 @@
 
     <main id="main">
 
-        {{-- <section id="about" class="about">
-            <div class="container" data-aos="fade-up">
-
-                <div class="row gy-4">
-                    <div class="col-lg-6">
-                        <h3>The Platform</h3>
-                        <img src="assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="content ps-0 ps-lg-5">
-                            <p style="width: 100%;">
-
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check-circle-fill"></i> </li>
-                                <li><i class="bi bi-check-circle-fill"></i> </li>
-                                <li><i class="bi bi-check-circle-fill"></i> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
+        
 
         <section id="services" class="services sections-bg">
             <div class="container" data-aos="fade-up">

@@ -1540,6 +1540,16 @@ section {
     padding: 40px 0 0 0;
 }
 
+.hero:before {
+    content: "";
+    background: rgba(255, 50, 90, 0.5);
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
 @media (min-width: 1365px) {
     .hero {
         background-attachment: fixed;
@@ -2331,4 +2341,28 @@ section {
     font-weight: 700;
     margin: 0;
     padding: 0;
+}
+
+.error-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.error-list li {
+    position: relative;
+    padding-left: 20px;
+    color: #d9534f;
+    /* Bootstrap danger color */
+    margin-bottom: 5px;
+}
+
+.error-list li::before {
+    content: "✖";
+    /* Unicode character for "X" */
+    position: absolute;
+    left: 0;
+    color: #d9534f;
+    /* Same color as the text for consistency */
+    /* font-weight: bold; */
 }

@@ -56,10 +56,26 @@
     const profileUpdateForm = $("#profileUpdateForm"),
         firstName = $("#firstName"),
         lastName = $("#lastName"),
+        studentTitle = $('#studentTitle'),
+        studentFirstName = $('#studentFirstName'),
+        studentLastName = $('#studentLastName'),
         title = $("#title"),
-        educationLevel = $("#educationLevel"),
-        course = $("#course"),
+        jobTittle = $('#jobTittle'),
+        jobCompanyName = $('#jobCompanyName'),
+        jobStartDate = $('#jobStartDate'),
+        jobEndDate = $('#jobEndDate'),
+        jobAddToggle = $('#jobAddToggle'),
+        jobsListSection = $('#jobsListSection'),
+
+        educationCourse = $('#educationCourse'),
+        educationInstitution = $('#educationInstitution'),
+        educationLevel = $('#educationLevel'),
+        educationStartDate = $('#educationStartDate'),
+        educationEndDate = $('#educationEndDate'),
+        educationAddToggle = $('#educationAddToggle'),
+        educationListSection = $('#educationListSection'),
         specialization = $("#specialization"),
+
         summary = $("#summary"),
         Address = $("#Address"),
         Phone = $("#Phone"),
@@ -68,11 +84,28 @@
         Facebook = $("#Facebook"),
         Instagram = $("#Instagram"),
         Linkedin = $("#Linkedin"),
-        ProfileImage = $("#ProfileImage")[0],
+
+        studentAddress = $('#studentAddress'),
+        studentPhone = $('#studentPhone'),
+        studentEmail = $('#studentEmail'),
+        studentTwitter = $('#studentTwitter'),
+        studentFacebook = $('#studentFacebook'),
+        studentInstagram = $('#studentInstagram'),
+        studentLinkedin = $('#studentLinkedin'),
+
+        studentProfileImage = $("#studentProfileImage")[0],
         ProfileInformation = window.sessionStorage,
-        level = $("#level"),
+        jobLevel = $("#jobLevel"),
         yearsOfExperience = $("#yearsOfExperience"),
-        skills = $("#skillsSelect");
+        skills = $("#skillsSelect"),
+
+        userUpdateForm = $('#userUpdateForm'),
+        userId = $('#userId'),
+        userphone = $('#userphone'),
+        useremail = $('#useremail'),
+        profilePhoto = $('#profilePhoto')[0];
+
+
 
     firstName.on("change", function () {
         ProfileInformation.setItem("first_name", $(this).val());
@@ -86,16 +119,13 @@
     educationLevel.on("change", function () {
         ProfileInformation.setItem("education_level", $(this).val());
     });
-    course.on("change", function () {
-        ProfileInformation.setItem("course", $(this).val());
-    });
     specialization.on("change", function () {
         ProfileInformation.setItem("specialization", $(this).val());
     });
     summary.on("change", function () {
         ProfileInformation.setItem("summary", $(this).val());
     });
-    Address.on("change", function () {
+    studentAddress.on("change", function () {
         ProfileInformation.setItem("address", $(this).val());
     });
     Phone.on("change", function () {
@@ -116,9 +146,7 @@
     Linkedin.on("change", function () {
         ProfileInformation.setItem("linkedin", $(this).val());
     });
-    level.on("change", function () {
-        ProfileInformation.setItem("level", $(this).val());
-    });
+    
     yearsOfExperience.on("change", function () {
         ProfileInformation.setItem("years_of_experience", $(this).val());
     });
@@ -141,7 +169,7 @@
                 if (allowedTypes.indexOf(file.type) === -1) {
                     showError(
                         "Invalid file type. Allowed types are: " +
-                            allowedTypes.join(", "),
+                        allowedTypes.join(", "),
                         "#imageError"
                     );
                     this.value = "";
@@ -150,43 +178,179 @@
         }
     });
 
+    jobAddToggle.on('click', function (event) {
+        event.preventDefault();
+        console.log('I have been clicked');
+        const data = {
+            title: jobTittle.val(),
+            company: jobCompanyName.val(),
+            start_date: jobStartDate.val(),
+            end_date: jobEndDate.val()
+        }, errors = [];
+        if (data.title == "" || data.title.length < 3) {
+            errors.push('Provide a valid Job Title');
+        }
+        if (data.company == "" || data.company.length < 3) {
+            errors.push('Provide a valid company name');
+        }
+        if (data.start_date == "") {
+            errors.push('Provide a valid start date');
+        }
+        if (errors.length > 0) {
+            showError(errors.join(', '), '#jobsAddFeedback')
+        } else {
+            jobsListSection.append(`<div class="jobExperience row p-2">
+            <div class="col-md-4"><p class="title">${data.title}</p></div>
+            <div class="col-md-4"><p class="company">${data.company}</p></div>
+            <div class="col-md-3"><p><span class="startDate">${data.start_date}</span> - <span class="endDate">${data.end_date}</span></p></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteJobToggle"><i class="bi bi-trash-fill"></i></button></div>
+            </div>`);
+            jobTittle.val("");
+            jobCompanyName.val("");
+            jobStartDate.val("");
+            jobEndDate.val("");
+        }
+    });
+
+    $('body').on('click', '#deleteJobToggle', function (event) {
+        event.preventDefault();
+        $(this).parents().closest('.jobExperience').remove();
+    });
+
+    educationAddToggle.on('click', function (event) {
+        event.preventDefault();
+        console.log('Halleluiah');
+        const data = {
+            course: educationCourse.val(),
+            institution: educationInstitution.val(),
+            level: educationLevel.val(),
+            start_date: educationStartDate.val(),
+            end_date: educationEndDate.val(),
+        }, errors = [];
+        if (data.course == "" || data.course < 3) {
+            errors.push("Valid course is required");
+        }
+        if (data.level == "") {
+            errors.push("Valid course leve is required");
+        }
+        if (data.start_date == "") {
+            errors.push("Start date is required");
+        }
+        if (errors.length > 0) {
+            showError(errors.join(', '), '#educationFeedback')
+        } else {
+            educationListSection.append(`<div class="educationExperience row  p-2">
+            <div class="col-md-4"><p class="title p-0 m-0"><span class="level">${data.level}</span>&nbsp;<span class="course">${data.course}</span></p></div>
+            <div class="col-md-4"><p class="institution  p-0 m-0">${data.institution}</p></div>
+            <div class="col-md-3"><p class="p-0 m-0"><span class="startDate">${data.start_date}</span> - <span class="endDate">${data.end_date}</span></p></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteEducationToggle"><i class="bi bi-trash-fill"></i></button></div>
+            </div>`)
+            educationCourse.val("")
+            educationInstitution.val("")
+            educationLevel.val("")
+            educationStartDate.val("")
+            educationEndDate.val("")
+        }
+    });
+
     profileUpdateForm.on("submit", function (event) {
         event.preventDefault();
         const data = new FormData(),
-            $this = $(this);
-        data.append("first_name", ProfileInformation.getItem("first_name"));
-        data.append("last_name", ProfileInformation.getItem("last_name"));
-        data.append("title", ProfileInformation.getItem("title"));
-        data.append(
-            "education_level",
-            ProfileInformation.getItem("education_level")
-        );
-        data.append("course", ProfileInformation.getItem("course"));
-        data.append(
-            "specialization",
-            ProfileInformation.getItem("specialization")
-        );
-        data.append("level", ProfileInformation.getItem("level"));
-        data.append(
-            "years_of_experience",
-            ProfileInformation.getItem("years_of_experience")
-        );
+            $this = $(this), education = [], work = [];
+
+        if ($('.educationExperience') !== undefined && $('.educationExperience').length > 0) {
+            $('.educationExperience').each(function (key, div) {
+                education.push({
+                    course: $(div).find('.course').text(),
+                    institution: $(div).find('.institution').text(),
+                    level: $(div).find('.level').text(),
+                    start_date: $(div).find('.startDate').text(),
+                    end_date: $(div).find('.endDate').text()
+                });
+            });
+        } else {
+            const minierrors = [];
+            if (educationCourse.val() == "" || educationCourse.val() < 3) {
+                minierrors.push("Valid course is required");
+            }
+            if (educationInstitution.val() == "") {
+                minierrors.push("Valid institution of study is required");
+            }
+            if (educationLevel.val() == "") {
+                minierrors.push("Education level is required");
+            }
+            if (educationStartDate.val() == "") {
+                minierrors.push("Education start is required");
+            }
+            if (educationEndDate.val() == "") {
+                minierrors.push("Education end is required");
+            }
+            if (minierrors.length <= 0) {
+                education.push({
+                    course: educationCourse.val(),
+                    institution: educationInstitution.val(),
+                    level: educationLevel.val(),
+                    start_date: educationStartDate.val(),
+                    end_date: educationEndDate.val(),
+                });
+            } else {
+                errors.push(minierrors);
+            }
+        }
+        if ($('.jobExperience') !== undefined && $('.jobExperience').length > 0) {
+            $('.jobExperience').each(function (key, div) {
+                work.push({
+                    title: $(div).find('.title').text(),
+                    company: $(div).find('.company').text(),
+                    start_date: $(div).find('.startDate').text(),
+                    end_date: $(div).find('.endDate').text()
+                });
+            });
+        } else {
+            const minierrors = [];
+            if (jobTittle.val() == "" || jobTittle.val() < 3) {
+                minierrors.push("Job title is required");
+            }
+            if (jobCompanyName.val() == "") {
+                minierrors.push("Valid company name is required");
+            }
+            if (jobStartDate.val() == "") {
+                minierrors.push("Job start is required");
+            }
+            if (minierrors.length <= 0) {
+                work.push({
+                    title: jobTittle.val(),
+                    company: jobCompanyName.val(),
+                    start_date: jobStartDate.val(),
+                    end_date: jobEndDate.val(),
+                });
+            } else {
+                errors.push(minierrors);
+            }
+        }
+        data.append("first_name", studentFirstName.val());
+        data.append("last_name", studentLastName.val());
+        data.append("title", studentTitle.val());
+        data.append("specialization", specialization.val());
+        data.append("years_of_experience", yearsOfExperience.val());
         data.append("skills", ProfileInformation.getItem("skills"));
         data.append("summary", ProfileInformation.getItem("summary"));
-        data.append("address", ProfileInformation.getItem("address"));
-        data.append("phone", ProfileInformation.getItem("phone"));
-        data.append("email", ProfileInformation.getItem("email"));
-        data.append("twitter", ProfileInformation.getItem("twitter"));
-        data.append("facebook", ProfileInformation.getItem("facebook"));
-        data.append("instagram", ProfileInformation.getItem("instagram"));
-        data.append("linkedin", ProfileInformation.getItem("linkedin"));
-        data.append("image", ProfileImage.files[0]);
+        data.append("address", studentAddress.val());
+        data.append("phone", studentPhone.val());
+        data.append("email", studentEmail.val());
+        data.append("twitter", studentTwitter.val());
+        data.append("facebook", studentFacebook.val());
+        data.append("instagram", studentInstagram.val());
+        data.append("linkedin", studentLinkedin.val());
+        data.append("image", studentProfileImage.files[0]);
+        data.append('education', JSON.stringify(education));
+        data.append('work', JSON.stringify(work));
+        data.append('level', jobLevel.val());
 
         showSpiner("#profileUpdateFeedback");
-
-        for (var pair of data.entries()) {
-            console.log(pair[0] + ": " + pair[1]);
-        }
+        // for (var pair of data.entries()) {
+        //     console.log(pair[0] + ": " + pair[1]);
+        // }
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
@@ -201,31 +365,77 @@
             contentType: false,
             success: function (params) {
                 console.log(params);
-                removeSpiner("#profileUpdateFeedback");
+                removeSpiner("#studentProfileUpdateFeedback");
                 let result = JSON.parse(params);
                 if (result.status === "success") {
-                    showSuccess(result.message, "#profileUpdateFeedback");
+                    showSuccess(result.message, "#studentProfileUpdateFeedback");
                     $this.trigger("reset");
                 } else {
-                    showError(result.message, "#profileUpdateFeedback");
+                    showError(result.message, "#studentProfileUpdateFeedback");
                 }
             },
             error: function (error) {
                 console.error(error);
-                removeSpiner("#profileUpdateFeedback");
+                removeSpiner("#studentProfileUpdateFeedback");
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
                         errors += value + "!";
                     });
-                    showError(errors, "#profileUpdateFeedback");
+                    showError(errors, "#studentProfileUpdateFeedback");
                 } else {
                     showError(
                         "Error occurred during processing",
-                        "#profileUpdateFeedback"
+                        "#studentProfileUpdateFeedback"
                     );
                 }
             },
         });
     });
+
+    userUpdateForm.on('submit', function (event) {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('user_id', userId.val());
+        data.append('first_name', firstName.val());
+        data.append('last_name', lastName.val());
+        data.append('phone', userphone.val());
+        data.append('email', useremail.val());
+        data.append('image', profilePhoto.files[0]);
+        $.ajax({
+            method: "POST",
+            url: "/profile",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (params) {
+                console.log(params);
+                removeSpiner("#userProfileFeedback");
+                let result = JSON.parse(params);
+                if (result.status === "success") {
+                    showSuccess(result.message, "#userProfileFeedback");
+                    $this.trigger("reset");
+                } else {
+                    showError(result.message, "#userProfileFeedback");
+                }
+            },
+            error: function (error) {
+                console.error(error);
+                removeSpiner("#userProfileFeedback");
+                if (error.status == 422) {
+                    var errors = "";
+                    $.each(error.responseJSON.errors, function (key, value) {
+                        errors += value + "!";
+                    });
+                    showError(errors, "#userProfileFeedback");
+                } else {
+                    showError(
+                        "Error occurred during processing",
+                        "#userProfileFeedback"
+                    );
+                }
+            },
+        });
+    });
+
 })();

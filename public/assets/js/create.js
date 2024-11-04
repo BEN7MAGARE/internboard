@@ -218,7 +218,7 @@
                     if (result.status === "success") {
                         showSuccess(result.message, "#jobFeedback");
                         localStorage.clear();
-                        window.location.href = '/jobs';
+                        window.location.href = '/profile-jobs';
                     } else {
                         showError(
                             "An error occured during processing",
@@ -228,7 +228,6 @@
                      $("html, body").animate({ scrollTop: 0 }, "slow");
                 })
                 .fail(function (error) {
-                    console.error(error);
                     submit.prop({ disabled: false });
                     removeSpiner("#jobFeedback");
                     if (error.status == 422) {

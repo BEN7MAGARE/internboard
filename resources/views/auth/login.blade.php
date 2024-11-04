@@ -23,14 +23,26 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control form-control-lg" name="email" id="email"
-                                        required>
+                                    <input type="email"
+                                        class="form-control form-control-lg @error('email') invalid-input:'' @enderror"
+                                        name="email" id="email" required>
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            <p class="text-danger">{{ $message }}</p>
+                                        </div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-12 form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control form-control-lg" name="password"
-                                        id="password" autocomplete="password" required>
+                                    <input type="password"
+                                        class="form-control form-control-lg @error('password') invalid-input:'' @enderror"
+                                        name="password" id="password" autocomplete="password" required>
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            <p class="text-danger">{{ $message }}</p>
+                                        </div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group mt-2">
@@ -44,6 +56,16 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="error-list">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="card-footer bg-white d-flex align-items-center justify-content-between p-2">
                             <button type="submit" class="btn btn-primary w-100">Login</button>

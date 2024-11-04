@@ -25,7 +25,6 @@
                         </div>
                         <form action="{{ route('jobs.store') }}" id="jobCreateForm">
                             @csrf
-                            <div id="jobFeedback"></div>
                             <div class="card-body  step-1">
                                 <div class="row" id="jobFormSection">
 
@@ -108,8 +107,8 @@
                                         <label for="skills">Skills</label>
 
                                         <div class="form-group">
-                                            <select name="skills" id="skills" class="form-control form-control-lg" multiple
-                                                style="width:100%;">
+                                            <select name="skills" id="skills" class="form-control form-control-lg"
+                                                multiple style="width:100%;">
 
                                             </select>
                                         </div>
@@ -144,6 +143,7 @@
                                             class="form-control form-control-lg" required>
                                     </div>
                                 </div>
+                                <div id="jobFeedback"></div>
 
                                 <div class="card-footer bg-white">
                                     <div class="d-flex align-items-center justify-content-between">

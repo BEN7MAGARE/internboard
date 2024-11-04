@@ -11,11 +11,11 @@ class Profile extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'education_level',
-        'course',
+        'level',
+        'education',
+        'work',
         'specialization',
         'summary',
-        'level',
         'years_of_experience',
     ];
 
