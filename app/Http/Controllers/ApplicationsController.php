@@ -54,9 +54,9 @@ class ApplicationsController extends Controller
         if (auth()->user()->role === "college") {
             $studentscount = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->count();
             $college_id = auth()->user()->college_id || NULL;
-            $applicationscount = DB::select("CALL sp_getschoolapplicantscount(1)");
-            $selectedcount = DB::select("CALL sp_gecollegetapplicantscountbystatus(1,'selected')");
-            $hiredcount = DB::select("CALL sp_gecollegetapplicantscountbystatus(1,'hired')");
+            $applicationscount = DB::select("CALL sp_getschoolapplicantscount($college_id)");
+            $selectedcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'selected')");
+            $hiredcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'hired')");
             return view('profile.collegedashboard', compact('studentscount', 'applicationscount', 'selectedcount', 'hiredcount'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
@@ -89,5 +89,5 @@ class ApplicationsController extends Controller
         $student = $this->user->with('profile')->find($id);
         return view('profile.student',compact('student'));
     }
-    
+
 }

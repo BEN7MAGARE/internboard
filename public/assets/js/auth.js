@@ -1,10 +1,11 @@
 (function () {
 
-    let getStartedForm = $("#getStartedForm");
+    const getStartedForm = $("#getStartedForm");
     getStartedForm.on("submit", function (event) {
         event.preventDefault();
-        console.log('tehre');
         let userroleselection = $("input[name='userroleselection']:checked").val();
+        console.log(userroleselection);
+
         if (userroleselection === "student") {
             window.location.href = '/student/create';
         } else if (userroleselection === "corporate") {
@@ -14,7 +15,7 @@
         }
     });
 
-    let userSignupForm = $("#studentSignupForm"),
+    const userSignupForm = $("#studentSignupForm"),
         firstName = $("#firstName"),
         userRole = $("#userRole"),
         lastName = $("#lastName"),

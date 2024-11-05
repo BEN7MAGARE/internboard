@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>@yield('title') - InternBoard</title>
+    <title>@yield('title') - DALMA (Daraja La Mafanikio)</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 

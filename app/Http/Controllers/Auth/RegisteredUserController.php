@@ -18,7 +18,8 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->college = new College();
     }
 
@@ -26,30 +27,31 @@ class RegisteredUserController extends Controller
      * Show emplyer creation form
      */
 
-    public function employer() : View {
+    public function employer(): View
+    {
         $role = "corporate";
         return view('auth.employer', compact('role'));
     }
 
-    public function getstarted() {
-
+    public function getstarted()
+    {
         if (auth()->user()) {
             if (auth()->user()->role === "corporate") {
                 return redirect()->route('jobs.create');
-            }else {
+            } else {
                 return redirect()->route('jobs.index');
             }
         } else {
             return view('auth.register');
         }
-
     }
 
     /**
      * Show institution creation form
      */
 
-    public function institution() : View {
+    public function institution(): View
+    {
         $role = "college";
         return view('auth.institution', compact('role'));
     }
@@ -72,12 +74,12 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'college_id' => ['required','exists:colleges,id'],
+            'college_id' => ['required', 'exists:colleges,id'],
             'first_name' => ['required', 'string', 'max:60'],
             'last_name' => ['required', 'string', 'max:60'],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:'.User::class],
-            'phone' => ['required','string','max:60', 'unique:'.User::class],
-            'role' => ['nullable','string',''],
+            'email' => ['required', 'string', 'email', 'max:80', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'max:60', 'unique:' . User::class],
+            'role' => ['nullable', 'string', ''],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -93,10 +95,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return json_encode(['status'=>'success', 'message'=>'Account created succcessfully and email verification has been sent to your email. Please click on the email to verify your account. ', 'url'=> '/jobs']);
+        return json_encode(['status' => 'success', 'message' => 'Account created succcessfully and email verification has been sent to your email. Please click on the email to verify your account. ', 'url' => '/jobs']);
     }
 
-    public function corporateCreate(Request $request) {
+    public function corporateCreate(Request $request)
+    {
         DB::beginTransaction();
         $corporate = Corporate::create($request->company);
         $user = User::create([
@@ -112,10 +115,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return json_encode(['status'=>"success", 'message'=>'Corporate account created successfully. Check your email and verify before you proceed.', 'url'=>'/jobs/create']);
+        return json_encode(['status' => "success", 'message' => 'Corporate account created successfully. Check your email and verify before you proceed.', 'url' => '/jobs/create']);
     }
 
-    public function institutioncreate(Request $request) {
+    public function institutioncreate(Request $request)
+    {
         DB::beginTransaction();
         $college = College::create($request->company);
         $user = User::create([
@@ -131,7 +135,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return json_encode(['status'=>"success", 'message'=>'Institution account created successfully. Check your email and verify before you proceed.', 'url'=>'/jobs']);
+        return json_encode(['status' => "success", 'message' => 'Institution account created successfully. Check your email and verify before you proceed.', 'url' => '/jobs']);
     }
-
 }

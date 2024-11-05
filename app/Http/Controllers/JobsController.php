@@ -124,6 +124,7 @@ class JobsController extends Controller
         $application->cover_letter = $validated['cover_letter'];
         $application->curriculum_vitae = $filename;
         $application->files = json_encode($fileNames);
+        $application->status = "pending";
         $application->save();
 
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
