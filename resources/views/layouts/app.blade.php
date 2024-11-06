@@ -228,6 +228,8 @@
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
+        <script src="{{ asset('assets/js/moment.js') }}"></script>
+
     <script src="{{ asset('assets/js/functions.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @yield('footer_scripts')

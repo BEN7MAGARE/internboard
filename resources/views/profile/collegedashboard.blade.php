@@ -130,6 +130,5 @@
 
 @section('footer_scripts')
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/moment.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 @endsection

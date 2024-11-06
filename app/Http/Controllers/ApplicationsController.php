@@ -74,11 +74,12 @@ class ApplicationsController extends Controller
         }
     }
 
-    public function schoolStudentApplications($status= NULL) {
+    public function schoolStudentApplications($status = NULL)
+    {
         if (auth()->user()->role === "college") {
             $college_id = auth()->user()->college_id;
-            $applications = DB::select("CALL sp_getschoolapplicants(28,'$status')");
-            return view('profile.schoolapplicants',compact('applications'));
+            $applications = DB::select("CALL sp_getschoolapplicants($college_id,'$status')");
+            return view('profile.schoolapplicants', compact('applications'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
         }
@@ -87,7 +88,18 @@ class ApplicationsController extends Controller
     public function studentDetails($id)
     {
         $student = $this->user->with('profile')->find($id);
-        return view('profile.student',compact('student'));
+        return view('profile.student', compact('student'));
     }
 
+    function downloadCV($application_id)
+    {
+        $application = $this->application->find($application_id);
+        $filePath = public_path('applicant_resources/'. $application->curriculum_vitae);
+        return response()->download($filePath);
+    }
+
+    function download($fileName) {
+        $filePath = public_path('applicant_resources/' . $fileName);
+        return response()->download($filePath);
+    }
 }

@@ -61,6 +61,5 @@
 
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/job.js') }}"></script>
 @endsection

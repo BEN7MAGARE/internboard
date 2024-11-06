@@ -21,12 +21,12 @@
 
                     <div class="card">
                         <div class="card-header bg-white">
-                            <h5>{{ $job->title }}</h5>
+                            <h4><b>{{ $job->title }}</b></h4>
                             <p>{{ $job->description }}</p>
                         </div>
 
-                        <div class="card-body p-">
-                            <h6><b>Applicants</b></h6>
+                        <div class="card-body scrollable-div">
+                            <h4><b>Applicants</b></h4>
 
                             @foreach ($job->applications as $key => $item)
                                 <div class="job">
@@ -47,35 +47,47 @@
                                                 <p class="m-0 p-0"><b>Education:</b> Missing</p>
                                             @endif
                                         @endif
-                                        <p></p>
+
                                     </div>
                                     <div class="desciption p-2">
                                         <p class="p-0 m-0"><b>Reason:</b> {{ $item->reason }}</p>
                                         <p class="p-0 m-0"><b>Cover Letter: </b>{{ $item->cover_letter }}</p>
                                     </div>
-                                </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('application.cvdownload',$item->id) }}" class="btn btn-outline-primary btn-sm">Download CV</a>
-                                    @php
-                                        $files = json_decode($item->files, 1);
-                                    @endphp
-                                    @foreach ($files as $file)
-                                        <a href="#" class="btn btn-outline-primary btn-">Download</a>
-                                    @endforeach
-                                </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a href="{{ route('student.details', $item->id) }}"
+                                                class="btn btn-outline-primary btn-sm" target="__blank">View Profile</a>
 
-                        @endforeach
+                                            <a href="{{ route('application.cvdownload', $item->id) }}"
+                                                class="btn btn-outline-primary btn-sm" target="__blank">Download CV</a>
+                                            @php
+                                                $files = json_decode($item->files, 1);
+                                            @endphp
+                                            @foreach ($files as $file)
+                                                <a href="{{ route('download.file', $file) }}"
+                                                    class="btn btn-outline-primary btn-sm" target="__blank">Download</a>
+                                            @endforeach
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="applicantSelectToggle{{ $item->id }}" value="{{ $item->id }}" class="applicantSelectToggle">
+                                            <label class="form-check-label" for="applicantSelectToggle{{ $item->id }}">Select </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
         </div>
     </section>
 @endsection
 
 @section('footer_scripts')
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/profile.js') }}"></script>
+    <script src="{{ asset('assets/js/job.js') }}"></script>
 @endsection

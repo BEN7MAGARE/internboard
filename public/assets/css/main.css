@@ -2363,3 +2363,10 @@ section {
     /* Same color as the text for consistency */
     /* font-weight: bold; */
 }
+
+.scrollable-div {
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: scroll;
+    width: 100%;
+}

@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('student-create', [RegisteredUserController::class, 'create'])
+->name('student.create');
 
 Route::middleware('guest')->group(function () {
     Route::get('getstarted', [RegisteredUserController::class, 'getstarted'])
@@ -25,9 +27,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/college', [RegisteredUserController::class, 'institutioncreate']);
 
-    Route::get('student/create', [RegisteredUserController::class, 'create'])
-                ->name('student.create');
-                
     Route::middleware('role');
 
 

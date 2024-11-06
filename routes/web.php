@@ -55,4 +55,6 @@ Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboar
 
 Route::get('student/{id}',  [ApplicationsController::class, 'studentDetails'])->name('student.details');
 Route::get('application-cvdownload/{id}',[ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
+Route::get('download/{file}', [ApplicationsController::class,'download'])->name('download.file');
+
 require __DIR__ . '/auth.php';

@@ -59,7 +59,7 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create()
     {
         $role = 'student';
         $colleges = $this->college->get();

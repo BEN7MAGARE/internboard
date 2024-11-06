@@ -133,8 +133,6 @@ class JobsController extends Controller
     function applications($job_id)
     {
         $job = $this->job->with('applications.applicant.profile')->find($job_id);
-        // return $job->corporate_id;
-        // return auth()->user()->corporate_id;
         if ($job->corporate_id == auth()->user()->corporate_id) {
             return view('profile.applicants', compact('job'));
         } else {

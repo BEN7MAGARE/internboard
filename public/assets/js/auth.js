@@ -7,7 +7,7 @@
         console.log(userroleselection);
 
         if (userroleselection === "student") {
-            window.location.href = '/student/create';
+            window.location.href = '/student-create';
         } else if (userroleselection === "corporate") {
             window.location.href = "/employer/create";
         } else if (userroleselection === "college") {

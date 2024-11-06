@@ -7,7 +7,6 @@
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-    
 @endsection
 
 @section('content')
@@ -44,8 +43,9 @@
                                     <a href="{{ route('job.applications', $item->id) }}" class="btn btn-primary btn-sm">View
                                         Applicants</a>
                                 </div>
+                                <hr>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
                 </div>
 
