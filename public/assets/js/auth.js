@@ -7,7 +7,7 @@
         console.log(userroleselection);
 
         if (userroleselection === "student") {
-            window.location.href = '/student-create';
+            window.location.href = '/student/create';
         } else if (userroleselection === "corporate") {
             window.location.href = "/employer/create";
         } else if (userroleselection === "college") {
@@ -22,7 +22,8 @@
         emailInput = $("#email"),
         phoneInput = $("#phone"),
         passwordInput = $("#password"),
-        passwordConfirmation = $("#passwordConfirmation"), collegeID = $('#college_id');
+        passwordConfirmation = $("#passwordConfirmation"),
+        collegeID = $('#college_id');
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
