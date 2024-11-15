@@ -57,4 +57,5 @@ Route::get('student/{id}',  [ApplicationsController::class, 'studentDetails'])->
 Route::get('application-cvdownload/{id}',[ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
 Route::get('download/{file}', [ApplicationsController::class,'download'])->name('download.file');
 
+Route::post('applications-select', [ApplicationsController::class, 'select'])->name('applications.select');
 require __DIR__ . '/auth.php';

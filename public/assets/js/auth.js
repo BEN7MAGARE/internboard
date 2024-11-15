@@ -24,7 +24,7 @@
         passwordInput = $("#password"),
         passwordConfirmation = $("#passwordConfirmation"),
         collegeID = $('#college_id');
-
+    
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
         let $this = $(this),

@@ -94,12 +94,26 @@ class ApplicationsController extends Controller
     function downloadCV($application_id)
     {
         $application = $this->application->find($application_id);
-        $filePath = public_path('applicant_resources/'. $application->curriculum_vitae);
+        $filePath = public_path('applicant_resources/' . $application->curriculum_vitae);
         return response()->download($filePath);
     }
 
-    function download($fileName) {
+    function download($fileName)
+    {
         $filePath = public_path('applicant_resources/' . $fileName);
         return response()->download($filePath);
+    }
+
+    function select(Request $request)
+    {
+        $applicants = json_decode($request->applicants);
+        $message = $request->message;
+        foreach ($applicants as $key => $value) {
+            $application = $this->application->find($value->applicationid);
+            $application->status = "selected";
+            $application->invitationletter = $message;
+            $application->update();
+        }
+        return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
     }
 }

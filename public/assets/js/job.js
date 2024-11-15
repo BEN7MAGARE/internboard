@@ -3,7 +3,6 @@
 
     function getCategories() {
         $.getJSON("/categories", function (categories) {
-            console.log("hete");
             let option = "<option value=''>Select One</option>";
             $.each(categories, function (key, value) {
                 option +=
@@ -73,11 +72,11 @@
         showSpiner("#jobDetailsSection");
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + job_id, function (value) {
-            $("#jobModalTitle").html("<b>" + value.title + "</b>");
+            $("#jobModalTitle").html("<b>" + value?.title + "</b>");
             let skill = '', ref_no = (value.ref_no == null) ? value.id : value.ref_no;
-                $.each(value.skills, function (kee, item) {
-                    skill += "<span>" + item.name + "</span>";
-                });
+            $.each(value.skills, function (kee, item) {
+                skill += "<span>" + item.name + "</span>";
+            });
             let details =
                 '<div class="job-details-section"><div class="salary mb-2"><span>' +
                 value.type +
@@ -102,7 +101,7 @@
                 "</div></div></div>";
             $('#jobDetailsSection').html(details);
             $("#jobActionSection").html(
-                '<a href="/jobs/'+ref_no+'/apply" class="btn btn-primary">Apply Now <i class="fa-solid fa-angles-right"></i></a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'
+                '<a href="/jobs/' + ref_no + '/apply" class="btn btn-primary">Apply Now <i class="fa-solid fa-angles-right"></i></a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>'
             );
         });
     });
@@ -117,9 +116,9 @@
 
             $("#jobModalTitle").html("<b>" + value.title + "</b>");
             let skill = '', ref_no = (value.ref_no == null) ? value.id : value.ref_no;
-                $.each(value.skills, function (kee, item) {
-                    skill += "<span>" + item.name + "</span>";
-                });
+            $.each(value.skills, function (kee, item) {
+                skill += "<span>" + item.name + "</span>";
+            });
             let details =
                 '<div class="job-details-section"><div class="salary mb-2"><span>' +
                 value.type +
@@ -149,6 +148,63 @@
         });
     });
 
+    const applicantsSelectForm = $('#applicantsSelectForm'),
+        applicantSelectToggle = $('.applicantSelectToggle'),
+        invitationLetter = $('#invitationLetter');
+    console.log(applicantSelectToggle);
 
+    applicantsSelectForm.on('submit', function (event) {
+        event.preventDefault();
+        const $this = $(this), applicants = [], errors = [];
+
+        ('.applicantSelectToggle').each(function (key, item) {
+            console.log(item);
+
+            if ($(item).is(':checked')) {
+                applicants.push({ applicationid: $(item).value() })
+            }
+        });
+        const data = {
+            applicants: JSON.stringify(applicants),
+            message: invitationLetter.val()
+        }
+        console.log(applicants.length);
+        if (applicants.length <= 0) {
+            errors.push("You have not selected applicants to invite");
+        }
+        if (invitationLetter.val().length < 20) {
+            errors.push("Enter a valid invitation letter");
+        }
+        if (errors.length > 0) {
+            showError(errors.join(', '), '#invitationFeedback')
+        } else {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+                },
+            });
+            $.ajax({
+                method: "POST",
+                url: "/applications-select",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (params) {
+                    console.log(params);
+                    let result = JSON.parse(params);
+                    if (result.status === "success") {
+                        showSuccess(result.message, "#invitationFeedback");
+                        $this.trigger("reset");
+                    } else {
+                        showError(result.message, "#invitationFeedback");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                    showError("Error occurred during processing", "#invitationFeedback");
+                },
+            });
+        }
+    });
 
 })();
