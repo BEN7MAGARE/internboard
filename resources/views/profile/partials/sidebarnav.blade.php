@@ -1,6 +1,6 @@
-<div class="card">
+<div>
 
-    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+    <div class="profile-card pt-4 d-flex flex-column align-items-center">
 
         @if (auth()->user()->image !== null && auth()->user()->image !== '')
             <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="Profile"

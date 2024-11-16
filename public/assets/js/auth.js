@@ -4,10 +4,8 @@
     getStartedForm.on("submit", function (event) {
         event.preventDefault();
         let userroleselection = $("input[name='userroleselection']:checked").val();
-        console.log(userroleselection);
-
         if (userroleselection === "student") {
-            window.location.href = '/student/create';
+            window.location.href = '/student-create';
         } else if (userroleselection === "corporate") {
             window.location.href = "/employer/create";
         } else if (userroleselection === "college") {
@@ -24,7 +22,7 @@
         passwordInput = $("#password"),
         passwordConfirmation = $("#passwordConfirmation"),
         collegeID = $('#college_id');
-    
+
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
         let $this = $(this),
@@ -43,7 +41,7 @@
         submit.prop({ disabled: false });
         let data = {
             _token: token,
-            college_id:college_id,
+            college_id: college_id,
             first_name: first_name,
             last_name: last_name,
             role: role,
@@ -52,7 +50,6 @@
             password: password,
             password_confirmation: password_confirmation,
         };
-        console.log(data);
         if (password !== password_confirmation) {
             errors.push('Incorrect password confirmation');
         }
@@ -79,14 +76,13 @@
             showSpiner("#studentfeedbackfeedback");
             $.post("/register", data)
                 .done(function (params) {
-                    console.log(params);
                     submit.prop({ disabled: false });
                     removeSpiner("#studentfeedbackfeedback");
                     let result = JSON.parse(params);
                     if (result.status === "success") {
                         showSuccess(result.message, "#studentfeedbackfeedback");
                         $this.trigger("reset");
-                        window.setTimeout(function() {
+                        window.setTimeout(function () {
                             window.location.href = result.url;
                         }, 1000)
                     } else {
@@ -94,7 +90,6 @@
                     }
                 })
                 .fail(function (error) {
-                    console.log(error);
                     submit.prop({ disabled: false });
                     removeSpiner("#studentfeedbackfeedback");
                     if (error.status == 422) {

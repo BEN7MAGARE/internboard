@@ -73,6 +73,7 @@
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + job_id, function (value) {
             $("#jobModalTitle").html("<b>" + value?.title + "</b>");
+            console.log(value);
             let skill = '', ref_no = (value.ref_no == null) ? value.id : value.ref_no;
             $.each(value.skills, function (kee, item) {
                 skill += "<span>" + item.name + "</span>";
@@ -151,24 +152,21 @@
     const applicantsSelectForm = $('#applicantsSelectForm'),
         applicantSelectToggle = $('.applicantSelectToggle'),
         invitationLetter = $('#invitationLetter');
-    console.log(applicantSelectToggle);
 
     applicantsSelectForm.on('submit', function (event) {
         event.preventDefault();
         const $this = $(this), applicants = [], errors = [];
 
-        ('.applicantSelectToggle').each(function (key, item) {
-            console.log(item);
-
+        applicantSelectToggle.each(function (key, item) {
             if ($(item).is(':checked')) {
-                applicants.push({ applicationid: $(item).value() })
+                applicants.push({ applicationid: $(item).val() })
             }
         });
         const data = {
             applicants: JSON.stringify(applicants),
             message: invitationLetter.val()
         }
-        console.log(applicants.length);
+        console.log(data);
         if (applicants.length <= 0) {
             errors.push("You have not selected applicants to invite");
         }
@@ -187,8 +185,6 @@
                 method: "POST",
                 url: "/applications-select",
                 data: data,
-                processData: false,
-                contentType: false,
                 success: function (params) {
                     console.log(params);
                     let result = JSON.parse(params);

@@ -7,6 +7,7 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationsController extends Controller
 {
@@ -106,10 +107,10 @@ class ApplicationsController extends Controller
 
     function select(Request $request)
     {
-        $applicants = json_decode($request->applicants);
+        $applicants = json_decode($request->applicants, true);
         $message = $request->message;
         foreach ($applicants as $key => $value) {
-            $application = $this->application->find($value->applicationid);
+            $application = $this->application->find($value["applicationid"]);
             $application->status = "selected";
             $application->invitationletter = $message;
             $application->update();
