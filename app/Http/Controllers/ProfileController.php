@@ -40,7 +40,7 @@ class ProfileController extends Controller
     function jobs()
     {
         if (auth()->user()->role === "corporate") {
-            $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->get();
+            $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->paginate(10);
             return view('profile.jobs', compact('jobs'));
         } else {
             return redirect()->route('profile.edit');
@@ -62,8 +62,6 @@ class ProfileController extends Controller
             }
             $request->file('image')->move('profilepictures/', $fileName);
             $image = $fileName;
-        } else {
-            return "Halleluiah";
         }
         $user->update($validated + ['image' => $image]);
         if (auth()->user()->role == "student") {
@@ -155,5 +153,22 @@ class ProfileController extends Controller
         }
         $opportunities = $this->job->latest()->with(['user:id,first_name,last_name', 'corporate:id,name', 'category:id,name'])->paginate(10);
         return view('profile.opportunities', compact('opportunities'));
+    }
+
+    public function changeImage(Request $request)
+    {
+        $user = $this->user->find(auth()->id());
+        $image = $user->image;
+        if ($request->hasFile("profile")) {
+            $fileName = 'pr' . strtotime(now()) . auth()->id() . '.' . $request->file('profile')->getClientOriginalExtension();
+            if (Storage::disk('public')->exists('profilepictures/' . $user->image)) {
+                Storage::disk('public')->delete('profilepictures/' . $user->image);
+            }
+            $request->file('profile')->move('profilepictures/', $fileName);
+            $image = $fileName;
+        }
+        $user->image = $image;
+        $user->update();
+        return json_encode(['status'=>'success','message'=>'Profile image changed successfully']);
     }
 }

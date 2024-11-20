@@ -25,6 +25,7 @@ class Job extends Model
         'location',
         'title',
         'description',
+        'application_end_date',
         'start_date',
         'salary_range',
         'no_of_positions',
@@ -61,7 +62,7 @@ class Job extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
-    
+
     public function applications(): HasMany
     {
         return $this->hasMany(Application::class, 'job_id', 'id');

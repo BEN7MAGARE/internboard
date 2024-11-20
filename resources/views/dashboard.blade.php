@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Profile @parent
@@ -7,11 +7,11 @@
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-    
+
 @endsection
 
 @section('content')
-    <section class="section profile" style="background:#EAFAF1;">
+    <section class="w3l-main-content">
         <div class="container">
             <div class="row">
 

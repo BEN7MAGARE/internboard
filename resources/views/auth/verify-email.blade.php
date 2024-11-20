@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <main>
+    <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-5">
 
@@ -45,5 +45,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 @endsection

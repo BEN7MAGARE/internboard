@@ -1,19 +1,30 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Students @parent
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('content')
-    <section class="section profile" style="background:#EAFAF1;">
-        <div class="container">
+    <section class="main-content">
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li class="current">Dashboard</li>
+                    </ol>
+                </div>
+            </nav>
+        </div>
+
+        <div class="container mt-3">
             <div class="row">
-                <div class="col-xl-3 mb-4">
+                <div class="col-xl-3 mb-4 card">
                     @include('profile.partials.sidebarnav')
                 </div>
 
@@ -129,6 +140,6 @@
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

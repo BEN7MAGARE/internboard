@@ -1,23 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Profile @parent
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('content')
-    <section class="section profile" style="background:#EAFAF1;">
+    <section class="main-content">
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li class="current">{{ ucfirst($status) }}</li>
+                    </ol>
+                </div>
+            </nav>
+        </div>
+
         <div class="container">
             <div class="row">
-                <div class="col-xl-3 mb-4">
+                <div class="col-xl-3 mb-4 card mt-3">
                     @include('profile.partials.sidebarnav')
                 </div>
 
-                <div class="col-xl-9">
+                <div class="col-xl-9 mt-3">
                     <div class="row">
                         @foreach ($applications as $item)
                             <div class="col-md-6 mb-4">
@@ -32,10 +43,11 @@
                                         <p class="p-0 m-0">Status: {{ $item->status }}</p>
                                     </div>
                                     <div class="card-footer bg-white">
-                                        <button type="button" class="btn btn-primary" id="jobApplicationDetails"
+                                        <button type="button" class="btn btn-outline-primary" id="jobApplicationDetails"
                                             data-id="{{ $item->id }}">View Details</button>
-                                        <button type="button" class="btn btn-primary" id="viewJobDetails"
-                                            data-id="{{ $item->job_id }}" data-bs-toggle="modal" data-bs-target="#jobDetailsModalToggle">View Job</button>
+                                        <button type="button" class="btn btn-outline-primary" id="viewJobDetails"
+                                            data-id="{{ $item->job_id }}" data-bs-toggle="modal"
+                                            data-bs-target="#jobDetailsModalToggle">View Job</button>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +79,7 @@
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/job.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/job.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/profile.js') }}"></script> --}}
 @endsection

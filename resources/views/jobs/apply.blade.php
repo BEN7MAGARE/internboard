@@ -1,23 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Job Apply
 @endsection
 
 @section('header_styles')
-    <link href="{{ asset('quill/quill.snow.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 @endsection
 
 @section('content')
-    <main id="main">
-        <div class="breadcrumbs">
-
-            <nav>
+    <section class="main-content">
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
                 <div class="container">
                     <ol>
-                        <li><a href="{{ url('/') }}">Home</a></li>
-                        <li>Apply</li>
+                        <li><a href="/">Home</a></li>
+                        <li class="current">Job Opportunities</li>
                     </ol>
                 </div>
             </nav>
@@ -26,7 +24,7 @@
         <section class="job-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 p-3" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
+                    <div class="col-md-8 p-3 bg-white mt-3" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
                         @if ($applied)
                             <div class="alert alert-info" role="alert">
                                 <p>Applied <i class="fa fa-check-circle"></i></p>
@@ -41,7 +39,10 @@
                                 <span>NO of positions: <b>{{ $job->no_of_positions }}</b></span>
                                 <span>{{ $job->salary_range }}</span>
                             </div>
-                            <div class="desciption p-2">{{ $job->description }}</div>
+                            <div class="desciption p-2">
+                                <h6 class="mb-1">{{ $job->title }}</h6>
+                                <p>{{ $job->description }}</p>
+                            </div>
                             <hr>
                             <h5 class="d-flex justify-content-between p-2"><b>Skills</b> <span class="float-right">Level:
                                     <b>{{ $job->experience_level }}</b></span></h5>
@@ -69,7 +70,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mt-4">
+
+                    <div class="col-md-4 mt-3">
                         @if ($applied)
                         <div class="alert alert-info">
                             <h6><i class="bi bi-exclamation-triangle-fill"></i> You have already applied for this job. </h6>
@@ -130,10 +132,9 @@
                 </div>
             </div>
         </section>
-    </main>
+    </section>
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('quill/quill.min.js') }}"></script>
-    <script src="{{ asset('assets/js/application.js') }}"></script>
+    <script src="{{ asset('js/application.js') }}"></script>
 @endsection

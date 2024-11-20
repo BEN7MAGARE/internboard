@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Job Create
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 
     <style>
         .step-2 {
@@ -15,13 +15,13 @@
 @endsection
 
 @section('content')
-    <main id="main">
+    <section class="w3l-main-content" id="main">
         <section class="job-section">
             <div class="container d-flex align-items-center justify-content-center">
-                <div class="col-lg-7">
-                    <div class="card">
+                <div class="col-lg-8">
+                    <div class="card p-3">
                         <div class="card-header bg-white text-center">
-                            <h5 class="mt-2"><b>New Job Post</b></h5>
+                            <h4 class="mt-2"><b>New Job Post</b></h4>
                         </div>
                         <form action="{{ route('jobs.store') }}" id="jobCreateForm">
                             @csrf
@@ -79,12 +79,11 @@
                                 </div>
 
                                 <div class="card-footer bg-white">
-                                    <div class="d-flex align-items-center justify-content-end">
+                                    <div class="d-flex align-items-center justify-content-end mt-2">
                                         {{-- <a class="btn btn-outline-primary" disabled id="toggleprevioussection"><i
                                                 class="fa fa-arrow-left"></i>&nbsp;
                                             Back</a> --}}
-                                        <a class="btn btn-primary" id="startButton">Next&nbsp;<i
-                                                class="fa fa-arrow-right"></i></a>
+                                        <a class="btn btn-primary btn-lg" id="startButton">Next&nbsp;>></a>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +92,7 @@
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <label for="educationLevel">Education Level</label>
-                                        <select name="education_level" id="educationLevel" class="form-select">
+                                        <select name="education_level" id="educationLevel" class="form-select form-select-lg">
                                             <option value="">Select One</option>
                                             <option value="Certificate">Certificate</option>
                                             <option value="Diploma">Diploma</option>
@@ -137,21 +136,26 @@
                                             class="form-control form-control-lg">
                                     </div>
 
-                                    <div class="col-md-12 form-group">
-                                        <label for="startDate">Start Date</label>
+                                    <div class="col-md-6 form-group">
+                                        <label for="startDate">Application deadline</label>
+                                        <input type="date" name="applicationEndDate" id="applicationEndDate"
+                                            class="form-control form-control-lg" required>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="startDate">Job Start Date</label>
                                         <input type="date" name="start_date" id="startDate"
                                             class="form-control form-control-lg" required>
                                     </div>
+<br>
                                 </div>
                                 <div id="jobFeedback"></div>
 
                                 <div class="card-footer bg-white">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <a class="btn btn-outline-primary" id="toggleprevioussection"><i
-                                                class="fa fa-arrow-left"></i>&nbsp;
-                                            Back</a>
+                                    <div class="d-flex align-items-center justify-content-between mt-2">
+                                        <a class="btn btn-warning btn-lg" id="toggleprevioussection"><< Back</a>
 
-                                        <button type="submit" class="btn btn-primary">Finish</button>
+                                        <button type="submit" class="btn btn-primary  btn-lg" id="jobSubmit"><i class="fa fa-server"></i> Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -160,10 +164,10 @@
                 </div>
             </div>
         </section>
-    </main>
+    </section>
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/create.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/create.js') }}"></script>
 @endsection

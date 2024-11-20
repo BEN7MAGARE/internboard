@@ -1,12 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Sign up as student @parent
 @endsection
 
 @section('content')
-    <main>
+    <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
+
             <div class="col-md-7">
                 <div class="card mt-5 mb-5">
 
@@ -58,14 +59,28 @@
 
                                 <div class="col-md-6 form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control form-control-lg" name="password"
-                                        id="password" required>
+                                    <div class="input-group">
+                                        <input type="password"
+                                            class="form-control @error('password') invalid-input:'' @enderror"
+                                            name="password" id="password" autocomplete="password" required>
+
+                                        <div class="input-group-text showRegisterPassword">
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6 form-group">
                                     <label for="passwordConfirmation">Confirm Password</label>
-                                    <input type="password" class="form-control form-control-lg" name="password_confimation"
-                                        id="passwordConfirmation" required>
+                                    <div class="input-group">
+                                        <input type="password"
+                                            class="form-control @error('password') invalid-input:'' @enderror"
+                                            name="password_confimation" id="passwordConfirmation" autocomplete="password"
+                                            required>
+                                        <div class="input-group-text showRegisterPassword">
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -77,15 +92,16 @@
                                 {{ __('Already registered?') }}
                             </a>
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" id="studentSubmit">Submit</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </main>
+
+    </section>
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/auth.js') }}"></script>
+    <script src="{{ asset('js/auth.js') }}"></script>
 @endsection

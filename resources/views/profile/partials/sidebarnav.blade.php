@@ -1,15 +1,40 @@
 <div>
 
     <div class="profile-card pt-4 d-flex flex-column align-items-center">
+        @if (auth()->user()->image !== null)
+            <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="Profile"
+                class="rounded-circle img-fluid">
+        @else
+            <img src="{{ asset('images/avatar.png') }}" alt="Profile" class="rounded-circle img-fluid">
+        @endif
+        <div id="profileImageChange"></div>
+        <form action="#" method="post" id="changeUserImageForm">
+            @csrf
+            <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
+            <div id="profileImageChangeFeedback"></div>
+        </form>
+        <a href="#" class="btn btn-warning btn-sm mt-1" id="changeProfileImageToggle"><i
+                class="fa fa-edit"></i></a>
+        <h4>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+        </h4>
+        <h6>{{ auth()->user()->email }}</h6>
+        <h6>Tel: {{ auth()->user()->phone }} </h6>
 
-        @if (auth()->user()->image !== null && auth()->user()->image !== '')
+        <div class="">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+
+        {{-- @if (auth()->user()->image !== null && auth()->user()->image !== '')
             <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="Profile"
                 class="rounded-circle">
         @else
             <img src="{{ asset('assets/img/avatar.png') }}" alt="Profile" class="rounded-circle">
         @endif
 
-        <h2>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+        <h2>{{ }}
         </h2>
 
         <h3>{{ auth()->user()->profile?->specialization }}</h3>
@@ -19,65 +44,67 @@
             <a href="{{ auth()->user()->facebook }}" class="facebook text-primary"><i class="bi bi-facebook"></i></a>
             <a href="{{ auth()->user()->instagram }}" class="instagram text-primary"><i class="bi bi-instagram"></i></a>
             <a href="{{ auth()->user()->linkedin }}" class="linkedin text-primary"><i class="bi bi-linkedin"></i></a>
-        </div>
+        </div> --}}
 
     </div>
 
-    <div class="bg-white">
+    <div class="mt-2 mb-3">
         <div class="list-group">
 
-                <li class="list-group-item {!! Request::is('profile') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.edit') }}" class="list-group-item-action" aria-current="true"><i class="bi bi-grid text-warning"></i> My
-                        Profile</a>
-                </li>
+            <li class="list-group-item {!! Request::is('profile') ? 'active' : '' !!}">
+                <a href="{{ route('profile.edit') }}" aria-current="true"><i
+                        class="fa fa-user text-warning"></i>&nbsp;My Profile</a>
+            </li>
             @if (auth()->user()->role === 'student')
                 <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
-                    <a href="{{ route('applications.index') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> My
-                        Applications</a>
+                    <a href="{{ route('applications.index') }}"><i
+                            class="fa fa-window-maximize text-warning"></i>&nbsp;My Applications</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'corporate')
                 <li class="list-group-item  {!! Request::is('profile-jobs') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.jobs') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> My
+                    <a href="{{ route('profile.jobs') }}"><i class="fa fa-window-maximize text-warning"></i>&nbsp;My
                         Jobs</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'college')
                 <li class="list-group-item  {!! Request::is('college-dashboard') ? 'active' : '' !!}">
-                    <a href="{{ route('college.dashboard') }}" class="list-group-item-action"><i class="bi bi-grid text-warning"></i> Dashboard</a>
+                    <a href="{{ route('college.dashboard') }}"><i
+                            class="fa fa-window-maximize text-warning"></i>&nbsp;Dashboard</a>
                 </li>
 
                 <li class="list-group-item  {!! Request::is('college-students') ? 'active' : '' !!}">
-                    <a href="{{ route('college.students') }}" class="list-group-item-action"><i
-                            class="fa fa-users text-warning"></i> My Students</a>
+                    <a href="{{ route('college.students') }}"><i class="fa fa-users text-warning"></i>&nbsp;My
+                        Students</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'admin')
                 <li class="list-group-item {!! Request::is('students') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.students') }}" class="list-group-item-action">Job Seekers</a>
+                    <a href="{{ route('profile.students') }}"><i class="fa fa-users"></i> Job Seekers</a>
                 </li>
 
                 <li class="list-group-item {!! Request::is('corporates') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.corporates') }}"
-                        class=" list-group-item-action">Employers/Corporates</a>
+                    <a href="{{ route('profile.corporates') }}">
+                        <i class="fa fa-acquisitions-incorporated"></i>&nbsp;Employers/Corporates
+                    </a>
                 </li>
 
                 <li class="list-group-item {!! Request::is('opportunities') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.opportunities') }}" class="list-group-item-action">Job Opportunities</a>
+                    <a href="{{ route('profile.opportunities') }}"><i class="fa fa-window-maximize"></i>&nbsp;Job
+                        Opportunities</a>
                 </li>
             @endif
 
             <li class="list-group-item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
-                    <a href="route('logout')" class="list-group-item-action"
+                    <a href="route('logout')" class="list-group-item-action text-danger"
                         onclick="event.preventDefault();
                                 this.closest('form').submit();"><i
-                            class="fa fa-sign-out text-warning"></i>
+                            class="fa fa-sign-out-alt"></i>
                         {{ __('Log Out') }}
                     </a>
                 </form>

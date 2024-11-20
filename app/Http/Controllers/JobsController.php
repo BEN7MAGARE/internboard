@@ -28,7 +28,7 @@ class JobsController extends Controller
 
     public function index()
     {
-        $jobs = $this->job->latest()->get();
+        $jobs = $this->job->latest()->paginate(10);
         return view('jobs.index', compact('jobs'));
     }
 
@@ -89,7 +89,7 @@ class JobsController extends Controller
         }
     }
 
-    function applicationCreate(Request $request)
+    public function applicationCreate(Request $request)
     {
         $validated = $request->validate([
             'job_id' => ['required', 'exists:jobs,id'],
@@ -130,13 +130,48 @@ class JobsController extends Controller
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
     }
 
-    function applications($job_id)
+    public function applications($job_id)
     {
-        $job = $this->job->with('applications.applicant.profile')->find($job_id);
+        $job = $this->job->with('applications.applicant.profile')->withCount('applications')->find($job_id);
         if ($job->corporate_id == auth()->user()->corporate_id) {
             return view('profile.applicants', compact('job'));
         } else {
             abort(405, 'You are not authorised to access this resource');
         }
+    }
+
+    public function jobsLocations()
+    {
+        $locations = $this->job->select('location')->distinct()->pluck('location');
+        return $locations;
+    }
+
+    public function search(Request $request)
+    {
+        $params = $request->all();
+        $experienceLevels = json_decode($params['experience_level'], true);
+        $educationLevels = json_decode($params['education_level'], true);
+        $locations = collect(json_decode($params['location'], true))->filter(fn($value) => is_string($value))->values();
+        $query = $this->job->query();
+        if (!empty($params['category_id'])) {
+            $query->where('category_id', $params['category_id']);
+        }
+        if (!empty($params['employment_type'])) {
+            $query->where('employment_type', $params['employment_type']);
+        }
+        if (!empty($params['job_type'])) {
+            $query->where('job_type', $params['job_type']);
+        }
+        if (!empty($experienceLevels)) {
+            $query->whereIn('experience_level', $experienceLevels);
+        }
+        if (!empty($educationLevels)) {
+            $query->whereIn('education_level', $educationLevels);
+        }
+        if ($locations->isNotEmpty()) {
+            $query->whereIn('location', $locations->toArray());
+        }
+        $jobs = $query->get();
+        return response()->json($jobs);
     }
 }

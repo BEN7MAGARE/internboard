@@ -1,43 +1,193 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Jobs @parent
 @endsection
 
 @section('header_styles')
-
 @endsection
 
 @section('content')
-    <main id="main">
+    <section class="main-content">
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li class="current">Job Opportunities</li>
+                    </ol>
+                </div>
+            </nav>
+        </div>
+
         <section class="job-section">
             <div class="container mt-2 mb-2">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form action="{{ route('jobs.search') }}" method="post" id="jobsSearchForm">
+                            <div class="row">
+                                @csrf
+                                <div class="col-md-3 mb-2">
+                                    <select name="category_id" id="searchCategoryID" class="form-select" required>
 
-                <div class="input-group mb-4">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <span class="input-group-text" style="background: #C70039; color: #fff;">
-                            <i class="fa fa-search"></i>
-                        </span>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+                                    <select name="type" id="searchEmploymentType" class="form-select" required>
+                                        <option value="">Employment Type</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Part-time">Part Time</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="Freelance">Freelance</option>
+                                        <option value="Temporary">Temporary</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+                                    <select name="job_type" id="searchJobType" class="form-select" required>
+                                        <option value="">Job Type</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="On-site">On-Site</option>
+                                        <option value="High-breed">High-breed</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 mb-2">
+                                    <input type="text" class="form-control" name="searchLocation" id="searchLocation"
+                                        placeholder="Location">
+                                </div>
+
+                                <div class="col-md-1 mb-1">
+                                    <button type="submit" class="btn btn-warning"><i
+                                            class="fa fa-search text-white"></i></button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div>
+                            <div id="jobrendersection">
+                                @php
+                                    function getSubstring($string)
+                                    {
+                                        if (strlen($string) > 150) {
+                                            return substr($string, 0, 150) . ' . . . .';
+                                        } else {
+                                            return $string;
+                                        }
+                                    }
+                                @endphp
+                                @foreach ($jobs as $item)
+                                    @php
+                                        $skilltext = '';
+                                        foreach ($item->skills as $key => $skill) {
+                                            $skilltext .= "<span>$skill->name</span>";
+                                        }
+                                    @endphp
+                                    <div class="job bg-white rounded p-2" data-id="{{ $item->id }}">
+                                        <div class="title">
+                                            <h5>{{ $item->title }}</h5>
+                                        </div>
+                                        <div class="salary p-2"><span>Monthly: {{ $item->salary_range }}</span></div>
+                                        <div class="desciption p-2">
+                                            <p>{{ getsubstring($item->description) }}</p>
+                                        </div>
+                                        <div class="skills p-2">{!! $skilltext !!}</div>
+                                        <div class="location d-flex justify-content-between p-2">
+                                            <div>
+                                                <small>
+                                                    <i
+                                                        class="fa fa-map-marker"></i>&nbsp;<span>{{ $item->location }}</span></small>
+                                            </div>
+                                            <div>
+                                                <small>Application Deadline:
+                                                    {!! $item->application_end_date !== null
+                                                        ? "<span class='text-warning'>" . date('j MM YYY', strtotime($item->application_end_date)) . '</span>'
+                                                        : "<span class='text-warning'>Not specified</span>" !!}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <section id="job-pagination" class="job-pagination section mt-3 bg-white p-2">
+                                <div class="container">
+                                    <div class="d-flex justify-content-center">
+                                        <ul>
+                                            {!! $jobs->links() !!}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mt-1">
+                            <div class="card-header bg-white">
+                                <h5>Filter Options</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Experience</p>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox"
+                                        id="experienceCheckEntry"name="experienceLevel" value="Entry">&nbsp;
+                                    <label class="form-check-label" for="experienceCheckEntry">Entry Level</label>
+                                </div>
+
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox"
+                                        id="experienceCheckIntermediate"name="experienceLevel" value="Intermediate">&nbsp;
+                                    <label class="form-check-label" for="experienceCheckIntermediate">Intermediate
+                                        Level</label>
+                                </div>
+
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox" id="experienceCheckExpert"
+                                        name="experienceLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="experienceCheckExpert">Expert Level</label>
+                                </div>
+                                <hr>
+
+                                <p>Education</p>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2 mb-0" type="checkbox" id="educationLevelCertificate"
+                                        name="educationLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="educationLevelCertificate">Certificate</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2 mb-0" type="checkbox" id="educationLevelDiploma"
+                                        name="educationLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="educationLevelDiploma">Diploma</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2 mb-0" type="checkbox" id="educationLevelDegree"
+                                        name="educationLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="educationLevelDegree">Degree</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2 mb-0" type="checkbox" id="educationLevelMasters"
+                                        name="educationLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="educationLevelMasters">Masters</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input me-2 mb-0" type="checkbox"
+                                        id="educationLevelDoctorate" name="educationLevel" value="Expert">&nbsp;
+                                    <label class="form-check-label" for="educationLevelDoctorate">Doctorate</label>
+                                </div>
+                                <hr>
+                                <p>Sort by Location</p>
+                                <div id="jobLocations"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="">
-                    <div class="card">
-                        <div class="card-header bg-white">
-                            <h2 class="mt-3 mb-3"><b>Opportunities You May Like</b></h2>
-                        </div>
-                        <div class="card-body" id="jobrendersection">
-
-                            {{-- <div class="job"><div class="title mt-2 mb-2"><h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui, nulla.</h3></div><div class="salary mb-2"><span>Monthly: Ksh. 5000</span></div><div class="desciption"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta amet numquam obcaecati quod, fugiat optio non molestias tempora, consequuntur perspiciatis saepe error eius quam consectetur molestiae est architecto. Repellat ea enim quisquam, porro doloremque soluta dicta. Odit temporibus nihil veritatis?</p></div><div class="skills"><span>Web Development</span><span>API design</span><span>Responsive design</span><span>Javascript</span><span>HTML</span><span>CSS</span></div><div class="location mt-3 d-flex justify-content-between"><div><i class="fa-solid fa-location-dot"></i> <span>Westlands Nairobi, Kenya</span></div><div>2023 -08 -23</div></div></div> --}}
-
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </section>
-    </main>
+    </section>
 
     <div class="modal fade" id="jobDetailsModalToggle" aria-hidden="true" aria-labelledby="jobDetailsModalToggleLabel"
         tabindex="-1">
@@ -59,7 +209,6 @@
     </div>
 @endsection
 
-
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/job.js') }}"></script>
+    <script src="{{ asset('js/job.js') }}"></script>
 @endsection

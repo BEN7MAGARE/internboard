@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Forgot Password @parent
 @endsection
 
 @section('content')
-    <main>
+    <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-5">
                 <div class="card mt-5 mb-5">
@@ -34,5 +34,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 @endsection

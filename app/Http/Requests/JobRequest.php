@@ -32,6 +32,7 @@ class JobRequest extends FormRequest
             'salary_range' => ['required','string'],
             'title' => ['required','string'],
             'description' => ['required','string'],
+            'application_end_date'=>['required','string'],
             'start_date' => ['required','string'],
             'no_of_positions' => ['required', 'numeric']
         ];

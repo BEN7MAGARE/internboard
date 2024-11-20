@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Employer Sign up @parent
 @endsection
 
 @section('content')
-    <main>
+    <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-7">
-                <div class="card mt-5 mb-5">
+                <div class="card mt-5 mb-5 radius-image p-2">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="" height="80px">
+                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2"><strong>Join as Corporate</strong></h4>
                     </div>
 
@@ -48,7 +48,7 @@
                             </div>
 
                             <hr>
-                                <h5><b>Personal Details</b></h5>
+                                <h5><b>Organization Contact Person Details</b></h5>
                             <hr>
 
                             <div class="row">
@@ -80,14 +80,28 @@
 
                                 <div class="col-md-6 form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control " name="password"
-                                        id="password" required>
+                                        <div class="input-group">
+                                        <input type="password"
+                                            class="form-control @error('password') invalid-input:'' @enderror"
+                                            name="password" id="password" autocomplete="password" required>
+
+                                        <div class="input-group-text showRegisterPassword">
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6 form-group">
                                     <label for="passwordConfirmation">Confirm Password</label>
-                                    <input type="password" class="form-control " name="password_confimation"
-                                        id="passwordConfirmation" autocomplete="password_confimation" required>
+                                    <div class="input-group">
+                                        <input type="password"
+                                            class="form-control @error('password') invalid-input:'' @enderror"
+                                            name="password_confimation" id="passwordConfirmation" autocomplete="password"
+                                            required>
+                                        <div class="input-group-text showRegisterPassword">
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -101,15 +115,15 @@
                                     {{ __('Already registered?') }}
                                 </a>
 
-                                <button type="submit" class="btn btn-primary btn-md">Submit </button>
+                                <button type="submit" class="btn btn-primary btn-md" id="employerCreateSubmit"><i class="fa fa-server"></i> Submit </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/corporate.js') }}"></script>
+    <script src="{{ asset('js/corporate.js') }}"></script>
 @endsection

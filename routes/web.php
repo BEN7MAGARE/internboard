@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::view('contact', 'contact')->name('contact');
+Route::view('about', 'about')->name('about');
 
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
@@ -59,4 +60,11 @@ Route::get('application-cvdownload/{id}',[ApplicationsController::class, 'downlo
 Route::get('download/{file}', [ApplicationsController::class,'download'])->name('download.file');
 
 Route::post('applications-select', [ApplicationsController::class, 'select'])->name('applications.select');
+
+Route::get('elearning', [ApplicationsController::class])->name('elearning');
+
+Route::get('jobs-locations', [JobsController::class,'jobsLocations']);
+
+Route::post('profileimage', [ProfileController::class,'changeImage']);
+
 require __DIR__ . '/auth.php';

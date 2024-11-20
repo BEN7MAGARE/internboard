@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Sign in @parent
 @endsection
 
 @section('content')
-    <main>
+    <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
-            <div class="col-md-5">
-                <div class="card mt-5 mb-5">
+            <div class="col-md-6">
+                <div class="card mt-5 mb-5 radius-image p-4">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="" height="80px">
+                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2"><strong>Sign In</strong></h4>
                     </div>
 
@@ -35,9 +35,15 @@
 
                                 <div class="col-md-12 form-group">
                                     <label for="password">Password</label>
-                                    <input type="password"
-                                        class="form-control form-control-lg @error('password') invalid-input:'' @enderror"
-                                        name="password" id="password" autocomplete="password" required>
+                                    <div class="input-group">
+                                        <input type="password"
+                                            class="form-control form-control-lg @error('password') invalid-input:'' @enderror"
+                                            name="password" id="password" autocomplete="password" required>
+
+                                        <div class="input-group-text" id="showLoginPassword">
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                    </div>
                                     @error('password')
                                         <div class="invalid-feedback">
                                             <p class="text-danger">{{ $message }}</p>
@@ -84,5 +90,23 @@
                 </div>
             </div>
         </div>
-    </main>
+    </section>
+@endsection
+
+@section('footer_scripts')
+<script>
+    (function() {
+        const showLoginPassword = $('#showLoginPassword');
+
+        showLoginPassword.on("click", function () {
+        if ($('#password').attr("type") == "password") {
+            $('#password').attr("type", "text");
+            showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
+        } else {
+            $('#password').attr("type", "password");
+            showLoginPassword.html('<i class="fa fa-eye"></i>');
+        }
+    });
+    })()
+</script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
 use App\Models\College;
 use App\Models\Corporate;
 use App\Models\User;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -113,6 +115,8 @@ class RegisteredUserController extends Controller
         ]);
         DB::commit();
 
+        // Mail::to($user->email)->send(new WelcomeMail($user));
+
         Auth::login($user);
 
         return json_encode(['status' => "success", 'message' => 'Corporate account created successfully. Check your email and verify before you proceed.', 'url' => '/jobs/create']);
@@ -132,6 +136,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->user["password"]),
         ]);
         DB::commit();
+
+        Mail::to($user->email)->send(new WelcomeMail($user));
 
         Auth::login($user);
 

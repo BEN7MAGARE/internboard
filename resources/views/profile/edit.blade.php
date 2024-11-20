@@ -1,24 +1,33 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Profile @parent
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('content')
-    <section class="section profile" style="background:#EAFAF1;">
-        <div class="container">
+    <section class="main-content">
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li class="current">ProFile</li>
+                    </ol>
+                </div>
+            </nav>
+        </div>
+
+        <div class="container mt-2 mb-2">
             <div class="row">
-                <div class="col-xl-3 mb-4">
+                <div class="col-xl-3 mb-4 card">
                     @include('profile.partials.sidebarnav')
                 </div>
-
                 <div class="col-xl-9">
-
                     <div class="card">
                         <div class="card-body pt-3">
                             <ul class="nav nav-tabs nav-tabs-bordered">
@@ -185,8 +194,8 @@
         </div>
     </section>
 
-    <div class="modal fade" id="updateProdileDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -261,9 +270,7 @@
                                 </div>
                             </div>
 
-                            <hr>
-
-                            <div class="col-md-3 form-group mb-1">
+                            <div class="col-md-4 form-group mb-1">
                                 <label for="specialization">Specialization</label>
                                 <div class="input-group">
                                     <input name="specialization" value="{{ auth()->user()->profile?->specialization }}"
@@ -272,7 +279,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 form-group mb-1">
+                            <div class="col-md-4 form-group mb-1">
                                 <label for="jobLevel">Level of seniority</label>
                                 <div class="input-group">
                                     <select name="level" id="jobLevel" class="form-select">
@@ -296,7 +303,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 form-group mb-1">
+                            <div class="col-md-4 form-group mb-1">
                                 <label for="yearsOfExperience">Years of experience</label>
                                 <div class="input-group">
                                     <input name="years_of_experience"
@@ -305,7 +312,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 form-group mb-1" id="SkillsSection">
+                            <div class="col-md-12 form-group mb-1" id="SkillsSection">
                                 <label for="skills">Skills</label>
                                 <div class="form-group">
                                     <select name="skills" id="skillsSelect" class="form-control form-control-lg"
@@ -348,17 +355,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2 form-group mb-1">
+                            <div class="col-md-3 form-group mb-1">
                                 <label for="jobEndDate">End Date</label>
-                                <div class="input-group">
+                                <div class="input-group d-flex gap-2">
                                     <input name="jobEndDate" type="date" class="form-control" id="jobEndDate">
+                                     <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i
+                                        class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
-
-                            <div class="col-md-1 mt-4">
-                                <button class="btn btn-primary btn-sm" type="button" id="jobAddToggle"><i
-                                        class="bi bi-plus"></i> Add</button>
-                            </div>
+                            
 
                             <div id="jobsAddFeedback"></div>
                             <hr>
@@ -379,7 +384,7 @@
                                                         class="endDate">{{ $item->end_date }}</span></p>
                                             </div>
                                             <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm"
-                                                    id="deleteJobToggle"><i class="bi bi-trash-fill"></i></button></div>
+                                                    id="deleteJobToggle"><i class="fa fa-trash"></i></button></div>
                                         </div>
                                     @endforeach
                                 @endif
@@ -420,7 +425,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 form-group mb-1">
+                            <div class="col-md-4 form-group mb-1">
                                 <label for="educationStartDate">Start Date</label>
                                 <div class="input-group">
                                     <input name="educationStartDate" type="date" class="form-control"
@@ -428,18 +433,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 form-group mb-1">
+                            <div class="col-md-4 form-group mb-1">
                                 <label for="educationEndDate">End date</label>
-                                <div class="input-group">
+                                <div class="input-group di-flex gap-2">
                                     <input name="educationEndDate" type="date" class="form-control"
                                         id="educationEndDate">
+                                    <button class="btn btn-secondary btn-sm" type="button" id="educationAddToggle"><i
+                                        class="fa fa-plus"></i>Add</button>
                                 </div>
                             </div>
 
-                            <div class="col-md-2 mt-4">
-                                <button class="btn btn-primary btn-sm" type="button" id="educationAddToggle"><i
-                                        class="bi bi-plus"></i>Add</button>
-                            </div>
+
                             <div id="educationFeedback"></div>
 
                             <div class="alert alert-info" id="educationListSection">
@@ -539,6 +543,7 @@
                     <div class="modal-footer">
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </form>
@@ -547,8 +552,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="financeModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="updateProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="financeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -609,8 +614,7 @@
                             <button class='btn btn-primary btn-md' type="submit"><i class="fa fa-save fa-lg fa-fw"></i>
                                 Save
                             </button>
-                            <button class='btn btn-outline-warning btn-md' type="reset"><i class="fa fa-broom fa-lg fa-fw"></i>
-                                Clear Fields</button>
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
@@ -620,6 +624,6 @@
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/profile.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/profile.js') }}"></script>
 @endsection

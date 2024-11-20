@@ -80,7 +80,7 @@ class ApplicationsController extends Controller
         if (auth()->user()->role === "college") {
             $college_id = auth()->user()->college_id;
             $applications = DB::select("CALL sp_getschoolapplicants($college_id,'$status')");
-            return view('profile.schoolapplicants', compact('applications'));
+            return view('profile.schoolapplicants', compact('applications', 'status'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
         }
