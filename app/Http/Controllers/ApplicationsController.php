@@ -13,7 +13,7 @@ class ApplicationsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("auth");
+        $this->middleware("auth")->except('elearning');
         $this->application = new Application();
         $this->job = new Job();
         $this->user = new User();
@@ -116,5 +116,10 @@ class ApplicationsController extends Controller
             $application->update();
         }
         return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
+    }
+
+    function elearning()
+    {
+        return view('comingsoon');
     }
 }

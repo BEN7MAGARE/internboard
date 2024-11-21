@@ -11,7 +11,7 @@
                 <div class="card mt-5 mb-5 radius-image p-4">
 
                     <div class="card-header bg-white text-center">
-                        {{-- <img src="{{ asset('images/logo.png') }}" alt="" height="80px"> --}}
+                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2"><strong>Join as University / College </strong></h4>
                     </div>
 

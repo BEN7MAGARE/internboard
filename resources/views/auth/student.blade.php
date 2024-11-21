@@ -12,7 +12,7 @@
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('assets/img/logo.png') }}" alt="" height="80px">
+                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
                         <h4 class="mt-2 mb-2"><strong>Create Account</strong></h4>
                     </div>
                     <form action="{{ route('register') }}" method="post" id="studentSignupForm">

@@ -61,7 +61,7 @@ Route::get('download/{file}', [ApplicationsController::class,'download'])->name(
 
 Route::post('applications-select', [ApplicationsController::class, 'select'])->name('applications.select');
 
-Route::get('elearning', [ApplicationsController::class])->name('elearning');
+Route::get('elearning', [ApplicationsController::class,'elearning'])->name('elearning');
 
 Route::get('jobs-locations', [JobsController::class,'jobsLocations']);
 

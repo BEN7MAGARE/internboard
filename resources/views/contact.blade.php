@@ -20,7 +20,7 @@
             </div>
         </div>
     </section>
-   
+
     <section class="w3l-contact-1 py-5" id="contact">
         <div class="contacts-9 py-lg-5 py-md-4">
             <div class="container">
@@ -30,17 +30,16 @@
                             <h6 class="title-subhny">Say Hello</h6>
                             <h3 class="title-w3l mb-2">Get In Touch
                             </h3>
-                            <p class="mb-sm-5 mb-4">Start working with Us that can provide everything you need to generate
-                                awareness,
-                                drive traffic,
-                                connect.We guarantee that you’ll be able to have any issue resolved within 24 hours.</p>
+                            <p class="mb-sm-5 mb-4">
+
+                            </p>
                             <div class="cont-top">
                                 <div class="cont-left text-center">
                                     <span class="fas fa-phone-alt"></span>
                                 </div>
                                 <div class="cont-right">
                                     <h5>Phone number</h5>
-                                    <p><a href="tel:+(21) 255 088 4943">+(21) 255 088 4943</a></p>
+                                    <p><a href=""></a></p>
                                 </div>
                             </div>
                             <div class="cont-top margin-up">
@@ -49,7 +48,7 @@
                                 </div>
                                 <div class="cont-right">
                                     <h5>Send Email</h5>
-                                    <p><a href="mailto:DigitMarkrting@mail.com" class="mail">DigitMarkrting@mail.com</a>
+                                    <p><a href="mailto:dalma-project@tukenya.ac.ke" class="mail">dalma-project@tukenya.ac.ke</a>
                                     </p>
                                 </div>
                             </div>
@@ -59,7 +58,7 @@
                                 </div>
                                 <div class="cont-right">
                                     <h5>Office Address</h5>
-                                    <p class="pr-lg-5">Address here, 434 Agency Honey street,<br> London, UK - 62617.</p>
+                                    <p class="pr-lg-5">Haile Salesie Avenue,<br> Nairobi, Kenya.</p>
                                 </div>
                             </div>
                         </div>
@@ -67,10 +66,7 @@
                     <div class="col-lg-7 cont-details mt-lg-0 mt-5">
                         <div class="map-content-9">
                             <div class="map-iframe">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317718.69319292053!2d-0.3817765050863085!3d51.528307984912544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C+UK!5e0!3m2!1sen!2spl!4v1562654563739!5m2!1sen!2spl"
-                                    width="100%" height="400" frameborder="0" style="border: 0px;"
-                                    allowfullscreen=""></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8051498733253!2d36.820422777559834!3d-1.2912535322456247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10df5a23385d%3A0x15238033c2bcdc3b!2sThe%20Technical%20University%20Of%20Kenya!5e0!3m2!1sen!2ske!4v1732188062688!5m2!1sen!2ske" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
@@ -78,8 +74,8 @@
             </div>
         </div>
     </section>
-    <!-- /contact1 -->
-    <!-- contact2 -->
+
+    
     <section class="w3l-contact-1 w3hny-form-btm py-5" id="contact">
         <div class="contacts-9 py-lg-5 py-md-4">
             <div class="container">
@@ -89,8 +85,9 @@
                         Don't hesitate to contact us <br> anytime with questions
                     </h3>
                 </div>
+
                 <div class="contactct-fm map-content-9">
-                    <form action="" class="pt-lg-4" method="post">
+                    <form action="#" class="pt-lg-4" method="post">
                         <div class="twice-two">
                             <input type="text" class="form-control" name="w3lName" id="w3lName" placeholder="Name"
                                 required="">
