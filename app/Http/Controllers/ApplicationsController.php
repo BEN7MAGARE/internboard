@@ -24,7 +24,7 @@ class ApplicationsController extends Controller
     public function index()
     {
         $query = $this->application->query();
-        if (auth()->user()->role === "student") {
+        if (auth()->user()->role === "student" || auth()->user()->role === "worker") {
             $query->where('user_id', auth()->id());
         } else if (auth()->user()->role === 'corporate') {
             $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->pluck('id');

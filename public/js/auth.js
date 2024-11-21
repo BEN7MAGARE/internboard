@@ -30,44 +30,38 @@
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
         let $this = $(this),
-            first_name = firstName.val(),
-            last_name = lastName.val(),
-            role = userRole.val(),
-            email = emailInput.val(),
-            phone = phoneInput.val(),
             password = passwordInput.val(),
             password_confirmation = passwordConfirmation.val(),
-            submit = $this.find("button[type='submit']"),
             errors = [], college_id = collegeID.val(),
             emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
             phoneNumberRegex = /^(\+254|0)[17]\d{8}$/,
             token = $this.find("input[name='_token']").val();
         studentSubmit.prop({ disabled: true });
-        studentSubmit.html('<i class="fa fa-server"></i> Save');
+        studentSubmit.text('Processing...');
         let data = {
             _token: token,
-            college_id: college_id,
-            first_name: first_name,
-            last_name: last_name,
-            role: role,
-            email: email,
-            phone: phone,
+            // college_id: college_id,
+            first_name: firstName.val(),
+            last_name: lastName.val(),
+            role: userRole.val(),
+            email: emailInput.val(),
+            phone: phoneInput.val(),
             password: password,
             password_confirmation: password_confirmation,
         };
         if (password !== password_confirmation) {
             errors.push('Incorrect password confirmation');
         }
-        if (!emailRegex.test(email)) {
+        if (!emailRegex.test(data.email)) {
             errors.push("Inalid emai address");
         }
-        if (first_name.length < 2) {
+        if (data.first_name.length < 2) {
             errors.push('Invalid first name');
         }
-        if (last_name.length < 2) {
+        if (data.last_name.length < 2) {
             errors.push("Invalid last name");
         }
-        if (!phoneNumberRegex.test(phone)) {
+        if (!phoneNumberRegex.test(data.phone)) {
             errors.push("Invalid phone number")
         }
         if (errors.length > 0) {

@@ -21,30 +21,11 @@
         <h6>Tel: {{ auth()->user()->phone }} </h6>
 
         <div class="">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
         </div>
-
-        {{-- @if (auth()->user()->image !== null && auth()->user()->image !== '')
-            <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="Profile"
-                class="rounded-circle">
-        @else
-            <img src="{{ asset('assets/img/avatar.png') }}" alt="Profile" class="rounded-circle">
-        @endif
-
-        <h2>{{ }}
-        </h2>
-
-        <h3>{{ auth()->user()->profile?->specialization }}</h3>
-
-        <div class="social-links mt-2">
-            <a href="{{ auth()->user()->twitter }}" class="twitter text-primary"><i class="bi bi-twitter"></i></a>
-            <a href="{{ auth()->user()->facebook }}" class="facebook text-primary"><i class="bi bi-facebook"></i></a>
-            <a href="{{ auth()->user()->instagram }}" class="instagram text-primary"><i class="bi bi-instagram"></i></a>
-            <a href="{{ auth()->user()->linkedin }}" class="linkedin text-primary"><i class="bi bi-linkedin"></i></a>
-        </div> --}}
 
     </div>
 
@@ -55,7 +36,7 @@
                 <a href="{{ route('profile.edit') }}" aria-current="true"><i
                         class="fa fa-user text-warning"></i>&nbsp;My Profile</a>
             </li>
-            @if (auth()->user()->role === 'student')
+            @if (auth()->user()->role === 'student' || auth()->user()->role=="worker")
                 <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
                     <a href="{{ route('applications.index') }}"><i
                             class="fa fa-window-maximize text-warning"></i>&nbsp;My Applications</a>

@@ -141,7 +141,7 @@
                                         @endif
 
                                     </div>
-                                    @if (auth()->user()->role === 'student')
+                                    @if (auth()->user()->role === 'student'||auth()->user()->role === "worker")
                                         <div class="mt-2 text-center">
                                             <a href="#" data-bs-toggle="modal"
                                                 data-bs-target="#updateProdileDetailsModal" class="btn btn-primary">Update
@@ -363,7 +363,7 @@
                                         class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
-                            
+
 
                             <div id="jobsAddFeedback"></div>
                             <hr>

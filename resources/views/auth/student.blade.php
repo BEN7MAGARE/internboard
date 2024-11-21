@@ -13,15 +13,13 @@
 
                     <div class="card-header bg-white text-center">
                         <img src="{{ asset('assets/img/logo.png') }}" alt="" height="80px">
-                        <h4 class="mt-2 mb-2"><strong>Join as student</strong></h4>
+                        <h4 class="mt-2 mb-2"><strong>Create Account</strong></h4>
                     </div>
-                    <br>
-
                     <form action="{{ route('register') }}" method="post" id="studentSignupForm">
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12 form-group">
+                                {{-- <div class="col-md-12 form-group">
                                     <label for="college_id">College</label>
                                     <select name="college_id" id="college_id" class="form-select form-select-lg" required>
                                         <option value="">Select One</option>
@@ -29,7 +27,7 @@
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6 form-group">
                                     <label for="firstName">First name</label>
@@ -85,7 +83,9 @@
 
                             </div>
                         </div>
+
                         <div id="studentfeedbackfeedback"></div>
+
                         <div class="card-footer bg-white d-flex align-items-center justify-content-between p-2">
                             <a class="underline text-sm text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-red-800"
                                 href="{{ route('login') }}">
@@ -94,6 +94,7 @@
 
                             <button type="submit" class="btn btn-primary" id="studentSubmit">Submit</button>
                         </div>
+
                     </form>
                 </div>
             </div>

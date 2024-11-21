@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $role = 'student';
+        $role = 'worker';
         $colleges = $this->college->get();
         return view('auth.student', compact('role', 'colleges'));
     }
@@ -76,7 +76,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'college_id' => ['required', 'exists:colleges,id'],
+            // 'college_id' => ['nullable', 'exists:colleges,id'],
             'first_name' => ['required', 'string', 'max:60'],
             'last_name' => ['required', 'string', 'max:60'],
             'email' => ['required', 'string', 'email', 'max:80', 'unique:' . User::class],
@@ -86,7 +86,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'college_id' => $validated["college_id"],
+            // 'college_id' => $validated["college_id"],
             'first_name' => $validated["first_name"],
             'last_name' => $validated["last_name"],
             'email' => $validated["email"],
@@ -94,9 +94,11 @@ class RegisteredUserController extends Controller
             'role' => $validated["role"],
             'password' => Hash::make($validated["password"]),
         ]);
-
         Auth::login($user);
 
+        if ($validated["role"] == "worker") {
+            return json_encode(['status' => 'success', 'message' => 'Account created succcessfully and email verification has been sent to your email. Please click on the email to verify your account. ', 'url' => '/profile']);
+        }
         return json_encode(['status' => 'success', 'message' => 'Account created succcessfully and email verification has been sent to your email. Please click on the email to verify your account. ', 'url' => '/jobs']);
     }
 
