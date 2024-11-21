@@ -81,5 +81,4 @@
 @section('footer_scripts')
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/job.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/profile.js') }}"></script> --}}
 @endsection

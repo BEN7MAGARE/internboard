@@ -69,7 +69,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="userRoleSelection" required value="student">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label" for="userRoleSelection"><b>Join as Student</b> <br>
+                                        <label class="form-check-label" for="userRoleSelection"><b>Join as Job Seeker</b> <br>
                                             <span>Seeking access to internship / employment opportunities.</span>
                                         </label>
                                     </div>
@@ -87,12 +87,8 @@
                 </div>
 
                 <div class="col-md-5">
-                    <div class="mt-5 mb-5 p-4 radius-image">
-                        <figure class="figure">
-                            <img src="{{ asset('images/banner5.jpg') }}" class="figure-img img-fluid rounded"
-                                alt="">
-                            <figcaption class="figure-caption"></figcaption>
-                        </figure>
+                    <div class="mt-5 mb-5 p-4 radius-image" style="background: url('/images/banner5.jpg');">
+
                     </div>
                 </div>
             </div>

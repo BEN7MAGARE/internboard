@@ -1,7 +1,6 @@
 /.phpunit.cache
 /node_modules
 /public/build
-/public/images
 /public/hot
 /public/applicant_resources
 /public/profiles
