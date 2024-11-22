@@ -141,6 +141,7 @@
         }
         if (errors.length > 0) {
             showError(errors.join(', '), '#invitationFeedback')
+            submitInvitation.prop('disabled', false);
         } else {
             $.ajaxSetup({
                 headers: {
@@ -187,7 +188,6 @@
         let locations = $('#locations>li.active').map(function () {
             return $(this).data('id');
         }).get();
-
         const data = {
             _token: jobsSearchForm.find(`input[name="_token"]`).val(),
             category_id: searchCategoryID.val(),
@@ -232,5 +232,4 @@
         let location = $(this).data('id');
         filterJobs();
     });
-
 })();

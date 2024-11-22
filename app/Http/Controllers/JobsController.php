@@ -76,7 +76,7 @@ class JobsController extends Controller
 
     public function apply($ref_no)
     {
-        if (auth()->user()->role === "student") {
+        if (auth()->user()->role === "student" || auth()->user()->role ==="worker") {
             $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
             $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
             $applied = false;
