@@ -117,7 +117,7 @@
 
     const applicantsSelectForm = $('#applicantsSelectForm'),
         applicantSelectToggle = $('.applicantSelectToggle'),
-        invitationLetter = $('#invitationLetter');
+        invitationLetter = $('#invitationLetter'), submitInvitation = $('#submitInvitation');
 
     applicantsSelectForm.on('submit', function (event) {
         event.preventDefault();
@@ -128,6 +128,7 @@
                 applicants.push({ applicationid: $(item).val() })
             }
         });
+        submitInvitation.prop('disabled', true);
         const data = {
             applicants: JSON.stringify(applicants),
             message: invitationLetter.val()
@@ -151,6 +152,7 @@
                 url: "/applications-select",
                 data: data,
                 success: function (params) {
+                    submitInvitation.prop('disabled', false);
                     console.log(params);
                     let result = JSON.parse(params);
                     if (result.status === "success") {
@@ -161,6 +163,7 @@
                     }
                 },
                 error: function (error) {
+                    submitInvitation.prop('disabled', false);
                     console.error(error);
                     showError("Error occurred during processing", "#invitationFeedback");
                 },

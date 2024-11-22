@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 Route::view('contact', 'contact')->name('contact');
 Route::view('about', 'about')->name('about');
 
+
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
 Route::post('jobs-search', [JobsController::class,'search'])->name('jobs.search');

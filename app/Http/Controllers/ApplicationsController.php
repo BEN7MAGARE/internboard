@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Invitation;
 use App\Models\Application;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationsController extends Controller
 {
@@ -107,13 +109,16 @@ class ApplicationsController extends Controller
 
     function select(Request $request)
     {
+        $corporate = auth()->user()->corporate;
         $applicants = json_decode($request->applicants, true);
         $message = $request->message;
         foreach ($applicants as $key => $value) {
-            $application = $this->application->find($value["applicationid"]);
+            $application = $this->application->with('applicant')->find($value["applicationid"]);
             $application->status = "selected";
             $application->invitationletter = $message;
             $application->update();
+            Mail::to("magaben33@gmail.com", $application->applicant->first_name . ' ' . $application->applicant->last_name)
+                ->send(new Invitation("Interview Invitation", $message, $corporate->email, $corporate->name));
         }
         return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
     }

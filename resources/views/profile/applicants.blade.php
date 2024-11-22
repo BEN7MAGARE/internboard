@@ -73,19 +73,19 @@
                                                 <div class="row">
                                                     <div class="col-md-10">
                                                         <a href="{{ route('student.details', $item->id) }}"
-                                                            class="btn btn-light btn-lg" target="__blank"><i
-                                                                class="bi bi-arrow-down-circle"></i><br> View Profile</a>
+                                                            class="btn btn-light" target="__blank"><i
+                                                                class="fa fa-user"></i><br> View Profile</a>
 
                                                         <a href="{{ route('application.cvdownload', $item->id) }}"
-                                                            class="btn btn-light btn-lg" target="__blank"><i
-                                                                class="bi bi-arrow-down-circle"></i> <br>Download CV</a>
+                                                            class="btn btn-light" target="__blank"><i
+                                                                class="fa fa-arrow-down"></i> <br>Download CV</a>
                                                         @php
                                                             $files = json_decode($item->files, 1);
                                                         @endphp
                                                         @foreach ($files as $file)
                                                             <a href="{{ route('download.file', $file) }}"
-                                                                class="btn btn-light btn-lg" target="__blank"><i
-                                                                    class="bi bi-arrow-down-circle"></i> <br>Download</a>
+                                                                class="btn btn-light" target="__blank"><i
+                                                                    class="fa fa-arrow-down"></i> <br>Download</a>
                                                         @endforeach
                                                     </div>
 
@@ -119,7 +119,7 @@
                                         </div>
                                         <div id="invitationFeedback"></div>
                                         <div class="form-group text-end">
-                                            <button type="submit" class="btn btn-primary">Save and send invitation</button>
+                                            <button type="submit" class="btn btn-primary" id="submitInvitation">Save and send invitation</button>
                                         </div>
                                     </div>
                                 @endif
