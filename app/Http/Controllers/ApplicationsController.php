@@ -112,6 +112,7 @@ class ApplicationsController extends Controller
         $corporate = auth()->user()->corporate;
         $applicants = json_decode($request->applicants, true);
         $message = $request->message;
+        return $message;
         foreach ($applicants as $key => $value) {
             $application = $this->application->with('applicant')->find($value["applicationid"]);
             $application->status = "selected";
