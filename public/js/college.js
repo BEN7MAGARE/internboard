@@ -41,7 +41,8 @@
         emailInput = $("#email"),
         phoneInput = $("#phone"),
         passwordInput = $("#password"),
-        passwordConfirmation = $("#passwordConfirmation");
+        passwordConfirmation = $("#passwordConfirmation"),
+        showRegisterPassword = $('#showRegisterPassword');
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
@@ -156,4 +157,17 @@
                 });
         }
     });
+
+    showRegisterPassword.on("click", function () {
+        if (passwordInput.attr("type") == "password") {
+            passwordInput.attr("type", "text");
+            passwordConfirmation.attr("type", "text");
+            showRegisterPassword.html('<i class="fa fa-eye-slash"></i>');
+        } else {
+            passwordInput.attr("type", "password");
+            passwordConfirmation.attr("type", "password");
+            showRegisterPassword.html('<i class="fa fa-eye"></i>');
+        }
+    });
+    
 })();

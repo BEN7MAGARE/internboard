@@ -67,59 +67,67 @@
                         </form>
 
                         <div>
-                            <div id="jobrendersection">
-                                @php
-                                    function getSubstring($string)
-                                    {
-                                        if (strlen($string) > 150) {
-                                            return substr($string, 0, 150) . ' . . . .';
-                                        } else {
-                                            return $string;
-                                        }
-                                    }
-                                @endphp
-                                @foreach ($jobs as $item)
+                            @if (count($jobs) <= 0)
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Holy guacamole!</strong> You may need to update your profile to see jobs that match your skill set <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-sm">Update your Profile </a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @else
+                                <div id="jobrendersection">
                                     @php
-                                        $skilltext = '';
-                                        foreach ($item->skills as $key => $skill) {
-                                            $skilltext .= "<span>$skill->name</span>";
+                                        function getSubstring($string)
+                                        {
+                                            if (strlen($string) > 150) {
+                                                return substr($string, 0, 150) . ' . . . .';
+                                            } else {
+                                                return $string;
+                                            }
                                         }
                                     @endphp
-                                    <div class="job bg-white rounded p-2" data-id="{{ $item->id }}">
-                                        <div class="title">
-                                            <h5>{{ $item->title }}</h5>
-                                        </div>
-                                        <div class="salary p-2"><span>Monthly: {{ $item->salary_range }}</span></div>
-                                        <div class="desciption p-2">
-                                            <p>{{ getsubstring($item->description) }}</p>
-                                        </div>
-                                        <div class="skills p-2">{!! $skilltext !!}</div>
-                                        <div class="location d-flex justify-content-between p-2">
-                                            <div>
-                                                <small>
-                                                    <i
-                                                        class="fa fa-map-marker"></i>&nbsp;<span>{{ $item->location }}</span></small>
+                                    @foreach ($jobs as $item)
+                                        @php
+                                            $skilltext = '';
+                                            foreach ($item->skills as $key => $skill) {
+                                                $skilltext .= "<span>$skill->name</span>";
+                                            }
+                                        @endphp
+                                        <div class="job bg-white rounded p-2" data-id="{{ $item->id }}">
+                                            <div class="title">
+                                                <h5>{{ $item->title }}</h5>
                                             </div>
-                                            <div>
-                                                <small>Application Deadline:
-                                                    {!! $item->application_end_date !== null
-                                                        ? "<span class='text-warning'>" . date('j MM YYY', strtotime($item->application_end_date)) . '</span>'
-                                                        : "<span class='text-warning'>Not specified</span>" !!}</small>
+                                            <div class="salary p-2"><span>Monthly: {{ $item->salary_range }}</span></div>
+                                            <div class="desciption p-2">
+                                                <p>{{ getsubstring($item->description) }}</p>
+                                            </div>
+                                            <div class="skills p-2">{!! $skilltext !!}</div>
+                                            <div class="location d-flex justify-content-between p-2">
+                                                <div>
+                                                    <small>
+                                                        <i
+                                                            class="fa fa-map-marker"></i>&nbsp;<span>{{ $item->location }}</span></small>
+                                                </div>
+                                                <div>
+                                                    <small>Application Deadline:
+                                                        {!! $item->application_end_date !== null
+                                                            ? "<span class='text-warning'>" . date('j MM YYY', strtotime($item->application_end_date)) . '</span>'
+                                                            : "<span class='text-warning'>Not specified</span>" !!}</small>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            <section id="job-pagination" class="job-pagination section mt-3 bg-white p-2">
-                                <div class="container">
-                                    <div class="d-flex justify-content-center">
-                                        <ul>
-                                            {!! $jobs->links() !!}
-                                        </ul>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            </section>
+
+                                <section id="job-pagination" class="job-pagination section mt-3 bg-white p-2">
+                                    <div class="container">
+                                        <div class="d-flex justify-content-center">
+                                            <ul>
+                                                {!! $jobs->links() !!}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+                            @endif
 
                         </div>
                     </div>

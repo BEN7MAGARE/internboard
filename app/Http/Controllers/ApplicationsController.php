@@ -90,7 +90,7 @@ class ApplicationsController extends Controller
 
     public function studentDetails($id)
     {
-        $student = $this->user->with('profile')->find($id);
+        $student = $this->user->with('profile','skills')->find($id);
         return view('profile.student', compact('student'));
     }
 

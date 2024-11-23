@@ -65,7 +65,6 @@ function composeJobs(jobs) {
     return job;
 }
 
-
 function getsubstring(string) {
     if (string.length > 150) {
         return string.slice(0, 150) + " . . . .";
@@ -73,3 +72,8 @@ function getsubstring(string) {
         return string;
     }
 }
+
+function validateImage(params) {
+
+}
+

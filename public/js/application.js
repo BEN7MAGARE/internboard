@@ -38,70 +38,6 @@
         $(target).children().remove();
     }
 
-    // if (select(".quill-editor-default")) {
-    //     new Quill(".quill-editor-default", {
-    //         theme: "snow",
-    //     });
-    // }
-
-    if (select(".quill-editor-default")) {
-        new Quill(".quill-editor-default", {
-            placeholder: "Write your cover letter here",
-            modules: {
-                toolbar: [
-                    [
-                        {
-                            font: [],
-                        },
-                        {
-                            size: [],
-                        },
-                    ],
-                    ["bold", "italic", "underline", "strike"],
-                    [
-                        {
-                            color: [],
-                        },
-                        {
-                            background: [],
-                        },
-                    ],
-                    [
-                        {
-                            script: "super",
-                        },
-                        {
-                            script: "sub",
-                        },
-                    ],
-                    [
-                        {
-                            list: "ordered",
-                        },
-                        {
-                            list: "bullet",
-                        },
-                        {
-                            indent: "-1",
-                        },
-                        {
-                            indent: "+1",
-                        },
-                    ],
-                    [
-                        "direction",
-                        {
-                            align: [],
-                        },
-                    ],
-                    ["link", "image", "video"],
-                    ["clean"],
-                ],
-            },
-            theme: "snow",
-        });
-    }
-
     const jobApplicationForm = $("#jobApplicationForm"),
         jobID = $("#jobID"),
         applicationReason = $("#applicationReason"),
@@ -124,7 +60,7 @@
                 if (allowedTypes.indexOf(file.type) === -1) {
                     showError(
                         "Invalid file type. Allowed types are: " +
-                            allowedTypes.join(", "),
+                        allowedTypes.join(", "),
                         "#cvError"
                     );
                     this.value = "";
@@ -172,48 +108,61 @@
     });
 
     jobApplicationForm.on("submit", function (event) {
-        event.preventDefault(), ($this = $(this));
-        const data = new FormData();
+        event.preventDefault();
+        const data = new FormData(),
+            $this = $(this), errors = [];
+        let fileSize = 0;
         data.append("job_id", jobID.val());
         data.append("reason", applicationReason.val());
         data.append("cover_letter", cover_letter.val());
         console.log(curriculumVitae);
         data.append("curriculum_vitae", curriculumVitae.files[0]);
         let files = otherFiles[0].files;
+        if (curriculumVitae.files[0].size > 1024 * 1024 * 2) {
+            errors.push("Curriculum vitae is more than 2mb. ");
+        }
         for (var i = 0; i < files.length; i++) {
+            fileSize += files[i].size;
             data.append("files[]", files[i]);
         }
-
-        showSpiner("#applyFeedback");
-
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
-            },
-        });
-
-        $.ajax({
-            method: "POST",
-            url: "/job/apply",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (params) {
-                console.log(params);
-                removeSpiner("#applyFeedback");
-                let result = JSON.parse(params);
-                if (result.status === "success") {
-                    showSuccess(result.message, "#applyFeedback");
-                    $this.trigger("reset");
-                } else {
-                    showError(result.message, "#advertFeedback");
-                }
-            },
-            error: function (error) {
-                console.error(error);
-                removeSpiner("#applyFeedback");
-                showError("Error occurred during processing", "#applyFeedback");
-            },
-        });
+        if (applicationReason.val().length <= 5) {
+            errors.push('Provide satisfactory reason for your application.');
+        }
+        if (cover_letter.val().length < 20) {
+            errors.push("Provide satisfactory cover letter.")
+        }
+        if (errors.length > 0) {
+            showError(errors.join(', '), '#applyFeedback');
+        } else {
+            showSpiner("#applyFeedback");
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+                },
+            });
+            $.ajax({
+                method: "POST",
+                url: "/job/apply",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (params) {
+                    console.log(params);
+                    removeSpiner("#applyFeedback");
+                    let result = JSON.parse(params);
+                    if (result.status === "success") {
+                        showSuccess(result.message, "#applyFeedback");
+                        $this.trigger("reset");
+                    } else {
+                        showError(result.message, "#advertFeedback");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                    removeSpiner("#applyFeedback");
+                    showError("Error occurred during processing", "#applyFeedback");
+                },
+            });
+        }
     });
 })();

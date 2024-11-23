@@ -73,19 +73,21 @@
                         </li>
                         @auth
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle {{ Request::url() == 'profile-jobs' || Request::url() == 'profile' || Request::url() == 'jobs-search' ? 'active' : '' }}" href="#" data-bs-toggle="dropdown"
-                                    aria-expanded="true"><i
+                                <a class="nav-link dropdown-toggle {{ Request::url() == 'profile-jobs' || Request::url() == 'profile' || Request::url() == 'jobs-search' ? 'active' : '' }}"
+                                    href="#" data-bs-toggle="dropdown" aria-expanded="true"><i
                                         class="fa fa-user"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;<i
                                         class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic"
                                     id="categoriesDropDownNav">
-                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="fa fa-user"></i>&nbsp;My Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                                class="fa fa-user"></i>&nbsp;My Profile</a></li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <a class="dropdown-item" href="route('logout')"
                                                 onclick="event.preventDefault();
-                                                this.closest('form').submit();"><i class="fa fa-sign-out-alt"></i>&nbsp;{{ __('Log Out') }}
+                                                this.closest('form').submit();"><i
+                                                    class="fa fa-sign-out-alt"></i>&nbsp;{{ __('Log Out') }}
                                             </a>
                                         </form>
                                     </li>
@@ -123,6 +125,19 @@
         </div>
     </header>
 
+    @if ($errors->any())
+        <div class="col-lg">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                </button>
+                @foreach ($errors->all() as $item)
+                    <strong>Error!</strong>
+                    {{ $item }}
+                @endforeach
+            </div>
+        </div>
+    @endif
+    
     @yield('content')
 
     <section class="w3l-footer-29-main">

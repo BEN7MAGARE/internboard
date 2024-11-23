@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -76,5 +78,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function corporate(): BelongsTo
     {
         return $this->belongsTo(Corporate::class, 'corporate_id');
+    }
+
+    /**
+     * The skills that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'user_skills', 'user_id', 'skill_id');
     }
 }

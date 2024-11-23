@@ -97,6 +97,22 @@
                                             </table>
                                         </div>
 
+                                        @php
+                                            $skills = auth()->user()->skills;
+                                        @endphp
+
+                                        @if ($skills->isNotEmpty())
+                                            <div class="skills-section mb-2">
+                                                <h5 class="mb-2">Skills</h5>
+
+                                                <div class="skills">
+                                                    @foreach ($skills as $item)
+                                                        <span>{{ $item->name }}</span>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+
                                         @if (auth()->user()->role === 'student')
                                             <div class="col-md-6">
                                                 @if (!empty($jobs) && !is_null($jobs))
@@ -141,7 +157,7 @@
                                         @endif
 
                                     </div>
-                                    @if (auth()->user()->role === 'student'||auth()->user()->role === "worker")
+                                    @if (auth()->user()->role === 'student' || auth()->user()->role === 'worker')
                                         <div class="mt-2 text-center">
                                             <a href="#" data-bs-toggle="modal"
                                                 data-bs-target="#updateProdileDetailsModal" class="btn btn-primary">Update
@@ -359,11 +375,10 @@
                                 <label for="jobEndDate">End Date</label>
                                 <div class="input-group d-flex gap-2">
                                     <input name="jobEndDate" type="date" class="form-control" id="jobEndDate">
-                                     <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i
-                                        class="fa fa-plus"></i> Add</button>
+                                    <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i
+                                            class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
-
 
                             <div id="jobsAddFeedback"></div>
                             <hr>
@@ -439,10 +454,9 @@
                                     <input name="educationEndDate" type="date" class="form-control"
                                         id="educationEndDate">
                                     <button class="btn btn-secondary btn-sm" type="button" id="educationAddToggle"><i
-                                        class="fa fa-plus"></i>Add</button>
+                                            class="fa fa-plus"></i>Add</button>
                                 </div>
                             </div>
-
 
                             <div id="educationFeedback"></div>
 

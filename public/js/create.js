@@ -158,6 +158,13 @@
         }
     });
 
+    applicationEndDate.on('change', function () {
+        const today = new Date($(this).val());
+        const formattedDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        console.log(formattedDate);
+        startDate.attr('min', formattedDate);
+    });
+
     jobCreateForm.on("submit", function (event) {
 
         event.preventDefault();

@@ -37,47 +37,83 @@
                             <div class="tab-content">
                                 <p class="small">{{ $student->profile?->summary }}</p>
                                 <div class="row">
-                                    <div class="mt-2">
-                                        <table class="table table-hover">
-                                            <tr>
-                                                <td><b>Full Name</b></td>
-                                                <td>{{ $student->first_name . ' ' . $student->last_name }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Education</b></td>
-                                                @if (!is_null($education) && !empty($education))
-                                                    <td>
-                                                        {{ $education[0]?->level . ' in ' . $education[0]?->course }}
-                                                    </td>
-                                                @else
-                                                    <td></td>
-                                                @endif
 
-                                            </tr>
-                                            <tr>
-                                                <td><b>Specialization</b></td>
-                                                <td>
-                                                    {{ $student->profile?->level . ' ' . $student->profile?->specialization . $student->profile?->years_of_experience }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Address</b></td>
-                                                <td>{{ $student->address }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Phone</b></td>
-                                                <td>{{ $student->phone }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Email</b></td>
-                                                <td>{{ $student->email }}</td>
-                                            </tr>
-                                        </table>
+                                    <div class="col-md-3">
+                                        @if ($student->image !== null)
+                                            <img src="{{ asset('profilepictures/' . $student->image) }}" alt="Profile"
+                                                class="rounded-circle img-fluid">
+                                        @else
+                                            <img src="{{ asset('images/avatar.png') }}" alt="Profile"
+                                                class="rounded-circle img-fluid">
+                                        @endif
                                     </div>
 
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <span><b>Full Name</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>{{ $student->first_name . ' ' . $student->last_name }}</span>
+                                            </div>
+                                            <hr>
+                                            <div class="col-4">
+                                                <span><b>Education</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                @if (!is_null($education) && !empty($education))
+                                                    <span>{{ $education[0]?->level . ' in ' . $education[0]?->course }}</span>
+                                                @endif
+                                            </div>
+                                            <hr>
+                                            <div class="col-4">
+                                                <span><b>Specialization</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>{{ $student->profile?->level . ' ' . $student->profile?->specialization . $student->profile?->years_of_experience }}</span>
+                                            </div>
+                                            <hr>
+                                            <div class="col-4">
+                                                <span><b>Address</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>{{ $student->address }}</span>
+                                            </div>
+                                            <hr>
+                                            <div class="col-4">
+                                                <span><b>Phone</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>{{ $student->phone }}</span>
+                                            </div>
+                                            <hr>
+                                            <div class="col-4">
+                                                <span><b>Email</b></span>
+                                            </div>
+                                            <div class="col-8">
+                                                <span>{{ $student->email }}</span>
+                                            </div>
+                                            <hr>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                @php
+                                    $skills = $student->skills;
+                                @endphp
+                                @if ($skills->isNotEmpty())
+                                    <div class="skills-section mb-3">
+                                        <h5 class="mb-2">Skills</h5>
+                                        <div class="skills">
+                                            @foreach ($student->skills as $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="row">
                                     @if ($student->role === 'student')
-                                    
                                         <div class="col-md-6">
                                             @if (!empty($jobs) && !is_null($jobs))
                                                 <h5 class="text-info">Work Experience</h5>
@@ -125,6 +161,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
 @endsection

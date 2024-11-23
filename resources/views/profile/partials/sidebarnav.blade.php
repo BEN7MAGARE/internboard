@@ -15,8 +15,11 @@
         </form>
         <a href="#" class="btn btn-warning btn-sm mt-1" id="changeProfileImageToggle"><i
                 class="fa fa-edit"></i></a>
-        <h4>{{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+        <h4 class="text-center">
+            {{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
         </h4>
+        <small>({{ auth()->user()->role }})</small>
+
         <h6>{{ auth()->user()->email }}</h6>
         <h6>Tel: {{ auth()->user()->phone }} </h6>
 
@@ -36,7 +39,7 @@
                 <a href="{{ route('profile.edit') }}" aria-current="true"><i
                         class="fa fa-user text-warning"></i>&nbsp;My Profile</a>
             </li>
-            @if (auth()->user()->role === 'student' || auth()->user()->role=="worker")
+            @if (auth()->user()->role === 'student' || auth()->user()->role == 'worker')
                 <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
                     <a href="{{ route('applications.index') }}"><i
                             class="fa fa-window-maximize text-warning"></i>&nbsp;My Applications</a>

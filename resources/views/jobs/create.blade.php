@@ -30,16 +30,13 @@
 
                                     <div class="col-md-12 mb-2">
                                         <label for="categoryID">Industry</label>
-                                        <select name="category_id" id="categoryID" class="form-select form-select-lg"
-                                            required>
-
+                                        <select name="category_id" id="categoryID" class="form-select form-select-lg">
                                         </select>
                                     </div>
 
                                     <div class="col-md-12 mb-2">
                                         <label for="employmentType">Employment Type</label>
-                                        <select name="type" id="employmentType" class="form-select form-select-lg"
-                                            required>
+                                        <select name="type" id="employmentType" class="form-select form-select-lg">
                                             <option value="">Select One</option>
                                             <option value="Internship">Internship</option>
                                             <option value="Part-time">Part Time</option>
@@ -52,7 +49,7 @@
 
                                     <div class="col-md-12 mb-2">
                                         <label for="jobType">Job Type</label>
-                                        <select name="job_type" id="jobType" class="form-select form-select-lg" required>
+                                        <select name="job_type" id="jobType" class="form-select form-select-lg">
                                             <option value="">Select One</option>
                                             <option value="Remote">Remote</option>
                                             <option value="On-site">On-Site</option>
@@ -63,7 +60,7 @@
                                     <div class="col-md-12 mb-2">
                                         <label for="experienceLevel">Experience Level</label>
                                         <select name="experience_level" id="experienceLevel"
-                                            class="form-select form-select-lg" required>
+                                            class="form-select form-select-lg">
                                             <option value="">Select One</option>
                                             <option value="Entry">Entry Level</option>
                                             <option value="Intermediate">Intermediate Level</option>
@@ -74,7 +71,7 @@
                                     <div class="col-md-12 mb-2">
                                         <label for="location">Location</label>
                                         <input type="text" class="form-control form-control-lg" name="location"
-                                            id="location" required>
+                                            id="location">
                                     </div>
                                 </div>
 
@@ -92,7 +89,8 @@
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <label for="educationLevel">Education Level</label>
-                                        <select name="education_level" id="educationLevel" class="form-select form-select-lg">
+                                        <select name="education_level" id="educationLevel"
+                                            class="form-select form-select-lg">
                                             <option value="">Select One</option>
                                             <option value="Certificate">Certificate</option>
                                             <option value="Diploma">Diploma</option>
@@ -139,23 +137,27 @@
                                     <div class="col-md-6 form-group">
                                         <label for="startDate">Application deadline</label>
                                         <input type="date" name="applicationEndDate" id="applicationEndDate"
-                                            class="form-control form-control-lg" required>
+                                            class="form-control form-control-lg" min="{{ date('Y-m-d') }}" required>
                                     </div>
 
                                     <div class="col-md-6 form-group">
                                         <label for="startDate">Job Start Date</label>
                                         <input type="date" name="start_date" id="startDate"
-                                            class="form-control form-control-lg" required>
+                                            class="form-control form-control-lg" min="{{ date('Y-m-d') }}" required>
+
                                     </div>
-<br>
+
+                                    <br>
                                 </div>
                                 <div id="jobFeedback"></div>
 
                                 <div class="card-footer bg-white">
                                     <div class="d-flex align-items-center justify-content-between mt-2">
-                                        <a class="btn btn-warning btn-lg" id="toggleprevioussection"><< Back</a>
+                                        <a class="btn btn-warning btn-lg" id="toggleprevioussection">
+                                            << Back</a>
 
-                                        <button type="submit" class="btn btn-primary  btn-lg" id="jobSubmit"><i class="fa fa-server"></i> Save</button>
+                                                <button type="submit" class="btn btn-primary  btn-lg" id="jobSubmit"><i
+                                                        class="fa fa-server"></i> Save</button>
                                     </div>
                                 </div>
                             </div>

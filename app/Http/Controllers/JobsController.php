@@ -28,7 +28,19 @@ class JobsController extends Controller
 
     public function index()
     {
-        $jobs = $this->job->latest()->paginate(10);
+        $query = $this->job->query();
+
+        if (auth()->check() && (auth()->user()->role === "student" || auth()->user()->role === "worker")) {
+            $skills = auth()->user()->skills->pluck('id'); // Fetch user's skills IDs
+            if ($skills->isNotEmpty()) { // Check if the user has any skills
+                $query->whereHas('skills', function ($q) use ($skills) {
+                    $q->whereIn('skills.id', $skills); // Match jobs with the user's skills
+                });
+            }
+        }
+
+        $jobs = $query->latest()->paginate(10);
+
         return view('jobs.index', compact('jobs'));
     }
 
@@ -46,7 +58,11 @@ class JobsController extends Controller
 
     public function create()
     {
-        return view('jobs.create');
+        if (auth()->user()->role === "corporate") {
+            return view('jobs.create');
+        } else {
+            return redirect()->back();
+        }
     }
 
 
@@ -76,7 +92,7 @@ class JobsController extends Controller
 
     public function apply($ref_no)
     {
-        if (auth()->user()->role === "student" || auth()->user()->role ==="worker") {
+        if (auth()->user()->role === "student" || auth()->user()->role === "worker") {
             $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
             $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
             $applied = false;
@@ -116,7 +132,6 @@ class JobsController extends Controller
                 array_push($fileNames, $fileName);
             }
         }
-
         $application = new Application();
         $application->user_id = auth()->id();
         $application->job_id = $validated['job_id'];
