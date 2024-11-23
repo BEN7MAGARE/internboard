@@ -61,7 +61,7 @@ class JobsController extends Controller
         if (auth()->user()->role === "corporate") {
             return view('jobs.create');
         } else {
-            return redirect()->back();
+            return redirect()->back()->withErrors(['error' => 'You must own a corporate account to post jobs']);
         }
     }
 

@@ -124,22 +124,17 @@
             </nav>
         </div>
     </header>
-
+    @yield('content')
+    
     @if ($errors->any())
-        <div class="col-lg">
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
-                </button>
-                @foreach ($errors->all() as $item)
-                    <strong>Error!</strong>
-                    {{ $item }}
+        <div class="alert alert-danger">
+            <ul class="error-list">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
                 @endforeach
-            </div>
+            </ul>
         </div>
     @endif
-    
-    @yield('content')
-
     <section class="w3l-footer-29-main">
         <div class="footer-29 py-5">
             <div class="container py-lg-4">

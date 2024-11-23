@@ -64,15 +64,12 @@
                         </div>
 
                         @if ($errors->any())
-                            <div class="col-lg">
-                                <div class="alert alert-danger alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
-                                    </button>
-                                    @foreach ($errors->all() as $item)
-                                        <strong>Error!</strong>
-                                        {{ $item }}
+                            <div class="alert alert-danger">
+                                <ul class="error-list">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
                                     @endforeach
-                                </div>
+                                </ul>
                             </div>
                         @endif
 
@@ -97,19 +94,19 @@
 @endsection
 
 @section('footer_scripts')
-    <script>
-        (function() {
-            const showLoginPassword = $('#showLoginPassword');
+<script>
+    (function() {
+        const showLoginPassword = $('#showLoginPassword');
 
-            showLoginPassword.on("click", function() {
-                if ($('#password').attr("type") == "password") {
-                    $('#password').attr("type", "text");
-                    showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
-                } else {
-                    $('#password').attr("type", "password");
-                    showLoginPassword.html('<i class="fa fa-eye"></i>');
-                }
-            });
-        })()
-    </script>
+        showLoginPassword.on("click", function () {
+        if ($('#password').attr("type") == "password") {
+            $('#password').attr("type", "text");
+            showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
+        } else {
+            $('#password').attr("type", "password");
+            showLoginPassword.html('<i class="fa fa-eye"></i>');
+        }
+    });
+    })()
+</script>
 @endsection
