@@ -22,9 +22,10 @@
     </section>
 
     <section class="w3l-contact-1 py-5 text-center" id="contact">
-        <div class="alert alert-warning">
-        <h1>This page is coming soon</h1>
+        <div class="container">
+            <div class="alert alert-danger">
+                <h1 class="text-danger">This page is coming soon</h1>
+            </div>
         </div>
     </section>
-
 @endsection
