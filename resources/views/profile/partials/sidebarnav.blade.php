@@ -71,7 +71,7 @@
 
                 <li class="list-group-item {!! Request::is('corporates') ? 'active' : '' !!}">
                     <a href="{{ route('profile.corporates') }}">
-                        <i class="fa fa-acquisitions-incorporated"></i>&nbsp;Employers/Corporates
+                        <i class="fa fa-industry"></i>&nbsp;Employers/Corporates
                     </a>
                 </li>
 

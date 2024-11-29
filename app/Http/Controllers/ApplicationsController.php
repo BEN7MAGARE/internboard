@@ -90,7 +90,7 @@ class ApplicationsController extends Controller
 
     public function studentDetails($id)
     {
-        $student = $this->user->with('profile','skills')->find($id);
+        $student = $this->user->with('profile', 'skills')->find($id);
         return view('profile.student', compact('student'));
     }
 
@@ -101,13 +101,13 @@ class ApplicationsController extends Controller
         return response()->download($filePath);
     }
 
-    function download($fileName)
+    public function download($fileName)
     {
         $filePath = public_path('applicant_resources/' . $fileName);
         return response()->download($filePath);
     }
 
-    function select(Request $request)
+    public function select(Request $request)
     {
         $corporate = auth()->user()->corporate;
         $applicants = json_decode($request->applicants, true);
@@ -123,8 +123,9 @@ class ApplicationsController extends Controller
         return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
     }
 
-    function elearning()
+    public function elearning()
     {
+        return "Here I am";
         return view('comingsoon');
     }
 }

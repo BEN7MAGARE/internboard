@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title')
     Profile @parent
@@ -14,7 +14,7 @@
     <section class="w3l-main-content">
         <div class="container">
             <div class="row">
-                <div class="col-xl-3 mb-4">
+                <div class="col-xl-3 mb-4 card">
                     @include('profile.partials.sidebarnav')
                 </div>
 
