@@ -13,7 +13,7 @@
             <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
             <div id="profileImageChangeFeedback"></div>
         </form>
-        <a href="#" class="btn btn-warning btn-sm mt-1" id="changeProfileImageToggle"><i
+        <a href="#" class="btn btn-secondary btn-sm mt-1" id="changeProfileImageToggle"><i
                 class="fa fa-edit"></i></a>
         <h4 class="text-center">
             {{ !is_null(auth()->user()->title) ? auth()->user()->title . '. ' . auth()->user()->first_name . ' ' . auth()->user()->last_name : ' ' . auth()->user()->first_name . ' ' . auth()->user()->last_name }}
@@ -34,21 +34,20 @@
 
     <div class="mt-2 mb-3">
         <div class="list-group">
-
             <li class="list-group-item {!! Request::is('profile') ? 'active' : '' !!}">
                 <a href="{{ route('profile.edit') }}" aria-current="true"><i
-                        class="fa fa-user text-warning"></i>&nbsp;My Profile</a>
+                        class="fa fa-user"></i>&nbsp;My Profile</a>
             </li>
             @if (auth()->user()->role === 'student' || auth()->user()->role == 'worker')
                 <li class="list-group-item {!! Request::is('applications') ? 'active' : '' !!}">
                     <a href="{{ route('applications.index') }}"><i
-                            class="fa fa-window-maximize text-warning"></i>&nbsp;My Applications</a>
+                            class="fa fa-window-maximize"></i>&nbsp;My Applications</a>
                 </li>
             @endif
 
             @if (auth()->user()->role === 'corporate')
                 <li class="list-group-item  {!! Request::is('profile-jobs') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.jobs') }}"><i class="fa fa-window-maximize text-warning"></i>&nbsp;My
+                    <a href="{{ route('profile.jobs') }}"><i class="fa fa-window-maximize"></i>&nbsp;My
                         Jobs</a>
                 </li>
             @endif
@@ -56,11 +55,11 @@
             @if (auth()->user()->role === 'college')
                 <li class="list-group-item  {!! Request::is('college-dashboard') ? 'active' : '' !!}">
                     <a href="{{ route('college.dashboard') }}"><i
-                            class="fa fa-window-maximize text-warning"></i>&nbsp;Dashboard</a>
+                            class="fa fa-window-maximize"></i>&nbsp;Dashboard</a>
                 </li>
 
                 <li class="list-group-item  {!! Request::is('college-students') ? 'active' : '' !!}">
-                    <a href="{{ route('college.students') }}"><i class="fa fa-users text-warning"></i>&nbsp;My
+                    <a href="{{ route('college.students') }}"><i class="fa fa-users"></i>&nbsp;My
                         Students</a>
                 </li>
             @endif

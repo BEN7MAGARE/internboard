@@ -60,7 +60,7 @@
                             <form action="{{ route('jobs.search') }}" method="POST" class="d-sm-flex" id="searchForm">
                                 <input class="form-control me-2" name="searchTerm" type="search"
                                     placeholder="Search jobs..." aria-label="Search" id="searchTerm" required="">
-                                <button class="btn btn-warning btn-sm" type="submit"><span class="fas fa-search"
+                                <button class="btn btn-secondary btn-sm" type="submit"><span class="fas fa-search"
                                         aria-hidden="true"></span></a></button>
                             </form>
                         </li>
@@ -125,7 +125,7 @@
         </div>
     </header>
     @yield('content')
-    
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="error-list">
@@ -135,6 +135,7 @@
             </ul>
         </div>
     @endif
+
     <section class="w3l-footer-29-main">
         <div class="footer-29 py-5">
             <div class="container py-lg-4">

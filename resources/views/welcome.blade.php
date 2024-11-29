@@ -72,6 +72,7 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 mt-3">
                     <div class="grid-block active">
                         <a href="#grids" class="d-block">
@@ -86,6 +87,7 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 mt-3">
                     <div class="grid-block">
                         <a href="#grids" class="d-block">
@@ -202,7 +204,6 @@
                                             <div class="photobox__info-wrapper">
                                                 <div class="photobox__info"><span> Integration</span></div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </a>
@@ -226,7 +227,7 @@
     <section class="w3l-video" id="video">
         <div class="video-mid-w3 py-5">
             <div class="container py-md-5 py-3">
-                <!--/row-1-->
+
                 <div class="row">
                     <div class="col-lg-6 mt-lg-0 mb-5 align-self pe-lg-3">
                         <div class="title-content text-left">
@@ -248,14 +249,14 @@
                     <div class="col-lg-6 videow3-right ps-lg-5">
                         <div class="w3l-index5 py-5">
                             <div class="history-info align-self text-center py-5 my-lg-5">
-                                <div class="position-relative py-5">
+                                {{-- <div class="position-relative py-5">
                                     <a href="#small-dialog1"
                                         class="popup-with-zoom-anim play-view text-center position-absolute">
                                         <span class="video-play-icon">
                                             <span class="fa fa-play"></span>
                                         </span>
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
