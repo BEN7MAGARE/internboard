@@ -78,14 +78,19 @@
                         </div>
                     </form>
                     <hr>
-                    <div class="d-flex justify-content-between p-2">
-                        <p>Do not have Account? <a href="{{ route('getstarted') }}">Get Started</a></p>
-                        @if (Route::has('password.request'))
-                            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-red-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                href="{{ route('password.request') }}">
-                                {{ __('Forgot your password?') }}
-                            </a>
-                        @endif
+                    <div class="row p-2">
+                        <div class="col-md-6">
+                            <p>No Account? <a href="{{ route('getstarted') }}">Get Started</a></p>
+                        </div>
+                        <div class="col-md-6">
+                            @if (Route::has('password.request'))
+                                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-red-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                    href="{{ route('password.request') }}">
+                                    {{ __('Forgot your password?') }}
+                                </a>
+                            @endif
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -94,19 +99,19 @@
 @endsection
 
 @section('footer_scripts')
-<script>
-    (function() {
-        const showLoginPassword = $('#showLoginPassword');
+    <script>
+        (function() {
+            const showLoginPassword = $('#showLoginPassword');
 
-        showLoginPassword.on("click", function () {
-        if ($('#password').attr("type") == "password") {
-            $('#password').attr("type", "text");
-            showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
-        } else {
-            $('#password').attr("type", "password");
-            showLoginPassword.html('<i class="fa fa-eye"></i>');
-        }
-    });
-    })()
-</script>
+            showLoginPassword.on("click", function() {
+                if ($('#password').attr("type") == "password") {
+                    $('#password').attr("type", "text");
+                    showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
+                } else {
+                    $('#password').attr("type", "password");
+                    showLoginPassword.html('<i class="fa fa-eye"></i>');
+                }
+            });
+        })()
+    </script>
 @endsection

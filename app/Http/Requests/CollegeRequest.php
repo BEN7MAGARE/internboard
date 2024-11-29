@@ -23,10 +23,9 @@ class CollegeRequest extends FormRequest
     {
         return [
             'company.name' => 'required|string|min:2|max:255',
-            'company.email' => 'required|email|unique:companies,email',
-            'company.phone' => 'required|regex:/^(\+254|0)[17]\d{8}$/',
+            'company.email' => 'required|email|unique:colleges,email',
+            'company.phone' => 'required|regex:/^(\+254|0)[17]\d{8}$/|unique:colleges,phone',
             'company.address' => 'required|string|min:2',
-
             'user.first_name' => 'required|string|min:2|max:50',
             'user.last_name' => 'required|string|min:2|max:50',
             'user.role' => 'required|string',

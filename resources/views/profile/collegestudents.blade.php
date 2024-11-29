@@ -31,6 +31,16 @@
 
                 <div class="col-xl-9">
                     <div class="card">
+
+                        <div class="card-header bg-white">
+                            <div class="text-end">
+                                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#createStudentModal"><i class="bi bi-plus"></i> Add new</a>
+                                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#importStudentsModal"><i class="bi bi-plus"></i> Import</a>
+                            </div>
+                        </div>
+
                         <div class="card-body">
                             <table class="table table-hover table-striped">
                                 <thead>
@@ -57,7 +67,7 @@
                                                 <td></td>
                                             @endif
                                             <td>{{ $item->profile?->level }}</td>
-                                            <td>{{ $item->profile?->years_of_experience.' yrs' }}</td>
+                                            <td>{{ $item->profile?->years_of_experience . ' yrs' }}</td>
                                             <td><a href="{{ route('student.details', $item->id) }}" target="_blank"
                                                     class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> View</a>
                                             </td>

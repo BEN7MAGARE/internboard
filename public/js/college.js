@@ -42,7 +42,7 @@
         phoneInput = $("#phone"),
         passwordInput = $("#password"),
         passwordConfirmation = $("#passwordConfirmation"),
-        showRegisterPassword = $('#showRegisterPassword');
+        showRegisterPassword = $('.showRegisterPassword');
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
@@ -169,5 +169,5 @@
             showRegisterPassword.html('<i class="fa fa-eye"></i>');
         }
     });
-    
+
 })();
