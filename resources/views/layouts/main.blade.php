@@ -42,7 +42,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ Request::url() == 'elearning' ? 'active' : '' }}"
-                                href="{{ route('elearning') }}">E-Learning</a>
+                                href="#">E-Learning</a>
                         </li>
 
                         <li class="nav-item dropdown">

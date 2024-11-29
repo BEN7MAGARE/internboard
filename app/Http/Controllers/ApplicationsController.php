@@ -117,7 +117,7 @@ class ApplicationsController extends Controller
             $application->status = "selected";
             $application->invitationletter = $message;
             $application->update();
-            Mail::to("magaben33@gmail.com", $application->applicant->first_name . ' ' . $application->applicant->last_name)
+            Mail::to($application->applicant->email, $application->applicant->first_name . ' ' . $application->applicant->last_name)
                 ->send(new Invitation("Interview Invitation", $message, $corporate->email, $corporate->name));
         }
         return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
@@ -125,7 +125,6 @@ class ApplicationsController extends Controller
 
     public function elearning()
     {
-        return "Here I am";
         return view('comingsoon');
     }
 }

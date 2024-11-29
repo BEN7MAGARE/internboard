@@ -20,7 +20,7 @@
                         informal settlements. </p>
                     <div class="w3l-buttons mt-sm-5 mt-2">
                         <a class="btn btn-primary btn-style mt-2" href="{{ route('jobs.create') }}">Post a job </a>
-                        <a class="btn btn-outline-primary btn-style mt-2" href="{{ route('elearning') }}">The Curriculum</a>
+                        <a class="btn btn-outline-primary btn-style mt-2" href="#">The Curriculum</a>
                     </div>
                 </div>
                 <div class="col-lg-5 w3l-slider-right-info mt-lg-0 mt-5 ps-lg-5 align-items-center">
