@@ -1,12 +1,8 @@
 @props(['url'])
 <tr>
-<td class="header">
-<a href="{{ $url }}" style="display: inline-block;">
-@if (trim($slot) === 'Laravel')
-<img src="{{  }}" class="logo" alt="Laravel Logo">
-@else
-{{ $slot }}
-@endif
-</a>
-</td>
+    <td class="header">
+        <a href="http://dalma.tukenya.ac.ke" target="_blank" style="display: inline-block;">
+            DALMA Project
+        </a>
+    </td>
 </tr>

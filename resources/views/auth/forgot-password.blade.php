@@ -15,7 +15,8 @@
                         <h4 class="mt-2 mb-2">Send password reset link</h4>
                     </div>
 
-                    <form action="{{ route('verification.send') }}" method="post">
+                    <form action="{{ route('password.email') }}" method="post">
+                        @csrf
                         <div class="card-body">
                             <div class="row">
 
