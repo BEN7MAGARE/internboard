@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Nairobi',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,5 +177,10 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+    'address' => env('APP_ADDRESS', 'Mkurur Slums'),
+    'city' => env('APP_CITY', 'Nairobi'),
+    'country' => env('APP_COUNTRY', 'Kenya'),
+    'phone' => env('APP_PHONE', '+254 712 345 678'),
+    'email' => env('APP_EMAIL', 'info@darajalamafanikio.org'),
 
 ];

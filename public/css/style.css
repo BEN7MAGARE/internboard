@@ -1,0 +1,486 @@
+:root {
+    /* Light mode colors */
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+
+    /* Light mode backgrounds */
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+    --sidebar-bg: var(--secondary-color);
+    --sidebar-text: rgba(255, 255, 255, 0.8);
+    --sidebar-text-hover: #ffffff;
+    --navbar-bg: #ffffff;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    --highlight-bg: rgba(52, 152, 219, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --table-bg: #ffffff;
+    --table-row-hover: #f8f9fa;
+}
+
+/* Dark mode colors */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --sidebar-bg: #1a1a1a;
+    --sidebar-text: rgba(255, 255, 255, 0.7);
+    --sidebar-text-hover: #ffffff;
+    --navbar-bg: #1e1e1e;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --highlight-bg: rgba(52, 152, 219, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --table-bg: #1e1e1e;
+    --table-row-hover: #2a2a2a;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Sidebar */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+    min-height: 100vh;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--sidebar-bg);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--sidebar-text);
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    text-decoration: none;
+    color: var(--sidebar-text);
+    padding: 12px 20px;
+    font-size: 1.1em;
+    display: block;
+    transition: all 0.3s;
+}
+#sidebar.active {
+    margin-left: 0;
+}
+
+#sidebar ul li a:hover {
+    color: var(--sidebar-text-hover);
+    background: var(--hover-bg);
+    text-decoration: none;
+}
+
+#sidebar ul li.active>a {
+    color: var(--primary-color);
+    background: var(--hover-bg);
+    text-decoration: none;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+#sidebar ul li.active>a i {
+    color: var(--primary-color);
+}
+
+#sidebar ul li.active>a i {
+    color: var(--primary-color);
+}
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+/* Cards */
+.card {
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    color: var(--text-color);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stat-card {
+    text-align: center;
+    padding: 25px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.chart-container {
+    height: 300px;
+    width: 100%;
+    padding: 15px;
+}
+
+.word-cloud {
+    height: 300px;
+    width: 100%;
+    padding: 15px;
+}
+
+.recent-survey {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+}
+
+.recent-survey:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+/* Offline banner */
+.offline-banner {
+    background-color: var(--warning-color);
+    color: var(--text-color);
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    z-index: 1000;
+    display: none;
+}
+
+
+/* Navbar */
+.navbar {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    padding: 10px 20px;
+}
+
+/* Tables */
+.table-container {
+    background-color: var(--card-bg);
+}
+
+.scrollableTable {
+    color: var(--text-color);
+}
+
+.scrollableTable thead th {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text-hover);
+}
+
+.scrollableTable tbody tr {
+    background-color: var(--table-bg);
+}
+
+.scrollableTable tbody tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+/* Form elements */
+.survey-title {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.location-card:hover {
+    background-color: var(--hover-bg);
+}
+
+.highlighted {
+    background-color: var(--highlight-bg);
+}
+
+/* Map */
+#map,
+#offlineMapContainer {
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+/* Info windows */
+.info-window h5 {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Add these to your existing styles */
+.btn {
+    transition: all 0.3s ease;
+}
+
+/* Adjust form controls for dark mode */
+[data-theme="dark"] .form-control {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .form-control:focus {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #content {
+        width: 100%;
+    }
+
+    .offline-banner {
+        left: 0;
+    }
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gm-style .gm-style-iw-c {
+    padding: 0;
+    border-radius: 8px;
+}
+
+.gm-style .gm-style-iw-d {
+    padding: 0;
+    overflow: hidden !important;
+}
+
+.info-window {
+    padding: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.info-window h5 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.info-window p {
+    margin-bottom: 5px;
+}
+
+.info-window .badge {
+    background-color: #3498db;
+    margin-right: 5px;
+}
+
+.location-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.location-card:hover {
+    background-color: #f8f9fa;
+    color: var(--text-color);
+}
+
+.location-card h6 {
+    margin-bottom: 5px;
+}
+
+.sidebar {
+    height: 600px;
+    overflow-y: auto;
+}
+
+.highlighted {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left: 3px solid #3498db;
+}
+
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+.progress {
+    height: 20px;
+    margin-bottom: 20px;
+}
+
+.required-field::after {
+    content: " *";
+    color: red;
+}
+
+.form-navigation {
+    margin-top: 20px;
+}
+
+.survey-title {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+}
+
+.is-invalid~.invalid-feedback {
+    display: block;
+}
+
+.dashboardNavigation {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Offline Map Styles */
+#offlineMapContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-marker {
+    background: transparent;
+    border: none;
+}
+
+.leaflet-control-savetiles {
+    background: white;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.leaflet-control-savetiles a {
+    color: #333;
+    text-decoration: none;
+}
+
+.table-container {
+    width: 100%;
+    max-height: 420px;
+    overflow: scroll;
+    position: relative;
+    /* overflow-x: auto;
+    overflow-y: auto; */
+}
+
+.scrollableTable {
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.list-group-flush{
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+.list-group-flush .list-group-item{
+    background-color: transparent;
+    color: var(--text-color);
+}
+table{
+    background-color: var(--card-bg);
+}
+
+tr:hover{
+    background-color: var(--card-bg);
+}
+
+tr{
+    color: var(--text-color);
+}
+td{
+    color: var(--text-color);
+}
+thead{
+    background-color: var(--card-bg);
+}
+thead th{
+    color: var(--text-color);
+}

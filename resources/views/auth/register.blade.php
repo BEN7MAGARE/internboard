@@ -29,6 +29,10 @@
 @endsection
 
 @section('content')
+<main class="main">
+<hr>
+<hr>
+<hr>
     <section class="w3l-main-content">
         <div class="container">
             <div class="row">
@@ -36,8 +40,7 @@
                     <div class="card mt-5 mb-5 p-4 radius-image">
 
                         <div class=" bg-white text-center">
-                            <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
-                            <h4 class="mt-2 mb-2"><strong>Sign up to proceed</strong></h4>
+                            <h4 class="mb-2"><strong>Sign up to proceed</strong></h4>
                         </div>
                         <div class="row"><hr></div>
                         <form action="#" id="getStartedForm">
@@ -83,21 +86,26 @@
                             </div>
                         </form>
 
+                        <div class="mt-2">
+                            <p>Already have an account? <a href="{{ route('login') }}"> Login</a></p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-5">
-                    <div class="mt-5 mb-5 p-4 radius-image" style="background: url('/images/banner5.jpg');">
-
-                    </div>
+                <div class="col-md-5 mt-5">
+                    <img src="{{ asset('images/opportunities.jpg') }}" alt="" class="img-fluid rounded">
                 </div>
+
             </div>
 
         </div>
 
     </section>
+
+</main>
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/iziToast.min.js') }}"></script>
     <script src="{{ asset('js/auth.js') }}"></script>
 @endsection

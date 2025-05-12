@@ -105,6 +105,20 @@ class RegisteredUserController extends Controller
     public function corporateCreate(Request $request)
     {
         DB::beginTransaction();
+
+        $request->validate([
+            'user' => ['required', 'array'],
+            'user.first_name' => ['required', 'string', 'max:60'],
+            'user.last_name' => ['required', 'string', 'max:60'],
+            'user.email' => ['required', 'string', 'email', 'max:80', 'unique:users,email'],
+            'user.phone' => ['required', 'string', 'max:60', 'unique:users,phone'],
+            'user.password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'company' => ['required', 'array'],
+            'company.name' => ['required', 'string', 'max:60'],
+            'company.email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email'],
+            'company.phone' => ['required', 'string', 'max:60', 'unique:corporates,phone'],
+        ]);
+
         $corporate = Corporate::create($request->company);
         $user = User::create([
             'corporate_id' => $corporate->id,
@@ -127,6 +141,20 @@ class RegisteredUserController extends Controller
     public function institutioncreate(Request $request)
     {
         DB::beginTransaction();
+
+        $request->validate([
+            'user' => ['required', 'array'],
+            'user.first_name' => ['required', 'string', 'max:60'],
+            'user.last_name' => ['required', 'string', 'max:60'],
+            'user.email' => ['required', 'string', 'email', 'max:80', 'unique:users,email'],
+            'user.phone' => ['required', 'string', 'max:60', 'unique:users,phone'],
+            'user.password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'company' => ['required', 'array'],
+            'company.name' => ['required', 'string', 'max:60','unique:colleges,name'],
+            'company.email' => ['required', 'string', 'email', 'max:80', 'unique:colleges,email'],
+            'company.phone' => ['required', 'string', 'max:60', 'unique:colleges,phone'],
+        ]);
+        
         $college = College::create($request->company);
         $user = User::create([
             'college_id' => $college->id,
@@ -139,7 +167,7 @@ class RegisteredUserController extends Controller
         ]);
         DB::commit();
 
-        Mail::to($user->email)->send(new WelcomeMail($user));
+        // Mail::to($user->email)->send(new WelcomeMail($user));
 
         Auth::login($user);
 

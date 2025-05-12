@@ -5,14 +5,17 @@
 @endsection
 
 @section('content')
+<main class="main">
+    <hr>
+    <hr>
+    <hr>
     <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-6">
                 <div class="card mt-5 mb-5 radius-image p-4">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
-                        <h4 class="mt-2 mb-2"><strong>Sign In</strong></h4>
+                        <h4 class="mb-2"><strong>Sign In</strong></h4>
                     </div>
 
                     <form action="{{ route('login') }}" method="post">
@@ -41,7 +44,7 @@
                                             name="password" id="password" autocomplete="password" required>
 
                                         <div class="input-group-text" id="showLoginPassword">
-                                            <i class="fa fa-eye"></i>
+                                            <i class="bi bi-eye"></i>
                                         </div>
                                     </div>
                                     @error('password')
@@ -95,9 +98,11 @@
             </div>
         </div>
     </section>
+</main>
 @endsection
 
 @section('footer_scripts')
+<script src="{{ asset('js/iziToast.min.js') }}"></script>
     <script>
         (function() {
             const showLoginPassword = $('#showLoginPassword');
@@ -105,10 +110,10 @@
             showLoginPassword.on("click", function() {
                 if ($('#password').attr("type") == "password") {
                     $('#password').attr("type", "text");
-                    showLoginPassword.html('<i class="fa fa-eye-slash"></i>');
+                    showLoginPassword.html('<i class="bi bi-eye-slash"></i>');
                 } else {
                     $('#password').attr("type", "password");
-                    showLoginPassword.html('<i class="fa fa-eye"></i>');
+                    showLoginPassword.html('<i class="bi bi-eye"></i>');
                 }
             });
         })()

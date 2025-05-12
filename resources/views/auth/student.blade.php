@@ -12,9 +12,9 @@
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
-                        <h4 class="mt-2 mb-2"><strong>Create Account</strong></h4>
+                        <h4 class="mb-2"><strong>Create Account</strong></h4>
                     </div>
+
                     <form action="{{ route('register') }}" method="post" id="studentSignupForm">
                         @csrf
                         <div class="card-body">
@@ -63,7 +63,7 @@
                                             name="password" id="password" autocomplete="password" required>
 
                                         <div class="input-group-text showRegisterPassword">
-                                            <i class="fa fa-eye"></i>
+                                            <i class="bi bi-eye"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -104,5 +104,6 @@
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/iziToast.min.js') }}"></script>
     <script src="{{ asset('js/auth.js') }}"></script>
 @endsection

@@ -27,6 +27,11 @@ class ProfileController extends Controller
         $this->job = new Job();
         $this->corporate = new Corporate();
     }
+
+    function index()
+    {
+        return view('profile.index');
+    }
     /**
      * Display the user's profile form.
      */

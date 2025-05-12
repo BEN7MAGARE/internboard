@@ -5,17 +5,19 @@
 @endsection
 
 @section('content')
+<main class="main">
+    <hr>
+    <hr>
     <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-5">
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('assets/img/tuk.png') }}" alt="" height="80px">
-                        <h4 class="mt-2 mb-2">Send password reset link</h4>
+                        <h4 class="mb-2">Send password reset link</h4>
                     </div>
-
-                    <form action="{{ route('password.email') }}" method="post">
+<div class="card-body">
+<form action="{{ route('password.email') }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -32,8 +34,14 @@
                             <button type="submit" class="btn btn-primary btn-lg">Email Password Reset Link</button>
                         </div>
                     </form>
+</div>
+<div class="card-footer bg-white">
+    <a href="{{ route('login') }}">Login</a>
+</div>
+                    
                 </div>
             </div>
         </div>
     </section>
+</main>
 @endsection

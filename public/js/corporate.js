@@ -116,14 +116,14 @@
                 p += value + '<br>';
             });
             showError(p, "#corporateFeedback");
-            employerCreateSubmit.html('<i class="fa fa-server"></i> Submit ');
+            employerCreateSubmit.html('<i class="bi bi-server"></i> Submit ');
             employerCreateSubmit.prop({ disabled: false });
         } else {
             showSpiner("#corporateFeedback");
             $.post("/corporate", data)
                 .done(function (params) {
                     console.log(params);
-                    employerCreateSubmit.html('<i class="fa fa-server"></i> Submit ');
+                    employerCreateSubmit.html('<i class="bi bi-server"></i> Submit ');
                     employerCreateSubmit.prop({ disabled: false });
                     removeSpiner("#corporateFeedback");
                     let result = JSON.parse(params);
@@ -139,7 +139,7 @@
                 })
                 .fail(function (error) {
                     console.error(error);
-                    employerCreateSubmit.html('<i class="fa fa-server"></i> Submit');
+                    employerCreateSubmit.html('<i class="bi bi-server"></i> Submit');
                     employerCreateSubmit.prop({ disabled: false });
                     removeSpiner("#corporateFeedback");
                     if (error.status == 422) {
@@ -165,11 +165,11 @@
         if (passwordInput.attr("type") == "password") {
             passwordInput.attr("type", "text");
             passwordConfirmation.attr("type", "text");
-            showRegisterPassword.html('<i class="fa fa-eye-slash"></i>');
+            showRegisterPassword.html('<i class="bi bi-eye-slash"></i>');
         } else {
             passwordInput.attr("type", "password");
             passwordConfirmation.attr("type", "password");
-            showRegisterPassword.html('<i class="fa fa-eye"></i>');
+            showRegisterPassword.html('<i class="bi bi-eye"></i>');
         }
     });
 

@@ -5,106 +5,126 @@
 @endsection
 
 @section('content')
-    <section class="w3l-about-breadcrumb">
-        <div class="breadcrumb-bg breadcrumb-bg-about">
-            <div class="container py-lg-5 py-sm-4">
-                <div class="w3breadcrumb-gids text-center">
-                    <div class="w3breadcrumb-info mt-5">
-                        <h2 class="w3ltop-title pt-4">Contact Us</h2>
-                        <ul class="breadcrumbs-custom-path">
-                            <li><a href="{{ url('/') }}">Home</a></li>
-                            <li class="active"><span class="fas fa-angle-double-right mx-2"></span> Contact</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<main class="main">
+
+<div class="page-title mt-5" data-aos="fade">
+  <div class="heading mt-3">
+    <div class="container">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1>Contact Us</h1>
+          <p class="mb-0">Get in touch with us for any inquiries, questions or sponsorships.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+  <nav class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="{{ route('home') }}">Home</a></li>
+        <li class="current">Contact Us</li>
+      </ol>
+    </div>
+  </nav>
+</div>
 
-    <section class="w3l-contact-1 py-5" id="contact">
-        <div class="contacts-9 py-lg-5 py-md-4">
-            <div class="container">
-                <div class="row contact-view">
-                    <div class="col-lg-5 cont-details pe-lg-5">
-                        <div class="contactct-fm-text text-left">
-                            <h6 class="title-subhny">Say Hello</h6>
-                            <h3 class="title-w3l mb-2">Get In Touch
-                            </h3>
-                            <p class="mb-sm-5 mb-4">
+<section id="contact" class="contact section">
 
-                            </p>
-                            <div class="cont-top">
-                                <div class="cont-left text-center">
-                                    <span class="fas fa-phone-alt"></span>
-                                </div>
-                                <div class="cont-right">
-                                    <h5>Phone number</h5>
-                                    <p><a href=""></a></p>
-                                </div>
-                            </div>
-                            <div class="cont-top margin-up">
-                                <div class="cont-left text-center">
-                                    <span class="fas fa-envelope-open-text"></span>
-                                </div>
-                                <div class="cont-right">
-                                    <h5>Send Email</h5>
-                                    <p><a href="mailto:dalma-project@tukenya.ac.ke" class="mail">dalma-project@tukenya.ac.ke</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="cont-top margin-up">
-                                <div class="cont-left text-center">
-                                    <span class="fas fa-map-marker-alt"></span>
-                                </div>
-                                <div class="cont-right">
-                                    <h5>Office Address</h5>
-                                    <p class="pr-lg-5">Haile Salesie Avenue,<br> Nairobi, Kenya.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 cont-details mt-lg-0 mt-5">
-                        <div class="map-content-9">
-                            <div class="map-iframe">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8051498733253!2d36.820422777559834!3d-1.2912535322456247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10df5a23385d%3A0x15238033c2bcdc3b!2sThe%20Technical%20University%20Of%20Kenya!5e0!3m2!1sen!2ske!4v1732188062688!5m2!1sen!2ske" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="container section-title" data-aos="fade-up">
+  <h2>Contact</h2>
+  <p>Get in touch with us for any inquiries, questions or sponsorships. </p>
+</div>
+
+<div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+  <div class="row gy-4">
+
+    <div class="col-lg-6">
+
+      <div class="row gy-4">
+        <div class="col-md-6">
+          <div class="info-item" data-aos="fade" data-aos-delay="200">
+            <i class="bi bi-geo-alt"></i>
+            <h3>Address</h3>
+            <p>{{ config('app.address') }}</p>
+            <p>{{ config('app.city') }}, {{ config('app.country') }}</p>
+          </div>
         </div>
-    </section>
 
-    
-    <section class="w3l-contact-1 w3hny-form-btm py-5" id="contact">
-        <div class="contacts-9 py-lg-5 py-md-4">
-            <div class="container">
-                <div class="header-sec text-center mb-5">
-                    <h6 class="title-subhny mb-2">Write Us</h6>
-                    <h3 class="title-w3l">
-                        Don't hesitate to contact us <br> anytime with questions
-                    </h3>
-                </div>
-
-                <div class="contactct-fm map-content-9">
-                    <form action="#" class="pt-lg-4" method="post">
-                        <div class="twice-two">
-                            <input type="text" class="form-control" name="w3lName" id="w3lName" placeholder="Name"
-                                required="">
-                            <input type="email" class="form-control" name="w3lSender" id="w3lSender" placeholder="Email"
-                                required="">
-                            <input type="text" class="form-control" name="w3lSubject" id="w3lSubject"
-                                placeholder="Subject" required="">
-                        </div>
-
-                        <textarea name="w3lMessage" class="form-control" id="w3lMessage" placeholder="Message" required=""></textarea>
-                        <div class="text-lg-center">
-                            <button type="submit" class="btn btn-primary btn-style mt-lg-5 mt-4">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
+        <div class="col-md-6">
+          <div class="info-item" data-aos="fade" data-aos-delay="300">
+            <i class="bi bi-telephone"></i>
+            <h3>Call Us</h3>
+            <p>{{ config('app.phone') }}</p>
+            <p>{{ config('app.phone') }}</p>
+          </div>
         </div>
-    </section>
+
+        <div class="col-md-6">
+          <div class="info-item" data-aos="fade" data-aos-delay="400">
+            <i class="bi bi-envelope"></i>
+            <h3>Email Us</h3>
+            <p>{{ config('app.email') }}</p>
+            <p>{{ config('app.email') }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-item" data-aos="fade" data-aos-delay="500">
+            <i class="bi bi-clock"></i>
+            <h3>Open Hours</h3>
+            <p>Monday - Friday</p>
+            <p>9:00AM - 05:00PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+        <div class="row gy-4">
+
+          <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+          </div>
+
+          <div class="col-md-6 ">
+            <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+          </div>
+
+          <div class="col-12">
+            <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+          </div>
+
+          <div class="col-12">
+            <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+          </div>
+
+          <div class="col-12 text-center">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your message has been sent. Thank you!</div>
+
+            <button type="submit">Send Message</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="col-lg-12 mt-5">
+      <div class="map-content-9">
+          <div class="map-iframe">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7729623486393!2d36.86269287478946!3d-1.3116050356539344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1103fb66eb3b%3A0x92b41c137f85d6a7!2sMukuru%20Slums%20Devevelopment%20Projects%2C%20(MSDP%20Kenya)!5e0!3m2!1sen!2ske!4v1747042979989!5m2!1sen!2ske" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>          </div>
+      </div>
+  </div>
+
+</div>
+
+</section>
+
+</main>
+
 @endsection

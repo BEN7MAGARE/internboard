@@ -5,14 +5,15 @@
 @endsection
 
 @section('content')
+<main class="main">
+    <hr>
     <section class="w3l-main-content">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-7">
                 <div class="card mt-5 mb-5 radius-image p-2">
 
                     <div class="card-header bg-white text-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="" height="80px">
-                        <h4 class="mt-2 mb-2"><strong>Join as Corporate</strong></h4>
+                        <h4 class="mb-2"><strong>Join as Corporate</strong></h4>
                     </div>
 
                     <form action="{{ route('register') }}" method="post" id="corporateSignupForm">
@@ -86,7 +87,7 @@
                                             name="password" id="password" autocomplete="password" required>
 
                                         <div class="input-group-text showRegisterPassword">
-                                            <i class="fa fa-eye"></i>
+                                            <i class="bi bi-eye"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +100,7 @@
                                             name="password_confimation" id="passwordConfirmation" autocomplete="password"
                                             required>
                                         <div class="input-group-text showRegisterPassword">
-                                            <i class="fa fa-eye"></i>
+                                            <i class="bi bi-eye"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -122,8 +123,10 @@
             </div>
         </div>
     </section>
+</main> 
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/iziToast.min.js') }}"></script>
     <script src="{{ asset('js/corporate.js') }}"></script>
 @endsection

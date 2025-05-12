@@ -116,13 +116,16 @@
                 p += value+'<br>';
             });
             showError(p, "#corporateFeedback");
-            submit.prop({ disabled: false });
+            institutionSubmit.prop({ disabled: false });
+            institutionSubmit.html('<i class="bi bi-server"></i> Submit');
         } else {
             showSpiner("#corporateFeedback");
+            console.log(data);
+            
             $.post("/college", data)
                 .done(function (params) {
                     institutionSubmit.prop({ disabled: false });
-                    institutionSubmit.html('<i class="fa fa-server"></i> Submit');
+                    institutionSubmit.html('<i class="bi bi-server"></i> Submit');
                     removeSpiner("#corporateFeedback");
                     let result = JSON.parse(params);
                     if (result.status === "success") {
@@ -137,7 +140,7 @@
                 })
                 .fail(function (error) {
                     institutionSubmit.prop({ disabled: false });
-                    institutionSubmit.html('<i class="fa fa-server"></i> Submit');
+                    institutionSubmit.html('<i class="bi bi-server"></i> Submit');
                     removeSpiner("#corporateFeedback");
                     if (error.status == 422) {
                         var errors = "";
@@ -162,11 +165,11 @@
         if (passwordInput.attr("type") == "password") {
             passwordInput.attr("type", "text");
             passwordConfirmation.attr("type", "text");
-            showRegisterPassword.html('<i class="fa fa-eye-slash"></i>');
+            showRegisterPassword.html('<i class="bi bi-eye-slash"></i>');
         } else {
             passwordInput.attr("type", "password");
             passwordConfirmation.attr("type", "password");
-            showRegisterPassword.html('<i class="fa fa-eye"></i>');
+            showRegisterPassword.html('<i class="bi bi-eye"></i>');
         }
     });
 

@@ -19,11 +19,13 @@ use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
 Route::view('contact', 'contact')->name('contact');
 Route::view('about', 'about')->name('about');
-
+Route::view('services', 'services')->name('services');
 
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
