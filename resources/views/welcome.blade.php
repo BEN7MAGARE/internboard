@@ -10,12 +10,9 @@ Home @parent
 @section('content')
 <main class="main">
 
-    <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-
         <img src="{{ asset('images/bridge.jpg') }}" alt="" data-aos="fade-in">
-
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h2 data-aos="fade-up" data-aos-delay="100">Job Opportunities</h2>
@@ -68,10 +65,8 @@ Home @parent
                     <div class="mt-2 d-flex flex-wrap gap-3 gy-4" id="categoriesWithJobs"></div>
                 </div>
             </div>
-
         </div>
-
-    </section><!-- /Hero Section -->
+    </section>
 
     <!-- Clients Section -->
     <section id="clients" class="clients section">
