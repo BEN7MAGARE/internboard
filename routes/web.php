@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('opportunities', [ProfileController::class, 'opportunities'])->name('profile.opportunities');
 });
 
+Route::get('profile/applications', [ProfileController::class, 'applications'])->name('profile.applications');
+
 Route::view('contact', 'contact')->name('contact');
 Route::view('about', 'about')->name('about');
 Route::view('services', 'services')->name('services');
@@ -49,6 +51,7 @@ Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
 Route::get('job-applications/{job_id}', [JobsController::class, 'applications'])->name('job.applications');
 Route::get('categories', [JobsController::class, 'categories']);
+Route::get('categories-with-jobs', [JobsController::class, 'categoriesWithJobs']);
 
 Route::get('skills', [JobsController::class, 'skills'])->name('skils');
 

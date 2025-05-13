@@ -31,6 +31,8 @@ function removeSpiner(target) {
 
 function getCategoriesOptions(target) {
     $.getJSON("/categories", function (categories) {
+        console.log(categories);
+
         let option = "<option value=''>Select Industry</option>";
         $.each(categories, function (key, value) {
             option +=
@@ -63,6 +65,19 @@ function composeJobs(jobs) {
             <div class="location d-flex justify-content-between p-2"><div><small><i class="fa fa-map-marker"></i>&nbsp;<span>${value.location}</span></small></div><div><small>Application Deadline: ${(value.application_end_date !== null) ? "<span class='text-warning'>" + moment(value.application_end_date).format('Do MMM YYYY') + "</span>" : "<span class='text-warning'>Not specified</span>"}</small></div></div></div>`;
     });
     return job;
+}
+
+function getCategoriesWithJobs(target) {
+    $.getJSON("/categories-with-jobs", function (categories) {
+        console.log(categories);
+
+        let li = "";
+        $.each(categories, function (key, value) {
+            li +=
+                `<li><a href="/category/${value.slug}" class="list-group-item list-group-item-action" data-id="${value.id}">${value.name}</a></li>`;
+        });
+        $(target).html(li);
+    });
 }
 
 function getsubstring(string) {

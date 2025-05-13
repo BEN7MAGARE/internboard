@@ -1,66 +1,66 @@
-@extends('layouts.main')
+@extends('layouts.dashboard')
 
 @section('title')
-    Profile @parent
+Corporates @parent
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
 
 @endsection
 
+@section('subtitle')
+Corporates
+@endsection
+
 @section('content')
+<main class="mt-3 p-2">
     <section class="w3l-main-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-3 mb-4 card">
-                    @include('profile.partials.sidebarnav')
-                </div>
+        <div class="row">
+            <div class="col-xl-12">
 
-                <div class="col-xl-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Corporates</h4>
+                    </div>
 
-                    <div class="card">
-                        <div class="card-header bg-white">
-                            <h4 class="card-title">Corporates</h4>
-                        </div>
+                    <div class="card-body pt-3">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Contact Person</th>
+                                <th>Action</th>
+                            </thead>
 
-                        <div class="card-body pt-3">
-                            <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Contact Person</th>
-                                    <th>Action</th>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($corporates as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->name }}</td>
-                                            <td>{{ $item->email }}</td>
-                                            <td>{{ $item->phone }}</td>
-                                            <td>{{ $item->address }}</td>
-                                            <td>{{ @$item->users[0]->first_name." ".@$item->users[0]->last_name }}</td>
-                                            <td></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot class="text-end">{{ $corporates->links() }}</tfoot>
-                            </table>
-                        </div>
+                            <tbody>
+                                @foreach ($corporates as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->address }}</td>
+                                    <td>{{ @$item->users[0]->first_name." ".@$item->users[0]->last_name }}</td>
+                                    <td></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot class="text-end">{{ $corporates->links() }}</tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+</main>
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/profile.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/profile.js') }}"></script>
 @endsection

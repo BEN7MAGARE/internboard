@@ -18,7 +18,7 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('categories', 'skills', 'categoriesWithJobs');
         $this->category = new Category();
         $this->job = new Job();
         $this->skill = new Skill();
@@ -47,6 +47,12 @@ class JobsController extends Controller
     public function categories()
     {
         $categories = $this->category->latest()->get();
+        return json_encode($categories);
+    }
+
+    public function categoriesWithJobs()
+    {
+        $categories = $this->category->whereHas('jobs')->limit(8)->get();
         return json_encode($categories);
     }
 

@@ -127,7 +127,7 @@ body {
     color: var(--primary-color);
 }
 
-#content {
+.content {
     width: 100%;
     padding: 20px;
     min-height: 100vh;
@@ -301,6 +301,10 @@ body {
     .offline-banner {
         left: 0;
     }
+}
+
+#content {
+    width: 100%;
 }
 
 #map {

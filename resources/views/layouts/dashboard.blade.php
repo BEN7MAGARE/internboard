@@ -8,8 +8,8 @@
         @yield('title') | Daraja La Mafanikio
     </title>
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
     @yield('header_styles')
@@ -21,30 +21,42 @@
         <div class="bg-dark" id="sidebar">
             <div class="sidebar-header">
                 <h3>DALMA Project</h3>
-                <p>Data Dashboard</p>
+                <p>{{ auth()->user()->role }}</p>
             </div>
 
             <ul class="list-unstyled components">
+
                 <li class="active">
                     <a href="{{ route('dashboard') }}">
                         <i class="bi bi-speedometer2"></i>
                         Dashboard
                     </a>
                 </li>
-
+                @if (auth()->user()->role === 'corporate')
                 <li>
-                    <a href="/respondents">
-                        <i class="bi bi-people"></i>
-                        Respondents
+                    <a href="{{ route('profile.jobs') }}">
+                        <i class="bi bi-briefcase"></i>
+                        My Jobs
                     </a>
                 </li>
 
                 <li>
-                    <a href="/users">
+                    <a href="{{ route('profile.applications') }}">
+                        <i class="bi bi-briefcase"></i>
+                        Applications
+                    </a>
+                </li>
+                
+                @endif
+
+                @if (auth()->user()->role === 'admin')
+                <li>
+                    <a href="{{ route('users') }}">
                         <i class="bi bi-people"></i>
                         Users
                     </a>
                 </li>
+                @endif
 
                 <li>
                     <a href="/logout" class="text-danger">
@@ -77,7 +89,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/iziToast.min.js') }}"></script>
     @yield('footer_scripts')
 </body>

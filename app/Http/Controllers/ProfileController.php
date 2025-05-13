@@ -176,4 +176,13 @@ class ProfileController extends Controller
         $user->update();
         return json_encode(['status'=>'success','message'=>'Profile image changed successfully']);
     }
+
+    public function applications()
+    {
+        if (auth()->user()->role !== "corporate") {
+            return redirect()->route('profile.edit');
+        }
+        $applications = $this->application->whereIn('job_id', auth()->user()->corporate->jobs->pluck('id'))->with('job:id,title')->paginate(10);
+        return view('profile.applications', compact('applications'));
+    }
 }

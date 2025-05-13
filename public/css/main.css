@@ -1,29 +1,41 @@
 :root {
-  --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Montserrat",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Montserrat", sans-serif;
+  --nav-font: "Poppins", sans-serif;
 }
 
 
-:root { 
+:root {
   --theme-color: #046FA5;
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #212529; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #046FA5; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #e84545; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --background-color: #ffffff;
+  /* Background color for the entire website, including individual sections */
+  --default-color: #212529;
+  /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #046FA5;
+  /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #e84545;
+  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff;
+  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #ffffff;
+  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #3a3939;  /* The default color of the main navmenu links */
-  --nav-hover-color: #e84545; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #3a3939; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #e84545; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-color: #3a3939;
+  /* The default color of the main navmenu links */
+  --nav-hover-color: #e84545;
+  /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #ffffff;
+  /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #ffffff;
+  /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #3a3939;
+  /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #e84545;
+  /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -188,12 +200,11 @@ h6 {
   }
 
   .header .logo h1 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .header .logo i {
     font-size: 8px;
-    padding-left: 3px;
   }
 
   .header .nav-link {
@@ -651,7 +662,7 @@ h6 {
 }
 
 .page-title .heading {
-  padding: 80px 0;
+  padding: 80px 0 0 0;
   border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -2847,4 +2858,41 @@ section,
   padding-left: 5px;
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
+}
+
+.skills span {
+  background: #E5E7E9;
+  padding: 4px 5px 5px 5px;
+  border-radius: 10px;
+  margin-right: .5em;
+}
+
+.location i {
+  color: var(--primary-color);
+}
+
+#categoriesWithJobs li {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #EAEDED;
+    list-style: none;
+    color: var(--theme-color);
+    background-color: #E5E7E9;
+}
+
+.job {
+  margin-bottom: .5em;
+  padding: 5px 10px;
+  /* border-radius: 10px; */
+  border-bottom: 1px solid #EAEDED;
+  box-shadow:;
+}
+
+.job:hover {
+  background: #F2F4F4;
+  cursor: pointer;
+}
+
+.salary span {
+  margin-right: 2em;
 }

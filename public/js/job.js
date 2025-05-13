@@ -154,7 +154,6 @@
                 data: data,
                 success: function (params) {
                     submitInvitation.prop('disabled', false);
-                    console.log(params);
                     let result = JSON.parse(params);
                     if (result.status === "success") {
                         showSuccess(result.message, "#invitationFeedback");
