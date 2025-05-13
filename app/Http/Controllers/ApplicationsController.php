@@ -88,6 +88,18 @@ class ApplicationsController extends Controller
         }
     }
 
+    public function collegeApplications()
+    {
+        if (auth()->user()->role === "college") {
+            $college_id = auth()->user()->college_id;
+            $students = $this->user->where('college_id', $college_id)->pluck('id');
+            $applications = $this->application->whereIn('user_id', $students)->with('applicant')->latest()->paginate(10);
+            return view('profile.schoolapplicants', compact('applications'));
+        } else {
+            return redirect()->back()->with('errors', 'You are not authorised to access this resource');
+        }
+    }
+
     public function studentDetails($id)
     {
         $student = $this->user->with('profile', 'skills')->find($id);

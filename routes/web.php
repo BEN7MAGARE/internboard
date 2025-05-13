@@ -60,6 +60,7 @@ Route::resource('applications', ApplicationsController::class);
 
 Route::get('college-students', [ApplicationsController::class, 'collegeStudents'])->name('college.students');
 Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoolStudentApplications'])->name('college.applicants');
+Route::get('college-applications', [ApplicationsController::class, 'collegeApplications'])->name('college.applications');
 Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
 
 Route::get('student/{id}',  [ApplicationsController::class, 'studentDetails'])->name('student.details');

@@ -6,7 +6,6 @@ Applicants @parent
 
 @section('header_styles')
 <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('subtitle')
@@ -21,12 +20,12 @@ Applicants
             <div class="col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title"><b>Student</b> : {{ $item->student_name }}</h5>
+                        <h5 class="card-title"><b>Student</b> : {{ $item->applicant->first_name }} {{ $item->applicant->last_name }}</h5>
                         <p class="card-text">
-                            <strong>Applied for:</strong> {{ $item->title }}<br>
-                            <strong>Company:</strong> {{ $item->company_name }}
+                            <strong>Applied for:</strong> {{ $item->job->title }}<br>
+                            <strong>Company:</strong> {{ $item->job->corporate->name }}
                         </p>
-                        <p class="p-0 m-0">Salary: {{ $item->salary_range }}</p>
+                        <p class="p-0 m-0">Salary: {{ $item->job->salary_range }}</p>
                         <p class="p-0 m-0">Status: {{ $item->status }}</p>
                     </div>
                     <div class="card-footer bg-white">
@@ -61,5 +60,6 @@ Applicants
 
 @section('footer_scripts')
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
 <script src="{{ asset('js/job.js') }}"></script>
 @endsection

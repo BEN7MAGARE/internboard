@@ -8,6 +8,9 @@
         @yield('title') | Daraja La Mafanikio
     </title>
 
+    <link href="{{ asset('images/logo.ico') }}" rel="icon">
+    <link href="{{ asset('images/logo.ico') }}" rel="apple-touch-icon">
+
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -19,9 +22,9 @@
     <div class="d-flex" id="wrapper">
 
         <div class="bg-dark" id="sidebar">
-            <div class="sidebar-header">
-                <h3>DALMA Project</h3>
-                <p>{{ auth()->user()->role }}</p>
+            <div class="sidebar-header text-center">
+                <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
+                <p>({{ auth()->user()->role }})</p>
             </div>
 
             <ul class="list-unstyled components">
@@ -30,12 +33,6 @@
                     <a href="{{ route('dashboard') }}">
                         <i class="bi bi-speedometer2"></i>
                         Dashboard
-                    </a>
-                </li>
-
-                <li class="{!! Request::is('profile') ? 'active' : '' !!}">
-                    <a href="{{ route('profile.edit') }}" aria-current="true">
-                        <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
                 </li>
 
@@ -57,8 +54,17 @@
 
                 @if (auth()->user()->role === 'student')
                 <li class="{!! Request::is('applications') ? 'active' : '' !!}">
-                    <a href="{{ route('applications.index') }}"><i
-                            class="bi bi-window"></i>&nbsp;My Applications</a>
+                    <a href="{{ route('applications.index') }}"><i class="bi bi-window"></i>&nbsp;My Applications</a>
+                </li>
+                @endif
+
+                @if (auth()->user()->role === 'college')
+                <li class="list-group-item  {!! Request::is('college-students') ? 'active' : '' !!}">
+                    <a href="{{ route('college.students') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
+                </li>
+
+                <li class="list-group-item  {!! Request::is('college-applications') ? 'active' : '' !!}">
+                    <a href="{{ route('college.applications') }}"><i class="bi bi-window"></i>&nbsp;Applications</a>
                 </li>
                 @endif
 
@@ -69,14 +75,22 @@
                         Users
                     </a>
                 </li>
-                @endif
 
-                <li>
-                    <a href="/logout" class="text-danger">
-                        <i class="bi bi-box-arrow-right text-danger"></i>
-                        Logout
+                @endif
+                <li class="{!! Request::is('profile') ? 'active' : '' !!}">
+                    <a href="{{ route('profile.edit') }}" aria-current="true">
+                        <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
                 </li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item text-danger" href="route('logout')" onclick="event.preventDefault();
+                        this.closest('form').submit();"><i class="bi bi-box-arrow-right text-danger"></i>&nbsp;Logout
+                        </a>
+                    </form>
+                </li>
+
             </ul>
         </div>
 

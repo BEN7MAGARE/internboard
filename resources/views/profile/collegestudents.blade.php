@@ -26,7 +26,8 @@ Students
         </div>
 
         <div class="card-body">
-            <table class="table table-hover table-striped">
+
+            <table class="table table-hover table-striped table-bordered table-sm">
                 <thead>
                     <th>Name</th>
                     <th>Email</th>
@@ -36,6 +37,7 @@ Students
                     <th>Experience</th>
                     <th>Action</th>
                 </thead>
+
                 <tbody>
                     @foreach ($students as $item)
                     @php
@@ -57,7 +59,9 @@ Students
                     </tr>
                     @endforeach
                 </tbody>
+
             </table>
+
         </div>
     </div>
 </main>
