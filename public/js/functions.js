@@ -31,8 +31,6 @@ function removeSpiner(target) {
 
 function getCategoriesOptions(target) {
     $.getJSON("/categories", function (categories) {
-        console.log(categories);
-
         let option = "<option value=''>Select Industry</option>";
         $.each(categories, function (key, value) {
             option +=
@@ -69,8 +67,6 @@ function composeJobs(jobs) {
 
 function getCategoriesWithJobs(target) {
     $.getJSON("/categories-with-jobs", function (categories) {
-        console.log(categories);
-
         let li = "";
         $.each(categories, function (key, value) {
             li +=
@@ -87,8 +83,3 @@ function getsubstring(string) {
         return string;
     }
 }
-
-function validateImage(params) {
-
-}
-

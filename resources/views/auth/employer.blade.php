@@ -3,6 +3,9 @@
 @section('title')
     Employer Sign up @parent
 @endsection
+@section('header_styles')
+    <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
+@endsection
 
 @section('content')
 <main class="main">

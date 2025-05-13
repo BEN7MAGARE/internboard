@@ -5,6 +5,7 @@
 @endsection
 
 @section('header_styles')
+<link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
     <style>
         .form-check {
             border-radius: 15px;

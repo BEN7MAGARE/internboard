@@ -4,8 +4,12 @@
     Sign up as student @parent
 @endsection
 
+@section('header_styles')
+    <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
+@endsection
+
 @section('content')
-    <section class="w3l-main-content">
+    <section class="w3l-main-content mt-5">
         <div class="container d-flex justify-content-center align-items-center">
 
             <div class="col-md-7">
