@@ -24,13 +24,13 @@ Home @parent
                         <div class="row">
                             @csrf
                             <div class="col-md-3 mb-2">
-                                <select name="category_id" id="searchCategoryID" class="form-select" required>
+                                <select name="category_id" id="searchCategoryID" class="form-select">
 
                                 </select>
                             </div>
 
                             <div class="col-md-3 mb-2">
-                                <select name="type" id="searchEmploymentType" class="form-select" required>
+                                <select name="type" id="searchEmploymentType" class="form-select">
                                     <option value="">Employment Type</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Part-time">Part Time</option>
@@ -42,7 +42,7 @@ Home @parent
                             </div>
 
                             <div class="col-md-3 mb-2">
-                                <select name="job_type" id="searchJobType" class="form-select" required>
+                                <select name="job_type" id="searchJobType" class="form-select">
                                     <option value="">Job Type</option>
                                     <option value="Remote">Remote</option>
                                     <option value="On-site">On-Site</option>

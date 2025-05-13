@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
 class JobsController extends Controller
 {
     public function __construct()
@@ -25,16 +24,15 @@ class JobsController extends Controller
         $this->application = new Application();
     }
 
-
     public function index()
     {
         $query = $this->job->query();
 
-        if (auth()->check() && (auth()->user()->role === "student" || auth()->user()->role === "worker")) {
-            $skills = auth()->user()->skills->pluck('id'); // Fetch user's skills IDs
-            if ($skills->isNotEmpty()) { // Check if the user has any skills
+        if (auth()->check() && (auth()->user()->role === 'student' || auth()->user()->role === 'worker')) {
+            $skills = auth()->user()->skills->pluck('id');  // Fetch user's skills IDs
+            if ($skills->isNotEmpty()) {  // Check if the user has any skills
                 $query->whereHas('skills', function ($q) use ($skills) {
-                    $q->whereIn('skills.id', $skills); // Match jobs with the user's skills
+                    $q->whereIn('skills.id', $skills);  // Match jobs with the user's skills
                 });
             }
         }
@@ -64,20 +62,19 @@ class JobsController extends Controller
 
     public function create()
     {
-        if (auth()->user()->role === "corporate") {
+        if (auth()->user()->role === 'corporate') {
             return view('jobs.create');
         } else {
             return redirect()->back()->withErrors(['error' => 'You must own a corporate account to post jobs']);
         }
     }
 
-
     public function store(JobRequest $request)
     {
         $validated = $request->validated();
         DB::beginTransaction();
         $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
-        foreach (explode(',', json_decode($validated["skills"], true)) as $value) {
+        foreach (explode(',', json_decode($validated['skills'], true)) as $value) {
             DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
         }
         DB::commit();
@@ -98,7 +95,7 @@ class JobsController extends Controller
 
     public function apply($ref_no)
     {
-        if (auth()->user()->role === "student" || auth()->user()->role === "worker") {
+        if (auth()->user()->role === 'student' || auth()->user()->role === 'worker') {
             $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->with('corporate')->first();
             $application = $this->application->where('job_id', $job->id)->where('user_id', auth()->id())->first();
             $applied = false;
@@ -120,12 +117,12 @@ class JobsController extends Controller
             'curriculum_vitae' => ['nullable', 'max:2000'],
             'files' => ['nullable'],
         ]);
-        $application = $this->application->where('user_id', auth()->id())->where('job_id', $validated["job_id"])->first();
+        $application = $this->application->where('user_id', auth()->id())->where('job_id', $validated['job_id'])->first();
         if (!is_null($application)) {
-            return json_encode(['status' => 'success', 'message' => "You have already applied for this job. Thank you"]);
+            return json_encode(['status' => 'success', 'message' => 'You have already applied for this job. Thank you']);
         }
-        $job = $this->job->find($validated["job_id"]);
-        $filename = "";
+        $job = $this->job->find($validated['job_id']);
+        $filename = '';
         if ($request->hasFile('curriculum_vitae')) {
             $filename .= 'CV' . auth()->id() . $job->ref_no . strtotime(now()) . '.' . $request->file('curriculum_vitae')->getClientOriginalExtension();
             $request->file('curriculum_vitae')->storeAs('applicant_resources/', $filename);
@@ -133,7 +130,7 @@ class JobsController extends Controller
         $fileNames = [];
         if (isset($request->files)) {
             foreach ($request->file('files') as $file) {
-                $fileName = auth()->id() . $job->ref_no . strtotime(now()) . '.' . $file->getClientOriginalExtension(); // or any other desired file name
+                $fileName = auth()->id() . $job->ref_no . strtotime(now()) . '.' . $file->getClientOriginalExtension();  // or any other desired file name
                 $file->move('applicant_resources/', $fileName);
                 array_push($fileNames, $fileName);
             }
@@ -145,7 +142,7 @@ class JobsController extends Controller
         $application->cover_letter = $validated['cover_letter'];
         $application->curriculum_vitae = $filename;
         $application->files = json_encode($fileNames);
-        $application->status = "pending";
+        $application->status = 'pending';
         $application->save();
 
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
@@ -170,9 +167,38 @@ class JobsController extends Controller
     public function search(Request $request)
     {
         $params = $request->all();
-        $experienceLevels = json_decode($params['experience_level'], true);
-        $educationLevels = json_decode($params['education_level'], true);
-        $locations = collect(json_decode($params['location'], true))->filter(fn($value) => is_string($value))->values();
+        $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
+        $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
+        $locations = isset($params['location']) ? collect($params['location'])->filter(fn($value) => is_string($value))->values() : collect();
+        $query = $this->job->query();
+        if (!empty($params['category_id'])) {
+            $query->where('category_id', $params['category_id']);
+        }
+        if (!empty($params['employment_type'])) {
+            $query->where('employment_type', $params['employment_type']);
+        }
+        if (!empty($params['job_type'])) {
+            $query->where('job_type', $params['job_type']);
+        }
+        if (!empty($experienceLevels)) {
+            $query->whereIn('experience_level', $experienceLevels);
+        }
+        if (!empty($educationLevels)) {
+            $query->whereIn('education_level', $educationLevels);
+        }
+        if ($locations->isNotEmpty()) {
+            $query->whereIn('location', $locations->toArray());
+        }
+        $jobs = $query->paginate(10);
+        return view('jobs.index', compact('jobs'));
+    }
+
+    public function jsonSearch(Request $request)
+    {
+        $params = $request->all();
+        $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
+        $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
+        $locations = isset($params['location']) ? collect($params['location'])->filter(fn($value) => is_string($value))->values() : collect();
         $query = $this->job->query();
         if (!empty($params['category_id'])) {
             $query->where('category_id', $params['category_id']);

@@ -197,7 +197,7 @@
             location: JSON.stringify(locations)
         };
         showSpiner('#jobrendersection');
-        $.post('/jobs-search', data).done(function (jobs) {
+        $.post('/jobs-json-search', data).done(function (jobs) {
             if (jobs.length > 0) {
                 jobrendersection.html(composeJobs(jobs));
             } else {

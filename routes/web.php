@@ -47,6 +47,7 @@ Route::view('services', 'services')->name('services');
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);
 Route::post('jobs-search', [JobsController::class,'search'])->name('jobs.search');
+Route::post('jobs-json-search', [JobsController::class,'jsonSearch'])->name('jobs.json.search');
 Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
 Route::get('job-applications/{job_id}', [JobsController::class, 'applications'])->name('job.applications');
