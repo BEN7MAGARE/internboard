@@ -26,31 +26,44 @@
 
             <ul class="list-unstyled components">
 
-                <li class="active">
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
                         <i class="bi bi-speedometer2"></i>
                         Dashboard
                     </a>
                 </li>
+
+                <li class="{!! Request::is('profile') ? 'active' : '' !!}">
+                    <a href="{{ route('profile.edit') }}" aria-current="true">
+                        <i class="bi bi-person"></i>&nbsp;My Profile
+                    </a>
+                </li>
+
                 @if (auth()->user()->role === 'corporate')
-                <li>
+                <li class="{!! Request::is('profile-jobs') ? 'active' : '' !!}">
                     <a href="{{ route('profile.jobs') }}">
                         <i class="bi bi-briefcase"></i>
                         My Jobs
                     </a>
                 </li>
 
-                <li>
+                <li class="{!! Request::is('profile/applications') ? 'active' : '' !!}">
                     <a href="{{ route('profile.applications') }}">
                         <i class="bi bi-briefcase"></i>
                         Applications
                     </a>
                 </li>
-                
+                @endif
+
+                @if (auth()->user()->role === 'student')
+                <li class="{!! Request::is('applications') ? 'active' : '' !!}">
+                    <a href="{{ route('applications.index') }}"><i
+                            class="bi bi-window"></i>&nbsp;My Applications</a>
+                </li>
                 @endif
 
                 @if (auth()->user()->role === 'admin')
-                <li>
+                <li class="{!! Request::is('users') ? 'active' : '' !!}">
                     <a href="{{ route('users') }}">
                         <i class="bi bi-people"></i>
                         Users
@@ -91,6 +104,7 @@
 
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/iziToast.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     @yield('footer_scripts')
 </body>
 

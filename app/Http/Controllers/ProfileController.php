@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Models\Application;
 
 class ProfileController extends Controller
 {
@@ -26,6 +27,7 @@ class ProfileController extends Controller
         $this->user = new User();
         $this->job = new Job();
         $this->corporate = new Corporate();
+        $this->application = new Application();
     }
 
     function index()
@@ -182,7 +184,8 @@ class ProfileController extends Controller
         if (auth()->user()->role !== "corporate") {
             return redirect()->route('profile.edit');
         }
-        $applications = $this->application->whereIn('job_id', auth()->user()->corporate->jobs->pluck('id'))->with('job:id,title')->paginate(10);
-        return view('profile.applications', compact('applications'));
+        $applications = $this->application->whereIn('job_id', auth()->user()->corporate->jobs->pluck('id'))->with(['job:id,title', 'applicant:id,first_name,last_name,phone,email'])->paginate(10);
+        $jobs = $this->job->where('corporate_id', auth()->user()->corporate->id)->get();
+        return view('profile.applications', compact('applications', 'jobs'));
     }
 }

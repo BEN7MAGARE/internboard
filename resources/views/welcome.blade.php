@@ -15,7 +15,7 @@ Home @parent
 
         <img src="{{ asset('images/bridge.jpg') }}" alt="" data-aos="fade-in">
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <h2 data-aos="fade-up" data-aos-delay="100">Job Opportunities</h2>
@@ -76,7 +76,7 @@ Home @parent
     <!-- Clients Section -->
     <section id="clients" class="clients section">
 
-        <div class="container" data-aos="fade-up">
+        <div class="container-fluid" data-aos="fade-up">
 
             <div class="d-flex justify-content-center align-items-center gap-3 gy-4">
 
@@ -102,7 +102,7 @@ Home @parent
 
     <section id="about" class="about section light-background">
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
             <div class="row align-items-xl-center gy-5">
 
                 <div class="col-xl-5 content">
@@ -160,11 +160,11 @@ Home @parent
 
     <!-- Features Section -->
     <section id="features" class="features section">
-        <div class="container section-title" data-aos="fade-up">
+        <div class="container-fluid section-title" data-aos="fade-up">
             <h2>What we Do</h2>
             <p></p>
         </div><!-- End Section Title -->
-        <div class="container">
+        <div class="container-fluid">
 
             <div class="row gy-4 align-items-center features-item">
                 <div class="col-lg-5 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
@@ -204,9 +204,9 @@ Home @parent
 
     <section id="call-to-action" class="call-to-action section dark-background">
 
-        <img src="{{ asset('images/cta-bg.jpg') }}" alt="">
+        <img src="{{ asset('') }}" alt="">
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
                     <div class="text-center">
