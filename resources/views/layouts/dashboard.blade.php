@@ -92,6 +92,27 @@
                         Users
                     </a>
                 </li>
+                
+                <li class="{!! Request::is('colleges') ? 'active' : '' !!}">
+                    <a href="{{ route('colleges.index') }}">
+                        <i class="bi bi-building"></i>
+                        Colleges
+                    </a>
+                </li>
+                
+                <li class="{!! Request::is('corporates') ? 'active' : '' !!}">
+                    <a href="{{ route('corporates.index') }}">
+                        <i class="bi bi-briefcase"></i>
+                        Corporates / Business
+                    </a>
+                </li>
+                
+                <li class="{!! Request::is('categories') ? 'active' : '' !!}">
+                    <a href="{{ route('categories.index') }}">
+                        <i class="bi bi-list"></i>
+                        Categories
+                    </a>
+                </li>
 
                 @endif
                 <li class="list-group-item {!! Request::is('profile') || Request::is('corporate/create') || Request::is('corporate/edit') || Request::is('corporate') ? 'active' : '' !!}">

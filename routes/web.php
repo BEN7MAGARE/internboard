@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubcategoryController;
 /*
  * |--------------------------------------------------------------------------
  * | Web Routes
@@ -64,13 +66,15 @@ Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoo
 Route::get('college-applications', [ApplicationsController::class, 'collegeApplications'])->name('college.applications');
 Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
 
-Route::resource('corporate', CorporateController::class);
+Route::resource('corporates', CorporateController::class);
 
-Route::resource('college', CollegeController::class);
+Route::resource('colleges', CollegeController::class);
 
 Route::resource('students', StudentController::class);
 
 Route::resource('users', UserController::class);
+
+Route::resource('categories', CategoryController::class);
 
 Route::get('student/{id}', [ApplicationsController::class, 'studentDetails'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');

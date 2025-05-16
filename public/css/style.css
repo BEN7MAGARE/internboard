@@ -496,3 +496,60 @@ thead th{
     width: 150px;
     max-height: 100px;
 }
+
+
+/** Paginatin box **/
+.pagination-box {
+    margin-bottom: 25px;
+}
+
+.pagination {
+    padding-left: 0;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline-block;
+}
+
+.pagination>li>a {
+    color: #212121;
+    font-size: 18px;
+    background: #fff;
+    font-weight: 400;
+}
+
+.pagination>li>a i {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    margin: 0 2px 5px;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    text-align: center;
+    border: none;
+    padding: 0;
+    border-radius: 3px;
+    background: #fff;
+}
+
+.pagination .page-item:first-child .page-link {
+    border-radius: 3px;
+}
+
+.pagination .page-item:last-child .page-link {
+    border-radius: 3px;
+}
+
+.pagination>li>a:hover {
+    color: #fff;
+}
+
+.pagination>li.active {
+    color: #fff;
+}

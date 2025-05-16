@@ -19,7 +19,8 @@ class CorporateController extends Controller
      */
     public function index()
     {
-        return view('corporate.index');
+        $corporates = Corporate::withCount('jobs')->paginate(10);
+        return view('corporate.index', compact('corporates'));
     }
 
     /**

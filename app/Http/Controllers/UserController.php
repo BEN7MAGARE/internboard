@@ -17,7 +17,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        $corporatesusers = User::where('role', 'corporate')->get();
+        $collegeusers = User::where('role', 'college')->get();
+        $jobseekers = User::where('role', 'worker')->get();
+        return view('users.index', compact('users', 'corporatesusers', 'collegeusers', 'jobseekers'));
     }
 
     /**

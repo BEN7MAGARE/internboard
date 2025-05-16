@@ -15,7 +15,8 @@ class CollegeController extends Controller
      */
     public function index()
     {
-        return view('college.index');
+        $colleges = College::withCount('students')->paginate(10);
+        return view('college.index', compact('colleges'));
     }
 
     /**
