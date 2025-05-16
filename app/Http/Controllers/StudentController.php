@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProfileRequest;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->profile = Profile::class;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +33,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('students.create');
     }
 
     /**

@@ -376,41 +376,40 @@
                             </div>
                         </div>
 
+                        <h5>Next of Kin</h5>
+                        
                         <div class="col-md-3 form-group mb-1">
-                            <label for="studentTwitter">Twitter
-                                Profile</label>
+                            <label for="kinName">Name</label>
                             <div class="input-group">
-                                <input name="twitter" type="text" class="form-control" id="studentTwitter"
-                                    value="{{ auth()->user()->twitter ?? 'https://twitter.com/#' }}">
+                                <input name="kinName" type="text" class="form-control" id="kinName"
+                                    value="{{ auth()->user()->kin_name }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
-                            <label for="studentFacebook">Facebook
-                                Profile</label>
+                            <label for="kinPhone">Phone</label>
                             <div class="input-group">
-                                <input name="facebook" type="text" class="form-control" id="studentFacebook"
-                                    value="{{ auth()->user()->facebook ?? 'https://facebook.com/#' }}">
+                                <input name="kinPhone" type="text" class="form-control" id="kinPhone"
+                                    value="{{ auth()->user()->kin_phone }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
-                            <label for="studentInstagram">Instagram
-                                Profile</label>
+                            <label for="kinEmail">Email</label>
                             <div class="input-group">
-                                <input name="instagram" type="text" class="form-control" id="studentInstagram"
-                                    value="{{ auth()->user()->instagram ?? 'https://instagram.com/#' }}">
+                                <input name="kinEmail" type="email" class="form-control" id="kinEmail"
+                                    value="{{ auth()->user()->kin_email }}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 form-group mb-1">
+                            <label for="kinRelationship">Relationship</label>
+                            <div class="input-group">
+                                <input name="kinRelationship" type="text" class="form-control" id="kinRelationship"
+                                    value="">
                             </div>
                         </div>
 
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="studentLinkedin">Linkedin
-                                Profile</label>
-                            <div class="input-group">
-                                <input name="linkedin" type="text" class="form-control" id="studentLinkedin"
-                                    value="{{ auth()->user()->linkedin ?? 'https://linkedin.com/#' }}">
-                            </div>
-                        </div>
                     </div>
 
                     <div id="studentProfileUpdateFeedback"></div>
