@@ -1,175 +1,57 @@
 (function () {
-    function showSuccess(message, target) {
-        iziToast.success({
-            title: "OK",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
 
-    function showError(message, target) {
-        iziToast.error({
-            title: "Error",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
-
-    function showSpiner(target) {
-        $(target).html(
-            '<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
-        );
-    }
-
-    function removeSpiner(target) {
-        $(target).children().remove();
-    }
-
-
-    const userSignupForm = $("#corporateSignupForm"),
-        companyName = $("#companyName"),
-        companyEmail = $("#companyEmail"),
-        companyPhone = $("#companyPhone"),
-        companyAddress = $("#companyAddress"),
-        firstName = $("#firstName"),
-        userRole = $("#userRole"),
-        lastName = $("#lastName"),
-        emailInput = $("#email"),
-        phoneInput = $("#phone"),
-        passwordInput = $("#password"),
-        passwordConfirmation = $("#passwordConfirmation"),
-        showRegisterPassword = $('.showRegisterPassword');
-
-    userSignupForm.on("submit", function (event) {
+    const collegeCreateForm = document.getElementById("collegeCreateForm"),
+        collegeCreateSubmit = document.getElementById("collegeCreateSubmit");
+    collegeCreateForm.addEventListener("submit", async function (event) {
         event.preventDefault();
-        const $this = $(this),
-            companyname = companyName.val(),
-            companyemail = companyEmail.val(),
-            companyphone = companyPhone.val(),
-            companyaddress = companyAddress.val(),
-            first_name = firstName.val(),
-            last_name = lastName.val(),
-            role = userRole.val(),
-            email = emailInput.val(),
-            phone = phoneInput.val(),
-            password = passwordInput.val(),
-            password_confirmation = passwordConfirmation.val(),
-            errors = [],
+        const formData = new FormData(this);
+
+        const errors = [],
             emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-            phoneNumberRegex = /^(\+254|0)[17]\d{8}$/,
-            token = $this.find("input[name='_token']").val(),
-            institutionSubmit = $('#institutionSubmit');
-        institutionSubmit.prop({ disabled: true });
-        institutionSubmit.text('Processing ..');
-        let data = {
-            _token: token,
-            company: {
-                name: companyname,
-                email: companyemail,
-                phone: companyphone,
-                address: companyaddress,
-            },
-            user: {
-                first_name: first_name,
-                last_name: last_name,
-                role: role,
-                email: email,
-                phone: phone,
-                password: password,
-                password_confirmation: password_confirmation,
-            },
-        };
-        if (password !== password_confirmation) {
-            errors.push("Incorrect password confirmation");
-        }
-        if (!emailRegex.test(email)) {
-            errors.push("Inalid emai address");
-        }
-        if (companyname.length < 2) {
+            phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
+
+        if (formData.get('name').length < 2) {
             errors.push("Invalid company name");
         }
-        if (!emailRegex.test(companyemail)) {
+        if (!emailRegex.test(formData.get('email'))) {
             errors.push("Invalid company email");
         }
-        if (!phoneNumberRegex.test(companyphone)) {
+        if (!phoneNumberRegex.test(formData.get('phone'))) {
             errors.push("Invalid company phone");
         }
-        if (companyaddress.length < 2) {
+        if (formData.get('address').length < 2) {
             errors.push("Invalid company address");
         }
-        if (first_name.length < 2) {
-            errors.push("Invalid first name");
-        }
-        if (last_name.length < 2) {
-            errors.push("Invalid last name");
-        }
-        if (!phoneNumberRegex.test(phone)) {
-            errors.push("Invalid phone number");
-        }
+        collegeCreateSubmit.disabled = true;
         if (errors.length > 0) {
             let p = "";
             $.each(errors, function (key, value) {
-                p += value+'<br>';
+                p += value + '<br>';
             });
-            showError(p, "#corporateFeedback");
-            institutionSubmit.prop({ disabled: false });
-            institutionSubmit.html('<i class="bi bi-server"></i> Submit');
+            showError(p, "#collegeFeedback");
+            collegeCreateSubmit.disabled = false;
         } else {
-            showSpiner("#corporateFeedback");
-            console.log(data);
-            
-            $.post("/college", data)
-                .done(function (params) {
-                    institutionSubmit.prop({ disabled: false });
-                    institutionSubmit.html('<i class="bi bi-server"></i> Submit');
-                    removeSpiner("#corporateFeedback");
-                    let result = JSON.parse(params);
-                    if (result.status === "success") {
-                        showSuccess(result.message, "#corporateFeedback");
-                        $this.trigger("reset");
-                        window.setTimeout(function () {
-                            window.location.href = result.url;
-                        }, 1000);
-                    } else {
-                        showError(result.message, "#corporateFeedback");
-                    }
-                })
-                .fail(function (error) {
-                    institutionSubmit.prop({ disabled: false });
-                    institutionSubmit.html('<i class="bi bi-server"></i> Submit');
-                    removeSpiner("#corporateFeedback");
-                    if (error.status == 422) {
-                        var errors = "";
-                        $.each(
-                            error.responseJSON.errors,
-                            function (key, value) {
-                                errors += value + "!";
-                            }
-                        );
-                        showError(errors, "#corporateFeedback");
-                    } else {
-                        showError(
-                            "Error occurred during processing",
-                            "#corporateFeedback"
-                        );
-                    }
-                });
-        }
-    });
-
-    showRegisterPassword.on("click", function () {
-        if (passwordInput.attr("type") == "password") {
-            passwordInput.attr("type", "text");
-            passwordConfirmation.attr("type", "text");
-            showRegisterPassword.html('<i class="bi bi-eye-slash"></i>');
-        } else {
-            passwordInput.attr("type", "password");
-            passwordConfirmation.attr("type", "password");
-            showRegisterPassword.html('<i class="bi bi-eye"></i>');
+            const response = await fetch("/college", {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                collegeCreateSubmit.disabled = false;
+                let result = await response.json();
+                console.log(result);
+                
+                if (result.status === "success") {
+                    showSuccess(result.message, "#collegeFeedback");
+                } else {
+                    showError(result.message, "#collegeFeedback");
+                }
+            } else {
+                let text = await response.text();
+                console.log(text);
+                
+                collegeCreateSubmit.disabled = false;
+                showError(text, "#collegeFeedback");
+            }
         }
     });
 

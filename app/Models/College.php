@@ -14,7 +14,8 @@ class College extends Model
         'name',
         'email',
         'phone',
-        'address'
+        'address',
+        'logo'
     ];
 
     /**

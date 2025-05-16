@@ -23,7 +23,23 @@
 
         <div class="bg-dark" id="sidebar">
             <div class="sidebar-header text-center">
-                <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
+            <h5 class="logo">Daraja La Mafanikio</h5>
+                {{-- <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo"> --}}
+                {{-- @if (auth()->user()->role === 'admin')
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
+                @endif
+                @if (auth()->user()->role === 'corporate')
+                <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}" alt="Logo" class="img-fluid dashboard-logo">
+                @endif
+                @if (auth()->user()->role === 'college')
+                <img src="{{ asset('college_logos/' . auth()->user()->college->logo) }}" alt="Logo" class="img-fluid dashboard-logo">
+                @endif
+                @if (auth()->user()->role === 'student')
+                <img src="{{ asset('profilepictures/' . auth()->user()->student->image) }}" alt="Logo" class="img-fluid dashboard-logo">
+                @endif
+                @if (auth()->user()->role === 'worker')
+                <img src="{{ asset('profilepictures/' . auth()->user()->worker->image) }}" alt="Logo" class="img-fluid dashboard-logo">
+                @endif --}}
                 <p>({{ auth()->user()->role }})</p>
             </div>
 
@@ -59,8 +75,8 @@
                 @endif
 
                 @if (auth()->user()->role === 'college')
-                <li class="list-group-item  {!! Request::is('college-students') ? 'active' : '' !!}">
-                    <a href="{{ route('college.students') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
+                <li class="list-group-item  {!! Request::is('students') ? 'active' : '' !!}">
+                    <a href="{{ route('students.index') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
                 </li>
 
                 <li class="list-group-item  {!! Request::is('college-applications') ? 'active' : '' !!}">
@@ -77,7 +93,7 @@
                 </li>
 
                 @endif
-                <li class="{!! Request::is('profile') ? 'active' : '' !!}">
+                <li class="{!! Request::is('profile') || Request::is('corporate/create') || Request::is('corporate/edit') || Request::is('corporate') ? 'active' : '' !!}">
                     <a href="{{ route('profile.edit') }}" aria-current="true">
                         <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
@@ -116,6 +132,7 @@
         </div>
     </div>
 
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/iziToast.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>

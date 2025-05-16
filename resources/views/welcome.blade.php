@@ -199,15 +199,13 @@ Home @parent
 
     <section id="call-to-action" class="call-to-action section dark-background">
 
-        <img src="{{ asset('') }}" alt="">
-
         <div class="container-fluid">
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
                     <div class="text-center">
                         <h3>Get Skilled Workers</h3>
                         <p>Get skilled workers to fill employment positions in your firm.</p>
-                        <a class="cta-btn" href="{{ route('jobs.create') }}">Post a job</a>
+                        <a href="{{ route('jobs.create') }}" class="cta-btn">Post a job</a>
                     </div>
                 </div>
             </div>
@@ -220,10 +218,10 @@ Home @parent
 
 @section('footer_scripts')
 <script src="{{ asset('js/functions.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            getCategoriesOptions(['#searchCategoryID']);
-            getCategoriesWithJobs('#categoriesWithJobs');
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        getCategoriesOptions(['#searchCategoryID']);
+        getCategoriesWithJobs('#categoriesWithJobs');
+    });
+</script>
 @endsection

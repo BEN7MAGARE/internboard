@@ -35,9 +35,7 @@ class ApplicationsController extends Controller
             $students = $this->user->where('college_id', auth()->user()->college_id)->pluck('id');
             $query->where('user_id', $students);
         }
-
         $applications = $query->with('job.corporate', 'applicant')->latest()->get();
-
         return view('apply.index', compact('applications'));
     }
 

@@ -103,7 +103,6 @@ class ProfileController extends Controller
         }
         return json_encode(['status' => 'success', 'message' => 'Profile information updated successfully.']);
     }
-
     /**
      * Delete the user's account.
      */

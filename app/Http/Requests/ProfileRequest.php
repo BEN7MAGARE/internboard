@@ -26,7 +26,7 @@ class ProfileRequest extends FormRequest
             'education' => ['nullable', 'string'],
             'work' => ['nullable', 'string'],
             'specialization' => ['nullable', 'string'],
-            'summary' => ['nullable', 'string'],
+            'summary' => ['nullable', 'string', 'max:1000'],
             'first_name' => ['string', 'nullable', ''],
             'last_name' => ['string', 'nullable', ''],
             'address' => ['string', 'nullable'],

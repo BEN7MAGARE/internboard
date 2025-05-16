@@ -346,7 +346,7 @@ Profile
                             <label for="jobEndDate">End Date</label>
                             <div class="input-group d-flex gap-2">
                                 <input name="jobEndDate" type="date" class="form-control" id="jobEndDate">
-                                <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i class="fa fa-plus"></i> Add</button>
+                                <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i class="bi bi-plus"></i> Add</button>
                             </div>
                         </div>
 
@@ -367,7 +367,7 @@ Profile
                                 <div class="col-md-3">
                                     <p><span class="startDate">{{ $item->start_date }}</span> - <span class="endDate">{{ $item->end_date }}</span></p>
                                 </div>
-                                <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteJobToggle"><i class="fa fa-trash"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteJobToggle"><i class="bi bi-trash"></i></button></div>
                             </div>
                             @endforeach
                             @endif
@@ -395,7 +395,9 @@ Profile
                             <div class="input-group">
                                 <select class="form-select" name="education_level" id="educationLevel">
                                     <option value="">Select One</option>
-                                    <option value="Highschool">Highschool</option>
+                                    <option value="No Education">No Education</option>
+                                    <option value="Primary">Primary</option>
+                                    <option value="Secondary">Secondary</option>
                                     <option value="Certificate">Certificate</option>
                                     <option value="Diploma">Diploma</option>
                                     <option value="Higher Diploma">Higher Diploma</option>
@@ -417,7 +419,7 @@ Profile
                             <label for="educationEndDate">End date</label>
                             <div class="input-group di-flex gap-2">
                                 <input name="educationEndDate" type="date" class="form-control" id="educationEndDate">
-                                <button class="btn btn-secondary btn-sm" type="button" id="educationAddToggle"><i class="fa fa-plus"></i>Add</button>
+                                <button class="btn btn-secondary btn-sm" type="button" id="educationAddToggle"><i class="bi bi-plus"></i>Add</button>
                             </div>
                         </div>
 
@@ -571,7 +573,7 @@ Profile
                     <div id="userProfileFeedback"></div>
 
                     <div class="form-group text-end">
-                        <button class='btn btn-primary btn-md' type="submit"><i class="fa fa-save fa-lg fa-fw"></i>
+                        <button class='btn btn-primary btn-md' type="submit"><i class="bi bi-save"></i>
                             Save
                         </button>
                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>

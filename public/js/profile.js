@@ -204,7 +204,7 @@
             <div class="col-md-4"><p class="title">${data.title}</p></div>
             <div class="col-md-4"><p class="company">${data.company}</p></div>
             <div class="col-md-3"><p><span class="startDate">${data.start_date}</span> - <span class="endDate">${data.end_date}</span></p></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteJobToggle"><i class="fa fa-trash"></i></button></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteJobToggle"><i class="bi bi-trash"></i></button></div>
             </div>`);
             jobTittle.val("");
             jobCompanyName.val("");
@@ -243,7 +243,7 @@
             <div class="col-md-4"><p class="title p-0 m-0"><span class="level">${data.level}</span>&nbsp;<span class="course">${data.course}</span></p></div>
             <div class="col-md-4"><p class="institution  p-0 m-0">${data.institution}</p></div>
             <div class="col-md-3"><p class="p-0 m-0"><span class="startDate">${data.start_date}</span> - <span class="endDate">${data.end_date}</span></p></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteEducationToggle"><i class="fa fa-trash"></i></button></div>
+            <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm" id="deleteEducationToggle"><i class="bi bi-trash"></i></button></div>
             </div>`)
             educationCourse.val("")
             educationInstitution.val("")
@@ -392,8 +392,6 @@
         });
     });
 
-
-
     userUpdateForm.on('submit', function (event) {
         event.preventDefault();
         const data = new FormData(), $this = $(this);
@@ -435,7 +433,12 @@
                         errors += value + "!";
                     });
                     showError(errors, "#userProfileFeedback");
-                } else {
+                } else if(error.status === 419) {
+                    showError("You are not logged in", "#userProfileFeedback");
+                    window.setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+                }else{
                     showError(
                         "Error occurred during processing",
                         "#userProfileFeedback"

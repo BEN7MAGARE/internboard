@@ -6,15 +6,15 @@
         console.log(userroleselection);
 
         if (userroleselection === "student") {
-            window.location.href = '/student-create';
+            window.location.href = '/account-create/student';
         } else if (userroleselection === "corporate") {
-            window.location.href = "/employer/create";
+            window.location.href = '/account-create/corporate';
         } else if (userroleselection === "college") {
-            window.location.href = "/college/create";
+            window.location.href = '/account-create/college';
         }
     });
 
-    const userSignupForm = $("#studentSignupForm"),
+    const userSignupForm = $("#signupForm"),
         firstName = $("#firstName"),
         userRole = $("#userRole"),
         lastName = $("#lastName"),
@@ -25,7 +25,7 @@
         collegeID = $('#college_id'),
         showLoginPassword = $('#showLoginPassword'),
         showRegisterPassword = $('.showRegisterPassword'),
-        studentSubmit = $('#studentSubmit');
+        studentSubmit = $('#userSubmit');
 
     userSignupForm.on("submit", function (event) {
         event.preventDefault();
@@ -69,27 +69,31 @@
             $.each(errors, function (key, value) {
                 p += value;
             });
-            showError(p, "#studentfeedbackfeedback");
-            submit.prop({ disabled: false });
+            showError(p, "#userFeedback");
+            studentSubmit.prop({ disabled: false });
+            studentSubmit.html('<i class="fa fa-server"></i> Submit');
         } else {
-            $.post("/register", data)
+            console.log(data);
+            
+            $.post("/account/store", data)
                 .done(function (params) {
                     studentSubmit.prop({ disabled: true });
-                    studentSubmit.html('<i class="fa fa-server"></i> Save');
+                    studentSubmit.html('<i class="fa fa-server"></i> Submit');
                     let result = JSON.parse(params);
+                    console.log(result.url);
                     if (result.status === "success") {
-                        showSuccess(result.message, "#studentfeedbackfeedback");
+                        showSuccess(result.message, "#userFeedback");
                         $this.trigger("reset");
                         window.setTimeout(function () {
                             window.location.href = result.url;
                         }, 1000)
                     } else {
-                        showError(result.message, "#studentfeedbackfeedback");
+                        showError(result.message, "#userFeedback");
                     }
                 })
                 .fail(function (error) {
                     studentSubmit.prop({ disabled: true });
-                    studentSubmit.html('<i class="fa fa-server"></i> Save');
+                    studentSubmit.html('<i class="fa fa-server"></i> Submit');
                     if (error.status == 422) {
                         var errors = "";
                         $.each(
@@ -98,11 +102,11 @@
                                 errors += value + "!";
                             }
                         );
-                        showError(errors, "#studentfeedbackfeedback");
+                        showError(errors, "#userFeedback");
                     } else {
                         showError(
                             "Error occurred during processing",
-                            "#studentfeedbackfeedback"
+                            "#userFeedback"
                         );
                     }
                 });

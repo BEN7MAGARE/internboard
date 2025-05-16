@@ -16,19 +16,14 @@ Route::middleware('guest')->group(function () {
         ->name('student.create');
 
     Route::get('getstarted', [RegisteredUserController::class, 'getstarted'])
-        ->name('getstarted');
-
-    Route::get('employer/create', [RegisteredUserController::class, 'employer'])
-        ->name('employer.create');
-
-    Route::get('college/create', [RegisteredUserController::class, 'institution'])
-        ->name('college.create');
-
-    Route::post('/college', [RegisteredUserController::class, 'institutioncreate']);
+        ->name('getstarted');    
 
     Route::middleware('role');
 
-    Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
+    Route::get('account-create/{role}', [RegisteredUserController::class, 'create'])
+        ->name('account.create');
+
+    Route::post('account/store', [RegisteredUserController::class, 'store'])->name('account.store');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
@@ -46,7 +41,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-    Route::post('/corporate', [RegisteredUserController::class, 'corporateCreate'])->name('corporate.create');
 });
 
 Route::middleware('auth')->group(function () {

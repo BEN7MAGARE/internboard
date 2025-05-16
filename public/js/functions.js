@@ -83,3 +83,34 @@ function getsubstring(string) {
         return string;
     }
 }
+
+function getCourses(target) {
+    $.getJSON("/courses", function (courses) {
+        let option = "<option value=''>Select Course</option>";
+        $.each(courses, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        $(target).html(option);
+    });
+}
+
+function getCounties(target) {
+    $.getJSON("/counties", function (counties) {
+        let option = "<option value=''>Select County</option>";
+        $.each(counties, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        $(target).html(option);
+    });
+}
+
