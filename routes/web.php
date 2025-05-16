@@ -7,6 +7,7 @@ use App\Http\Controllers\JobsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 /*
  * |--------------------------------------------------------------------------
  * | Web Routes
@@ -68,6 +69,8 @@ Route::resource('corporate', CorporateController::class);
 Route::resource('college', CollegeController::class);
 
 Route::resource('students', StudentController::class);
+
+Route::resource('users', UserController::class);
 
 Route::get('student/{id}', [ApplicationsController::class, 'studentDetails'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');

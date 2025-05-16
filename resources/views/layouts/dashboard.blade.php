@@ -85,19 +85,21 @@
                 @endif
 
                 @if (auth()->user()->role === 'admin')
+                
                 <li class="{!! Request::is('users') ? 'active' : '' !!}">
-                    <a href="{{ route('users') }}">
+                    <a href="{{ route('users.index') }}">
                         <i class="bi bi-people"></i>
                         Users
                     </a>
                 </li>
 
                 @endif
-                <li class="{!! Request::is('profile') || Request::is('corporate/create') || Request::is('corporate/edit') || Request::is('corporate') ? 'active' : '' !!}">
+                <li class="list-group-item {!! Request::is('profile') || Request::is('corporate/create') || Request::is('corporate/edit') || Request::is('corporate') ? 'active' : '' !!}">
                     <a href="{{ route('profile.edit') }}" aria-current="true">
                         <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
                 </li>
+
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
