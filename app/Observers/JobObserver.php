@@ -16,7 +16,6 @@ class JobObserver
 
     public function creating(Job $job) {
         $job->user_id = auth()->id();
-        $job->corporate_id = auth()->user()->corporate_id;
     }
 
     /**

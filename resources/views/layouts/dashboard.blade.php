@@ -8,8 +8,8 @@
         @yield('title') | Daraja La Mafanikio
     </title>
 
-    <link href="{{ asset('images/logo.ico') }}" rel="icon">
-    <link href="{{ asset('images/logo.ico') }}" rel="apple-touch-icon">
+    <link href="{{ asset('/images/logo.ico') }}" rel="icon">
+    <link href="{{ asset('/images/logo.ico') }}" rel="apple-touch-icon">
 
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -93,6 +93,13 @@
                     </a>
                 </li>
                 
+                <li class="{!! Request::is('students') ? 'active' : '' !!}">
+                    <a href="{{ route('students.index') }}">
+                        <i class="bi bi-people"></i>
+                        Students
+                    </a>
+                </li>
+                
                 <li class="{!! Request::is('colleges') ? 'active' : '' !!}">
                     <a href="{{ route('colleges.index') }}">
                         <i class="bi bi-building"></i>
@@ -110,7 +117,7 @@
                 <li class="{!! Request::is('categories') ? 'active' : '' !!}">
                     <a href="{{ route('categories.index') }}">
                         <i class="bi bi-list"></i>
-                        Categories
+                        Job Categories
                     </a>
                 </li>
 

@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Profile;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\StudentRequest;
+use App\Models\College;
+use App\Models\County;
+use App\Models\Course;
+use App\Models\Profile;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -15,14 +21,21 @@ class StudentController extends Controller
         $this->middleware('auth');
         $this->profile = Profile::class;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (auth()->user()->role === "college") {
-            $students = User::where('role', 'student')->where('college_id', auth()->user()->college_id)->with('profile')->paginate(10);
-            return view('students.index', compact('students'));
+        $counties = County::all();
+        $courses = Course::all();
+        if (auth()->user()->role === 'college') {
+            $students = User::where('role', 'student')->where('college_id', auth()->user()->college_id)->with(['profile', 'college', 'student'])->paginate(10);
+            return view('students.index', compact('students', 'counties', 'courses'));
+        } else if (auth()->user()->role === 'admin') {
+            $colleges = College::all();
+            $students = User::where('role', 'student')->with(['profile', 'college', 'student'])->paginate(10);
+            return view('students.index', compact('students', 'counties', 'colleges', 'courses'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
         }
@@ -39,51 +52,22 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProfileRequest $request)
+    public function store(StudentRequest $request)
     {
         $validated = $request->validated();
-        $user = User::find(auth()->id());
-        $image = $user->image;
-        if ($request->hasFile("image")) {
-            $fileName = 'pr' . strtotime(now()) . auth()->id() . '.' . $request->file('image')->getClientOriginalExtension();
-            if (Storage::disk('public')->exists('profilepictures/' . $user->image)) {
-                Storage::disk('public')->delete('profilepictures/' . $user->image);
-            }
-            $request->file('image')->move('profilepictures/', $fileName);
-            $image = $fileName;
+        $validated['password'] = bcrypt('Dalma@2025');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('profilepictures'), $image_name);
+            $validated['image'] = $image_name;
         }
-        $user->update($validated + ['image' => $image]);
-        if (auth()->user()->role == "student") {
-            if (is_null($user->profile)) {
-                $this->profile->create([
-                    'user_id' => $user->id,
-                    'level' => $validated['level'],
-                    'education' => $validated["education"],
-                    'work' => $validated["work"],
-                    'specialization' => $validated["specialization"],
-                    'summary' => $validated["summary"],
-                    'years_of_experience' => $validated["years_of_experience"],
-                ]);
-            } else {
-                $user->profile->update([
-                    'education' => $validated["education"],
-                    'work' => $validated["work"],
-                    'level' => $validated['level'],
-                    'specialization' => $validated["specialization"],
-                    'summary' => $validated["summary"],
-                    'level' => $validated["level"],
-                    'years_of_experience' => $validated["years_of_experience"],
-                ]);
-            }
-            $skills = explode(',', $request->skills);
-            foreach ($skills as $value) {
-                User_Skill::create([
-                    'user_id' => $user->id,
-                    'skill_id' => $value,
-                ]);
-            }
-        }
-        return json_encode(['status' => 'success', 'message' => 'Profile information updated successfully.']);
+        $validated['role'] = 'student';
+        DB::beginTransaction();
+        $user = User::create($validated);
+        Student::create($validated + ['user_id' => $user->id]);
+        DB::commit();
+        return json_encode(['status' => 'success', 'message' => 'Student created successfully.']);
     }
 
     /**
@@ -91,7 +75,8 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $student = User::with(['profile', 'college', 'student'])->findOrFail($id);
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -99,15 +84,20 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $student = User::with(['profile', 'college', 'student'])->findOrFail($id);
+        return view('students.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StudentRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        $user = User::findOrFail($id);
+        $user->update($validated);
+        $user->profile()->update($validated);
+        return json_encode(['status' => 'success', 'message' => 'Student updated successfully.']);
     }
 
     /**
@@ -115,6 +105,8 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return json_encode(['status' => 'success', 'message' => 'Student deleted successfully.']);
     }
 }

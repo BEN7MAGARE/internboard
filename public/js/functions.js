@@ -30,8 +30,8 @@ function removeSpiner(target) {
 
 
 function getCategoriesOptions(target) {
-    $.getJSON("/categories", function (categories) {
-        let option = "<option value=''>Select Industry</option>";
+    $.getJSON("/categoriesdata", function (categories) {
+        let option = "<option value=''>Select Category/Industry</option>";
         $.each(categories, function (key, value) {
             option +=
                 "<option value=" +
@@ -95,7 +95,13 @@ function getCourses(target) {
                 value.name +
                 "</option>";
         });
-        $(target).html(option);
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
     });
 }
 
@@ -110,7 +116,96 @@ function getCounties(target) {
                 value.name +
                 "</option>";
         });
-        $(target).html(option);
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
     });
 }
 
+function countiesOption(target) {
+    $.getJSON("/counties", function (counties) {
+        let option = "<option value=''>Select County</option>";
+        $.each(counties, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+
+function getSkillsOption(target) {
+    $.getJSON("/skills", function (skills) {
+        let option = "<option value=''>Select One</option>";
+        $.each(skills, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+
+function getSubCategories(categoryid,target) {
+    $.getJSON("/categorysubs/" + categoryid, function (subcategories) {
+        let option = "<option value=''>Select One</option>";
+        $.each(subcategories, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+
+function getEmployerOptions(target) {
+    $.getJSON("/corporatesdata", function (corporates) {
+        let option = "<option value=''>Select Employer</option>";        
+        $.each(corporates, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}

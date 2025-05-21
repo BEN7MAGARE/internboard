@@ -44,7 +44,7 @@ class JobsController extends Controller
 
     public function categories()
     {
-        $categories = $this->category->latest()->get();
+        $categories = $this->category->select('id', 'name')->latest()->get();
         return json_encode($categories);
     }
 
@@ -72,13 +72,24 @@ class JobsController extends Controller
     public function store(JobRequest $request)
     {
         $validated = $request->validated();
+        if (auth()->user()->role === 'corporate') {
+            $validated['corporate_id'] = auth()->user()->corporate_id;
+        }
+
         DB::beginTransaction();
-        $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
+        if (isset($validated['id']) || $validated['id'] !== null || $validated['id'] !== "") {
+            $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
+            $message = 'Job post added successfully';
+        } else {
+            $job = $this->job->find($validated['id'])->update($validated);
+            $message = 'Job post added successfully';
+        }
         foreach (explode(',', json_decode($validated['skills'], true)) as $value) {
             DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
         }
         DB::commit();
-        return json_encode(['status' => 'success', 'message' => 'Job post added successfully']);
+        
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     public function show(string $id)
@@ -200,6 +211,9 @@ class JobsController extends Controller
         $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
         $locations = isset($params['location']) ? collect($params['location'])->filter(fn($value) => is_string($value))->values() : collect();
         $query = $this->job->query();
+        if (!empty($params['corporate_id'])) {
+            $query->where('corporate_id', $params['corporate_id']);
+        }
         if (!empty($params['category_id'])) {
             $query->where('category_id', $params['category_id']);
         }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -11,6 +11,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -36,12 +37,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-            'role' => 'required',
-        ]);
         User::create($validated);
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
@@ -86,5 +81,37 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
+    }
+
+    public function collegeUserStore(StoreCollegeUserRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['role'] = 'college';
+        if ($validated['id'] !== null) {
+            $user = User::findOrFail($validated['id']);
+            $user->update($validated);
+            $message = 'User updated successfully';
+        } else {
+            $validated['password'] = bcrypt('Dalma@2025');
+            User::create($validated);
+            $message = 'User created successfully';
+        }
+        return redirect()->route('users.index')->with('success', $message);
+    }
+
+    public function corporateUserStore(StoreCorporateUserRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['role'] = 'corporate';
+        if ($validated['id'] !== null) {
+            $user = User::findOrFail($validated['id']);
+            $user->update($validated);
+            $message = 'User updated successfully';
+        } else {
+            $validated['password'] = bcrypt('Dalma@2025');
+            User::create($validated);
+            $message = 'User created successfully';
+        }
+        return redirect()->route('users.index')->with('success', $message);
     }
 }

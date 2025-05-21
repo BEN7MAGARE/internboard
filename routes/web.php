@@ -10,16 +10,6 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
-/*
- * |--------------------------------------------------------------------------
- * | Web Routes
- * |--------------------------------------------------------------------------
- * |
- * | Here is where you can register web routes for your application. These
- * | routes are loaded by the RouteServiceProvider and all of them will
- * | be assigned to the "web" middleware group. Make something great!
- * |
- */
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,7 +45,7 @@ Route::post('jobs-json-search', [JobsController::class, 'jsonSearch'])->name('jo
 Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
 Route::get('job-applications/{job_id}', [JobsController::class, 'applications'])->name('job.applications');
-Route::get('categories', [JobsController::class, 'categories']);
+Route::get('categoriesdata', [JobsController::class, 'categories']);
 Route::get('categories-with-jobs', [JobsController::class, 'categoriesWithJobs']);
 
 Route::get('skills', [JobsController::class, 'skills'])->name('skils');
@@ -67,6 +57,7 @@ Route::get('college-applications', [ApplicationsController::class, 'collegeAppli
 Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
 
 Route::resource('corporates', CorporateController::class);
+Route::get('corporatesdata',[CorporateController::class,'getCorporates']);
 
 Route::resource('colleges', CollegeController::class);
 
@@ -75,8 +66,10 @@ Route::resource('students', StudentController::class);
 Route::resource('users', UserController::class);
 
 Route::resource('categories', CategoryController::class);
+Route::get('categorysubs/{id}', [CategoryController::class, 'getSubCategories']);
+Route::resource('subcategories', SubcategoryController::class);
 
-Route::get('student/{id}', [ApplicationsController::class, 'studentDetails'])->name('student.details');
+Route::get('student/{id}', [StudentController::class, 'show'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
 Route::get('download/{file}', [ApplicationsController::class, 'download'])->name('download.file');
 
@@ -87,5 +80,7 @@ Route::get('elearning', [ApplicationsController::class, 'elearning'])->name('ele
 Route::get('jobs-locations', [JobsController::class, 'jobsLocations']);
 
 Route::post('profileimage', [ProfileController::class, 'changeImage']);
+
+Route::get('counties', [ApplicationsController::class, 'counties']);
 
 require __DIR__ . '/auth.php';

@@ -43,114 +43,48 @@
 
                         <div class="tab-pane fade show active" id="corporateUsersTab" role="tabpanel"
                             aria-labelledby="corporateUsers-tab">
-                            <table class="table table-hover table-striped table-bordered table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Company</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($corporatesusers as $user)
-                                        <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                            <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->corporate?->name }}</td>
-                                            <td>
-                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                                    style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="bi bi-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            
+                            
                         </div>
-                        <div class="tab-pane fade" id="collegeUsersTab" role="tabpanel"
-                            aria-labelledby="collegeUsers-tab">
-                            <table class="table table-hover table-striped table-bordered table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>College</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($collegeusers as $user)
-                                        <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                            <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->college?->name }}</td>
-                                            <td>
-                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                                    style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="bi bi-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="tab-pane fade" id="collegeUsersTab" role="tabpanel" aria-labelledby="collegeUsers-tab">
+                            
                         </div>
-                        <div class="tab-pane fade" id="jobSeekersTab" role="tabpanel"
-                            aria-labelledby="jobSeekers-tab">
-                            <table class="table table-hover table-striped table-bordered table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($jobseekers as $user)
+                        <div class="tab-pane fade" id="jobSeekersTab" role="tabpanel" aria-labelledby="jobSeekers-tab">
+                            <div class="table-container">
+                                <table class="table table-hover table-striped table-bordered table-sm scrollableTable">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                            <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>
-                                                <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                                    style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="bi bi-trash"></i></button>
-                                                </form>
-                                            </td>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Actions</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($jobseekers as $user)
+                                            <tr>
+                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                                                <td>{{ $user->phone }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>
+                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                        class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                        style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="bi bi-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>

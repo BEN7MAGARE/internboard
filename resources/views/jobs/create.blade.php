@@ -28,8 +28,14 @@ Job Create
                 <div class="row" id="jobFormSection">
 
                     <div class="col-md-6 mb-2">
-                        <label for="categoryID">Industry</label>
+                        <label for="categoryID">Category / Industry</label>
                         <select name="category_id" id="categoryID" class="form-select">
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label for="subcategoryID">Sub-category</label>
+                        <select name="subcategory_id" id="subcategoryID" class="form-select">
                         </select>
                     </div>
 
@@ -84,6 +90,7 @@ Job Create
 
             <div class="card-body step-2">
                 <div class="row">
+                    
                     <div class="col-md-6 form-group">
                         <label for="educationLevel">Education Level</label>
                         <select name="education_level" id="educationLevel" class="form-select">
@@ -158,5 +165,5 @@ Job Create
 @section('footer_scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/select2.min.js') }}"></script>
-<script src="{{ asset('js/create.js') }}"></script>
+<script src="{{ asset('js/jobs/create.js') }}"></script>
 @endsection

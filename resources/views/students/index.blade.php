@@ -18,407 +18,308 @@
         <div class="card p-2">
 
             <div class="card-header">
-                <div class="text-end">
+                <div class="d-flex justify-content-end gap-2">
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                         data-bs-target="#createStudentModal"><i class="bi bi-plus"></i> Add new</a>
-                    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                         data-bs-target="#importStudentsModal"><i class="bi bi-plus"></i> Import</a>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item text-danger" href="#" id="deleteCategory"><i
+                                        class="bi bi-trash"></i>&nbsp;Delete</a></li>
+                            <li><a class="dropdown-item text-info" href="#" id="exportCategory"><i
+                                        class="bi bi-file-earmark-excel"></i>&nbsp;Export</a></li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
 
             <div class="card-body">
+                <div class="table-container">
+                    <table class="table table-hover table-striped table-bordered table-sm scrollableTable">
+                        <thead>
+                            <th scope="col"><input type="checkbox" name="student_id[]" value=""
+                                    id="allStudentSelect">
+                            </th>
 
-                <table class="table table-hover table-striped table-bordered table-sm">
-                    <thead>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Qualification</th>
-                        <th>Level</th>
-                        <th>Experience</th>
-                        <th>Action</th>
-                    </thead>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>College</th>
+                            <th>Course</th>
+                            <th>Reg Number</th>
+                            <th>Year</th>
+                            <th>Action</th>
 
-                    <tbody>
-                        @foreach ($students as $item)
-                            @php
-                                $education = json_decode($item->profile?->education);
-                            @endphp
-                            <tr>
-                                <td>{{ $item->first_name . ' ' . $item->last_name }}</td>
-                                <td>{{ $item->email }}</td>
-                                <td>{{ $item->phone }}</td>
-                                @if (!is_null($education))
-                                    <td>{{ $education[0]->course }}</td>
-                                @else
-                                    <td></td>
-                                @endif
-                                <td>{{ $item->profile?->level }}</td>
-                                <td>{{ $item->profile?->years_of_experience . ' yrs' }}</td>
-                                <td><a href="{{ route('student.details', $item->id) }}" target="_blank"
-                                        class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> View</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                        </thead>
 
-                </table>
+                        <tbody>
+                            @foreach ($students as $item)
+                                @php
+                                    $education = json_decode($item->profile?->education);
+                                @endphp
+                                <tr>
+                                    <td><input type="checkbox" name="student_id[]" value="{{ $item->id }}"></td>
+                                    <td>{{ $item->first_name . ' ' . $item->last_name }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->gender }}</td>
+                                    <td>{{ $item->college?->name }}</td>
+                                    <td>{{ $item->student?->course }}</td>
+                                    <td>{{ $item->student?->reg_number }}</td>
+                                    <td>{{ $item->student?->year_of_study }}</td>
+                                    <td>
+                                        <a href="{{ route('student.details', $item->id) }}" target="_blank"
+                                            class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i></a>
+                                        <a href="{{ route('students.edit', $item->id) }}" target="_blank"
+                                            class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
 
+                    </table>
+                </div>
+                <div class="pagination">
+                    {{ $students->links() }}
+                </div>
             </div>
         </div>
     </main>
 @endsection
 
 
-<div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="createStudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Profile Information</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Student</h1>
                 <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
 
-            <form action="{{ route('profile.update') }}" id="profileUpdateForm">
+            <form action="{{ route('students.store') }}" id="studentCreateForm">
 
                 <div class="modal-body">
                     @csrf
                     <div class="row">
 
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="studentProfileImage">Profile
-                                Image</label>
-                            <div class="input-group">
-                                <input type="file" name="profile" id="studentProfileImage">
-                                <div id="imageError"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="title">
-                                Title</label>
-                            <div class="input-group">
-                                <select name="title" class="form-select" id="studentTitle">
-                                    <option value="">Select One</option>
-                                    @if (auth()->user()->title == 'Miss')
-                                        <option value="Miss" selected>Miss</option>
-                                    @else
-                                        <option value="Miss">Miss</option>
-                                    @endif
-                                    @if (auth()->user()->title == 'Mrs')
-                                        <option value="Mrs" selected>Mrs</option>
-                                    @else
-                                        <option value="Mrs">Mrs</option>
-                                    @endif
-                                    @if (auth()->user()->title == 'Mr')
-                                        <option value="Mr" selected>Mr</option>
-                                    @else
-                                        <option value="Mr">Mr</option>
-                                    @endif
-                                    @if (auth()->user()->title == 'Dr')
-                                        <option value="Dr" selected>Dr</option>
-                                    @else
-                                        <option value="Dr">Dr</option>
-                                    @endif
-                                    @if (auth()->user()->title == 'Pst')
-                                        <option value="Pst" selected>Pst</option>
-                                    @else
-                                        <option value="Pst">Pst</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
+                        <div class="col-md-4 form-group mb-1">
                             <label for="firstName">First Name</label>
                             <div class="input-group">
                                 <input name="first_name" type="text" class="form-control" id="studentFirstName"
-                                    value="{{ auth()->user()->first_name }}">
+                                    value="{{ old('first_name') }}">
                             </div>
                         </div>
 
-                        <div class="col-md-3 form-group mb-1">
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="middleName">Middle Name</label>
+                            <div class="input-group">
+                                <input name="middle_name" type="text" class="form-control" id="studentMiddleName"
+                                    value="{{ old('middle_name') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
                             <label for="lastName">Last Name</label>
                             <div class="input-group">
                                 <input name="last_name" type="text" class="form-control" id="studentLastName"
-                                    value="{{ auth()->user()->last_name }}">
+                                    value="{{ old('last_name') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
-                            <label for="specialization">Specialization</label>
+                            <label for="title">
+                                Gender</label>
                             <div class="input-group">
-                                <input name="specialization" value="{{ auth()->user()->profile?->specialization }}"
-                                    type="text" class="form-control" id="specialization"
-                                    placeholder="eg Web Designer">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-1">
-                            <label for="jobLevel">Level of seniority</label>
-                            <div class="input-group">
-                                <select name="level" id="jobLevel" class="form-select">
-                                    <option value=" ">Select One</option>
-                                    @if (auth()->user()->profile?->level === 'Beginner')
-                                        <option value="Beginner" selected>Beginner / Amature</option>
-                                    @else
-                                        <option value="Beginner">Beginner / Amature</option>
-                                    @endif
-                                    @if (auth()->user()->profile?->level === 'Intermediate')
-                                        <option value="Intermediate" selected>Intermediate</option>
-                                    @else
-                                        <option value="Intermediate">Intermediate</option>
-                                    @endif
-                                    @if (auth()->user()->profile?->level === 'Expert')
-                                        <option value="Expert" selected>Expert</option>
-                                    @else
-                                        <option value="Expert">Expert</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-1">
-                            <label for="yearsOfExperience">Years of experience</label>
-                            <div class="input-group">
-                                <input name="years_of_experience"
-                                    value="{{ auth()->user()->profile?->years_of_experience }}" type="text"
-                                    class="form-control" id="yearsOfExperience">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 form-group mb-1" id="SkillsSection">
-                            <label for="skills">Skills</label>
-                            <div class="form-group">
-                                <select name="skills" id="skillsSelect" class="form-control form-control-lg"
-                                    data-control="select2" data-dropdown-parent="#SkillsSection" multiple
-                                    style="width:100%;">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <label for="summary">Proffessional Summary</label>
-                            <div class="input-group">
-                                <textarea name="summary" value="{{ auth()->user()->profile?->summary }}" class="form-control" id="summary"></textarea>
-                            </div>
-                        </div>
-                        <hr>
-
-                        <h4>Work Experience</h4>
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="jobTittle">Job Title</label>
-                            <div class="input-group">
-                                <input name="jobTittle" type="text" class="form-control" id="jobTittle"
-                                    value="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="jobCompanyName">Company</label>
-                            <div class="input-group">
-                                <input name="jobCompanyName" type="text" class="form-control" id="jobCompanyName"
-                                    value="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="jobStartDate">Start Date</label>
-                            <div class="input-group">
-                                <input name="jobStartDate" type="date" class="form-control" id="jobStartDate"
-                                    value="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="jobEndDate">End Date</label>
-                            <div class="input-group d-flex gap-2">
-                                <input name="jobEndDate" type="date" class="form-control" id="jobEndDate">
-                                <button class="btn btn-secondary btn-sm" type="button" id="jobAddToggle"><i
-                                        class="bi bi-plus"></i> Add</button>
-                            </div>
-                        </div>
-
-                        <div id="jobsAddFeedback"></div>
-                        <hr>
-
-                        <div class="alert alert-info" id="jobsListSection">
-
-                            @if (!empty($jobs) && !is_null($jobs))
-                                @foreach ($jobs as $item)
-                                    <div class="jobExperience row">
-                                        <div class="col-md-4">
-                                            <p class="title">{{ $item->title }}</p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="company">{{ $item->company }}</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p><span class="startDate">{{ $item->start_date }}</span> - <span
-                                                    class="endDate">{{ $item->end_date }}</span></p>
-                                        </div>
-                                        <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm"
-                                                id="deleteJobToggle"><i class="bi bi-trash"></i></button></div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
-                        <hr>
-
-                        <h4>Education</h4>
-
-                        <div class="col-md-4 form-group mb-1">
-                            <label for="educationCourse">Course</label>
-                            <div class="input-group">
-                                <input name="educationCourse" type="text" class="form-control"
-                                    id="educationCourse">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-1">
-                            <label for="educationInstitution">Institution</label>
-                            <div class="input-group">
-                                <input name="educationInstitution" type="text" class="form-control"
-                                    id="educationInstitution">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-1">
-                            <label for="company">Education Level</label>
-                            <div class="input-group">
-                                <select class="form-select" name="education_level" id="educationLevel">
+                                <select name="gender" class="form-select" id="studentGender">
                                     <option value="">Select One</option>
-                                    <option value="No Education">No Education</option>
-                                    <option value="Primary">Primary</option>
-                                    <option value="Secondary">Secondary</option>
-                                    <option value="Certificate">Certificate</option>
-                                    <option value="Diploma">Diploma</option>
-                                    <option value="Higher Diploma">Higher Diploma</option>
-                                    <option value="Degree">Degree</option>
-                                    <option value="Masters">Masters</option>
-                                    <option value="Doctorate">Doctorate</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
-                            <label for="educationStartDate">Start Date</label>
+                            <label for="title">
+                                Designation</label>
                             <div class="input-group">
-                                <input name="educationStartDate" type="date" class="form-control"
-                                    id="educationStartDate">
+                                <select name="title" class="form-select" id="studentTitle">
+                                    <option value="">Select One</option>
+                                    <option value="Miss" selected>Miss</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Dr">Dr</option>
+                                    <option value="Pst">Pst</option>
+                                </select>
                             </div>
                         </div>
+
 
                         <div class="col-md-4 form-group mb-1">
-                            <label for="educationEndDate">End date</label>
-                            <div class="input-group di-flex gap-2">
-                                <input name="educationEndDate" type="date" class="form-control"
-                                    id="educationEndDate">
-                                <button class="btn btn-secondary btn-sm" type="button" id="educationAddToggle"><i
-                                        class="bi bi-plus"></i>Add</button>
-                            </div>
-                        </div>
-
-                        <div id="educationFeedback"></div>
-
-                        <div class="alert alert-info" id="educationListSection">
-
-                            @if (!empty($education) && !is_null($education))
-                                @foreach ($education as $item)
-                                    <div class="educationExperience row  p-2">
-                                        <div class="col-md-4">
-                                            <p class="title p-0 m-0"><span
-                                                    class="level">{{ $item->level }}</span>&nbsp;<span
-                                                    class="course">{{ $item->course }}</span></p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="institution  p-0 m-0">{{ $item->institution }}</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p class="p-0 m-0"><span class="startDate">{{ $item->start_date }}</span>
-                                                -
-                                                <span class="endDate">{{ $item->end_date }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="col-md-1"><button type="button" class="btn btn-danger btn-sm"
-                                                id="deleteEducationToggle"><i class="bi bi-trash-fill"></i></button>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endif
-
-                        </div>
-
-                        <hr>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="studentAddress">Address</label>
-                            <div class="input-group">
-                                <input name="address" type="text" class="form-control" id="studentAddress"
-                                    value="{{ auth()->user()->address }}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
-                            <label for="studentPhone">Phone</label>
-                            <div class="input-group">
-                                <input name="phone" type="text" class="form-control" id="studentPhone"
-                                    value="{{ auth()->user()->phone }}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-1">
                             <label for="studentEmail">Email</label>
                             <div class="input-group">
                                 <input name="email" type="email" class="form-control" id="studentEmail"
-                                    value="{{ auth()->user()->email }}">
+                                    value="{{ old('email') }}">
                             </div>
                         </div>
 
-                        <h5>Next of Kin</h5>
-                        
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="studentPhone">Phone</label>
+                            <div class="input-group">
+                                <input name="phone" type="text" class="form-control" id="studentPhone"
+                                    value="{{ old('phone') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="studentAddress">Address</label>
+                            <div class="input-group">
+                                <input name="address" type="text" class="form-control" id="studentAddress"
+                                    value="{{ old('address') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="homeCountyId">Home County</label>
+                            <div class="input-group">
+                                <select name="county_id" class="form-select" id="homeCountyId">
+                                    <option value="">Select One</option>
+                                    @foreach ($counties as $county)
+                                        <option value="{{ $county->id }}">{{ $county->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="studentProfileImage">Passport
+                                Photo</label>
+                            <div class="input-group">
+                                <input type="file" name="image" id="studentProfileImage">
+                                <div id="imageError"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @if (auth()->user()->role === 'admin')
+                            <div class="col-md-4 form-group mb-1">
+                                <label for="collegeId">College</label>
+                                <div class="input-group">
+                                    <select name="college_id" class="form-select" id="collegeId">
+                                        <option value="">Select One</option>
+                                        @foreach ($colleges as $college)
+                                            <option value="{{ $college->id }}">{{ $college->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @else
+                            <input type="hidden" name="college_id" value="{{ auth()->user()->college_id }}">
+                        @endif
+
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="courseId">Course</label>
+                            <div class="input-group">
+                                <select name="course_id" class="form-select" id="courseId">
+                                    <option value="">Select One</option>
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="year_of_study">Year of Study</label>
+                            <div class="input-group">
+                                <select name="year_of_study" class="form-select" id="year_of_study">
+                                    <option value="">Select One</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="regNumber">Registration Number</label>
+                            <div class="input-group">
+                                <input name="reg_number" type="text" class="form-control" id="regNumber"
+                                    value="{{ old('reg_number') }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Next of Kin</h5>
+                    <div class="row">
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinName">Name</label>
                             <div class="input-group">
-                                <input name="kinName" type="text" class="form-control" id="kinName"
-                                    value="{{ auth()->user()->kin_name }}">
+                                <input name="kin_name" type="text" class="form-control" id="kinName"
+                                    value="{{ old('kin_name') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinPhone">Phone</label>
                             <div class="input-group">
-                                <input name="kinPhone" type="text" class="form-control" id="kinPhone"
-                                    value="{{ auth()->user()->kin_phone }}">
+                                <input name="kin_phone" type="text" class="form-control" id="kinPhone"
+                                    value="{{ old('kin_phone') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinEmail">Email</label>
                             <div class="input-group">
-                                <input name="kinEmail" type="email" class="form-control" id="kinEmail"
-                                    value="{{ auth()->user()->kin_email }}">
+                                <input name="kin_email" type="email" class="form-control" id="kinEmail"
+                                    value="{{ old('kin_email') }}">
                             </div>
                         </div>
-                        
+
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinRelationship">Relationship</label>
                             <div class="input-group">
-                                <input name="kinRelationship" type="text" class="form-control" id="kinRelationship"
-                                    value="">
+                                <select name="kin_relationship" class="form-select" id="kinRelationship">
+                                    <option value="">Select One</option>
+                                    <option value="Father" selected>Father</option>
+                                    <option value="Mother">Mother</option>
+                                    <option value="Brother">Brother</option>
+                                    <option value="Sister">Sister</option>
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Son">Son</option>
+                                    <option value="Daughter">Daughter</option>
+                                    <option value="Grandmother">Grandmother</option>
+                                    <option value="Grandfather">Grandfather</option>
+                                    <option value="Aunt">Aunt</option>
+                                    <option value="Uncle">Uncle</option>
+                                    <option value="Cousin">Cousin</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                         </div>
 
                     </div>
 
-                    <div id="studentProfileUpdateFeedback"></div>
+                    <div id="studentfeedback"></div>
 
                 </div>
                 <div class="modal-footer">
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </form>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCorporateRequest;
 use App\Models\Corporate;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,13 +15,15 @@ class CorporateController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $corporates = Corporate::withCount('jobs')->paginate(10);
-        return view('corporate.index', compact('corporates'));
+        $corporatesusers = User::where('role', 'corporate')->paginate(10);  
+        return view('corporate.index', compact('corporates', 'corporatesusers'));
     }
 
     /**
@@ -38,21 +41,17 @@ class CorporateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCorporateRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:60', 'unique:corporates,name'],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email'],
-            'phone' => ['required', 'string', 'max:60', 'unique:corporates,phone'],
-            'address' => ['required', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $validated = $request->validated();
+
         if ($request->hasFile('logo')) {
             $filename = strtoupper(Str::random(3)) . strtotime(now()) . '.' . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move(public_path('corporate_logos'), $filename);
             $validated['logo'] = $filename;
         }
         DB::beginTransaction();
+
         $corporate = Corporate::create($validated);
         User::where('id', auth()->user()->id)->update(['corporate_id' => $corporate->id]);
         DB::commit();
@@ -66,7 +65,7 @@ class CorporateController extends Controller
     public function show(string $id)
     {
         $corporate = Corporate::findOrFail($id);
-        return view('corporate.show', compact('corporate'));
+        return json_encode($corporate);
     }
 
     /**
@@ -75,22 +74,16 @@ class CorporateController extends Controller
     public function edit(string $id)
     {
         $corporate = Corporate::findOrFail($id);
-        return view('corporate.edit', compact('corporate'));
+        return json_encode($corporate);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreCorporateRequest $request, string $id)
     {
         DB::beginTransaction();
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:60', 'unique:corporates,name'],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email'],
-            'phone' => ['required', 'string', 'max:60', 'unique:corporates,phone'],
-            'address' => ['required', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $validated = $request->validated();
         if ($request->hasFile('logo')) {
             $filename = strtoupper(Str::random(3)) . strtotime(now()) . '.' . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move(public_path('corporate_logos'), $filename);
@@ -112,5 +105,29 @@ class CorporateController extends Controller
         $corporate = Corporate::findOrFail($id);
         $corporate->delete();
         return json_encode(['status' => 'success', 'message' => 'Business deleted successfully.']);
+    }
+
+    public function getCorporates()
+    {
+        $corporates = Corporate::withCount('jobs')
+            ->orderBy('jobs_count', 'desc')
+            ->get(['id', 'name']);
+        return json_encode($corporates);
+    }
+
+    public function handleCorporate(StoreCorporateRequest $request)
+    {
+        $validated = $request->validated();
+        if ($request->hasFile('logo')) {
+            $filename = strtoupper(Str::random(3)) . strtotime(now()) . '.' . $request->file('logo')->getClientOriginalExtension();
+            $request->file('logo')->move(public_path('corporate_logos'), $filename);
+            $validated['logo'] = $filename;
+        }
+        DB::beginTransaction();
+        $corporate = Corporate::create($validated);
+        User::where('id', auth()->user()->id)->update(['corporate_id' => $corporate->id]);
+        DB::commit();
+
+        return json_encode(['status' => 'success', 'message' => 'Business created successfully.']);
     }
 }

@@ -26,7 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'corporate_id',
         'college_id',
         'first_name',
+        'middle_name',
         'last_name',
+        'gender',
         'role',
         'phone',
         'email',
@@ -93,5 +95,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function kin(): HasMany
     {
         return $this->hasMany(Kin::class, 'user_id', 'id');
+    }
+
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class, 'user_id', 'id');
     }
 }

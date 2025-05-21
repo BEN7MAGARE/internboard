@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCollegeRequest;
 use App\Models\College;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -16,7 +16,8 @@ class CollegeController extends Controller
     public function index()
     {
         $colleges = College::withCount('students')->paginate(10);
-        return view('college.index', compact('colleges'));
+        $collegeusers = User::where('role', 'college')->paginate(10);
+        return view('college.index', compact('colleges', 'collegeusers'));
     }
 
     /**
@@ -34,25 +35,26 @@ class CollegeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCollegeRequest $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:60', 'unique:colleges,name'],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:colleges,email'],
-            'phone' => ['required', 'string', 'max:60', 'unique:colleges,phone'],
-            'address' => ['required', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $validated = $request->validated();
         if ($request->hasFile('logo')) {
             $filename = strtoupper(Str::random(3)) . strtotime(now()) . '.' . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move(public_path('college_logos'), $filename);
             $validated['logo'] = $filename;
         }
         DB::beginTransaction();
-        $college = College::create($validated);
+        if ($validated['id'] !== null) {
+            $college = College::findOrFail($validated['id']);
+            $college->update($validated);
+            $message = 'College updated successfully.';
+        } else {
+            $college = College::create($validated);
+            $message = 'College created successfully.';
+        }
         User::where('id', auth()->user()->id)->update(['college_id' => $college->id]);
         DB::commit();
-        return json_encode(['status' => 'success', 'message' => 'College created successfully.']);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     /**
@@ -61,7 +63,7 @@ class CollegeController extends Controller
     public function show(string $id)
     {
         $college = College::findOrFail($id);
-        return view('college.show', compact('college'));
+        return response()->json($college);
     }
 
     /**
@@ -70,32 +72,31 @@ class CollegeController extends Controller
     public function edit(string $id)
     {
         $college = College::findOrFail($id);
-        return view('college.edit', compact('college'));
+        return response()->json($college);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreCollegeRequest $request, string $id)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:60', 'unique:colleges,name'],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:colleges,email'],
-            'phone' => ['required', 'string', 'max:60', 'unique:colleges,phone'],
-            'address' => ['required', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $validated = $request->validated();
         if ($request->hasFile('logo')) {
             $filename = strtoupper(Str::random(3)) . strtotime(now()) . '.' . $request->file('logo')->getClientOriginalExtension();
             $request->file('logo')->move(public_path('college_logos'), $filename);
             $validated['logo'] = $filename;
         }
         DB::beginTransaction();
-        $college = College::findOrFail($id);
-        $college->update($validated);
+        if ($validated['id'] !== null) {
+            $college = College::findOrFail($validated['id']);
+            $college->update($validated);
+            $message = 'College updated successfully.';
+        } else {
+            $college = College::create($validated);
+            $message = 'College created successfully.';
+        }
         DB::commit();
-
-        return json_encode(['status' => 'success', 'message' => 'College updated successfully.']);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     /**

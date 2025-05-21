@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Job;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        $categories = Category::withCount('jobs')->paginate(10);
+        $subcategories = Subcategory::withCount('jobs')->paginate(10);
+        $jobs = Job::with(['corporate', 'category', 'subcategory'])->paginate(10);
+        return view('categories.index', compact('categories', 'subcategories', 'jobs'));
     }
 
     /**
@@ -31,11 +39,11 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required',
+            'slug' => 'nullable',
+            'description' => 'nullable',
         ]);
         Category::create($validated);
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        return json_encode(['status' => 'success', 'message' => 'Category created successfully']);
     }
 
     /**
@@ -44,7 +52,9 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::findOrFail($id);
-        return view('categories.show', compact('category'));
+        return response()->json([
+            'data' => $category,
+        ]);
     }
 
     /**
@@ -63,11 +73,11 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required',
+            'slug' => 'nullable',
+            'description' => 'nullable',
         ]);
         Category::findOrFail($id)->update($validated);
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        return json_encode(['status' => 'success', 'message' => 'Category updated successfully']);
     }
 
     /**
@@ -76,8 +86,12 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         Category::findOrFail($id)->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        return json_encode(['status' => 'success', 'message' => 'Category deleted successfully']);
     }
 
-    
+    public function getSubCategories($categoryid)
+    {
+        $subcategories = Subcategory::where('category_id', $categoryid)->get();
+        return json_encode($subcategories);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subcategory;
 
 class SubcategoryController extends Controller
 {
@@ -35,11 +36,10 @@ class SubcategoryController extends Controller
         $validated = $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
         ]);
         Subcategory::create($validated);
-        return redirect()->route('subcategories.index')->with('success', 'Subcategory created successfully');
+        return json_encode(['status' => 'success', 'message' => 'Subcategory created successfully']);
     }
 
     /**
@@ -48,7 +48,9 @@ class SubcategoryController extends Controller
     public function show(string $id)
     {
         $subcategory = Subcategory::findOrFail($id);
-        return view('subcategories.show', compact('subcategory'));
+        return response()->json([
+            'data' => $subcategory,
+        ]);
     }
 
     /**
@@ -67,11 +69,10 @@ class SubcategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'slug' => 'required',
             'description' => 'required',
         ]);
         Subcategory::findOrFail($id)->update($validated);
-        return redirect()->route('subcategories.index')->with('success', 'Subcategory updated successfully');
+        return json_encode(['status' => 'success', 'message' => 'Subcategory updated successfully']);
     }
 
     /**
@@ -80,6 +81,6 @@ class SubcategoryController extends Controller
     public function destroy(string $id)
     {
         Subcategory::findOrFail($id)->delete();
-        return redirect()->route('subcategories.index')->with('success', 'Subcategory deleted successfully');
+        return json_encode(['status' => 'success', 'message' => 'Subcategory deleted successfully']);
     }
 }

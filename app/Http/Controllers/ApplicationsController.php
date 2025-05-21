@@ -101,7 +101,7 @@ class ApplicationsController extends Controller
     public function studentDetails($id)
     {
         $student = $this->user->with('profile', 'skills')->find($id);
-        return view('profile.student', compact('student'));
+        return view('students.show', compact('student'));
     }
 
     function downloadCV($application_id)
@@ -136,5 +136,11 @@ class ApplicationsController extends Controller
     public function elearning()
     {
         return view('comingsoon');
+    }
+
+    public function counties()
+    {
+        $counties = DB::select("SELECT * FROM counties");
+        return json_encode($counties);
     }
 }

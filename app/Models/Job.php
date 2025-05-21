@@ -17,7 +17,7 @@ class Job extends Model
         'user_id',
         'ref_no',
         'category_id',
-        'organization_id',
+        'corporate_id',
         'type',
         'job_type',
         'experience_level',
@@ -66,5 +66,10 @@ class Job extends Model
     public function applications(): HasMany
     {
         return $this->hasMany(Application::class, 'job_id', 'id');
+    }
+
+    public function subcategory(): BelongsTo
+    {
+        return $this->belongsTo(Subcategory::class, 'subcategory_id');
     }
 }
