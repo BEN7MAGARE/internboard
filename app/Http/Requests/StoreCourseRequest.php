@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
-class StoreCorporateRequest extends FormRequest
+class StoreCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,13 @@ class StoreCorporateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['nullable', 'exists:corporates,id'],
-            'name' => ['required', 'string', 'max:60', 'unique:corporates,name,' . $this->id],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email,' . $this->id],
-            'phone' => ['required', 'string', 'max:60', 'unique:corporates,phone,' . $this->id],
-            'address' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
+            'code' => 'nullable|string|max:50',
+            'name' => 'required|string|max:150',
+            'description' => 'nullable|string',
+            'course_category_id' => 'required|exists:course_categories,id',
+            'id' => 'nullable|exists:courses,id',
+            'duration' => 'nullable|string|max:50',
+            'fees' => 'nullable|numeric',
         ];
     }
 
@@ -41,4 +42,6 @@ class StoreCorporateRequest extends FormRequest
             'errors' => $validator->errors()
         ], 422));
     }
+
+
 }

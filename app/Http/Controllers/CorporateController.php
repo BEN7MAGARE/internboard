@@ -22,7 +22,7 @@ class CorporateController extends Controller
     public function index()
     {
         $corporates = Corporate::withCount('jobs')->paginate(10);
-        $corporatesusers = User::where('role', 'corporate')->paginate(10);  
+        $corporatesusers = User::where('role', 'corporate')->paginate(10);
         return view('corporate.index', compact('corporates', 'corporatesusers'));
     }
 
@@ -50,13 +50,22 @@ class CorporateController extends Controller
             $request->file('logo')->move(public_path('corporate_logos'), $filename);
             $validated['logo'] = $filename;
         }
-        DB::beginTransaction();
 
-        $corporate = Corporate::create($validated);
-        User::where('id', auth()->user()->id)->update(['corporate_id' => $corporate->id]);
+        DB::beginTransaction();
+        if ($validated['id'] !== null) {
+            $corporate = Corporate::findOrFail($validated['id']);
+            $corporate->update($validated);
+            $message = 'Corporate updated successfully.';
+        } else {
+            $corporate = Corporate::create($validated);
+            if (auth()->user()->role === 'corporate') {
+                User::where('id', auth()->user()->id)->update(['corporate_id' => $corporate->id]);
+            }
+            $message = 'Corporate created successfully.';
+        }
         DB::commit();
 
-        return json_encode(['status' => 'success', 'message' => 'Business created successfully.']);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     /**

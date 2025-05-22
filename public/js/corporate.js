@@ -1,6 +1,21 @@
 (async function () {
+    getCorporatesOptions('#corporateOptionsID');
     const corporateCreateForm = document.getElementById('corporateCreateForm'),
-        corporateCreateSubmit = document.getElementById('corporateCreateSubmit');
+        corporateCreateSubmit = document.getElementById('corporateCreateSubmit'),
+        contactPersonCreateForm = document.getElementById('contactPersonCreateForm'),
+        contactPersonCreateSubmit = document.getElementById('contactPersonCreateSubmit'),
+        createCorporateToggle = document.getElementById('createCorporateToggle'),
+        createContactPersonToggle = document.getElementById('createContactPersonToggle');
+
+    createCorporateToggle.addEventListener('click', function () {
+        corporateCreateForm.reset();
+        document.getElementById('corporateID').value = '';
+    });
+
+    createContactPersonToggle.addEventListener('click', function () {
+        contactPersonCreateForm.reset();
+        document.getElementById('corporateContactPersonID').value = '';
+    });
 
     const checkboxes = document.querySelectorAll('input[name="corporate_id[]"]');
     checkboxes.forEach((checkbox) => {
@@ -19,6 +34,8 @@
         const formData = new FormData(corporateCreateForm), errors = [],
             emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
             phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
+            
+        console.log(Object.fromEntries(formData.entries()));
 
         if (formData.get('name').length < 2) {
             errors.push("Invalid company name");
@@ -79,9 +96,11 @@
     document.addEventListener('click', function (e) {
         const editCorporateToggle = e.target.closest('#editCorporateToggle');
         if (editCorporateToggle) {
+            e.preventDefault();
             const id = editCorporateToggle.dataset.id;
             const response = fetch(`/corporates/${id}`);
             response.then((res) => res.json()).then((data) => {
+                console.log(data);
                 document.getElementById('corporateID').value = data.id;
                 document.getElementById('corporateName').value = data.name;
                 document.getElementById('corporateEmail').value = data.email;
@@ -90,5 +109,64 @@
                 document.getElementById('corporateLogo').value = data.logo;
             });
         }
+
+        const editContactPersonToggle = e.target.closest('#editContactPersonToggle');
+        if (editContactPersonToggle) {
+            e.preventDefault();
+            const id = editContactPersonToggle.dataset.id;
+            const response = fetch(`/users/${id}`);
+            response.then((res) => res.json()).then((data) => {
+
+                document.getElementById('corporateContactPersonID').value = data.id;
+                document.getElementById('corpContactPersonFirstName').value = data.first_name;
+                document.getElementById('corpContactPersonMiddleName').value = data.middle_name;
+                document.getElementById('corpContactPersonLastName').value = data.last_name;
+                document.getElementById('corpContactPersonEmail').value = data.email;
+                document.getElementById('corpContactPersonPhone').value = data.phone;
+                document.getElementById('corpContactPersonAddress').value = data.address;
+                const corporateIDOption = document.getElementById('corporateOptionsID').options;
+                for (let i = 0; i < corporateIDOption.length; i++) {
+                    if (corporateIDOption[i].value == data.corporate_id) {
+                        corporateIDOption[i].selected = true;
+                        break;
+                    }
+                }
+            });
+        }
     });
+
+    contactPersonCreateForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const formData = new FormData(contactPersonCreateForm);
+        const response = await fetch("/corporate-user-store", {
+            method: 'POST',
+            body: formData,
+        });
+        if (response.ok) {
+            let result = await response.json();
+            if (result.status === "success") {
+                showSuccess(result.message, "#corporateContactPersonFeedback");
+                document.getElementById('corporateContactPersonID').value = "";
+                contactPersonCreateForm.reset();
+            } else {
+                showError(result.message, "#corporateContactPersonFeedback");
+            }
+        } else if (response.status === 422) {
+            const errorData = await response.json();
+            let errors = '';
+            for (const key in errorData.errors) {
+                errors += errorData.errors[key].join(' ') + '!<br>';
+            }
+            showError(errors, "#corporateContactPersonFeedback");
+        } else if (response.status === 419) {
+            showError("You are not logged in", "#corporateContactPersonFeedback");
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        } else {
+            showError("Error occurred during processing", "#corporateContactPersonFeedback");
+        }
+    });
+
+    
 })();

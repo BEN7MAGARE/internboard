@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\CourseCategory;
 
 return new class extends Migration
 {
@@ -12,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('course_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(CourseCategory::class)->constrained()->nullOnDelete();
-            $table->string('code')->nullable();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('description')->nullable();
-            $table->string('duration')->nullable();
-            $table->string('fees')->nullable();
-            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('course_categories');
     }
 };

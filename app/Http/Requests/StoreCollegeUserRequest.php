@@ -13,7 +13,7 @@ class StoreCollegeUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -44,4 +44,5 @@ class StoreCollegeUserRequest extends FormRequest
             'errors' => $validator->errors()
         ], 422));
     }
+    
 }

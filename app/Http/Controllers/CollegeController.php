@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCollegeRequest;
 use App\Models\College;
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CollegeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +22,8 @@ class CollegeController extends Controller
     {
         $colleges = College::withCount('students')->paginate(10);
         $collegeusers = User::where('role', 'college')->paginate(10);
-        return view('college.index', compact('colleges', 'collegeusers'));
+        $courses = Course::with('category:id,name')->withCount('students')->paginate(10);
+        return view('college.index', compact('colleges', 'collegeusers', 'courses'));
     }
 
     /**
@@ -107,5 +113,10 @@ class CollegeController extends Controller
         $college = College::findOrFail($id);
         $college->delete();
         return json_encode(['status' => 'success', 'message' => 'College deleted successfully.']);
+    }
+
+    public function getColleges() {
+        $colleges = College::select('id', 'name')->get();
+        return response()->json($colleges);
     }
 }

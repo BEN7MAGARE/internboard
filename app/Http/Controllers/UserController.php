@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCollegeUserRequest;
+use App\Http\Requests\StoreCorporateUserRequest;
 
 class UserController extends Controller
 {
@@ -35,7 +37,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         User::create($validated);
         return redirect()->route('users.index')->with('success', 'User created successfully');
@@ -47,7 +49,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        return response()->json($user);
     }
 
     /**
@@ -96,7 +98,7 @@ class UserController extends Controller
             User::create($validated);
             $message = 'User created successfully';
         }
-        return redirect()->route('users.index')->with('success', $message);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     public function corporateUserStore(StoreCorporateUserRequest $request)
@@ -112,6 +114,7 @@ class UserController extends Controller
             User::create($validated);
             $message = 'User created successfully';
         }
-        return redirect()->route('users.index')->with('success', $message);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
+
 }

@@ -209,3 +209,67 @@ function getEmployerOptions(target) {
         }
     });
 }
+
+function getCollegesOptions(target) {
+    $.getJSON("/collegesdata", function (colleges) {
+        let option = "<option value=''>Select College</option>";
+        $.each(colleges, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+
+function getCorporatesOptions(target) {
+    $.getJSON("/corporatesdata", function (corporates) {
+        let option = "<option value=''>Select Corporate</option>";
+        $.each(corporates, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+
+function getCourseCategoriesOptions(target) {
+    $.getJSON("/coursescategoriesdata", function (coursecategories) {
+        let option = "<option value=''>Select Course Category</option>";
+        $.each(coursecategories, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}
+

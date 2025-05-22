@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\CourseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,6 +56,7 @@ Route::resource('applications', ApplicationsController::class);
 Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoolStudentApplications'])->name('college.applicants');
 Route::get('college-applications', [ApplicationsController::class, 'collegeApplications'])->name('college.applications');
 Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
+Route::get('collegesdata',[CollegeController::class,'getColleges']);
 
 Route::resource('corporates', CorporateController::class);
 Route::get('corporatesdata',[CorporateController::class,'getCorporates']);
@@ -64,10 +66,16 @@ Route::resource('colleges', CollegeController::class);
 Route::resource('students', StudentController::class);
 
 Route::resource('users', UserController::class);
+Route::post('college-user-store', [UserController::class, 'collegeUserStore'])->name('college.user.store');
+Route::post('corporate-user-store', [UserController::class, 'corporateUserStore'])->name('corporate.user.store');
 
 Route::resource('categories', CategoryController::class);
 Route::get('categorysubs/{id}', [CategoryController::class, 'getSubCategories']);
 Route::resource('subcategories', SubcategoryController::class);
+
+Route::resource('courses', CourseController::class);
+Route::get('coursesdata',[CourseController::class,'getCourses']);
+Route::get('coursescategoriesdata',[CourseController::class,'getCourseCategories']);
 
 Route::get('student/{id}', [StudentController::class, 'show'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');

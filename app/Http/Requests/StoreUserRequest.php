@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreCorporateRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +22,15 @@ class StoreCorporateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['nullable', 'exists:corporates,id'],
-            'name' => ['required', 'string', 'max:60', 'unique:corporates,name,' . $this->id],
-            'email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email,' . $this->id],
-            'phone' => ['required', 'string', 'max:60', 'unique:corporates,phone,' . $this->id],
-            'address' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:2048'],
+            'first_name' => 'required',
+            'middle_name' => 'nullable',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|unique:users,phone',
+            'address' => 'nullable',
+            'college_id' => 'nullable|exists:colleges,id',
+            'corporate_id' => 'nullable|exists:corporates,id',
+            'role' => 'nullable',
         ];
     }
 
