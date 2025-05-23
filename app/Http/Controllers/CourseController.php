@@ -6,7 +6,7 @@ use App\Models\CourseCategory;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use StoreCourseRequest
+use App\Http\Requests\StoreCourseRequest;
 
 class CourseController extends Controller
 {

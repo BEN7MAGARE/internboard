@@ -378,7 +378,7 @@
 
                         <div class="col-md-6 mb-2">
                             <label for="courseCategoryID" class="form-label">Category</label>
-                            <select name="courseCategoryID" id="courseCategoryID" class="form-select">
+                            <select name="course_category_id" id="courseCategoryID" class="form-select">
                                 
                             </select>
                         </div>

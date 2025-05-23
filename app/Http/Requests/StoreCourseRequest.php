@@ -27,7 +27,7 @@ class StoreCourseRequest extends FormRequest
             'code' => 'nullable|string|max:50',
             'name' => 'required|string|max:150',
             'description' => 'nullable|string',
-            'course_category_id' => 'required|exists:course_categories,id',
+            'course_category_id' => 'nullable|exists:course_categories,id',
             'id' => 'nullable|exists:courses,id',
             'duration' => 'nullable|string|max:50',
             'fees' => 'nullable|numeric',

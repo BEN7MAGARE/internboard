@@ -22,11 +22,11 @@ Job Create
 <main class="mt-3 p-2">
 
     <div class="card p-2">
-        <form action="{{ route('jobs.store') }}" id="jobCreateForm">
+        <form action="{{ route('jobs.store') }}" id="createJobForm">
             @csrf
             <div class="card-body  step-1">
                 <div class="row" id="jobFormSection">
-
+                    <input type="hidden" name="id" id="jobID" value="">
                     <div class="col-md-6 mb-2">
                         <label for="categoryID">Category / Industry</label>
                         <select name="category_id" id="categoryID" class="form-select">
@@ -76,6 +76,7 @@ Job Create
                         <label for="location">Location</label>
                         <input type="text" class="form-control" name="location" id="location">
                     </div>
+
                 </div>
 
                 <div class="card-footer bg-white">
@@ -165,5 +166,6 @@ Job Create
 @section('footer_scripts')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
 <script src="{{ asset('js/jobs/create.js') }}"></script>
 @endsection

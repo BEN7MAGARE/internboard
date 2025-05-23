@@ -255,6 +255,8 @@ function getCorporatesOptions(target) {
 function getCourseCategoriesOptions(target) {
     $.getJSON("/coursescategoriesdata", function (coursecategories) {
         let option = "<option value=''>Select Course Category</option>";
+        console.log();
+        
         $.each(coursecategories, function (key, value) {
             option +=
                 "<option value=" +

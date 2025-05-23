@@ -102,47 +102,6 @@
         }
     });
 
-    document.addEventListener('click', function (e) {
-
-        const editCollegeToggle = e.target.closest('#editCollegeToggle');
-        if (editCollegeToggle) {
-            e.preventDefault();
-            const id = editCollegeToggle.dataset.id;
-            const response = fetch(`/colleges/${id}`);
-            response.then((res) => res.json()).then((data) => {
-                document.getElementById('collegeID').value = data.id;
-                document.getElementById('collegeName').value = data.name;
-                document.getElementById('collegeEmail').value = data.email;
-                document.getElementById('collegePhone').value = data.phone;
-                document.getElementById('collegeAddress').value = data.address;
-                document.getElementById('collegeLogo').value = data.logo;
-            });
-        }
-
-        const editCollegeUserToggle = e.target.closest('#editCollegeUserToggle');
-        if (editCollegeUserToggle) {
-            e.preventDefault();
-            const id = editCollegeUserToggle.dataset.id;
-            const response = fetch(`/users/${id}`);
-            response.then((res) => res.json()).then((data) => {
-                document.getElementById('collegeUserID').value = data.id;
-                document.getElementById('collegeUserFirstName').value = data.first_name;
-                document.getElementById('collegeUserLastName').value = data.last_name;
-                document.getElementById('collegeUserEmail').value = data.email;
-                document.getElementById('collegeUserPhone').value = data.phone;
-                document.getElementById('collegeUserAddress').value = data.address;
-                const collegeIDOption = document.getElementById('collegeUserCollegeID').options;
-                for (let i = 0; i < collegeIDOption.length; i++) {
-                    if (collegeIDOption[i].value == data.college_id) {
-                        collegeIDOption[i].selected = true;
-                        break;
-                    }
-                }
-            });
-        }
-
-    });
-
     collegeUserCreateForm.addEventListener("submit", async function (event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -227,7 +186,7 @@
             });
             showError(p, "#courseFeedback");
         } else {
-            const response = await fetch("/courses ", {
+            const response = await fetch("/courses", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -265,5 +224,71 @@
                 showError("Error occurred during processing", "#courseFeedback");
             }
         }
+    });
+
+
+    document.addEventListener('click', function (e) {
+
+        const editCollegeToggle = e.target.closest('#editCollegeToggle');
+        if (editCollegeToggle) {
+            e.preventDefault();
+            const id = editCollegeToggle.dataset.id;
+            const response = fetch(`/colleges/${id}`);
+            response.then((res) => res.json()).then((data) => {
+                document.getElementById('collegeID').value = data.id;
+                document.getElementById('collegeName').value = data.name;
+                document.getElementById('collegeEmail').value = data.email;
+                document.getElementById('collegePhone').value = data.phone;
+                document.getElementById('collegeAddress').value = data.address;
+                document.getElementById('collegeLogo').value = data.logo;
+            });
+        }
+
+        const editCollegeUserToggle = e.target.closest('#editCollegeUserToggle');
+        if (editCollegeUserToggle) {
+            e.preventDefault();
+            const id = editCollegeUserToggle.dataset.id;
+            const response = fetch(`/users/${id}`);
+            response.then((res) => res.json()).then((data) => {
+                document.getElementById('collegeUserID').value = data.id;
+                document.getElementById('collegeUserFirstName').value = data.first_name;
+                document.getElementById('collegeUserLastName').value = data.last_name;
+                document.getElementById('collegeUserEmail').value = data.email;
+                document.getElementById('collegeUserPhone').value = data.phone;
+                document.getElementById('collegeUserAddress').value = data.address;
+                const collegeIDOption = document.getElementById('collegeUserCollegeID').options;
+                for (let i = 0; i < collegeIDOption.length; i++) {
+                    if (collegeIDOption[i].value == data.college_id) {
+                        collegeIDOption[i].selected = true;
+                        break;
+                    }
+                }
+            });
+        }
+
+        const editCourseToggle = e.target.closest('#editCourseToggle');
+        if (editCourseToggle) {
+            e.preventDefault();
+            const id = editCourseToggle.dataset.id;
+            const response = fetch(`/courses/${id}`);
+            response.then((res) => res.json()).then((data) => {
+                console.log(data);
+                
+                document.getElementById('courseID').value = data.id;
+                document.getElementById('courseName').value = data.name;
+                document.getElementById('courseDescription').value = data.description;
+                document.getElementById('courseDuration').value = data.duration;
+                // document.getElementById('courseFees').value = data.fees;
+                document.getElementById('courseCode').value = data.code;
+                const courseCategoryIDOption = document.getElementById('courseCategoryID').options;
+                for (let i = 0; i < courseCategoryIDOption.length; i++) {
+                    if (courseCategoryIDOption[i].value == data.course_category_id) {
+                        courseCategoryIDOption[i].selected = true;
+                        break;
+                    }
+                }
+            });
+        }
+
     });
 })();

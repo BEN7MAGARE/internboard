@@ -87,7 +87,7 @@ Applications
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('job.show', $application->job->id) }}" class="btn btn-primary btn-sm">View</a>
+                            <a href="{{ route('jobs.show', $application->job->id) }}" class="btn btn-primary btn-sm">View</a>
                         </td>
                     </tr>
                     @endforeach

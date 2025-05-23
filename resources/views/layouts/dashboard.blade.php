@@ -53,7 +53,7 @@
                 </li>
 
                 @if (auth()->user()->role === 'corporate')
-                <li class="{!! Request::is('profile-jobs') ? 'active' : '' !!}">
+                <li class="{!! Request::is('profile-jobs') || Request::is('jobs/create') ? 'active' : '' !!}">
                     <a href="{{ route('profile.jobs') }}">
                         <i class="bi bi-briefcase"></i>
                         My Jobs

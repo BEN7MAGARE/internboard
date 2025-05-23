@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const allCategorySelect = document.getElementById('allCategorySelect');
     const allSubcategorySelect = document.getElementById('allSubcategorySelect');
 
-    getCategoriesOptions(['#categoryIDOptions','#categoryID','#jobCategoryID','#searchJobCategoryID']);
 
     allCategorySelect.addEventListener('click', function () {
         const checkboxes = document.querySelectorAll('input[name="category_id[]"]');
