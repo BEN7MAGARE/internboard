@@ -10,6 +10,14 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected static function booted()
+    {
+        static::created(function ($student) {
+            $student->admision_number = 'DALMA/' . str_pad($student->count()+1, 4, '0', STR_PAD_LEFT)."/".date('Y');
+            $student->save();
+        });
+    }
+
     protected $fillable = [ 
         'user_id',
         'college_id',
@@ -21,6 +29,10 @@ class Student extends Model
         'kin_phone',
         'kin_email',
         'kin_relationship',
+        'id_no',
+        'admision_number',
+        'course_level',
+        'sponsored',
     ];
 
     public function college(): BelongsTo

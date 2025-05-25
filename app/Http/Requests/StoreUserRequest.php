@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;  
 
 class StoreUserRequest extends FormRequest
 {

@@ -27,15 +27,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $counties = County::all();
-        $courses = Course::all();
         if (auth()->user()->role === 'college') {
             $students = User::where('role', 'student')->where('college_id', auth()->user()->college_id)->with(['profile', 'college', 'student'])->paginate(10);
-            return view('students.index', compact('students', 'counties', 'courses'));
+            return view('students.index', compact('students'));
         } else if (auth()->user()->role === 'admin') {
-            $colleges = College::all();
             $students = User::where('role', 'student')->with(['profile', 'college', 'student'])->paginate(10);
-            return view('students.index', compact('students', 'counties', 'colleges', 'courses'));
+            return view('students.index', compact('students'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
         }
@@ -62,12 +59,25 @@ class StudentController extends Controller
             $image->move(public_path('profilepictures'), $image_name);
             $validated['image'] = $image_name;
         }
-        $validated['role'] = 'student';
         DB::beginTransaction();
-        $user = User::create($validated);
-        Student::create($validated + ['user_id' => $user->id]);
+        $validated['role'] = 'student';
+        if ($validated['id'] === null) {
+            $user = User::create($validated);
+            Student::create($validated + ['user_id' => $user->id]);
+            $message = 'Student created successfully.';
+        } else {
+            $user = User::with('student')->findOrFail($validated['id']);
+            $user->update($validated);
+            if ($user->student !== null) {
+                $student = Student::findOrFail($validated['student_id']);
+                $student->update($validated);
+            } else {
+                Student::create($validated + ['user_id' => $user->id]);
+            }
+            $message = 'Student updated successfully.';
+        }
         DB::commit();
-        return json_encode(['status' => 'success', 'message' => 'Student created successfully.']);
+        return json_encode(['status' => 'success', 'message' => $message]);
     }
 
     /**
@@ -76,7 +86,7 @@ class StudentController extends Controller
     public function show(string $id)
     {
         $student = User::with(['profile', 'college', 'student'])->findOrFail($id);
-        return view('students.show', compact('student'));
+        return json_encode($student);
     }
 
     /**
@@ -108,5 +118,29 @@ class StudentController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return json_encode(['status' => 'success', 'message' => 'Student deleted successfully.']);
+    }
+
+    public function filter(Request $request)
+    {
+        $query = User::where('role', 'student');
+        if ($request->filled('college_id')) {
+            $query->where('college_id', $request->college_id);
+        }
+        $query->whereHas('student', function ($q) use ($request) {
+            if ($request->filled('course_id') && $request->course_id !== null) {
+                $q->where('course_id', $request->course_id);
+            }
+            if ($request->filled('level_of_study') && $request->level_of_study !== null) {
+                $q->where('course_level', $request->level_of_study);
+            }
+            if ($request->filled('year_of_study') && $request->year_of_study !== null) {
+                $q->where('year_of_study', $request->year_of_study);
+            }
+            if ($request->has('sponsored') && $request->sponsored === 'on') {
+                $q->where('sponsored', true);
+            }
+        });
+        $students = $query->with(['profile', 'college', 'student','student.course'])->get();
+        return json_encode($students);
     }
 }

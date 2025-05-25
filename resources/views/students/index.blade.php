@@ -20,7 +20,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-end gap-2">
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createStudentModal"><i class="bi bi-plus"></i> Add new</a>
+                        data-bs-target="#createStudentModal" id="createStudentToggle"><i class="bi bi-plus"></i> Add new</a>
                     <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                         data-bs-target="#importStudentsModal"><i class="bi bi-plus"></i> Import</a>
                     <div class="dropdown">
@@ -40,13 +40,77 @@
             </div>
 
             <div class="card-body">
+                <form action="{{ route('students.filter') }}" method="post" id="studentFilterForm">
+                    @csrf
+                    <div class="row">
+                        @if (auth()->user()->role === 'admin')
+                            <div class="col-md-3 form-group mb-1">
+                                <div class="input-group">
+                                    <select name="college_id" class="form-select form-select-sm" id="studentFilterCollegeID">
+                                        <option value="">Select College</option>
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                        @else
+                            <input type="hidden" name="college_id" value="{{ auth()->user()->college_id }}" id="studentFilterCollegeID">
+                        @endif
+
+                        <div class="col-md-2 form-group mb-1">
+                            <div class="input-group">
+                                <select name="course_id" class="form-select form-select-sm" id="studentFilterCourse">
+                                    <option value="">Select Course</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2 form-group mb-1">
+                            <div class="input-group">
+                                <select name="level_of_study" class="form-select form-select-sm" id="level_of_study">
+                                    <option value="">Select One</option>
+                                    <option value="Certificate">Certificate</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Degree">Degree</option>
+                                    <option value="Masters">Masters</option>
+                                    <option value="Doctorate">Doctorate</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 form-group mb-1">
+                            <div class="input-group">
+                                <select name="year_of_study" class="form-select form-select-sm" id="studentFilterYear">
+                                    <option value="">Select Year</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 mb-1">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="sponsored">
+                                <label class="form-check-label" for="sponsored">Sponsored</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-search"></i></button>
+                        </div>
+
+                    </div>
+                </form>
                 <div class="table-container">
                     <table class="table table-hover table-striped table-bordered table-sm scrollableTable">
                         <thead>
                             <th scope="col"><input type="checkbox" name="student_id[]" value=""
                                     id="allStudentSelect">
                             </th>
-
+                            <th>#</th>
+                            <th>ADM NO</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -59,26 +123,27 @@
 
                         </thead>
 
-                        <tbody>
+                        <tbody id="studentTableBody">
                             @foreach ($students as $item)
                                 @php
                                     $education = json_decode($item->profile?->education);
                                 @endphp
                                 <tr>
                                     <td><input type="checkbox" name="student_id[]" value="{{ $item->id }}"></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->student?->admision_number }}</td>
                                     <td>{{ $item->first_name . ' ' . $item->last_name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone }}</td>
                                     <td>{{ $item->gender }}</td>
                                     <td>{{ $item->college?->name }}</td>
-                                    <td>{{ $item->student?->course }}</td>
+                                    <td>{{ $item->student?->course?->name }}</td>
                                     <td>{{ $item->student?->reg_number }}</td>
                                     <td>{{ $item->student?->year_of_study }}</td>
-                                    <td>
+                                    <td class="d-flex gap-2">
                                         <a href="{{ route('student.details', $item->id) }}" target="_blank"
                                             class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i></a>
-                                        <a href="{{ route('students.edit', $item->id) }}" target="_blank"
-                                            class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="#" target="_blank" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createStudentModal" id="editStudentToggle" data-id="{{ $item->id }}"><i class="bi bi-pencil-square"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -86,7 +151,7 @@
 
                     </table>
                 </div>
-                <div class="pagination">
+                <div class="pagination" id="studentPagination">
                     {{ $students->links() }}
                 </div>
             </div>
@@ -110,28 +175,36 @@
                 <div class="modal-body">
                     @csrf
                     <div class="row">
-
+                        <input type="hidden" name="id" id="userID" value="">
+                        <input type="hidden" name="student_id" id="studentID" value="">
                         <div class="col-md-4 form-group mb-1">
                             <label for="firstName">First Name</label>
                             <div class="input-group">
-                                <input name="first_name" type="text" class="form-control" id="studentFirstName"
-                                    value="{{ old('first_name') }}">
+                                <input name="first_name" type="text" class="form-control form-control-sm"
+                                    id="studentFirstName" value="{{ old('first_name') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
                             <label for="middleName">Middle Name</label>
                             <div class="input-group">
-                                <input name="middle_name" type="text" class="form-control" id="studentMiddleName"
-                                    value="{{ old('middle_name') }}">
+                                <input name="middle_name" type="text" class="form-control form-control-sm"
+                                    id="studentMiddleName" value="{{ old('middle_name') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
                             <label for="lastName">Last Name</label>
                             <div class="input-group">
-                                <input name="last_name" type="text" class="form-control" id="studentLastName"
-                                    value="{{ old('last_name') }}">
+                                <input name="last_name" type="text" class="form-control form-control-sm"
+                                    id="studentLastName" value="{{ old('last_name') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group mb-1">
+                            <label for="idNumber">ID Number</label>
+                            <div class="input-group">
+                                <input name="id_no" type="text" class="form-control form-control-sm"
+                                    id="studentIdNumber" value="{{ old('id_no') }}">
                             </div>
                         </div>
 
@@ -139,7 +212,7 @@
                             <label for="title">
                                 Gender</label>
                             <div class="input-group">
-                                <select name="gender" class="form-select" id="studentGender">
+                                <select name="gender" class="form-select form-select-sm" id="studentGender">
                                     <option value="">Select One</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -151,7 +224,7 @@
                             <label for="title">
                                 Designation</label>
                             <div class="input-group">
-                                <select name="title" class="form-select" id="studentTitle">
+                                <select name="title" class="form-select form-select-sm" id="studentTitle">
                                     <option value="">Select One</option>
                                     <option value="Miss" selected>Miss</option>
                                     <option value="Mrs">Mrs</option>
@@ -166,35 +239,32 @@
                         <div class="col-md-4 form-group mb-1">
                             <label for="studentEmail">Email</label>
                             <div class="input-group">
-                                <input name="email" type="email" class="form-control" id="studentEmail"
-                                    value="{{ old('email') }}">
+                                <input name="email" type="email" class="form-control form-control-sm"
+                                    id="studentEmail" value="{{ old('email') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
                             <label for="studentPhone">Phone</label>
                             <div class="input-group">
-                                <input name="phone" type="text" class="form-control" id="studentPhone"
-                                    value="{{ old('phone') }}">
+                                <input name="phone" type="text" class="form-control form-control-sm"
+                                    id="studentPhone" value="{{ old('phone') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
                             <label for="studentAddress">Address</label>
                             <div class="input-group">
-                                <input name="address" type="text" class="form-control" id="studentAddress"
-                                    value="{{ old('address') }}">
+                                <input name="address" type="text" class="form-control form-control-sm"
+                                    id="studentAddress" value="{{ old('address') }}">
                             </div>
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
                             <label for="homeCountyId">Home County</label>
                             <div class="input-group">
-                                <select name="county_id" class="form-select" id="homeCountyId">
-                                    <option value="">Select One</option>
-                                    @foreach ($counties as $county)
-                                        <option value="{{ $county->id }}">{{ $county->name }}</option>
-                                    @endforeach
+                                <select name="county_id" class="form-select form-select-sm" id="homeCountyId">
+                                    
                                 </select>
                             </div>
                         </div>
@@ -214,11 +284,8 @@
                             <div class="col-md-4 form-group mb-1">
                                 <label for="collegeId">College</label>
                                 <div class="input-group">
-                                    <select name="college_id" class="form-select" id="collegeId">
-                                        <option value="">Select One</option>
-                                        @foreach ($colleges as $college)
-                                            <option value="{{ $college->id }}">{{ $college->name }}</option>
-                                        @endforeach
+                                    <select name="college_id" class="form-select form-select-sm" id="collegeId">
+                                       
                                     </select>
                                 </div>
                             </div>
@@ -230,11 +297,9 @@
                         <div class="col-md-4 form-group mb-1">
                             <label for="courseId">Course</label>
                             <div class="input-group">
-                                <select name="course_id" class="form-select" id="courseId">
+                                <select name="course_id" class="form-select form-select-sm" id="courseId">
                                     <option value="">Select One</option>
-                                    @foreach ($courses as $course)
-                                        <option value="{{ $course->id }}">{{ $course->name }}</option>
-                                    @endforeach
+                                   
                                 </select>
                             </div>
                         </div>
@@ -242,9 +307,9 @@
                         <div class="col-md-4 form-group mb-1">
                             <label for="year_of_study">Year of Study</label>
                             <div class="input-group">
-                                <select name="year_of_study" class="form-select" id="year_of_study">
+                                <select name="year_of_study" class="form-select form-select-sm" id="yearOfStudy">
                                     <option value="">Select One</option>
-                                    <option value="1">1</option>
+                                    <option value="">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
@@ -255,10 +320,24 @@
                         </div>
 
                         <div class="col-md-4 form-group mb-1">
+                            <label for="courseLevel">Course Level</label>
+                            <div class="input-group">
+                                <select name="course_level" class="form-select form-select-sm" id="courseLevel">
+                                    <option value="">Select One</option>
+                                    <option value="Certificate">Certificate</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Degree">Degree</option>
+                                    <option value="Masters">Masters</option>
+                                    <option value="Doctorate">Doctorate</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-1">
                             <label for="regNumber">Registration Number</label>
                             <div class="input-group">
-                                <input name="reg_number" type="text" class="form-control" id="regNumber"
-                                    value="{{ old('reg_number') }}">
+                                <input name="reg_number" type="text" class="form-control form-control-sm"
+                                    id="regNumber" value="{{ old('reg_number') }}">
                             </div>
                         </div>
                     </div>
@@ -268,31 +347,32 @@
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinName">Name</label>
                             <div class="input-group">
-                                <input name="kin_name" type="text" class="form-control" id="kinName"
-                                    value="{{ old('kin_name') }}">
+                                <input name="kin_name" type="text" class="form-control form-control-sm"
+                                    id="kinName" value="{{ old('kin_name') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinPhone">Phone</label>
                             <div class="input-group">
-                                <input name="kin_phone" type="text" class="form-control" id="kinPhone"
-                                    value="{{ old('kin_phone') }}">
+                                <input name="kin_phone" type="text" class="form-control form-control-sm"
+                                    id="kinPhone" value="{{ old('kin_phone') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinEmail">Email</label>
                             <div class="input-group">
-                                <input name="kin_email" type="email" class="form-control" id="kinEmail"
-                                    value="{{ old('kin_email') }}">
+                                <input name="kin_email" type="email" class="form-control form-control-sm"
+                                    id="kinEmail" value="{{ old('kin_email') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3 form-group mb-1">
                             <label for="kinRelationship">Relationship</label>
                             <div class="input-group">
-                                <select name="kin_relationship" class="form-select" id="kinRelationship">
+                                <select name="kin_relationship" class="form-select form-select-sm"
+                                    id="kinRelationship">
                                     <option value="">Select One</option>
                                     <option value="Father" selected>Father</option>
                                     <option value="Mother">Mother</option>
@@ -308,6 +388,13 @@
                                     <option value="Cousin">Cousin</option>
                                     <option value="Other">Other</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mt-2">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="studentSponsored" name="sponsored">
+                                <label class="form-check-label" for="studentSponsored">Sponsored</label>
                             </div>
                         </div>
 

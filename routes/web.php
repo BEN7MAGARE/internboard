@@ -64,6 +64,7 @@ Route::get('corporatesdata',[CorporateController::class,'getCorporates']);
 Route::resource('colleges', CollegeController::class);
 
 Route::resource('students', StudentController::class);
+Route::post('students/filter', [StudentController::class, 'filter'])->name('students.filter');
 
 Route::resource('users', UserController::class);
 Route::post('college-user-store', [UserController::class, 'collegeUserStore'])->name('college.user.store');

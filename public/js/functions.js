@@ -105,28 +105,7 @@ function getCourses(target) {
     });
 }
 
-function getCounties(target) {
-    $.getJSON("/counties", function (counties) {
-        let option = "<option value=''>Select County</option>";
-        $.each(counties, function (key, value) {
-            option +=
-                "<option value=" +
-                value.id +
-                ">" +
-                value.name +
-                "</option>";
-        });
-        if (Array.isArray(target)) {
-            $.each(target, function (key, value) {
-                $(value).html(option);
-            });
-        } else {
-            $(target).html(option);
-        }
-    });
-}
-
-function countiesOption(target) {
+function getCountiesOptions(target) {
     $.getJSON("/counties", function (counties) {
         let option = "<option value=''>Select County</option>";
         $.each(counties, function (key, value) {
@@ -275,3 +254,33 @@ function getCourseCategoriesOptions(target) {
     });
 }
 
+function isValidKenyanPhone(number) {
+    const regex = /^(?:\+254|254|0)?(1[0-2][0-9]{7}|7[0-9]{8})$/;
+    return regex.test(number);
+  }
+  
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function getCoursesOptions(target) {
+    $.getJSON("/coursesdata", function (courses) {
+        let option = "<option value=''>Select Course</option>";        
+        $.each(courses, function (key, value) {
+            option +=
+                "<option value=" +
+                value.id +
+                ">" +
+                value.name +
+                "</option>";
+        });
+        if (Array.isArray(target)) {
+            $.each(target, function (key, value) {
+                $(value).html(option);
+            });
+        } else {
+            $(target).html(option);
+        }
+    });
+}

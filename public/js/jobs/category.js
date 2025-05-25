@@ -130,11 +130,17 @@ document.addEventListener('DOMContentLoaded', function () {
             let result = await response.json();
             const subcategory = result.data;
             document.getElementById('subcategoryID').value = subcategoryId;
-            document.getElementById('categoryID').value = subcategory.category_id;
             document.getElementById('subcategoryName').value = subcategory.name;
             document.getElementById('subcategoryDescription').value = subcategory.description;
+            
+            const categoryIDOption = document.getElementById('categoryID').options;
+            for (let i = 0; i < categoryIDOption.length; i++) {
+                if (categoryIDOption[i].value == subcategory.category_id) {
+                    categoryIDOption[i].selected = true;
+                    break;
+                }
+            }
         }
-
     });
 
     const createCategoryToggle = document.getElementById('createCategoryToggle');

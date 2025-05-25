@@ -96,7 +96,7 @@ class CourseController extends Controller
 
     public function getCourses()
     {
-        $courses = Course::with('category:id,name')->withCount('students')->paginate(10);
+        $courses = Course::select('id', 'name')->get();
         return json_encode($courses);
     }
 

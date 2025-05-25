@@ -1,5 +1,6 @@
 // Theme toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('loader').style.display = 'none';
     const themeToggle = document.createElement('button');
     themeToggle.className = 'theme-toggle';
     themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
