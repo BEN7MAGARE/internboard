@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('id_no')->nullable()->after('id');
             $table->string('admision_number')->nullable()->after('id_no');
             $table->string('course_level')->nullable()->after('course_id');
-            $table->boolean('sponsored')->default(false)->after('gender');
+            $table->boolean('sponsored')->default(false)->after('year_of_study');
         });
     }
 
