@@ -163,7 +163,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
     'company' => env('APP_COMPANY', 'Mukuru Slums Development projects – MSDP'),
-    'physicalAddress' => env('APP_PHYSICAL_ADDRESS', 'Physical address: Sasio road, off Lunga Lunga Road, Opposite St Elizabeth Primary School – Mukuru'),
+    'physicalAddress' => env('APP_PHYSICAL_ADDRESS', 'Sasio road, off Lunga Lunga Road, Opposite St Elizabeth Primary School – Mukuru'),
     'city' => env('APP_CITY', 'Nairobi'),
     'country' => env('APP_COUNTRY', 'Kenya'),
     'phone' => env('APP_PHONE', '+254 712 345 678'),

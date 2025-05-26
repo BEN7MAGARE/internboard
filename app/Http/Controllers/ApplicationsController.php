@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Contact;
 
 class ApplicationsController extends Controller
 {
@@ -142,5 +143,22 @@ class ApplicationsController extends Controller
     {
         $counties = DB::select("SELECT * FROM counties");
         return json_encode($counties);
+    }
+
+    public function contact(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        $contact = new Contact();
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->subject = $request->subject;
+        $contact->message = $request->message;
+        $contact->save();
+        return json_encode(['status' => 'success', 'message' => 'Message sent successfully. We will get in touch after review.']);
     }
 }

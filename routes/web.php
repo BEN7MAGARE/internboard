@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
 Route::get('profile/applications', [ProfileController::class, 'applications'])->name('profile.applications');
 
 Route::view('contact', 'contact')->name('contact');
+Route::post('contact', [ApplicationsController::class, 'contact'])->name('contact');
 Route::view('about', 'about')->name('about');
 Route::view('services', 'services')->name('services');
 
