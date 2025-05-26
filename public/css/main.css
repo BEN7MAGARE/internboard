@@ -216,6 +216,12 @@ h6 {
   .header .navmenu {
     order: 3;
   }
+
+  .header .btn-getstarted,
+  .header .btn-getstarted:focus {
+    font-size: 10px;
+    padding: 4px 16px;
+  }
 }
 
 .scrolled .header {
@@ -2872,12 +2878,12 @@ section,
 }
 
 #categoriesWithJobs li {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #EAEDED;
-    list-style: none;
-    color: var(--theme-color);
-    background-color: #E5E7E9;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #EAEDED;
+  list-style: none;
+  color: var(--theme-color);
+  background-color: #E5E7E9;
 }
 
 .job {
@@ -2885,7 +2891,7 @@ section,
   padding: 5px 10px;
   /* border-radius: 10px; */
   border-bottom: 1px solid #EAEDED;
-  box-shadow:;
+  box-shadow: ;
 }
 
 .job:hover {
