@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <form action="{{ route('contact') }}" method="post" id="contactForm">
+                        <form action="{{ url('contact') }}" method="post" id="contactForm">
                             @csrf
                             <div class="row gy-4">
 
