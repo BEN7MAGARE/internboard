@@ -65,6 +65,7 @@ Route::resource('colleges', CollegeController::class);
 
 Route::resource('students', StudentController::class);
 Route::post('students/filter', [StudentController::class, 'filter'])->name('students.filter');
+Route::post('students/export', [StudentController::class, 'export'])->name('students.export');
 
 Route::resource('users', UserController::class);
 Route::post('college-user-store', [UserController::class, 'collegeUserStore'])->name('college.user.store');

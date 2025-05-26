@@ -29,9 +29,9 @@
                             Actions
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item text-danger" href="#" id="deleteCategory"><i
+                            <li><a class="dropdown-item text-danger" href="#" id="deleteStudent"><i
                                         class="bi bi-trash"></i>&nbsp;Delete</a></li>
-                            <li><a class="dropdown-item text-info" href="#" id="exportCategory"><i
+                            <li><a class="dropdown-item text-info" href="#" id="exportStudent"><i
                                         class="bi bi-file-earmark-excel"></i>&nbsp;Export</a></li>
                         </ul>
                     </div>

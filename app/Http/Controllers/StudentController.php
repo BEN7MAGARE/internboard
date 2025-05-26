@@ -143,4 +143,45 @@ class StudentController extends Controller
         $students = $query->with(['profile', 'college', 'student','student.course'])->get();
         return json_encode($students);
     }
+
+    public function export(Request $request)
+    {
+        $students = User::where('role', 'student')->where('id', $request->student_id)->with(['profile', 'college', 'student','student.course'])->get();
+        $fileName = 'students.xlsx';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+        $callback = function () use ($students) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['ADM NO', 'Name', 'Email', 'Phone', 'Gender', 'College', 'Course', 'Reg Number', 'Year']);
+            foreach ($students as $student) {
+                $education = json_decode($student->profile?->education);
+                fputcsv($file, [
+                    $student->student?->admision_number,
+                    $student->title.'. '.$student->first_name . " ".$student->middle_name.' ' . $student->last_name,
+                    $student->id_no,
+                    $student->student?->admision_number,
+                    $student->email,
+                    $student->phone,
+                    $student->gender,
+                    $student->college?->name,
+                    $student->student?->course_level,
+                    $student->student?->course?->name,
+                    $student->student?->reg_number,
+                    $student->student?->year_of_study,
+                    $student->student->kin_name,
+                    $student->student->kin_phone,
+                    $student->student->kin_email,
+                    $student->student->kin_relationship,
+                    $student->student->sponsored ? 'Yes' : 'No',
+                ]);
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+    }
 }

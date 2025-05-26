@@ -2,7 +2,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const studentCreateForm = document.getElementById('studentCreateForm'),
         studentFilterForm = document.getElementById('studentFilterForm'),
         createStudentToggle = document.getElementById('createStudentToggle'),
-        editStudentToggle = document.getElementById('editStudentToggle');
+        editStudentToggle = document.getElementById('editStudentToggle'),
+        allStudentSelect = document.getElementById('allStudentSelect'),
+        exportStudent = document.getElementById('exportStudent'),
+        deleteStudent = document.getElementById('deleteStudent');
 
     createStudentToggle.addEventListener('click', function () {
         document.getElementById('userID').value = "";
@@ -14,7 +17,14 @@ document.addEventListener('DOMContentLoaded', function () {
     //     document.getElementById('userID').value = this.dataset.id;
     //     document.getElementById('studentId').value = this.dataset.id;
     // });
-    
+
+    allStudentSelect.addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('input[name="student_id[]"]');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = this.checked;
+        }, this);
+    });
+
     getCountiesOptions('#homeCountyId');
     if (document.getElementById('collegeId')) {
         getCollegesOptions(['#collegeId', '#studentFilterCollegeID']);
@@ -61,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: formData,
                 });
-
                 if (response.ok) {
                     const data = await response.json();
                     if (data.status === 'success') {
@@ -243,6 +252,22 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </td>`;
                 document.getElementById('studentTableBody').appendChild(tr);
             }
+        }
+    });
+
+    exportStudent.addEventListener('click', async function (event) {
+        event.preventDefault();
+        const formData = new FormData(studentFilterForm);
+        const response = await fetch('/students/export', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
+            },
+            body: formData,
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
         }
     });
 });

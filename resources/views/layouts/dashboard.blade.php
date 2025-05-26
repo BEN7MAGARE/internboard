@@ -152,17 +152,42 @@
         <div id="content">
 
             <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <button class="btn btn-primary" id="sidebarToggle">
-                        <i class="bi bi-list"></i>
-                    </button>
-                    <h4 class="ms-3 mb-0">@yield('subtitle')</h4>
+                <div class="container-fluid" id="dashboard-header">
+                    <div class="d-flex">
+                        <button class="btn btn-primary" id="sidebarToggle">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <h4 class="ms-3 mb-0">@yield('subtitle')</h4>
+                    </div>
                     <div class="ms-auto d-flex align-items-center">
                         <span class="me-3">
                             <i class="bi bi-calendar me-1"></i>
                             {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
                         </span>
                     </div>
+                    <div class="dropdown-center">
+                        <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @if (auth()->user()->image)
+                                <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="" class="img-fluid" id="profile-image">
+                            @else
+                                <img src="{{ asset('images/avatar.png') }}" alt="" class="img-fluid" id="profile-image">
+                            @endif
+                        </a>
+
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person"></i>&nbsp;Profile</a></li>
+                          <li class="text-danger">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item text-danger" href="route('logout')"
+                                    onclick="event.preventDefault();
+                                this.closest('form').submit();"><i
+                                        class="bi bi-box-arrow-right text-danger"></i>&nbsp;Logout
+                                </a>
+                            </form>
+                          </li>
+                        </ul>
+                      </div>
                 </div>
             </nav>
 

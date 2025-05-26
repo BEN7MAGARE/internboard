@@ -74,7 +74,7 @@
                 </ul>
             </a>
             @else
-            <a class="nav-link {{ Request::url() == route('getstarted') ? 'active' : '' }}" href="{{ route('getstarted') }}"><i class="bi bi-person-circle"></i></a>
+            <a class="nav-link {{ Request::url() == route('getstarted') ? 'active' : '' }} btn-getstarted" href="{{ route('getstarted') }}">Get Started</a>
             @endauth
 
         </div>
@@ -93,6 +93,8 @@
                         <span class="sitename">Daraja La Mafanikio</span>
                     </a>
                     <p>Empowering TVET graduates from Informal Settlements in Kenya.</p>
+                    <p>{{ config('app.company') }}</p>
+                    <p>{{ config('app.physicalAddress') }}</p>
                     <div class="social-links d-flex mt-4">
                         <a href=""><i class="bi bi-twitter-x"></i></a>
                         <a href=""><i class="bi bi-facebook"></i></a>
@@ -125,10 +127,12 @@
 
                 <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                     <h4>Contact Us</h4>
-                    <p>{{ config('app.address') }}</p>
-                    <p>{{ config('app.city') }}, {{ config('app.country') }}</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>{{ config('app.phone') }}</span></p>
+                    <p>{{ config('app.postal') }}</p>
+                    <p class="mt-2"><strong>Phone:</strong> <span>{{ config('app.phone') }}</span></p>
+                    <p><strong>Phone:</strong> <span>{{ config('app.phone2') }}</span></p>
                     <p><strong>Email:</strong> <span>{{ config('app.email') }}</span></p>
+                    <p><strong>Email:</strong> <span>{{ config('app.email2') }}</span></p>
+                    <p><strong>Email:</strong> <span>{{ config('app.email3') }}</span></p>
                 </div>
 
             </div>
