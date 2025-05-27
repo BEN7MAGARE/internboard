@@ -6,13 +6,16 @@
 
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
 @endsection
 
 @section('content')
+<main class="main"> 
     <section class="main-content">
+        <hr>
         <div class="page-title" data-aos="fade">
             <nav class="breadcrumbs">
-                <div class="container">
+                <div class="container-fluid">
                     <ol>
                         <li><a href="/">Home</a></li>
                         <li class="current">Job Opportunities</li>
@@ -22,9 +25,9 @@
         </div>
 
         <section class="job-section">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8 p-3 bg-white mt-3" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
+                    <div class="col-md-7 p-3 bg-white" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
                         @if ($applied)
                             <div class="alert alert-info" role="alert">
                                 <p>Applied <i class="fa fa-check-circle"></i></p>
@@ -71,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-5">
                         @if ($applied)
                         <div class="alert alert-info">
                             <h6><i class="bi bi-exclamation-triangle-fill"></i> You have already applied for this job. </h6>
@@ -92,15 +95,13 @@
                                             <div class="col-md-12 form-group mb-4">
                                                 <label for="applicationReason" class="mb-2">Why are you applying for this
                                                     job</label>
-                                                <input type="text" class="form-control form-control-lg" name="reason"
-                                                    id="applicationReason">
+                                                <textarea class="form-control form-control-lg" name="reason"
+                                                    id="applicationReason"></textarea>
                                             </div>
 
-                                            <div class="col-md-12 mb-4" style="max-height: 10em;">
+                                            <div class="col-md-12 mb-4">
                                                 <label for="cover_letter" class="mb-2">Cover letter</label>
-                                                <textarea name="cover_letter" id="cover_letter" class="form-control form-control-lg"></textarea>
-                                                {{-- <div class="quill-editor-default" id="cover_letter">
-                                            </div> --}}
+                                                <textarea name="cover_letter" id="cover_letter" class="form-control form-control-lg" rows="8"></textarea>
                                             </div>
 
                                             <div class="col-md-12 form-group mb-4">
@@ -120,7 +121,7 @@
                                     </div>
 
                                     <div class="card-footer bg-white d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary btn-md">Submit <i
+                                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit <i
                                                 class="fa fa-angles-right"></i></button>
                                     </div>
 
@@ -133,8 +134,11 @@
             </div>
         </section>
     </section>
+</main>
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/iziToast.min.js') }}"></script>
+    <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/application.js') }}"></script>
 @endsection

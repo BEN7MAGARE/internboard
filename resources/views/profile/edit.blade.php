@@ -316,7 +316,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 form-group mb-1">
+                        <div class="col-md-5 form-group mb-1">
                             <label for="specialization">Specialization</label>
                             <div class="input-group">
                                 <input name="specialization" value="{{ auth()->user()->profile?->specialization }}"

@@ -1,49 +1,11 @@
 (function () {
-    const select = (el, all = false) => {
-        el = el.trim();
-        if (all) {
-            return [...document.querySelectorAll(el)];
-        } else {
-            return document.querySelector(el);
-        }
-    };
-
-    function showSuccess(message, target) {
-        iziToast.success({
-            title: "OK",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
-
-    function showError(message, target) {
-        iziToast.error({
-            title: "Error",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
-
-    function showSpiner(target) {
-        $(target).html(
-            '<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
-        );
-    }
-
-    function removeSpiner(target) {
-        $(target).children().remove();
-    }
-
     const jobApplicationForm = $("#jobApplicationForm"),
         jobID = $("#jobID"),
         applicationReason = $("#applicationReason"),
         cover_letter = $("#cover_letter"),
         curriculumVitae = $("#curriculumVitae")[0],
-        otherFiles = $("#otherFiles");
+        otherFiles = $("#otherFiles"),
+        jobApplySubmit = $("#jobApplySubmit");
 
     $("#curriculumVitae").on("change", function () {
         var file = this.files[0];
@@ -115,8 +77,8 @@
         data.append("job_id", jobID.val());
         data.append("reason", applicationReason.val());
         data.append("cover_letter", cover_letter.val());
-        console.log(curriculumVitae);
         data.append("curriculum_vitae", curriculumVitae.files[0]);
+        jobApplySubmit.prop("disabled", true);
         let files = otherFiles[0].files;
         if (curriculumVitae.files[0].size > 1024 * 1024 * 2) {
             errors.push("Curriculum vitae is more than 2mb. ");
@@ -132,8 +94,10 @@
             errors.push("Provide satisfactory cover letter.")
         }
         if (errors.length > 0) {
+            jobApplySubmit.prop("disabled", false);
             showError(errors.join(', '), '#applyFeedback');
         } else {
+            jobApplySubmit.prop("disabled", true);
             showSpiner("#applyFeedback");
             $.ajaxSetup({
                 headers: {
@@ -147,7 +111,7 @@
                 processData: false,
                 contentType: false,
                 success: function (params) {
-                    console.log(params);
+                    jobApplySubmit.prop("disabled", false);
                     removeSpiner("#applyFeedback");
                     let result = JSON.parse(params);
                     if (result.status === "success") {
@@ -158,11 +122,45 @@
                     }
                 },
                 error: function (error) {
-                    console.error(error);
+                    jobApplySubmit.prop("disabled", false);
                     removeSpiner("#applyFeedback");
                     showError("Error occurred during processing", "#applyFeedback");
                 },
             });
+        }
+    });
+
+    document.addEventListener("click", async function (event) {
+        const editApplicationToggle = event.target.closest('#editApplicationToggle');
+        const deleteApplicationToggle = event.target.closest('#deleteApplicationToggle');
+        if (editApplicationToggle) {
+            event.preventDefault();
+            const applicationId = editApplicationToggle.dataset.id;
+            console.log(applicationId);
+            const response = await fetch(`/applications/${applicationId}`);
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                document.getElementById('applicationReason').value = data.reason;
+                document.getElementById('applicationCoverLetter').value = data.cover_letter;
+                document.getElementById('applicationCurriculumVitae').value = data.curriculum_vitae;
+                document.getElementById('applicationOtherFiles').value = data.other_files;
+            }
+        }
+
+        if (deleteApplicationToggle) {
+            event.preventDefault();
+            const applicationId = deleteApplicationToggle.dataset.id;
+            console.log(applicationId);
+            const response = await fetch(`/applications/${applicationId}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector("input[name='_token']").value,
+                }
+            });
+            if (response.ok) {
+                showSuccess("Application deleted successfully", "#applyFeedback");
+            }
         }
     });
 })();

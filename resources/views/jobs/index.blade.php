@@ -225,6 +225,7 @@
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/job.js') }}"></script>
 @endsection
