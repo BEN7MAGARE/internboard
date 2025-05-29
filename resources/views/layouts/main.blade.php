@@ -28,6 +28,12 @@
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     @yield('header_styles')
+    <style>
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="index-page">
@@ -51,8 +57,9 @@
                             class="{{ Request::url() == route('about') ? 'active' : '' }}">About</a></li>
                     <li><a href="{{ route('elearning') }}"
                             class="{{ Request::url() == route('elearning') ? 'active' : '' }}">E-Learning</a></li>
-                    <li class="dropdown {{ Request::url() == '/jobs' || Request::url() == '/jobs/create' ? 'active' : '' }}"><a href="#"><span>Jobs</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <li
+                        class="dropdown {{ Request::url() == '/jobs' || Request::url() == '/jobs/create' ? 'active' : '' }}">
+                        <a href="#"><span>Jobs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="{{ route('jobs.index') }}">Job List</a></li>
                             <li><a href="{{ route('jobs.create') }}">Post a Job</a></li>
@@ -60,37 +67,51 @@
                     </li>
                     <li><a href="{{ route('contact') }}"
                             class="{{ Request::url() == route('contact') ? 'active' : '' }}">Contact</a></li>
+                    <li class="nav-language"><a href="#">
+                            <select class="lang-selector form-select text-primary">
+                                <option value="en">English</option>
+                                <option value="sw">Kiswahili</option>
+                            </select>
+                        </a>
+                    </li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            @auth
-                <a class="nav-link dropdown">
-                    <a class="dropdown-toggle btn btn-outline-warning btn-sm {{ Request::url() == '/profile' ? 'active' : '' }}"
-                        href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
-                            class="bi bi-person-circle"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;
-                        <i class="bi bi-angle-down"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
-                                    class="bi bi-person-circle"></i>&nbsp;My Profile</a></li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a class="dropdown-item text-danger" href="route('logout')"
-                                    onclick="event.preventDefault();
+            <nav class="d-flex justify-content-between gap-2" id="second-nav">
+                @auth
+                    <a class="nav-link dropdown">
+                        <a class="dropdown-toggle btn btn-outline-warning btn-sm {{ Request::url() == '/profile' ? 'active' : '' }}"
+                            href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
+                                class="bi bi-person-circle"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;
+                            <i class="bi bi-angle-down"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                        class="bi bi-person-circle"></i>&nbsp;My Profile</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item text-danger" href="route('logout')"
+                                        onclick="event.preventDefault();
                             this.closest('form').submit();"><i
-                                        class="bi bi-box-arrow-right"></i>&nbsp;{{ __('Log Out') }}
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
+                                            class="bi bi-box-arrow-right"></i>&nbsp;{{ __('Log Out') }}
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
+                    </a>
+                @else
+                    <a class="nav-link {{ Request::url() == route('getstarted') ? 'active' : '' }} btn-getstarted"
+                        href="{{ route('getstarted') }}">Get Started</a>
+
+                @endauth
+                <a href="#" class="language-toggle">
+                    <select class="lang-selector form-select text-primary">
+                        <option value="en">English</option>
+                        <option value="sw">Kiswahili</option>
+                    </select>
                 </a>
-            @else
-                <a class="nav-link {{ Request::url() == route('getstarted') ? 'active' : '' }} btn-getstarted"
-                    href="{{ route('getstarted') }}">Get Started</a>
-
-            @endauth
-
+            </nav>
         </div>
     </header>
 
@@ -167,6 +188,21 @@
     <!-- Preloader -->
     <div id="preloader"></div>
 
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,sw',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/aos/aos.js') }}"></script>
@@ -176,6 +212,34 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('footer_scripts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.language-selector').forEach(function(selector) {
+                selector.addEventListener('change', function() {
+                    console.log('I was changed');
+                    
+                    const lang = this.value;
+                    const frame = document.querySelector('iframe.goog-te-menu-frame');
+                    console.log(frame);
+
+                    if (frame) {
+                    const innerDoc = frame.contentDocument || frame.contentWindow.document;
+                    const langElements = innerDoc.querySelectorAll('.goog-te-menu2-item span.text');
+
+                    langElements.forEach(function(el) {
+                        if (el.innerText.toLowerCase().includes(lang === 'sw' ? 'swahili' :
+                                'english')) {
+                            el.click();
+                        }
+                    });
+                } else {
+                    console.warn('Google Translate iframe not ready. Try again shortly.');
+                }
+                });
+            });
+        });
+    </script>
 
 </body>
 

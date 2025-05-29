@@ -161,4 +161,10 @@ class ApplicationsController extends Controller
         $contact->save();
         return json_encode(['status' => 'success', 'message' => 'Message sent successfully. We will get in touch after review.']);
     }
+
+    public function show($id)
+    {
+        $application = $this->application->with('applicant')->find($id);
+        return json_encode($application);
+    }
 }

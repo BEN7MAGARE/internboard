@@ -70,7 +70,7 @@
     </main>
 @endsection
 
-<div class="modal" id="editApplicationModalToggle" aria-hidden="true" aria-labelledby="editApplicationModalToggleLabel"
+<div class="modal" id="editApplicationModal" aria-hidden="true" aria-labelledby="editApplicationModalToggleLabel"
     tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,9 +100,8 @@
                             </div>
 
                             <div class="col-md-12 form-group mb-4">
-                                <label for="curriculumVitae" class="mb-2">Attach your CV</label><br>
-                                <input type="file" name="curriculum_vitae" id="applicationCurriculumVitae" required>
-                                <div id="cvError"></div>
+                                <label for="prefferedpay" class="mb-2">Preffered Pay</label><br>
+                                <input type="text" name="prefferedpay" id="applicationPrefferedPay" required>
                             </div>
 
                             <div class="col-md-12 form-group">

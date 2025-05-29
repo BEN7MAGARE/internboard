@@ -94,4 +94,12 @@ Route::post('profileimage', [ProfileController::class, 'changeImage']);
 
 Route::get('counties', [ApplicationsController::class, 'counties']);
 
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'sw'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+});
+
+
 require __DIR__ . '/auth.php';

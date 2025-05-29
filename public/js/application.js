@@ -139,12 +139,12 @@
             console.log(applicationId);
             const response = await fetch(`/applications/${applicationId}`);
             const data = await response.json();
-            console.log(data);
+
             if (response.ok) {
                 document.getElementById('applicationReason').value = data.reason;
                 document.getElementById('applicationCoverLetter').value = data.cover_letter;
-                document.getElementById('applicationCurriculumVitae').value = data.curriculum_vitae;
-                document.getElementById('applicationOtherFiles').value = data.other_files;
+                // document.getElementById('applicationCurriculumVitae').value = data.curriculum_vitae;
+                // document.getElementById('applicationOtherFiles').value = data.other_files;
             }
         }
 

@@ -194,9 +194,18 @@ h6 {
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }
 
+.header .nav-language {
+  display: none;
+}
+
 @media (max-width: 1200px) {
   .header .logo {
     order: 1;
+  }
+
+  #second-nav{
+    order: 2;
+    margin-right: 3px;
   }
 
   .header .logo h1 {
@@ -222,6 +231,15 @@ h6 {
   .header .btn-getstarted:focus {
     font-size: 10px;
     padding: 4px 16px;
+  }
+
+  .header .language-toggle {
+    display: none;
+  }
+
+
+  .header .nav-language {
+    display: block;
   }
 }
 

@@ -17,7 +17,7 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('categories', 'skills', 'categoriesWithJobs');
+        $this->middleware('auth')->except('categories', 'skills', 'categoriesWithJobs','index','jobsLocations');
         $this->category = new Category();
         $this->job = new Job();
         $this->skill = new Skill();
