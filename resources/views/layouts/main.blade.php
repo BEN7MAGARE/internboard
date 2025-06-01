@@ -79,9 +79,15 @@
             </nav>
 
             <nav class="d-flex justify-content-between gap-2" id="second-nav">
+                <a href="#" class="language-toggle">
+                    <select class="lang-selector form-select text-primary">
+                        <option value="en">English</option>
+                        <option value="sw">Kiswahili</option>
+                    </select>
+                </a>
                 @auth
-                    <a class="nav-link dropdown">
-                        <a class="dropdown-toggle btn btn-outline-warning btn-sm {{ Request::url() == '/profile' ? 'active' : '' }}"
+                    <a class="nav-link">
+                        <a class="dropdown-toggle btn btn-outline-warning btn-sm mt-1 {{ Request::url() == '/profile' ? 'active' : '' }}"
                             href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
                                 class="bi bi-person-circle"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;
                             <i class="bi bi-angle-down"></i></a>
@@ -105,12 +111,7 @@
                         href="{{ route('getstarted') }}">Get Started</a>
 
                 @endauth
-                <a href="#" class="language-toggle">
-                    <select class="lang-selector form-select text-primary">
-                        <option value="en">English</option>
-                        <option value="sw">Kiswahili</option>
-                    </select>
-                </a>
+
             </nav>
         </div>
     </header>
@@ -218,24 +219,26 @@
             document.querySelectorAll('.language-selector').forEach(function(selector) {
                 selector.addEventListener('change', function() {
                     console.log('I was changed');
-                    
+
                     const lang = this.value;
                     const frame = document.querySelector('iframe.goog-te-menu-frame');
                     console.log(frame);
 
                     if (frame) {
-                    const innerDoc = frame.contentDocument || frame.contentWindow.document;
-                    const langElements = innerDoc.querySelectorAll('.goog-te-menu2-item span.text');
+                        const innerDoc = frame.contentDocument || frame.contentWindow.document;
+                        const langElements = innerDoc.querySelectorAll(
+                            '.goog-te-menu2-item span.text');
 
-                    langElements.forEach(function(el) {
-                        if (el.innerText.toLowerCase().includes(lang === 'sw' ? 'swahili' :
-                                'english')) {
-                            el.click();
-                        }
-                    });
-                } else {
-                    console.warn('Google Translate iframe not ready. Try again shortly.');
-                }
+                        langElements.forEach(function(el) {
+                            if (el.innerText.toLowerCase().includes(lang === 'sw' ?
+                                    'swahili' :
+                                    'english')) {
+                                el.click();
+                            }
+                        });
+                    } else {
+                        console.warn('Google Translate iframe not ready. Try again shortly.');
+                    }
                 });
             });
         });

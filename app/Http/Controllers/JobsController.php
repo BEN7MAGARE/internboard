@@ -63,7 +63,8 @@ class JobsController extends Controller
     public function create()
     {
         if (auth()->user()->role === 'corporate') {
-            return view('jobs.create');
+            $categories = $this->category->get();   
+            return view('jobs.create', compact('categories'));
         } else {
             return redirect()->back()->withErrors(['error' => 'You must own a corporate account to post jobs']);
         }
@@ -84,6 +85,7 @@ class JobsController extends Controller
             $job = $this->job->find($validated['id'])->update($validated);
             $message = 'Job post added successfully';
         }
+        
         foreach (explode(',', json_decode($validated['skills'], true)) as $value) {
             DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
         }
@@ -96,6 +98,13 @@ class JobsController extends Controller
     {
         $job = $this->job->find($id);
         return json_encode($job);
+    }
+
+    public function edit($id)   
+    {
+        $categories = $this->category->get();
+        $job = $this->job->find($id);
+        return view('jobs.edit', compact('job', 'categories'));
     }
 
     public function jobs()
@@ -186,7 +195,7 @@ class JobsController extends Controller
             $query->where('category_id', $params['category_id']);
         }
         if (!empty($params['employment_type'])) {
-            $query->where('employment_type', $params['employment_type']);
+            $query->where('type', $params['employment_type']);
         }
         if (!empty($params['job_type'])) {
             $query->where('job_type', $params['job_type']);
@@ -201,6 +210,7 @@ class JobsController extends Controller
             $query->whereIn('location', $locations->toArray());
         }
         $jobs = $query->paginate(10);
+        
         return view('jobs.index', compact('jobs'));
     }
 

@@ -46,13 +46,17 @@
 
             <ul class="list-unstyled components">
 
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}">
-                        <i class="bi bi-speedometer2"></i>
-                        Dashboard
+                <li class="list-group-item {!! Request::is('profile') ||
+                Request::is('corporate/create') ||
+                Request::is('corporate/edit') ||
+                Request::is('corporate')
+                    ? 'active'
+                    : '' !!}">
+                    <a href="{{ route('profile.edit') }}" aria-current="true">
+                        <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
                 </li>
-
+                
                 @if (auth()->user()->role === 'corporate')
                     <li class="{!! Request::is('profile-jobs') || Request::is('jobs/create') ? 'active' : '' !!}">
                         <a href="{{ route('profile.jobs') }}">
@@ -88,6 +92,12 @@
                 @endif
 
                 @if (auth()->user()->role === 'admin')
+                    <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard') }}">
+                            <i class="bi bi-speedometer2"></i>
+                            Dashboard
+                        </a>
+                    </li>
                     <li class="{!! Request::is('users') ? 'active' : '' !!}">
                         <a href="{{ route('users.index') }}">
                             <i class="bi bi-people"></i>
@@ -123,16 +133,6 @@
                         </a>
                     </li>
                 @endif
-                <li class="list-group-item {!! Request::is('profile') ||
-                Request::is('corporate/create') ||
-                Request::is('corporate/edit') ||
-                Request::is('corporate')
-                    ? 'active'
-                    : '' !!}">
-                    <a href="{{ route('profile.edit') }}" aria-current="true">
-                        <i class="bi bi-person"></i>&nbsp;My Profile
-                    </a>
-                </li>
 
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
@@ -168,26 +168,29 @@
                     <div class="dropdown-center">
                         <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             @if (auth()->user()->image)
-                                <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt="" class="img-fluid" id="profile-image">
+                                <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt=""
+                                    class="img-fluid" id="profile-image">
                             @else
-                                <img src="{{ asset('images/avatar.png') }}" alt="" class="img-fluid" id="profile-image">
+                                <img src="{{ asset('profilepictures/avatar.png') }}" alt="" class="img-fluid"
+                                    id="profile-image">
                             @endif
                         </a>
 
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person"></i>&nbsp;Profile</a></li>
-                          <li class="text-danger">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a class="dropdown-item text-danger" href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                        class="bi bi-person"></i>&nbsp;Profile</a></li>
+                            <li class="text-danger">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item text-danger" href="route('logout')"
+                                        onclick="event.preventDefault();
                                 this.closest('form').submit();"><i
-                                        class="bi bi-box-arrow-right text-danger"></i>&nbsp;Logout
-                                </a>
-                            </form>
-                          </li>
+                                            class="bi bi-box-arrow-right text-danger"></i>&nbsp;Logout
+                                    </a>
+                                </form>
+                            </li>
                         </ul>
-                      </div>
+                    </div>
                 </div>
             </nav>
 

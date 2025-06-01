@@ -30,25 +30,30 @@
                         <div class="col-md-6 mb-2">
                             <label for="categoryID">Category / Industry</label>
                             <select name="category_id" id="categoryID" class="form-select">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ $job->category_id == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-2">
                             <label for="subcategoryID">Sub-category</label>
                             <select name="subcategory_id" id="subcategoryID" class="form-select">
-                            </select>
+                                </select>
                         </div>
 
                         <div class="col-md-6 mb-2">
                             <label for="employmentType">Employment Type</label>
                             <select name="type" id="employmentType" class="form-select">
                                 <option value="">Select One</option>
-                                <option value="Internship">Internship</option>
-                                <option value="Part-time">Part Time</option>
-                                <option value="Full Time">Full Time</option>
-                                <option value="Contract">Contract</option>
-                                <option value="Freelance">Freelance</option>
-                                <option value="Temporary">Temporary</option>
+                                <option value="Internship" {{ $job->type == 'Internship' ? 'selected' : '' }}>Internship</option>
+                                <option value="Part-time" {{ $job->type == 'Part-time' ? 'selected' : '' }}>Part Time</option>
+                                <option value="Full Time" {{ $job->type == 'Full Time' ? 'selected' : '' }}>Full Time</option>
+                                <option value="Contract" {{ $job->type == 'Contract' ? 'selected' : '' }}>Contract</option>
+                                <option value="Freelance" {{ $job->type == 'Freelance' ? 'selected' : '' }}>Freelance</option>
+                                <option value="Temporary" {{ $job->type == 'Temporary' ? 'selected' : '' }}>Temporary</option>
                             </select>
                         </div>
 
@@ -56,9 +61,9 @@
                             <label for="jobType">Job Type</label>
                             <select name="job_type" id="jobType" class="form-select" required>
                                 <option value="">Select One</option>
-                                <option value="Remote">Remote</option>
-                                <option value="On-site">On-Site</option>
-                                <option value="High-breed">High-breed</option>
+                                <option value="Remote" {{ $job->job_type == 'Remote' ? 'selected' : '' }}>Remote</option>
+                                <option value="On-site" {{ $job->job_type == 'On-site' ? 'selected' : '' }}>On-Site</option>
+                                <option value="High-breed" {{ $job->job_type == 'High-breed' ? 'selected' : '' }}>High-breed</option>
                             </select>
                         </div>
 
@@ -66,15 +71,15 @@
                             <label for="experienceLevel">Experience Level</label>
                             <select name="experience_level" id="experienceLevel" class="form-select" required>
                                 <option value="">Select One</option>
-                                <option value="Entry">Entry Level</option>
-                                <option value="Intermediate">Intermediate Level</option>
-                                <option value="Expert">Expert Level</option>
+                                <option value="Entry" {{ $job->experience_level == 'Entry' ? 'selected' : '' }}>Entry Level</option>
+                                <option value="Intermediate" {{ $job->experience_level == 'Intermediate' ? 'selected' : '' }}>Intermediate Level</option>
+                                <option value="Expert" {{ $job->experience_level == 'Expert' ? 'selected' : '' }}>Expert Level</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-2">
                             <label for="location">Location</label>
-                            <input type="text" class="form-control" name="location" id="location">
+                            <input type="text" class="form-control" name="location" id="location" value="{{ $job->location }}">
                         </div>
 
                     </div>
@@ -96,12 +101,12 @@
                             <label for="educationLevel">Education Level</label>
                             <select name="education_level" id="educationLevel" class="form-select">
                                 <option value="">Select One</option>
-                                <option value="No Education">No Education</option>
-                                <option value="Certificate">Certificate</option>
-                                <option value="Diploma">Diploma</option>
-                                <option value="Degree">Degree</option>
-                                <option value="Masters">Masters</option>
-                                <option value="Doctorate">Doctorate</option>
+                                <option value="No Education" {{ $job->education_level == 'No Education' ? 'selected' : '' }}>No Education</option>
+                                <option value="Certificate" {{ $job->education_level == 'Certificate' ? 'selected' : '' }}>Certificate</option>
+                                <option value="Diploma" {{ $job->education_level == 'Diploma' ? 'selected' : '' }}>Diploma</option>
+                                <option value="Degree" {{ $job->education_level == 'Degree' ? 'selected' : '' }}>Degree</option>
+                                <option value="Masters" {{ $job->education_level == 'Masters' ? 'selected' : '' }}>Masters</option>
+                                <option value="Doctorate" {{ $job->education_level == 'Doctorate' ? 'selected' : '' }}>Doctorate</option>
                             </select>
                         </div>
 
@@ -117,34 +122,34 @@
 
                         <div class="col-md-6 form-group">
                             <label for="lastName">Salary range</label>
-                            <input type="text" class="form-control" name="salary_range" id="salaryRange">
+                            <input type="text" class="form-control" name="salary_range" id="salaryRange" value="{{ $job->salary_range }}">
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" name="title" id="title">
+                            <input type="text" class="form-control" name="title" id="title" value="{{ $job->title }}">
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" class="form-control"></textarea>
+                            <textarea name="description" id="description" class="form-control">{{ $job->description }}</textarea>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="noOfPositions">No of positions</label>
-                            <input type="number" name="no_of_positions" id="noOfPositions" class="form-control">
+                            <input type="number" name="no_of_positions" id="noOfPositions" class="form-control" value="{{ $job->no_of_positions }}">
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="startDate">Application deadline</label>
                             <input type="date" name="applicationEndDate" id="applicationEndDate" class="form-control"
-                                min="{{ date('Y-m-d') }}" required>
+                                min="{{ date('Y-m-d') }}" required value="{{ $job->applicationEndDate }}">
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="startDate">Job Start Date</label>
                             <input type="date" name="start_date" id="startDate" class="form-control"
-                                min="{{ date('Y-m-d') }}" required>
+                                min="{{ date('Y-m-d') }}" required value="{{ $job->start_date }}">
                         </div>
 
                         <br>
@@ -187,6 +192,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="jobQualificationsTableBody">
+                                    @foreach (json_decode($job->qualifications) as $qualification)
+                                        <tr>
+                                            <td>{{ $qualification }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" id="deleteQualificationToggle"><i class="bi bi-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -214,6 +227,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="jobRequirementsTableBody">
+                                    @foreach (json_decode($job->requirements) as $requirement)
+                                        <tr>
+                                            <td>{{ $requirement }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" id="deleteRequirementToggle"><i class="bi bi-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

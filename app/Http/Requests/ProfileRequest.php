@@ -29,6 +29,7 @@ class ProfileRequest extends FormRequest
             'summary' => ['nullable', 'string', 'max:1000'],
             'first_name' => ['string', 'nullable', ''],
             'last_name' => ['string', 'nullable', ''],
+            'gender' => ['string', 'nullable'],
             'address' => ['string', 'nullable'],
             'phone' => ['string', 'nullable', 'max:16', 'unique:users,phone,' . auth()->id()],
             'email' => ['string', 'required', 'unique:users,email,' . auth()->id()],

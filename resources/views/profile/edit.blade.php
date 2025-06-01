@@ -18,18 +18,12 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
+                        <div class="card-header bg-white d-flex justify-content-between">
+                            <h5>Profile</h5>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changePasswordModal"><i class="bi bi-lock"></i>Change Password</a>
+                        </div>
                         <div class="card-body pt-3">
-                            <ul class="nav nav-tabs nav-tabs-bordered">
-                                <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab"
-                                        data-bs-target="#profile-overview">Overview</button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-change-password">Change Password</button>
-                                </li>
-                            </ul>
+                            
                             @if (auth()->user()->role === 'student')
                                 @php
                                     $jobs = json_decode(auth()->user()->profile?->work);
@@ -37,8 +31,7 @@
                                 @endphp
                             @endif
 
-                            <div class="tab-content pt-2">
-                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                            <div>
                                     <p class="small">{{ auth()->user()->profile?->summary }}</p>
 
                                     @if (auth()->user()->role === 'student')
@@ -186,16 +179,106 @@
                                         </div>
                                     @endif
 
-                                    <div class="mt-2 text-center">
-                                        @if (auth()->user()->role === 'student' || auth()->user()->role === 'worker')
-                                            <a href="#" data-bs-toggle="modal"
-                                                data-bs-target="#updateProdileDetailsModal" class="btn btn-primary">Update
-                                                Details</a>
-                                        @else
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
-                                                class="btn btn-primary">Update Details</a>
-                                        @endif
-                                    </div>
+                                    @if (auth()->user()->role === 'corporate')
+                                        <div class="corporate-section mb-2">
+                                            <div class="row">
+                                                @if (!empty(auth()->user()->corporate->logo))
+                                                    <div class="col-md-6">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>Corporate Details</h5>
+                                                            <a href="{{ route('corporate.create') }}"
+                                                                class="btn btn-primary btn-sm"><i
+                                                                    class="bi bi-pencil-square"></i> Edit</a>
+                                                        </div>
+                                                        <div class="corporate">
+                                                            <div class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <div class="corporate-logo">
+                                                                        <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}"
+                                                                            alt="{{ auth()->user()->corporate->name }}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-8">
+                                                                    <p><strong>Name:</strong>
+                                                                        {{ auth()->user()->corporate->name }}</p>
+                                                                    <p><strong>Email:</strong>
+                                                                        {{ auth()->user()->corporate->email }}
+                                                                    </p>
+                                                                    <p><strong>Address:</strong>
+                                                                        {{ auth()->user()->corporate->address }}</p>
+                                                                    <p><strong>Phone:</strong>
+                                                                        {{ auth()->user()->corporate->phone }}
+                                                                    </p>
+                                                                    <p><strong>Category:</strong>
+                                                                        {{ auth()->user()->corporate->category->name }}
+                                                                    </p>
+                                                                    <p><strong>Size:</strong>
+                                                                        {{ auth()->user()->corporate->size }}
+                                                                    </p>
+                                                                    <p><strong>Mission/Vision:</strong>
+                                                                        {{ auth()->user()->corporate->mission_vision }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-6">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h5>Corporate Details</h5>
+                                                            <a href="{{ route('corporate.create') }}"
+                                                                class="btn btn-primary btn-sm"><i
+                                                                    class="bi bi-pencil-square"></i> Edit</a>
+                                                        </div>
+                                                        <h5 class="mb-2">Corporate Details</h5>
+                                                        <div class="corporate">
+                                                            <div class="col-md-8">
+                                                                <p><strong>Name:</strong>
+                                                                    {{ auth()->user()->corporate->name }}</p>
+                                                                <p><strong>Email:</strong>
+                                                                    {{ auth()->user()->corporate->email }}
+                                                                </p>
+                                                                <p><strong>Address:</strong>
+                                                                    {{ auth()->user()->corporate->address }}</p>
+                                                                <p><strong>Phone:</strong>
+                                                                    {{ auth()->user()->corporate->phone }}
+                                                                </p>
+                                                                <p><strong>Category:</strong>
+                                                                    {{ auth()->user()->corporate->category->name }}
+                                                                </p>
+                                                                <p><strong>Size:</strong>
+                                                                    {{ auth()->user()->corporate->size }}
+                                                                </p>
+                                                                <p><strong>Mission/Vision:</strong>
+                                                                    {{ auth()->user()->corporate->mission_vision }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>User Details</h5>
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#updateProdileDetailsModal"
+                                                            class="btn btn-primary btn-sm"><i
+                                                                class="bi bi-pencil-square"></i> Edit</a>
+                                                    </div>
+                                                    <div class="user">
+                                                        <p><strong>Name:</strong> {{ auth()->user()->name }}</p>
+                                                        <p><strong>Email:</strong> {{ auth()->user()->email }}</p>
+                                                        <p><strong>Address:</strong> {{ auth()->user()->address }}</p>
+                                                        <p><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">
@@ -232,8 +315,8 @@
 @endsection
 
 
-<div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -299,7 +382,7 @@
                                     value="{{ auth()->user()->first_name }}">
                             </div>
                         </div>
-                        
+
                         <div class="col-md-3 form-group mb-1">
                             <label for="middleName">Middle Name</label>
                             <div class="input-group">

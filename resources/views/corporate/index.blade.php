@@ -56,10 +56,12 @@
                                         <th scope="col"><input type="checkbox" name="corporate_id[]" value=""
                                                 id="allCorporateSelect"></th>
                                         <th>#</th>
+                                        <th>Category</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Address</th>
+                                        <th>Size</th>
                                         <th>Jobs</th>
                                         <th>Actions</th>
                                     </tr>
@@ -71,10 +73,12 @@
                                             <td><input type="checkbox" name="corporate_id[]" value="{{ $corporate->id }}">
                                             </td>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $corporate->category?->name }}</td>
                                             <td>{{ $corporate->name }}</td>
                                             <td>{{ $corporate->email }}</td>
                                             <td>{{ $corporate->phone }}</td>
                                             <td>{{ $corporate->address }}</td>
+                                            <td>{{ $corporate->size }}</td>
                                             <td>{{ $corporate->jobs_count }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm"
@@ -175,6 +179,15 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" id="corporateID" value="">
                     <div class="mb-3">
+                        <label for="category_id" class="form-label">Category</label>
+                        <select name="category_id" id="corporateCategory" class="form-control" required>
+                            <option value="">Select Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="corporateName" required>
                     </div>
@@ -184,15 +197,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="corporatePhone" required>
+                        <input type="text" class="form-control" name="phone" id="corporatePhone">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" id="corporateAddress" required>
+                        <input type="text" class="form-control" name="address" id="corporateAddress">
                     </div>
                     <div class="mb-3">
                         <label for="logo" class="form-label">Logo</label>
                         <input type="file" class="form-control" name="logo" id="corporateLogo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="size" class="form-label">Size</label>
+                        <input type="text" class="form-control" name="size" id="corporateSize">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mission_vision" class="form-label">Mission & Vision</label>
+                        <textarea name="mission_vision" id="corporateMissionVision" class="form-control"></textarea>
                     </div>
                 </div>
                 <div id="corporateFeedback"></div>

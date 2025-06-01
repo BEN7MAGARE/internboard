@@ -1,34 +1,5 @@
 (function () {
-    function showSuccess(message, target) {
-        iziToast.success({
-            title: "OK",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
-
-    function showError(message, target) {
-        iziToast.error({
-            title: "Error",
-            message: message,
-            position: "center",
-            timeout: 7000,
-            target: target,
-        });
-    }
-
-    function showSpiner(target) {
-        $(target).html(
-            '<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>'
-        );
-    }
-
-    function removeSpiner(target) {
-        $(target).children().remove();
-    }
-
+    
     function getSkills() {
         $.getJSON("/skills", function (skills) {
             let option = "<option value=''>Select One</option>";
@@ -328,6 +299,7 @@
                 errors.push(minierrors);
             }
         }
+
         data.append("first_name", studentFirstName.val());
         data.append("last_name", studentLastName.val());
         data.append("title", studentTitle.val());
@@ -363,7 +335,6 @@
             processData: false,
             contentType: false,
             success: function (params) {
-                console.log(params);
                 removeSpiner("#studentProfileUpdateFeedback");
                 let result = JSON.parse(params);
                 if (result.status === "success") {

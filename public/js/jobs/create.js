@@ -1,24 +1,23 @@
 (function () {
-    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID']);
+    getCategoriesOptions(['#categoryIDOptions', '#jobCategoryID', '#searchJobCategoryID']);
     getEmployerOptions(['#jobEmployerID', '#searchEmployerID']);
     getSkillsOption('#skills');
 
-    const jobCreateForm = $("#jobCreateForm"),
-        categoryID = $("#categoryID"),
-        employmentType = $("#employmentType"),
-        experienceLevel = $("#experienceLevel"),
-        locationInput = $("#location"),
-        applicationEndDate = $('#applicationEndDate'),
-        educationLevel = $("#educationLevel"),
-        skillsInput = $("#skills"),
-        salaryRange = $("#salaryRange"),
-        titleInput = $("#title"),
-        descriptionInput = $("#description"),
-        startDate = $("#startDate"),
-        noOfPositions = $("#noOfPositions"),
-        startButton = $("#startButton"),
-        JobObject = window.localStorage,
-        jobSubmit = $('#jobSubmit'),
+    const jobCreateForm = document.getElementById('jobCreateForm'),
+        categoryID = document.getElementById('categoryID'),
+        employmentType = document.getElementById('employmentType'),
+        experienceLevel = document.getElementById('experienceLevel'),
+        locationInput = document.getElementById('location'),
+        applicationEndDate = document.getElementById('applicationEndDate'),
+        educationLevel = document.getElementById('educationLevel'),
+        skillsInput = document.getElementById('skillsInput'),
+        salaryRange = document.getElementById('salaryRange'),
+        titleInput = document.getElementById('title'),
+        descriptionInput = document.getElementById('description'),
+        startDate = document.getElementById('startDate'),
+        noOfPositions = document.getElementById('noOfPositions'),
+        startButton = document.getElementById('startButton'),
+        jobSubmit = document.getElementById('jobCreateForm'),
         jobEmployerID = document.getElementById('jobEmployerID'),
         jobCategoryID = document.getElementById('jobCategoryID'),
         jobSubCategoryID = document.getElementById('jobSubCategoryID'),
@@ -33,12 +32,17 @@
         jobLocation = document.getElementById('jobLocation'),
         jobType = document.getElementById('jobType'),
         jobSkills = document.getElementById('jobSkills'),
-        createJobModal = document.getElementById('createJobModal');
+        createJobModal = document.getElementById('createJobModal'),
+        addQualificationToggle = document.getElementById('addQualificationToggle'),
+        addRequirementToggle = document.getElementById('addRequirementToggle'),
+        jobQualification = document.getElementById('jobQualification'),
+        jobRequirement = document.getElementById('jobRequirement'),
+        jobQualificationsTableBody = document.getElementById('jobQualificationsTableBody'),
+        jobRequirementsTableBody = document.getElementById('jobRequirementsTableBody');
 
     if (categoryID) {
-        categoryID.on('change', function () {
-            JobObject.setItem("category_id", $(this).val());
-            getSubCategories($(this).val(), '#subcategoryID');
+        categoryID.addEventListener('change', function () {
+            getSubCategories(this.value, '#subcategoryID');
         });
     }
 
@@ -58,23 +62,23 @@
     }
 
     if (startButton) {
-        startButton.on("click", function (event) {
+        startButton.addEventListener("click", function (event) {
             event.preventDefault();
             let $this = $(this),
                 errors = [];
-            if (JobObject.getItem("category_id").length < 1) {
+            if (categoryID.value === "") {
                 errors.push("Industry is required");
             }
-            if (JobObject.getItem("type").length < 1) {
+            if (employmentType.value === "") {
                 errors.push("Employment type is required");
             }
-            if (JobObject.getItem("job_type").length < 1) {
+            if (jobType.value === "") {
                 errors.push("Job type is required");
             }
-            if (JobObject.getItem("experience_level").length < 1) {
+            if (experienceLevel.value === "") {
                 errors.push("Experience level is required");
             }
-            if (JobObject.getItem("location").length < 1) {
+            if (locationInput.value === "") {
                 errors.push("Location is required");
             }
             if (errors.length > 0) {
@@ -90,20 +94,57 @@
             }
         });
     }
+    const toggleStep2 = document.querySelectorAll('.toggleStep2');
+    toggleStep2.forEach(function (toggleStep2) {
+        toggleStep2.addEventListener('click', function (event) {
+            event.preventDefault();
+            $(".step-2").show();
+            $(".step-1").hide();
+            $(".step-3").hide();
+        });
+    });
+
+    const toggleStep3 = document.querySelectorAll('.toggleStep3');
+    toggleStep3.forEach(function (toggleStep3) {
+        toggleStep3.addEventListener('click', function (event) {
+            event.preventDefault(), errors = [];
+            educationLevel.value === "" ? errors.push("Education level is required") : null;
+            salaryRange.value === "" ? errors.push("Salary range is required") : null;
+            titleInput.value === "" ? errors.push("Title is required") : null;
+            descriptionInput.value === "" ? errors.push("Description is required") : null;
+            noOfPositions.value === "" ? errors.push("No of positions is required") : null;
+            applicationEndDate.value === "" ? errors.push("Application end date is required") : null;
+            startDate.value === "" ? errors.push("Start date is required") : null;
+            if (errors.length > 0) {
+                let p = "";
+                $.each(errors, function (key, value) {
+                    p += value;
+                });
+                showError(p, "#step2Feedback");
+                $this.prop("disabled", false);
+            } else {
+                $(".step-2").hide();
+                $(".step-1").hide();
+                $(".step-3").show();
+            }
+        });
+    });
 
     if (applicationEndDate) {
-        applicationEndDate.on('change', function () {
-            const today = new Date($(this).val());
+        applicationEndDate.addEventListener('change', function () {
+            const today = new Date(this.value);
             const formattedDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-            console.log(formattedDate);
-            startDate.attr('min', formattedDate);
+            startDate.setAttribute('min', formattedDate);
         });
     }
 
-    $("#toggleprevioussection").on('click', function (event) {
-        $(".step-1").show();
-        $(".step-2").hide();
-    });
+    const toggleprevioussection = document.getElementById('toggleprevioussection');
+    if (toggleprevioussection) {
+        toggleprevioussection.addEventListener('click', function (event) {
+            $(".step-1").show();
+            $(".step-2").hide();
+        });
+    }
 
     if (jobCategoryID) {
         jobCategoryID.addEventListener('change', function () {
@@ -169,9 +210,25 @@
     if (createJobForm) {
         createJobForm.addEventListener('submit', async function (event) {
             event.preventDefault();
-            const data = new FormData(this);
-            const csrfToken = document.querySelector("input[name='_token']").value;
+            const data = new FormData(this),
+                csrfToken = document.querySelector("input[name='_token']").value,
+                requirements = [],
+                qualifications = [];
+
             data.append('_token', csrfToken);
+
+            jobQualificationsTableBody.querySelectorAll('tr').forEach(function (tr) {
+                qualifications.push(tr.querySelector('td:first-child').textContent);
+            });
+
+            jobRequirementsTableBody.querySelectorAll('tr').forEach(function (tr) {
+                requirements.push(tr.querySelector('td:first-child').textContent);
+            });
+
+            data.append('requirements', JSON.stringify(requirements));
+            data.append('qualifications', JSON.stringify(qualifications));
+
+            console.log(Object.fromEntries(data.entries()));
             const response = await fetch('/jobs', {
                 method: 'POST',
                 body: data,
@@ -179,12 +236,14 @@
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json'
                 }
-            });
+             });
             if (response.ok) {
                 const result = await response.json();
                 if (result.status === "success") {
                     showSuccess(result.message, "#jobFeedback");
                     createJobForm.reset();
+                    jobQualificationsTableBody.innerHTML = '';
+                    jobRequirementsTableBody.innerHTML = '';
                 } else {
                     showError(result.message, "#jobFeedback");
                 }
@@ -269,6 +328,36 @@
                 })
                 .catch(error => console.error(error));
         }
+    });
+
+    addQualificationToggle.addEventListener('click', function () {
+        const qualification = jobQualification.value;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${qualification}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteQualificationToggle"><i class="bi bi-trash"></i></button></td>`;
+        jobQualificationsTableBody.append(tr);
+        jobQualification.value = '';
+        document.addEventListener('click', function (event) {
+            const deleteQualificationToggle = event.target.closest('#deleteQualificationToggle');
+            if (deleteQualificationToggle) {
+                event.preventDefault();
+                deleteQualificationToggle.closest('tr').remove();
+            }
+        });
+    });
+
+    addRequirementToggle.addEventListener('click', function () {
+        const requirement = jobRequirement.value,
+        tr = document.createElement('tr');
+        tr.innerHTML = `<td>${requirement}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteRequirementToggle"><i class="bi bi-trash"></i></button></td>`;
+        jobRequirementsTableBody.append(tr);
+        jobRequirement.value = '';
+        document.addEventListener('click', function (event) {
+            const deleteRequirementToggle = event.target.closest('#deleteRequirementToggle');
+            if (deleteRequirementToggle) {
+                event.preventDefault();
+                deleteRequirementToggle.closest('tr').remove();
+            }
+        });
     });
 
 })();

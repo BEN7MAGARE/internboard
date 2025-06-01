@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCorporateRequest;
+use App\Models\Category;
 use App\Models\Corporate;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,8 +32,9 @@ class CorporateController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->role === 'corporate' && auth()->user()->corporate_id === null) {
-            return view('corporate.create');
+        $categories = Category::all();
+        if (auth()->user()->role === 'corporate') {
+            return view('corporate.create', compact('categories'));
         } else {
             return redirect('profile');
         }
@@ -50,7 +52,6 @@ class CorporateController extends Controller
             $request->file('logo')->move(public_path('corporate_logos'), $filename);
             $validated['logo'] = $filename;
         }
-
         DB::beginTransaction();
         if ($validated['id'] !== null) {
             $corporate = Corporate::findOrFail($validated['id']);

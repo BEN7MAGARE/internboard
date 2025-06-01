@@ -5,6 +5,7 @@
 /public/applicant_resources
 /public/profiles
 /public/profilepictures
+/public/corporate_logos
 /public/storage
 /storage/*.key
 /vendor

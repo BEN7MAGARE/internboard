@@ -29,6 +29,8 @@ class Job extends Model
         'start_date',
         'salary_range',
         'no_of_positions',
+        'requirements',
+        'qualifications'
     ];
 
     protected $with = ['skills'];

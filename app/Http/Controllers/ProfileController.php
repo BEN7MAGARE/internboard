@@ -39,16 +39,36 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        if (auth()->user()->role === "corporate") {
+            $jobscount = auth()->user()->corporate->jobs()->count();
+            $applicationscount = Application::whereHas('job', function ($query) {
+                $query->where('corporate_id', auth()->user()->corporate_id);
+            })->count();
+            $employedcount = Application::whereHas('job', function ($query) {
+                $query->where('corporate_id', auth()->user()->corporate_id);
+            })->where('status', 'employed')->count();
+            return view('profile.corporate', [
+                'user' => $request->user(),
+                'jobscount' => $jobscount,
+                'applicationscount' => $applicationscount,
+                'employedcount' => $employedcount,
+            ]);
+        }elseif (auth()->user()->role === "student"||auth()->user()->role === "worker") {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        }else if(auth()->user()->role === "admin"){
+            return view('profile.admin', [
+                'user' => $request->user(),
+            ]);
+        }
     }
 
     function jobs()
     {
         if (auth()->user()->role === "corporate") {
             $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->paginate(10);
-            return view('profile.jobs', compact('jobs'));
+            return view('corporate.jobs', compact('jobs'));
         } else {
             return redirect()->route('profile.edit');
         }
