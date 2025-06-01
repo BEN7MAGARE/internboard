@@ -1,8 +1,5 @@
 (function () {
-    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID']);
     getEmployerOptions(['#jobEmployerID', '#searchEmployerID']);
-    getSkillsOption('#skills');
-
     const jobCreateForm = document.getElementById('jobCreateForm'),
         categoryID = document.getElementById('categoryID'),
         employmentType = document.getElementById('employmentType'),

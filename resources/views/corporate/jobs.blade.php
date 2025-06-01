@@ -82,19 +82,18 @@
                                     <span class="badge salary-badge mb-2">Monthly: {{ $item->salary_range }}</span>
                                 </div>
                                 <div class="dropdown">
-                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                    <button class="btn btn-sm btn-danger dropdown-toggle" type="button"
                                         id="jobActionsDropdown{{ $item->id }}" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
+                                        aria-expanded="false">Action <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="jobActionsDropdown{{ $item->id }}">
-                                        <li><a class="dropdown-item" href="{{ route('jobs.edit', $item->id) }}"><i
+                                        <li><a class="dropdown-item" href="{{ route('jobs.edit', $item->ref_no) }}"><i
                                                     class="bi bi-pencil-square me-2"></i>Edit</a>
                                         </li>
                                         {{-- <li><a class="dropdown-item" href="{{ route('jobs.destroy', $item->id) }}"
                                                 onclick="return confirm('Are you sure you want to delete this job?')"><i
                                                     class="bi bi-trash me-2"></i>Delete</a></li> --}}
-                                        <li><a class="dropdown-item" href="{{ route('job.applications', $item->id) }}"><i
+                                        <li><a class="dropdown-item" href="{{ route('job.applications', $item->ref_no) }}"><i
                                                     class="bi bi-people me-2"></i>View Applicants</a></li>
                                     </ul>
                                 </div>
@@ -114,7 +113,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{{ route('job.applications', $item->id) }}"
+                                <a href="{{ route('job.applications', $item->ref_no) }}"
                                     class="btn applicants-btn rounded-pill">
                                     <i class="fas fa-users me-2"></i>
                                     {{ $item->applications_count }}
@@ -240,10 +239,11 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href="{{ route('job.applications', $item->id) }}" class="btn btn-primary">
+                                <a href="{{ route('job.applications', $item->ref_no) }}" class="btn btn-primary">
                                     View Applicants
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

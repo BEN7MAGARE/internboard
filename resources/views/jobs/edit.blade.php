@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Job Create
+    Job Edit
 @endsection
 
 @section('header_styles')
@@ -15,7 +15,7 @@
 @endsection
 
 @section('subtitle')
-    Job Create
+    Job Edit
 @endsection
 
 @section('content')
@@ -26,7 +26,9 @@
                 @csrf
                 <div class="card-body  step-1">
                     <div class="row" id="jobFormSection">
-                        <input type="hidden" name="id" id="jobID" value="">
+
+                        <input type="hidden" name="id" id="jobID" value="{{ $job->id }}">
+
                         <div class="col-md-6 mb-2">
                             <label for="categoryID">Category / Industry</label>
                             <select name="category_id" id="categoryID" class="form-select">
@@ -41,7 +43,12 @@
                         <div class="col-md-6 mb-2">
                             <label for="subcategoryID">Sub-category</label>
                             <select name="subcategory_id" id="subcategoryID" class="form-select">
-                                </select>
+                                @foreach ($subCategories as $subCategory)
+                                    <option value="{{ $subCategory->id }}" {{ $job->subcategory_id == $subCategory->id ? 'selected' : '' }}>
+                                        {{ $subCategory->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-6 mb-2">
@@ -115,7 +122,9 @@
 
                             <div class="form-group">
                                 <select name="skills" id="skills" class="form-control" multiple style="width:100%;">
-
+                                    @foreach ($skills as $skill)
+                                        <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -263,5 +272,5 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
-    <script src="{{ asset('js/jobs/create.js') }}"></script>
+    <script src="{{ asset('js/jobs/edit.js') }}"></script>
 @endsection
