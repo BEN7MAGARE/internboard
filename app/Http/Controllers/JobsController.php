@@ -95,9 +95,9 @@ class JobsController extends Controller
         return json_encode(['status' => 'success', 'message' => $message]);
     }
 
-    public function show(string $id)
+    public function show(string $ref_no)
     {
-        $job = $this->job->find($id);
+        $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->first();
         return json_encode($job);
     }
 

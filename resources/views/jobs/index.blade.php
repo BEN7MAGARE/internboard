@@ -70,6 +70,7 @@
                                     </div>
                                 </form>
                             </div>
+
                             <div>
                                 @if (count($jobs) <= 0)
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -89,7 +90,7 @@
                                                     $skilltext .= "<span>$skill->name</span>";
                                                 }
                                             @endphp
-                                            <div class="job card bg-white rounded p-3 shadow-" data-id="{{ $item->id }}">
+                                            <div class="job card bg-white rounded p-3 shadow-" data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
                                                 <div class="title">
                                                     <h5>{{ $item->title }}</h5>
                                                 </div>

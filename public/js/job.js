@@ -38,9 +38,10 @@
 
     $("body").on("click", ".job", function () {
         let job_id = $(this).data('id');
+        let ref_no = $(this).data('ref_no');
         showSpiner("#jobDetailsSection");
         $("#jobDetailsModalToggle").modal("show");
-        $.getJSON('/jobs/' + job_id, function (value) {
+        $.getJSON('/jobs/' + ref_no, function (value) {
             $("#jobModalTitle").html("<b>" + value?.title + "</b>");
             let skill = '', ref_no = (value.ref_no == null) ? value.id : value.ref_no;
             $.each(value.skills, function (kee, item) {
