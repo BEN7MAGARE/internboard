@@ -87,7 +87,7 @@
                 </a>
                 @auth
                     <a class="nav-link">
-                        <a class="dropdown-toggle btn btn-outline-warning btn-sm mt-1 {{ Request::url() == '/profile' ? 'active' : '' }}"
+                        <a class="dropdown-toggle btn btn-outline-danger btn-sm mt-1 {{ Request::url() == '/profile' ? 'active' : '' }}"
                             href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
                                 class="bi bi-person-circle"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;
                             <i class="bi bi-angle-down"></i></a>

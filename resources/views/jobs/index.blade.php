@@ -5,6 +5,85 @@
 @endsection
 
 @section('header_styles')
+    <style>
+        .job-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--bs-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-logo {
+            max-height: 80px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-weight: 400;
+            color: var(--bs-dark);
+        }
+
+        .skill-badge {
+            background-color: #e9ecef;
+            color: #495057;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .salary-badge {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: 400;
+        }
+
+        .deadline-badge {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .filter-card {
+            position: sticky;
+            top: 20px;
+        }
+
+        .job-description {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-state {
+            padding: 3rem;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #dee2e6;
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .breadcrumb-item.active {
+            color: var(--bs-primary);
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -14,11 +93,8 @@
             <hr>
             <div class="page-title" data-aos="fade">
                 <nav class="breadcrumbs">
-                    <div class="container">
-                        <ol>
-                            <li><a href="/">Home</a></li>
-                            <li class="current">Job Opportunities</li>
-                        </ol>
+                    <div class="container-fluid">
+                        <h4 class="display-7 mb-0 text-danger">Find Your Next Opportunity</h1>
                     </div>
                 </nav>
             </div>
@@ -26,9 +102,10 @@
             <div class="job-section">
                 <div class="container-fluid mt-2 mb-2">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <div class="card p-2 mb-2">
                                 <form action="{{ route('jobs.search') }}" method="post" id="jobsSearchForm">
+
                                     <div class="row">
                                         @csrf
                                         <div class="col-md-3 mb-2">
@@ -90,38 +167,63 @@
                                                     $skilltext .= "<span>$skill->name</span>";
                                                 }
                                             @endphp
-                                            <div class="job card bg-white rounded p-3 shadow-" data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
+                                            <div class="job card bg-white rounded p-3 job-card"
+                                                data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
                                                 <div class="title">
-                                                    <h5>{{ $item->title }}</h5>
+                                                    <h6>{{ $item->title }}</h6>
                                                 </div>
-                                                <div class="salary p-2"><span>Monthly: {{ $item->salary_range }}</span>
-                                                </div>
-                                                <div class="desciption p-2">
-                                                    @php
-                                                        $description = $item->description;
-                                                    @endphp
-                                                    @if (strlen($description) > 150)
-                                                        <p>{{ substr($description, 0, 150) . ' . . . .' }}</p>
-                                                    @else
-                                                        <p>{{ $description }}</p>
-                                                    @endif
-                                                </div>
-                                                <div class="skills p-2">{!! $skilltext !!}</div>
-                                                <div class="location d-flex justify-content-between p-2">
-                                                    <div>
-                                                        <small>
-                                                            <i
-                                                                class="bi bi-map-marker"></i>&nbsp;<span>{{ $item->location }}</span></small>
+                                                <div class="d-flex gap-2">
+                                                    <div class="text-center">
+                                                        @if ($item->corporate->logo !== null)
+                                                            <img src="{{ asset('corporate_logos/' . $item->corporate->logo) }}"
+                                                                alt="{{ $item->corporate->name }}"
+                                                                class="img-fluid company-logo">
+                                                            <p class="company-name"><i>{{ $item->corporate->name }}</i></p>
+                                                        @else
+                                                            <p class="company-name"><i>{{ $item->corporate->name }}</i></p>
+                                                        @endif
                                                     </div>
-                                                    <div>
-                                                        <small>Application Deadline:
-                                                            {!! $item->application_end_date !== null
-                                                                ? "<span class='text-warning'>" . date('j M Y', strtotime($item->application_end_date)) . '</span>'
-                                                                : "<span class='text-warning'>Not specified</span>" !!}</small>
+                                                    <div class="">
+                                                        <div class="d-flex flex-wrap gap-2">
+                                                            <span class="salary-badge p-1 rounded">Level:
+                                                                {{ $item->experience_level }}</span>
+                                                            <span class="salary-badge p-1 rounded">Salary:
+                                                                {{ $item->salary_range }}</span>
+                                                            <span class="salary-badge p-1 rounded">Work Type:
+                                                                {{ $item->job_type }}</span>
+                                                            <span class="salary-badge p-1 rounded">Positions:
+                                                                {{ $item->no_of_positions }}</span>
+                                                        </div>
+                                                        <div class="desciption p-2">
+                                                            @php
+                                                                $description = $item->description;
+                                                            @endphp
+                                                            @if (strlen($description) > 150)
+                                                                <p>{{ substr($description, 0, 150) . ' . . . .' }}</p>
+                                                            @else
+                                                                <p>{{ $description }}</p>
+                                                            @endif
+                                                        </div>
+                                                        <div class="skills ml-2">{!! $skilltext !!}</div>
+                                                        <div class="location d-flex justify-content-between p-2">
+                                                            <div>
+                                                                <small>
+                                                                    <i class="bi bi-geo-alt-fill text-danger"></i>&nbsp;<span>{{ $item->location }}</span>
+                                                                </small>
+                                                            </div>
+                                                            <div>
+                                                                <small>Application Deadline:
+                                                                    {!! $item->application_end_date !== null
+                                                                        ? "<span class='text-danger'>" . date('j M Y', strtotime($item->application_end_date)) . '</span>'
+                                                                        : "<span class='text-danger'>Not specified</span>" !!}</small>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         @endforeach
+
                                     </div>
 
                                     <section id="job-pagination" class="job-pagination section mt-3 bg-white p-2">
@@ -137,7 +239,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="card mt-1">
                                 <div class="card-header bg-white">
                                     <h5>Filter Options</h5>

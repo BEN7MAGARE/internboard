@@ -162,5 +162,6 @@
                 showSuccess("Application deleted successfully", "#applyFeedback");
             }
         }
+        
     });
 })();
