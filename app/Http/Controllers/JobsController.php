@@ -7,7 +7,7 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\Skill;
-use App\Models\SubCategory;
+use App\Models\Subcategory;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,18 +23,17 @@ class JobsController extends Controller
         $this->job = new Job();
         $this->skill = new Skill();
         $this->application = new Application();
-        $this->subCategory = new SubCategory();
+        $this->subCategory = new Subcategory();
     }
 
     public function index()
     {
         $query = $this->job->query();
-
         if (auth()->check() && (auth()->user()->role === 'student' || auth()->user()->role === 'worker')) {
-            $skills = auth()->user()->skills->pluck('id');  // Fetch user's skills IDs
-            if ($skills->isNotEmpty()) {  // Check if the user has any skills
+            $skills = auth()->user()->skills->pluck('id');
+            if ($skills->isNotEmpty()) {
                 $query->whereHas('skills', function ($q) use ($skills) {
-                    $q->whereIn('skills.id', $skills);  // Match jobs with the user's skills
+                    $q->whereIn('skills.id', $skills);
                 });
             }
         }
