@@ -27,7 +27,7 @@
         <section class="job-section">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7 p-3 bg-white" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
+                    <div class="col-md-7 bg-white" style="box-shadow: 5px 10px 29px 0 rgba(68, 88, 144, 0.2);">
                         @if ($applied)
                             <div class="alert alert-info" role="alert">
                                 <p>Applied <i class="fa fa-check-circle"></i></p>
@@ -56,12 +56,38 @@
                                 @endforeach
                             </div>
                             <hr>
-                            <div class="education d-flex justify-content-between p-2">
+                            <div class="education d-flex justify-content-between">
                                 <span>Education Level: <i class="fa fa-graduation-cap text-primary"></i>
                                     <b>{{ $job->education_level }}</b></span>
                                 <span>Starts on: <i class="fa-regular fa-calendar-days text-primary"></i>
                                     <b>{{ date('j M Y', strtotime($job->start_date)) }}</b></span>
                             </div>
+                            <hr>
+                            <h5 class="d-flex justify-content-between mb-2 mt-2"><b>Requirements</b></h5>
+                            @if ($job->requirements !== null)   
+                            <div class="requirements">
+                                @foreach (json_decode($job->requirements) as $item)
+                                    <span>{{ $item }}</span>
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="requirements">
+                                <span>No requirements specified</span>
+                            </div>
+                            @endif
+                            <hr>
+                            <h5 class="d-flex justify-content-between mt-2 mb-2"><b>Qualifications</b></h5>
+                            @if ($job->qualifications !== null)
+                            <div class="qualifications">
+                                @foreach (json_decode($job->qualifications) as $item)
+                                    <span>{{ $item }}</span>
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="qualifications p-2">
+                                <span>No qualifications specified</span>
+                            </div>
+                            @endif
                             <hr>
                             <div class="location mt-3 d-flex justify-content-between p-2">
                                 <div>
@@ -93,6 +119,12 @@
                                         <div class="row mb-2">
 
                                             <div class="col-md-12 form-group mb-4">
+                                                <label for="preferredPay" class="mb-2">Your preffered pay</label>
+                                                <input type="number" class="form-control form-control-lg" name="preferred_pay"
+                                                    id="preferredPay">
+                                            </div>
+                                            
+                                            <div class="col-md-12 form-group mb-4">
                                                 <label for="applicationReason" class="mb-2">Why are you applying for this
                                                     job</label>
                                                 <textarea class="form-control form-control-lg" name="reason"
@@ -121,8 +153,7 @@
                                     </div>
 
                                     <div class="card-footer bg-white d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit <i
-                                                class="fa fa-angles-right"></i></button>
+                                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Apply</button>
                                     </div>
 
                                 </form>

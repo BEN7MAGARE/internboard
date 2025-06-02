@@ -75,6 +75,7 @@
             $this = $(this), errors = [];
         let fileSize = 0;
         data.append("job_id", jobID.val());
+        data.append("preferred_pay", preferredPay.val());
         data.append("reason", applicationReason.val());
         data.append("cover_letter", cover_letter.val());
         data.append("curriculum_vitae", curriculumVitae.files[0]);
@@ -136,13 +137,16 @@
         if (editApplicationToggle) {
             event.preventDefault();
             const applicationId = editApplicationToggle.dataset.id;
-            console.log(applicationId);
             const response = await fetch(`/applications/${applicationId}`);
             const data = await response.json();
+            console.log(data);
 
             if (response.ok) {
                 document.getElementById('applicationReason').value = data.reason;
                 document.getElementById('applicationCoverLetter').value = data.cover_letter;
+                document.getElementById('applicationPrefferedPay').value = data.preferred_pay;
+                document.getElementById('jobID').value = data.job_id;
+                document.getElementById('applicationID').value = data.id;
                 // document.getElementById('applicationCurriculumVitae').value = data.curriculum_vitae;
                 // document.getElementById('applicationOtherFiles').value = data.other_files;
             }
@@ -162,6 +166,6 @@
                 showSuccess("Application deleted successfully", "#applyFeedback");
             }
         }
-        
+
     });
 })();

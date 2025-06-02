@@ -72,21 +72,27 @@
 
 <div class="modal" id="editApplicationModal" aria-hidden="true" aria-labelledby="editApplicationModalToggleLabel"
     tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editApplicationModalToggleLabel">Edit Application</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            
             <form action="{{ route('job.apply') }}" method="post" enctype="multipart/form-data"
                 id="jobApplicationForm">
+                @csrf
                 <div class="modal-body">
-                    @csrf
                     <input type="hidden" name="job_id" id="jobID" value="">
                     <input type="hidden" name="id" id="applicationID" value="">
                     <div class="card-body">
 
                         <div class="row mb-2">
+                            <div class="col-md-12 form-group mb-4">
+                                <label for="prefferedpay" class="mb-2">Preffered Pay</label><br>
+                                <input type="text" class="form-control form-control-lg" name="preferred_pay"
+                                    id="applicationPrefferedPay" required>
+                            </div>
 
                             <div class="col-md-12 form-group mb-4">
                                 <label for="applicationReason" class="mb-2">Why are you applying for this
@@ -96,12 +102,7 @@
 
                             <div class="col-md-12 mb-4">
                                 <label for="cover_letter" class="mb-2">Cover letter</label>
-                                <textarea name="cover_letter" id="applicationCoverLetter" class="form-control form-control-lg" rows="8"></textarea>
-                            </div>
-
-                            <div class="col-md-12 form-group mb-4">
-                                <label for="prefferedpay" class="mb-2">Preffered Pay</label><br>
-                                <input type="text" name="prefferedpay" id="applicationPrefferedPay" required>
+                                <textarea name="cover_letter" id="applicationCoverLetter" class="form-control form-control-lg" rows="5"></textarea>
                             </div>
 
                             <div class="col-md-12 form-group">
@@ -114,6 +115,7 @@
                         <div id="applyFeedback"></div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <div class="card-footer bg-white d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit <i

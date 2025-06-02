@@ -37,9 +37,7 @@ class JobsController extends Controller
                 });
             }
         }
-
         $jobs = $query->latest()->paginate(10);
-
         return view('jobs.index', compact('jobs'));
     }
 
@@ -134,6 +132,7 @@ class JobsController extends Controller
     {
         $validated = $request->validate([
             'job_id' => ['required', 'exists:jobs,id'],
+            'preferred_pay' => ['required', 'string'],
             'reason' => ['required', 'string'],
             'cover_letter' => ['required', 'max:1000'],
             'curriculum_vitae' => ['nullable', 'max:2000'],
@@ -160,13 +159,13 @@ class JobsController extends Controller
         $application = new Application();
         $application->user_id = auth()->id();
         $application->job_id = $validated['job_id'];
+        $application->preferred_pay = $validated['preferred_pay'];
         $application->reason = $validated['reason'];
         $application->cover_letter = $validated['cover_letter'];
         $application->curriculum_vitae = $filename;
         $application->files = json_encode($fileNames);
         $application->status = 'pending';
         $application->save();
-
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
     }
 

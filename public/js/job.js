@@ -60,7 +60,7 @@
             let details =
                 `<div class="job-details-section"><div class="salary mb-2"><span>${value.type}</span><span>Work Type:${value.job_type}</span><span>NO of positions: <b>${value.no_of_positions}</b></span><span>${value.salary_range}</span></div>
                 <div class="desciption p-2">${value.description}</div><hr><h5 class="d-flex justify-content-between p-2"><b>Skills</b> <span class="float-right">Level: <b>${value.experience_level}</b></span></h5><hr><div class="skills p-2">
-                ${skill}</div><hr><div class="requirements p-2"><ul>${reqdiv}</ul></div><hr><div class="qualifications p-2"><ul>${qualdiv}</ul></div>
+                ${skill}</div><hr><div class="requirements p-2"><p><b>Requirements</b></p><ul>${reqdiv}</ul></div><hr><div class="qualifications p-2"><p><b>Qualifications</b></p><ul>${qualdiv}</ul></div>
                 <hr><div class="education d-flex justify-content-between p-2"><span>Education Level: <i class="fa fa-graduation-cap text-primary"></i> <b>${value.education_level}</b></span><span>Starts on: <i class="fa-regular fa-calendar-days text-primary"></i> <b>${moment(value.start_date).format("Do MMMM YYYY")}</b></span></div><hr><div class="location mt-3 d-flex justify-content-between p-2"><div><i class="fa-solid fa-location-dot"></i> <span>Westlands Nairobi, Kenya</span></div><div>Posted: ${moment(value.created_at).fromNow()}</div></div></div>`;
             $('#jobDetailsSection').html(details);
             $("#jobActionSection").html(
