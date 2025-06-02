@@ -29,8 +29,11 @@
         lastName = $("#lastName"),
         studentTitle = $('#studentTitle'),
         studentFirstName = $('#studentFirstName'),
+        studentMiddleName = $('#studentMiddleName'),
         studentLastName = $('#studentLastName'),
         title = $("#title"),
+        middleName = $("#middleName"),
+        gender = $("#userGender"),
         jobTittle = $('#jobTittle'),
         jobCompanyName = $('#jobCompanyName'),
         jobStartDate = $('#jobStartDate'),
@@ -299,8 +302,8 @@
                 errors.push(minierrors);
             }
         }
-
         data.append("first_name", studentFirstName.val());
+        data.append("middle_name", studentMiddleName.val());
         data.append("last_name", studentLastName.val());
         data.append("title", studentTitle.val());
         data.append("specialization", specialization.val());
@@ -361,8 +364,11 @@
         event.preventDefault();
         const data = new FormData(), $this = $(this);
         data.append('user_id', userId.val());
+        data.append('title', title.val());
         data.append('first_name', firstName.val());
+        data.append('middle_name', middleName.val());
         data.append('last_name', lastName.val());
+        data.append('gender', gender.val());
         data.append('phone', userphone.val());
         data.append('email', useremail.val());
         data.append('address', userAddress.val());
