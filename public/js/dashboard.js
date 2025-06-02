@@ -12,7 +12,6 @@
     updateTimes();
 
     function getJobs() {
-        showSpiner("#jobrendersection");
         $.getJSON('/jobs-get', function (jobs) {
             let job = "";
             $.each(jobs, function (key, value) {
@@ -46,7 +45,6 @@
     $("body").on("click", ".job", function () {
         console.log('here we are');
         let job_id = $(this).data('id');
-        showSpiner("#jobDetailsSection");
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + job_id, function (value) {
             $("#jobModalTitle").html("<b>" + value.title + "</b>");

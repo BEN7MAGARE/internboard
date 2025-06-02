@@ -17,13 +17,54 @@
         <section class="main-content">
             <div class="row">
                 <div class="col-xl-12">
+                        <div class="row mb-4">
+    
+                            <div class="col-md-3">
+                                <div class="card stat-card">
+                                    <div class="stat-number">
+                                        {{ $applicationscount }}
+                                    </div>
+                                    <div class="stat-label">Applications</div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-3">
+                                <div class="card stat-card" style="border-left-color: var(--success-color);">
+                                    <div class="stat-number" style="color: var(--success-color);">
+                                        {{ $selectedapplications }}
+                                    </div>
+                                    <div class="stat-label">Selected Apllication</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="card stat-card" style="border-left-color: var(--accent-color);">
+                                    <div class="stat-number" style="color: var(--accent-color);">
+                                        {{ $interviewapplications }}
+                                    </div>
+                                    <div class="stat-label">Interview Applications</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="card stat-card" style="border-left-color: var(--accent-color);">
+                                    <div class="stat-number" style="color: var(--accent-color);">
+                                        {{ $hiredapplications }}
+                                    </div>
+                                    <div class="stat-label">Jobs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card">
                         <div class="card-header bg-white d-flex justify-content-between">
                             <h5>Profile</h5>
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changePasswordModal"><i class="bi bi-lock"></i>Change Password</a>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#changePasswordModal"><i class="bi bi-lock"></i>Change Password</a>
                         </div>
                         <div class="card-body pt-3">
-                            
+
                             @if (auth()->user()->role === 'student')
                                 @php
                                     $jobs = json_decode(auth()->user()->profile?->work);
@@ -32,281 +73,121 @@
                             @endif
 
                             <div>
-                                    <p class="small">{{ auth()->user()->profile?->summary }}</p>
+                                <div class="text-end">
+                                    <a href="#" data-bs-toggle="modal" class="btn btn-primary btn-sm" data-bs-target="#updateProdileDetailsModal"> <i class="bi bi-pencil-square"></i> Update Profile</a>
+                                </div>
 
-                                    @if (auth()->user()->role === 'student')
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <table class="table table-hover">
-                                                    <tr>
-                                                        <td><b>Admission NO</b></td>
-                                                        <td>{{ auth()->user()->student?->admision_number }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Full Name</b></td>
-                                                        <td>{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Education</b></td>
-                                                        @if (!is_null($education) && !empty($education))
-                                                            <td>{{ $education[0]?->level . ' in ' . $education[0]?->course }}
-                                                            </td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Specialization</b></td>
-                                                        <td>{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Phone</b></td>
-                                                        <td>{{ auth()->user()->phone }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Email</b></td>
-                                                        <td>{{ auth()->user()->email }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Address</b></td>
-                                                        <td>{{ auth()->user()->address }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Home County</b></td>
-                                                        <td>{{ auth()->user()->student?->county?->name }}</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                <p class="small">{{ auth()->user()->profile?->summary }}</p>
 
-                                            <div class="col-md-6">
-                                                <table class="table table-hover">
-                                                    <tr>
-                                                        <td><b>Reg Number</b></td>
-                                                        <td>{{ auth()->user()->student?->reg_number }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>College</b></td>
-                                                        <td>{{ auth()->user()->student?->college?->name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Course</b></td>
-                                                        <td>{{ auth()->user()->student?->course?->name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Year of Study</b></td>
-                                                        <td>{{ auth()->user()->student?->year_of_study }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>kin_name</b></td>
-                                                        <td>{{ auth()->user()->student?->kin_name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>kin_phone</b></td>
-                                                        <td>{{ auth()->user()->student?->kin_phone }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>kin_email</b></td>
-                                                        <td>{{ auth()->user()->student?->kin_email }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>kin_relationship</b></td>
-                                                        <td>{{ auth()->user()->student?->kin_relationship }}</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                @if (auth()->user()->role === 'student')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><b>Admission NO</b>&nbsp;{{ auth()->user()->student?->admision_number }}</p>
+                                            <p class="mb-1"><b>Full Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
+                                            <p class="mb-1"><b>Education</b>&nbsp;
+                                                @if (!is_null($education) && !empty($education))
+                                                {{ $education[0]?->level . ' in ' . $education[0]?->course }}
+                                            @endif</p>
+                                            
+                                            <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}</p>
+                                            <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
+                                            <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
+                                            <p class="mb-1"><b>Address</b>&nbsp;{{ auth()->user()->address }}</p>
+                                            <p class="mb-1"><b>Home County</b>&nbsp;{{ auth()->user()->student?->county?->name }}</p>
                                         </div>
-                                    @endif
 
-                                    @php
-                                        $skills = auth()->user()->skills;
-                                    @endphp
-
-                                    @if ($skills->isNotEmpty())
-                                        <div class="skills-section mb-2">
-                                            <h5 class="mb-2">Skills</h5>
-                                            <div class="skills">
-                                                @foreach ($skills as $item)
-                                                    <span>{{ $item->name }}</span>
-                                                @endforeach
-                                            </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><b>Reg Number</b>&nbsp;{{ auth()->user()->student?->reg_number }}</p>
+                                            <p class="mb-1"><b>College</b>&nbsp;{{ auth()->user()->student?->college?->name }}</p>
+                                            <p class="mb-1"><b>Course</b>&nbsp;{{ auth()->user()->student?->course?->name }}</p>
+                                            <p class="mb-1"><b>Year of Study</b>&nbsp;{{ auth()->user()->student?->year_of_study }}</p>
+                                            <p class="mb-1"><b>kin_name</b>&nbsp;{{ auth()->user()->student?->kin_name }}</p>
+                                            <p class="mb-1"><b>kin_phone</b>&nbsp;{{ auth()->user()->student?->kin_phone }}</p>
+                                            <p class="mb-1"><b>kin_email</b>&nbsp;{{ auth()->user()->student?->kin_email }}</p>
+                                            <p class="mb-1"><b>kin_relationship</b>&nbsp;{{ auth()->user()->student?->kin_relationship }}</p>
                                         </div>
-                                    @endif
+                                    </div>
+                            </div>
+                            @endif
 
-                                    @if (auth()->user()->role === 'student')
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                @if (!empty($jobs) && !is_null($jobs))
-                                                    <h5 class="text-info">Work Experience</h5>
-                                                    @foreach ($jobs as $job)
-                                                        <div class="card alert alert-primary">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">{{ $job->title }}</h5>
-                                                                <h6 class="card-subtitle mb-2 text-muted">
-                                                                    {{ $job->company }}</h6>
-                                                                <p class="card-text">
-                                                                    <strong>Duration:</strong>
-                                                                    {{ date('M Y', strtotime($job->start_date)) }} -
-                                                                    {{ date('M Y', strtotime($job->end_date)) }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
+                            @if (auth()->user()->role === 'worker')
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="mb-1"><b>Full Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}</p>
+                                        <p class="mb-1"><b>Education</b>&nbsp; @if (!is_null($education) && !empty($education))
+                                            {{ $education[0]?->level . ' in ' . $education[0]?->course }}
+                                        @endif</p>
+                                        
+                                        <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}</p>
+                                        <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
+                                        <p class="mb-1"><b>Gender</b>&nbsp;{{ auth()->user()->gender }}</p>
+                                        <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
+                                        <p class="mb-1"><b>Address</b>&nbsp;{{ auth()->user()->address }}</p>
+                                    </div>
+                                </div>
+                            @endif
 
-                                            <div class="col-md-6">
-                                                @if (!empty($education) && !is_null($education))
-                                                    <h5 class="text-info">Education Background</h5>
-                                                    @foreach ($education as $item)
-                                                        <div class="card alert alert-warning">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">
-                                                                    {{ $item->level . ' in ' . $item->course }}</h5>
-                                                                <h6 class="card-subtitle mb-2 text-muted">
-                                                                    {{ $item->institution }}</h6>
-                                                                <p class="card-text">
-                                                                    <strong>Duration:</strong>
-                                                                    {{ date('Y', strtotime($item->start_date)) }} -
-                                                                    {{ date('Y', strtotime($item->end_date)) }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif
+                            @php
+                                $skills = auth()->user()->skills;
+                            @endphp
 
-                                    @if (auth()->user()->role === 'corporate')
-                                        <div class="corporate-section mb-2">
-                                            <div class="row">
-                                                @if (!empty(auth()->user()->corporate->logo))
-                                                    <div class="col-md-6">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h5>Corporate Details</h5>
-                                                            <a href="{{ route('corporate.create') }}"
-                                                                class="btn btn-primary btn-sm"><i
-                                                                    class="bi bi-pencil-square"></i> Edit</a>
-                                                        </div>
-                                                        <div class="corporate">
-                                                            <div class="row">
+                            @if ($skills->isNotEmpty())
+                                <div class="skills-section mb-2">
+                                    <h5 class="mb-2">Skills</h5>
+                                    <div class="skills">
+                                        @foreach ($skills as $item)
+                                            <span>{{ $item->name }}</span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
 
-                                                                <div class="col-md-4">
-                                                                    <div class="corporate-logo">
-                                                                        <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}"
-                                                                            alt="{{ auth()->user()->corporate->name }}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-8">
-                                                                    <p><strong>Name:</strong>
-                                                                        {{ auth()->user()->corporate->name }}</p>
-                                                                    <p><strong>Email:</strong>
-                                                                        {{ auth()->user()->corporate->email }}
-                                                                    </p>
-                                                                    <p><strong>Address:</strong>
-                                                                        {{ auth()->user()->corporate->address }}</p>
-                                                                    <p><strong>Phone:</strong>
-                                                                        {{ auth()->user()->corporate->phone }}
-                                                                    </p>
-                                                                    <p><strong>Category:</strong>
-                                                                        {{ auth()->user()->corporate->category->name }}
-                                                                    </p>
-                                                                    <p><strong>Size:</strong>
-                                                                        {{ auth()->user()->corporate->size }}
-                                                                    </p>
-                                                                    <p><strong>Mission/Vision:</strong>
-                                                                        {{ auth()->user()->corporate->mission_vision }}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="col-md-6">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h5>Corporate Details</h5>
-                                                            <a href="{{ route('corporate.create') }}"
-                                                                class="btn btn-primary btn-sm"><i
-                                                                    class="bi bi-pencil-square"></i> Edit</a>
-                                                        </div>
-                                                        <h5 class="mb-2">Corporate Details</h5>
-                                                        <div class="corporate">
-                                                            <div class="col-md-8">
-                                                                <p><strong>Name:</strong>
-                                                                    {{ auth()->user()->corporate->name }}</p>
-                                                                <p><strong>Email:</strong>
-                                                                    {{ auth()->user()->corporate->email }}
-                                                                </p>
-                                                                <p><strong>Address:</strong>
-                                                                    {{ auth()->user()->corporate->address }}</p>
-                                                                <p><strong>Phone:</strong>
-                                                                    {{ auth()->user()->corporate->phone }}
-                                                                </p>
-                                                                <p><strong>Category:</strong>
-                                                                    {{ auth()->user()->corporate->category->name }}
-                                                                </p>
-                                                                <p><strong>Size:</strong>
-                                                                    {{ auth()->user()->corporate->size }}
-                                                                </p>
-                                                                <p><strong>Mission/Vision:</strong>
-                                                                    {{ auth()->user()->corporate->mission_vision }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-                                                <div class="col-md-6">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h5>User Details</h5>
-                                                        <a href="#" data-bs-toggle="modal"
-                                                            data-bs-target="#updateProdileDetailsModal"
-                                                            class="btn btn-primary btn-sm"><i
-                                                                class="bi bi-pencil-square"></i> Edit</a>
-                                                    </div>
-                                                    <div class="user">
-                                                        <p><strong>Name:</strong> {{ auth()->user()->name }}</p>
-                                                        <p><strong>Email:</strong> {{ auth()->user()->email }}</p>
-                                                        <p><strong>Address:</strong> {{ auth()->user()->address }}</p>
-                                                        <p><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
+                            @if (auth()->user()->role === 'student')
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        @if (!empty($jobs) && !is_null($jobs))
+                                            <h5 class="text-info">Work Experience</h5>
+                                            @foreach ($jobs as $job)
+                                                <div class="card alert alert-primary">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $job->title }}</h5>
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            {{ $job->company }}</h6>
+                                                        <p class="card-text">
+                                                            <strong>Duration:</strong>
+                                                            {{ date('M Y', strtotime($job->start_date)) }} -
+                                                            {{ date('M Y', strtotime($job->end_date)) }}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                                        </div>
-                                    @endif
+                                    <div class="col-md-6">
+                                        @if (!empty($education) && !is_null($education))
+                                            <h5 class="text-info">Education Background</h5>
+                                            @foreach ($education as $item)
+                                                <div class="card alert alert-warning">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            {{ $item->level . ' in ' . $item->course }}</h5>
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            {{ $item->institution }}</h6>
+                                                        <p class="card-text">
+                                                            <strong>Duration:</strong>
+                                                            {{ date('Y', strtotime($item->start_date)) }} -
+                                                            {{ date('Y', strtotime($item->end_date)) }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
                                 </div>
-
-                                <div class="tab-pane fade pt-3" id="profile-change-password">
-                                    <form action="{{ route('password.change') }}" method="post">
-                                        @csrf
-                                        <div class="row mb-1">
-                                            <label for="password" class="col-md-4">New Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="password"
-                                                    autocomplete="">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-1">
-                                            <label for="passwordConfirmation" class="col-md-4">Confirm Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="password_confirmation" type="password" class="form-control"
-                                                    id="passwordConfirmation" autocomplete="">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Change Password</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            @endif
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -315,8 +196,8 @@
 @endsection
 
 
-<div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateProdileDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -454,7 +335,7 @@
                         <div class="form-group mb-2">
                             <label for="summary">Proffessional Summary</label>
                             <div class="input-group">
-                                <textarea name="summary" value="{{ auth()->user()->profile?->summary }}" class="form-control" id="summary"></textarea>
+                                <textarea name="summary" class="form-control" id="summary">{{ auth()->user()->profile?->summary }}</textarea>
                             </div>
                         </div>
                         <hr>
@@ -744,6 +625,45 @@
                             Save
                         </button>
                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="financeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+                <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route('password.change') }}" method="post">
+                    @csrf
+                    <div class="row mb-1">
+                        <label for="password" class="col-md-4">New Password</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input name="password" type="password" class="form-control" id="password"
+                                autocomplete="">
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <label for="passwordConfirmation" class="col-md-4">Confirm Password</label>
+                        <div class="col-md-8 col-lg-9">
+                            <input name="password_confirmation" type="password" class="form-control"
+                                id="passwordConfirmation" autocomplete="">
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
                     </div>
                 </form>
             </div>

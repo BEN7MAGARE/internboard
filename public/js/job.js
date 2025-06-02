@@ -28,7 +28,6 @@
     getSkills();
 
     function getJobs() {
-        showSpiner("#jobrendersection");
         $.getJSON('/jobs-get', function (jobs) {
             jobrendersection.html(composeJobs(jobs));
         });
@@ -39,7 +38,6 @@
     $("body").on("click", ".job", function () {
         let job_id = $(this).data('id');
         let ref_no = $(this).data('ref_no');
-        showSpiner("#jobDetailsSection");
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + ref_no, function (value) {
             console.log(value);
@@ -72,7 +70,6 @@
 
     $("body").on("click", "#viewJobDetails", function () {
         let job_id = $(this).data('id');
-        showSpiner("#jobDetailsSection");
         $("#jobDetailsModalToggle").modal("show");
         $.getJSON('/jobs/' + job_id, function (value) {
             $("#jobModalTitle").html("<b>" + value.title + "</b>");
@@ -191,7 +188,6 @@
             education_level: JSON.stringify(education),
             location: JSON.stringify(locations)
         };
-        showSpiner('#jobrendersection');
         $.post('/jobs-json-search', data).done(function (jobs) {
             if (jobs.length > 0) {
                 jobrendersection.html(composeJobs(jobs));
@@ -226,4 +222,5 @@
         let location = $(this).data('id');
         filterJobs();
     });
+    
 })();

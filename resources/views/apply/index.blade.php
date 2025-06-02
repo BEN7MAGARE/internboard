@@ -5,8 +5,6 @@
 @endsection
 
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('subtitle', 'Applications')
@@ -29,10 +27,15 @@
                                                 {!! '<strong>' . $application->job->corporate->name . '</strong>' . ': &nbsp;&nbsp;' . $application->job->title !!}
                                             </button>
                                         </h2>
-
                                         <div id="collapse{{ $loop->iteration }}" class="accordion-collapse collapse"
                                             data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                <div class="mb-2">
+                                                    <p class="mb-0"><b>Job</b> {{ $application->job->corporate->name }}:
+                                                        {{ $application->job->title }}</p>
+                                                    <p class="mb-0"><b>Preferred Pay</b>
+                                                        <span>{{ $application->preferred_pay }}</span></p>
+                                                </div>
                                                 <div class="reason mb-2">
                                                     <p><b>Reason</b></p>
                                                     <p>{{ $application->reason }}</p>
@@ -78,9 +81,9 @@
                 <h5 class="modal-title" id="editApplicationModalToggleLabel">Edit Application</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
+
             <form action="{{ route('job.apply') }}" method="post" enctype="multipart/form-data"
-                id="jobApplicationForm">
+                id="editApplicationForm">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="job_id" id="jobID" value="">
@@ -102,7 +105,7 @@
 
                             <div class="col-md-12 mb-4">
                                 <label for="cover_letter" class="mb-2">Cover letter</label>
-                                <textarea name="cover_letter" id="applicationCoverLetter" class="form-control form-control-lg" rows="5"></textarea>
+                                <textarea name="cover_letter" id="cover_letter" class="form-control form-control-lg" rows="5"></textarea>
                             </div>
 
                             <div class="col-md-12 form-group">
@@ -111,6 +114,7 @@
                                 <input type="file" name="files" id="applicationOtherFiles" multiple>
                                 <div id="filesError"></div>
                             </div>
+
                         </div>
                         <div id="applyFeedback"></div>
                     </div>
@@ -118,8 +122,7 @@
 
                 <div class="modal-footer">
                     <div class="card-footer bg-white d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit <i
-                                class="bi bi-angles-right"></i></button>
+                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit</button>
                     </div>
                 </div>
             </form>
@@ -129,6 +132,6 @@
 </div>
 
 @section('footer_scripts')
-    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/application.js') }}"></script>
 @endsection

@@ -319,10 +319,6 @@
         data.append('work', JSON.stringify(work));
         data.append('level', jobLevel.val());
 
-        showSpiner("#profileUpdateFeedback");
-        // for (var pair of data.entries()) {
-        //     console.log(pair[0] + ": " + pair[1]);
-        // }
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
@@ -335,7 +331,6 @@
             processData: false,
             contentType: false,
             success: function (params) {
-                removeSpiner("#studentProfileUpdateFeedback");
                 let result = JSON.parse(params);
                 if (result.status === "success") {
                     showSuccess(result.message, "#studentProfileUpdateFeedback");
@@ -346,7 +341,6 @@
             },
             error: function (error) {
                 console.error(error);
-                removeSpiner("#studentProfileUpdateFeedback");
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
@@ -386,7 +380,6 @@
             contentType: false,
             success: function (params) {
                 console.log(params);
-                removeSpiner("#userProfileFeedback");
                 let result = JSON.parse(params);
                 if (result.status === "success") {
                     showSuccess(result.message, "#userProfileFeedback");
@@ -397,7 +390,6 @@
             },
             error: function (error) {
                 console.error(error);
-                removeSpiner("#userProfileFeedback");
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {

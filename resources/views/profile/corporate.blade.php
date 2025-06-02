@@ -17,7 +17,6 @@
         <section class="main-content">
             <div class="row">
                 <div class="col-xl-12">
-
                     <div class="row">
 
                         <div class="col-md-4">
@@ -61,11 +60,13 @@
                             <div class="row">
                                 @if (!empty(auth()->user()->corporate->logo))
                                     <div class="col-md-7">
+
                                         <div class="d-flex justify-content-between">
                                             <h5>Corporate Details</h5>
                                             <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
                                                     class="bi bi-pencil-square"></i> Edit</a>
                                         </div>
+
                                         <div class="corporate">
                                             <div class="row">
 
@@ -100,16 +101,20 @@
                                             </div>
 
                                         </div>
+
                                     </div>
                                 @else
                                     <div class="col-md-7">
+                                        
                                         <div class="d-flex justify-content-between">
                                             <h5>Corporate Details</h5>
                                             <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
                                                     class="bi bi-pencil-square"></i>
                                                 Edit</a>
                                         </div>
+
                                         <h5 class="mb-2">Corporate Details</h5>
+
                                         <div class="corporate">
                                             <div class="col-md-8">
                                                 <p class="mb-1"><strong>Name:</strong>
@@ -133,6 +138,7 @@
                                                 </p>
                                             </div>
                                         </div>
+
                                     </div>
                                 @endif
 

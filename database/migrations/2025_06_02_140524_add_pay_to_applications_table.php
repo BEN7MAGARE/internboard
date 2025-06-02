@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('applications', function (Blueprint $table) {
-            $table->string('preffered_pay')->before('cover_letter')->nullable();
+            $table->string('preferred_pay')->before('cover_letter')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('applications', function (Blueprint $table) {
-            $table->dropColumn('preffered_pay');
+            $table->dropColumn('preferred_pay');
         });
     }
 };

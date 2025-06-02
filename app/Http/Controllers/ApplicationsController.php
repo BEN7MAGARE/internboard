@@ -167,4 +167,24 @@ class ApplicationsController extends Controller
         $application = $this->application->with('applicant')->find($id);
         return json_encode($application);
     }
+
+    public function update(Request $request, $id)
+    {
+        $application = $this->application->find($id);
+        $fileNames = json_decode($application->files);
+        if (isset($request->files) && count($request->files) > 0 && $request->files !== null) {
+            foreach ($request->file('files') as $file) {
+                $fileName = auth()->id() . $application->job->ref_no . strtotime(now()) . '.' . $file->getClientOriginalExtension();  // or any other desired file name
+                $file->move('applicant_resources/', $fileName);
+                array_push($fileNames, $fileName);
+            }
+        }
+        $application->cover_letter = $request->cover_letter;
+        $application->preferred_pay = $request->preferred_pay;
+        $application->reason = $request->reason;
+        $application->status = $request->status;
+        $application->files = json_encode($fileNames);
+        $application->update();
+        return json_encode(['status' => 'success', 'message' => 'Application updated successfully']);
+    }
 }

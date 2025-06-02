@@ -54,8 +54,16 @@ class ProfileController extends Controller
                 'employedcount' => $employedcount,
             ]);
         }elseif (auth()->user()->role === "student"||auth()->user()->role === "worker") {
+            $applicationscount = Application::where('user_id', auth()->user()->id)->count();
+            $selectedapplications = Application::where('user_id', auth()->user()->id)->where('status', 'selected')->count();
+            $interviewapplications = Application::where('user_id', auth()->user()->id)->where('status', 'interview')->count();
+            $hiredapplications = Application::where('user_id', auth()->user()->id)->where('status', 'hired')->count();
             return view('profile.edit', [
                 'user' => $request->user(),
+                'applicationscount' => $applicationscount,
+                'selectedapplications' => $selectedapplications,
+                'interviewapplications' => $interviewapplications,
+                'hiredapplications' => $hiredapplications,
             ]);
         }else if(auth()->user()->role === "admin"){
             return view('profile.admin', [

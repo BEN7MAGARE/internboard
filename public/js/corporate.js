@@ -45,8 +45,6 @@
                 emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
                 phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
 
-            console.log(Object.fromEntries(formData.entries()));
-
             if (formData.get('name').length < 2) {
                 errors.push("Invalid company name");
             }
