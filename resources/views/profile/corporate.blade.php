@@ -105,7 +105,7 @@
                                     </div>
                                 @else
                                     <div class="col-md-7">
-                                        
+
                                         <div class="d-flex justify-content-between">
                                             <h5>Corporate Details</h5>
                                             <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
@@ -172,7 +172,6 @@
                     </div>
 
                 </div>
-            </div>
             </div>
         </section>
     </main>
