@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
     document.body.appendChild(themeToggle);
     
-    // Check for saved theme preference or use preferred color scheme
     const savedTheme = localStorage.getItem('theme') || 
                       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     
@@ -38,4 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    setInterval(function () {
+        fetch('/refresh-csrf').then(res => res.json()).then(data => {
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) meta.setAttribute('content', data.csrf_token);
+            const inputs = document.querySelectorAll("input[name='_token']");
+            if (inputs) {
+                inputs.forEach(el => {
+                    el.value = data.csrf_token;
+                });
+            }
+        });
+    }, 10 * 60 * 1000);
 });
