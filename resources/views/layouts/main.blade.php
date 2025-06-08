@@ -67,13 +67,13 @@
                     </li>
                     <li><a href="{{ route('contact') }}"
                             class="{{ Request::url() == route('contact') ? 'active' : '' }}">Contact</a></li>
-                    <li class="nav-language"><a href="#">
-                            <select class="lang-selector form-select text-primary">
-                                <option value="en">English</option>
-                                <option value="sw">Kiswahili</option>
-                            </select>
-                        </a>
-                    </li>
+
+                    <div class="nav-language">
+                        <select class="lang-selector form-select text-primary">
+                            <option value="en">English</option>
+                            <option value="sw">Kiswahili</option>
+                        </select>
+                    </div>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -201,7 +201,48 @@
         }
     </script>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            function waitForTranslateIframe(callback, interval = 500, attempts = 20) {
+                let tries = 0;
+                const checkIframe = setInterval(() => {
+                    const frame = document.querySelector('iframe.goog-te-menu-frame');
+                    if (frame) {
+                        clearInterval(checkIframe);
+                        callback(frame);
+                    } else if (++tries >= attempts) {
+                        clearInterval(checkIframe);
+                        console.warn('Google Translate iframe not found.');
+                    }
+                }, interval);
+            }
+
+            document.querySelectorAll('.lang-selector').forEach(function(selector) {
+                selector.addEventListener('change', function() {                    
+                    const lang = this.value;
+                    waitForTranslateIframe(function(frame) {
+                        const innerDoc = frame.contentDocument || frame.contentWindow
+                            .document;
+                        const langElements = innerDoc.querySelectorAll(
+                            '.goog-te-menu2-item span.text');
+                        console.log(langElements);
+
+                        langElements.forEach(function(el) {
+                            const langText = lang === 'sw' ? 'swahili' : 'english';
+                            if (el.innerText.toLowerCase().includes(langText)) {
+                                el.click();
+                            }
+                        });
+                    });
+                });
+            });
+
+        });
+        
     </script>
 
     <!-- Vendor JS Files -->
@@ -214,35 +255,7 @@
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('footer_scripts')
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.language-selector').forEach(function(selector) {
-                selector.addEventListener('change', function() {
-                    console.log('I was changed');
 
-                    const lang = this.value;
-                    const frame = document.querySelector('iframe.goog-te-menu-frame');
-                    console.log(frame);
-
-                    if (frame) {
-                        const innerDoc = frame.contentDocument || frame.contentWindow.document;
-                        const langElements = innerDoc.querySelectorAll(
-                            '.goog-te-menu2-item span.text');
-
-                        langElements.forEach(function(el) {
-                            if (el.innerText.toLowerCase().includes(lang === 'sw' ?
-                                    'swahili' :
-                                    'english')) {
-                                el.click();
-                            }
-                        });
-                    } else {
-                        console.warn('Google Translate iframe not ready. Try again shortly.');
-                    }
-                });
-            });
-        });
-    </script>
 
 </body>
 

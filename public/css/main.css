@@ -237,9 +237,9 @@ h6 {
     display: none;
   }
 
-
   .header .nav-language {
     display: block;
+    margin: 5px 15px;
   }
 }
 
