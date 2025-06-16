@@ -37,7 +37,7 @@ Route::get('profile/applications', [ProfileController::class, 'applications'])->
 Route::view('contact', 'contact')->name('contact');
 Route::post('contact', [ApplicationsController::class, 'contact']);
 Route::view('about', 'about')->name('about');
-Route::view('services', 'services')->name('services');
+Route::view('services', 'comingsoon')->name('services');
 
 Route::resource('jobs', JobsController::class);
 Route::get('jobs-get', [JobsController::class, 'jobs']);

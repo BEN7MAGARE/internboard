@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title') - DALMA Project</title>
+    <title class="translatable">@yield('title') - DALMA Project</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -28,15 +28,63 @@
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     @yield('header_styles')
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,es,fr,de,zh-CN,ja,sw', // Added Swahili (sw)
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+            );
+
+            // Optional: Change default "Select Language" text
+            var select = document.querySelector(".goog-te-combo");
+            if (select) {
+                select.options[0].text = "Choose Language";
+            }
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
     <style>
-        .goog-te-banner-frame.skiptranslate,
-        .goog-te-gadget {
+        /* Style improvements */
+        .goog-te-combo {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background: white;
+            font-size: 16px;
+            margin: 15px 0;
+            width: 200px;
+        }
+
+        /* Hide Google branding */
+        .goog-te-gadget .goog-te-combo {
+            margin: 4px 0;
+        }
+
+        .goog-logo-link,
+        .goog-te-banner-frame {
             display: none !important;
         }
+
+        body {
+            top: 0 !important;
+        }
+
+        /* Language names in dropdown */
+        .goog-te-menu-value span {
+            color: #333 !important;
+        }
     </style>
+
 </head>
 
 <body class="index-page">
+    <div id="google_translate_element"></div>
 
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
@@ -45,28 +93,28 @@
                 <img src="{{ asset('images/logo.jpg') }}" alt="">
                 <div>
                     <h1>Daraja La Mafanikio</h1>
-                    <i>TVET Skills Development and Job Linkage.</i>
+                    <i class="translatable">TVET Skills Development and Job Linkage.</i>
                 </div>
             </a>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{{ route('home') }}"
-                            class="{{ Request::url() == route('home') ? 'active' : '' }}">Home</a></li>
+                            class="{{ Request::url() == route('home') ? 'active' : '' }} translatable">Home</a></li>
                     <li><a href="{{ route('about') }}"
-                            class="{{ Request::url() == route('about') ? 'active' : '' }}">About</a></li>
+                            class="{{ Request::url() == route('about') ? 'active' : '' }} translatable">About</a></li>
                     <li><a href="{{ route('elearning') }}"
-                            class="{{ Request::url() == route('elearning') ? 'active' : '' }}">E-Learning</a></li>
+                            class="{{ Request::url() == route('elearning') ? 'active' : '' }} translatable">E-Learning</a></li>
                     <li
                         class="dropdown {{ Request::url() == '/jobs' || Request::url() == '/jobs/create' ? 'active' : '' }}">
-                        <a href="#"><span>Jobs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <a href="#"><span class="translatable">Jobs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="{{ route('jobs.index') }}">Job List</a></li>
-                            <li><a href="{{ route('jobs.create') }}">Post a Job</a></li>
+                            <li><a href="{{ route('jobs.index') }}" class="translatable">Job List</a></li>
+                            <li><a href="{{ route('jobs.create') }}" class="translatable">Post a Job</a></li>
                         </ul>
                     </li>
                     <li><a href="{{ route('contact') }}"
-                            class="{{ Request::url() == route('contact') ? 'active' : '' }}">Contact</a></li>
+                            class="{{ Request::url() == route('contact') ? 'active' : '' }} translatable">Contact</a></li>
 
                     <div class="nav-language">
                         <select class="lang-selector form-select text-primary">
@@ -89,25 +137,25 @@
                     <a class="nav-link">
                         <a class="dropdown-toggle btn btn-outline-danger btn-sm mt-1 {{ Request::url() == '/profile' ? 'active' : '' }}"
                             href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
-                                class="bi bi-person-circle"></i>&nbsp;{{ auth()->user()->last_name }}&nbsp;
+                                class="bi bi-person-circle"></i>&nbsp;<span class="translatable">{{ auth()->user()->last_name }}</span>&nbsp;
                             <i class="bi bi-angle-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
-                                        class="bi bi-person-circle"></i>&nbsp;My Profile</a></li>
+                                        class="bi bi-person-circle"></i>&nbsp;<span class="translatable">My Profile</span></a></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a class="dropdown-item text-danger" href="route('logout')"
                                         onclick="event.preventDefault();
                             this.closest('form').submit();"><i
-                                            class="bi bi-box-arrow-right"></i>&nbsp;{{ __('Log Out') }}
+                                            class="bi bi-box-arrow-right"></i>&nbsp;<span class="translatable">Log Out</span>
                                     </a>
                                 </form>
                             </li>
                         </ul>
                     </a>
                 @else
-                    <a class="nav-link {{ Request::url() == route('getstarted') ? 'active' : '' }} btn-getstarted"
+                    <a class="nav-link translatable {{ Request::url() == route('getstarted') ? 'active' : '' }} btn-getstarted"
                         href="{{ route('getstarted') }}">Get Started</a>
 
                 @endauth
@@ -128,7 +176,7 @@
                     <a href="index.html" class="logo d-flex align-items-center">
                         <span class="sitename">Daraja La Mafanikio</span>
                     </a>
-                    <p>Empowering TVET graduates from Informal Settlements in Kenya.</p>
+                    <p class="translatable">Empowering TVET graduates from Informal Settlements in Kenya.</p>
                     <p>{{ config('app.company') }}</p>
                     <p>{{ config('app.physicalAddress') }}</p>
                     <div class="social-links d-flex mt-4">
@@ -142,22 +190,21 @@
                 <div class="col-lg-2 col-6 footer-links">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('about') }}">About us</a></li>
-                        <li><a href="{{ route('services') }}">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="{{ route('home') }}" class="translatable">Home</a></li>
+                        <li><a href="{{ route('about') }}" class="translatable">About us</a></li>
+                        <li><a href="{{ route('services') }}" class="translatable">Services</a></li>
+                        <li><a href="#" class="translatable">Terms of service</a></li>
+                        <li><a href="#" class="translatable">Privacy policy</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-2 col-6 footer-links">
                     <h4>Our Services</h4>
                     <ul>
-                        <li><a href="#">Employability and Entrepreneurship Training</a></li>
-                        <li><a href="#">Linking TVET graduates to employment opportunities</a></li>
-                        <li><a href="#">Youth Empowerment</a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#">Youth Empowerment</a></li>
+                        <li><a href="#" class="translatable">Employability and Entrepreneurship Training</a></li>
+                        <li><a href="#" class="translatable">Linking TVET graduates to employment opportunities</a></li>
+                        <li><a href="#" class="translatable">Youth Empowerment</a></li>
+                        <li><a href="#" class="translatable">Youth Empowerment</a></li>
                     </ul>
                 </div>
 
@@ -165,19 +212,19 @@
                     <h4>Contact Us</h4>
                     <p>{{ config('app.company') }}</p>
                     <p>{{ config('app.postal') }}</p>
-                    <p class="mt-2"><strong>Phone:</strong> <span>{{ config('app.phone') }}</span></p>
-                    <p><strong>Phone:</strong> <span>{{ config('app.phone2') }}</span></p>
-                    <p><strong>Email:</strong> <span>{{ config('app.email') }}</span></p>
-                    <p><strong>Email:</strong> <span>{{ config('app.email2') }}</span></p>
+                    <p class="mt-2"><strong class="translatable">Phone:</strong> <span>{{ config('app.phone') }}</span></p>
+                    <p><strong class="translatable">Phone:</strong> <span>{{ config('app.phone2') }}</span></p>
+                    <p><strong class="translatable">Email:</strong> <span>{{ config('app.email') }}</span></p>
+                    <p><strong class="translatable">Email:</strong> <span>{{ config('app.email2') }}</span></p>
                 </div>
 
             </div>
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="sitename">Daraja La Mafanikio</strong> <span>All Rights
-                    Reserved</span></p>
-
+            <p>© <span class="translatable">Copyright</span> <strong class="sitename translatable">Daraja La Mafanikio</strong>
+                <span class="translatable">All Rights Reserved</span>
+            </p>
         </div>
 
     </footer>
@@ -189,61 +236,54 @@
     <!-- Preloader -->
     <div id="preloader"></div>
 
-    <div id="google_translate_element"></div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,sw',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
+    <script>
+        const API_KEY = ;
+
+        document.querySelectorAll('#language-select option').forEach(option => {
+            option.textContent = `${option.dataset.flag} ${option.textContent}`;
+        });
+
+        document.querySelectorAll('.lang-selector').forEach(function(selector) {
+            selector.addEventListener('change', async function() {
+                const lang = this.value;
+                try {
+                    const elements = document.querySelectorAll('.translatable');
+
+                    for (const element of elements) {
+                        const text = element.textContent;
+                        const translatedText = await translateText(text, lang);
+                        element.textContent = translatedText;
+                    }
+                } catch (error) {
+                    console.error('Translation error:', error);
+                    alert('Translation failed. Please try again.');
+                }
+            });
+        });
+
+        async function translateText(text, targetLanguage) {
+            if (targetLanguage === 'en') {
+                return text; // Skip translation for English
+            }
+
+            const url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: text,
+                    target: targetLanguage
+                })
+            });
+
+            const data = await response.json();
+            return data.data.translations[0].translatedText;
         }
     </script>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            function waitForTranslateIframe(callback, interval = 500, attempts = 20) {
-                let tries = 0;
-                const checkIframe = setInterval(() => {
-                    const frame = document.querySelector('iframe.goog-te-menu-frame');
-                    if (frame) {
-                        clearInterval(checkIframe);
-                        callback(frame);
-                    } else if (++tries >= attempts) {
-                        clearInterval(checkIframe);
-                        console.warn('Google Translate iframe not found.');
-                    }
-                }, interval);
-            }
-
-            document.querySelectorAll('.lang-selector').forEach(function(selector) {
-                selector.addEventListener('change', function() {                    
-                    const lang = this.value;
-                    waitForTranslateIframe(function(frame) {
-                        const innerDoc = frame.contentDocument || frame.contentWindow
-                            .document;
-                        const langElements = innerDoc.querySelectorAll(
-                            '.goog-te-menu2-item span.text');
-                        console.log(langElements);
-
-                        langElements.forEach(function(el) {
-                            const langText = lang === 'sw' ? 'swahili' : 'english';
-                            if (el.innerText.toLowerCase().includes(langText)) {
-                                el.click();
-                            }
-                        });
-                    });
-                });
-            });
-
-        });
-        
-    </script>
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -254,8 +294,6 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('footer_scripts')
-
-
 
 </body>
 

@@ -22,7 +22,7 @@
                             <div class="stat-number">
                                 {{ $jobcount }}
                             </div>
-                            <div class="stat-label">Jobs</div>
+                            <div class="stat-label translatable">Jobs</div>
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@
                             <div class="stat-number" style="color: var(--success-color);">
                                 {{ $corporatecount }}
                             </div>
-                            <div class="stat-label">Employers</div>
+                            <div class="stat-label translatable">Employers</div>
                         </div>
                     </div>
 
@@ -40,7 +40,7 @@
                             <div class="stat-number" style="color: var(--accent-color);">
                                 {{ $applicationcount }}
                             </div>
-                            <div class="stat-label">Applications</div>
+                            <div class="stat-label translatable">Applications</div>
                         </div>
                     </div>
 
@@ -49,7 +49,7 @@
                             <div class="stat-number" style="color: var(--primary-color);">
                                 {{ $studentcount }}
                             </div>
-                            <div class="stat-label">Students</div>
+                            <div class="stat-label translatable">Students</div>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
                             <div class="stat-number" style="color: var(--success-color);">
                                 {{ $workercount }}
                             </div>
-                            <div class="stat-label">Workers</div>
+                            <div class="stat-label translatable">Workers</div>
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
                             <div class="stat-number" style="color: var(--accent-color);">
                                 {{ $collegecount }}
                             </div>
-                            <div class="stat-label">Colleges</div>
+                            <div class="stat-label translatable">Colleges</div>
                         </div>
                     </div>
                 </div>

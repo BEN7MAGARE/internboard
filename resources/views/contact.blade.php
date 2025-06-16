@@ -16,8 +16,8 @@
                 <div class="container">
                     <div class="row d-flex justify-content-center text-center">
                         <div class="col-lg-8">
-                            <h1>Contact Us</h1>
-                            <p class="mb-0">Get in touch with us for any inquiries, questions or sponsorships.</p>
+                            <h1 class="translatable">Contact Us</h1>
+                            <p class="mb-0 translatable">Get in touch with us for any inquiries, questions or sponsorships.</p>
                         </div>
                     </div>
                 </div>
@@ -25,8 +25,8 @@
             <nav class="breadcrumbs">
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li class="current">Contact Us</li>
+                        <li><a href="{{ route('home') }}" class="translatable">Home</a></li>
+                        <li class="current translatable">Contact Us</li>
                     </ol>
                 </div>
             </nav>
@@ -35,8 +35,8 @@
         <section id="contact" class="contact section">
 
             <div class="container section-title" data-aos="fade-up">
-                <h2>Contact</h2>
-                <p>Get in touch with us for any inquiries, questions or sponsorships. </p>
+                <h2 class="translatable">Contact</h2>
+                <p class="translatable">Get in touch with us for any inquiries, questions or sponsorships. </p>
             </div>
 
             <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
@@ -49,7 +49,7 @@
                             <div class="col-md-6">
                                 <div class="info-item" data-aos="fade" data-aos-delay="200">
                                     <i class="bi bi-geo-alt"></i>
-                                    <h3>Address</h3>
+                                    <h3 class="translatable">Address</h3>
                                     <p>{{ config('app.physicalAddress') }}</p>
                                     <p>{{ config('app.city') }}, {{ config('app.country') }}</p>
                                     <p>{{ config('app.postal') }}</p>
@@ -59,7 +59,7 @@
                             <div class="col-md-6">
                                 <div class="info-item" data-aos="fade" data-aos-delay="300">
                                     <i class="bi bi-telephone"></i>
-                                    <h3>Call Us</h3>
+                                    <h3 class="translatable">Call Us</h3>
                                     <p>{{ config('app.phone') }}</p>
                                     <p>{{ config('app.phone2') }}</p>
                                 </div>
@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="info-item" data-aos="fade" data-aos-delay="400">
                                     <i class="bi bi-envelope"></i>
-                                    <h3>Email Us</h3>
+                                    <h3 class="translatable">Email Us</h3>
                                     <p>{{ config('app.email') }}</p>
                                     <p>{{ config('app.email2') }}</p>
                                     <p>{{ config('app.email3') }}</p>
@@ -78,9 +78,9 @@
                             <div class="col-md-6">
                                 <div class="info-item" data-aos="fade" data-aos-delay="500">
                                     <i class="bi bi-clock"></i>
-                                    <h3>Open Hours</h3>
-                                    <p>Monday - Friday</p>
-                                    <p>9:00AM - 05:00PM</p>
+                                    <h3 class="translatable">Open Hours</h3>
+                                    <p class="translatable">Monday - Friday</p>
+                                    <p class="translatable">9:00AM - 05:00PM</p>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                                 <div id="contactFeedback"></div>
 
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                    <button type="submit" class="btn btn-primary translatable">Send Message</button>
                                 </div>
 
                             </div>

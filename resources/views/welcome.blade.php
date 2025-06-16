@@ -15,8 +15,8 @@ Home @parent
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 data-aos="fade-up" data-aos-delay="100">Job Opportunities</h2>
-                    <p data-aos="fade-up" data-aos-delay="200">Find job opportunities that match your skill set</p>
+                    <h2 data-aos="fade-up" data-aos-delay="100" class="translatable">Job Opportunities</h2>
+                    <p data-aos="fade-up" data-aos-delay="200" class="translatable">Find job opportunities that match your skill set</p>
                 </div>
 
                 <div class="col-md-12 mt-4" data-aos="fade-up" data-aos-delay="300">
@@ -32,21 +32,21 @@ Home @parent
                             <div class="col-md-3 mb-2">
                                 <select name="type" id="searchEmploymentType" class="form-select">
                                     <option value="">Employment Type</option>
-                                    <option value="Internship">Internship</option>
-                                    <option value="Part-time">Part Time</option>
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Contract">Contract</option>
-                                    <option value="Freelance">Freelance</option>
-                                    <option value="Temporary">Temporary</option>
+                                    <option value="Internship" class="translatable">Internship</option>
+                                    <option value="Part-time" class="translatable">Part Time</option>
+                                    <option value="Full Time" class="translatable">Full Time</option>
+                                    <option value="Contract" class="translatable">Contract</option>
+                                    <option value="Freelance" class="translatable">Freelance</option>
+                                    <option value="Temporary" class="translatable">Temporary</option>
                                 </select>
                             </div>
 
                             <div class="col-md-3 mb-2">
                                 <select name="job_type" id="searchJobType" class="form-select">
                                     <option value="">Job Type</option>
-                                    <option value="Remote">Remote</option>
-                                    <option value="On-site">On-Site</option>
-                                    <option value="High-breed">High-breed</option>
+                                    <option value="Remote" class="translatable">Remote</option>
+                                    <option value="On-site" class="translatable">On-Site</option>
+                                    <option value="High-breed" class="translatable">High-breed</option>
                                 </select>
                             </div>
 
@@ -61,7 +61,7 @@ Home @parent
                     </form>
                 </div>
                 <div class="mt-4" data-aos="fade-up" data-aos-delay="400">
-                    <h5>Get started quickly by industries</h5>
+                    <h5 class="translatable">Get started quickly by industries</h5>
                     <div class="mt-2 d-flex flex-wrap gap-3 gy-4" id="categoriesWithJobs"></div>
                 </div>
             </div>
@@ -101,12 +101,12 @@ Home @parent
             <div class="row align-items-xl-center gy-5">
 
                 <div class="col-xl-5 content">
-                    <h3>About Us</h3>
+                    <h3 class="translatable">About Us</h3>
                     <h2>Daraja La Mafanikio - Bridge to Success</h2>
-                    <p>We aim to allievate poverty in informal settlements by providing training and
+                    <p class="translatable">We aim to allievate poverty in informal settlements by providing training and
                         imparting skills on employability and entrepreneurship curriculum to youths in disadvantaged and
                         informal settlements.</p>
-                    <a href="{{ route('about') }}" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                    <a href="{{ route('about') }}" class="read-more"><span class="translatable">Read More</span><i class="bi bi-arrow-right"></i></a>
                 </div>
 
                 <div class="col-xl-7">
@@ -115,8 +115,8 @@ Home @parent
                         <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
                             <div class="icon-box">
                                 <i class="bi bi-buildings"></i>
-                                <h3>TVET graduates</h3>
-                                <p>Empowering TVET graduates from Informal Settlements in Kenya.
+                                <h3 class="translatable">TVET graduates</h3>
+                                <p class="translatable">Empowering TVET graduates from Informal Settlements in Kenya.
                                 </p>
                             </div>
                         </div>
@@ -124,8 +124,8 @@ Home @parent
                         <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
                             <div class="icon-box">
                                 <i class="bi bi-pie-chart"></i>
-                                <h3>Employers</h3>
-                                <p>Employers can access this skilled pool of youths to fill employment positions in their firms.
+                                <h3 class="translatable">Employers</h3>
+                                <p class="translatable">Employers can access this skilled pool of youths to fill employment positions in their firms.
                                 </p>
                             </div>
                         </div>
@@ -133,16 +133,16 @@ Home @parent
                         <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
                             <div class="icon-box">
                                 <i class="bi bi-award"></i>
-                                <h3>Employability and Entrepreneurship</h3>
-                                <p>We have skillful employability and entrepreneurship curriculum to equip youths with skills to be competitive in the job market.</p>
+                                <h3 class="translatable">Employability and Entrepreneurship</h3>
+                                <p class="translatable">We have skillful employability and entrepreneurship curriculum to equip youths with skills to be competitive in the job market.</p>
                             </div>
                         </div>
 
                         <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
                             <div class="icon-box">
                                 <i class="bi bi-graph-up-arrow"></i>
-                                <h3>Training</h3>
-                                <p>We provide specially curated training on employability and entrepreneurship to youths in disadvantaged and informal settlements.</p>
+                                <h3 class="translatable">Training</h3>
+                                <p class="translatable">We provide specially curated training on employability and entrepreneurship to youths in disadvantaged and informal settlements.</p>
                             </div>
                         </div>
 
@@ -156,15 +156,15 @@ Home @parent
     <!-- Features Section -->
     <section id="features" class="features section">
         <div class="container-fluid section-title" data-aos="fade-up">
-            <h2>What we Do</h2>
+            <h2 class="translatable">What we Do</h2>
             <p></p>
         </div><!-- End Section Title -->
         <div class="container-fluid">
 
             <div class="row gy-4 align-items-center features-item">
                 <div class="col-lg-5 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Employability and Entrepreneurship Training</h3>
-                    <p>
+                    <h3 class="translatable">Employability and Entrepreneurship Training</h3>
+                    <p class="translatable">
                         We provide specially curated training on employability and entrepreneurship to youths in disadvantaged and informal settlements.
                     </p>
                     <a href="{{ route('elearning') }}" class="btn btn-get-started">Access Training Materials</a>
@@ -182,14 +182,14 @@ Home @parent
                     <img src="{{ asset('images/jobs.avif') }}" class="img-fluid" alt="">
                 </div>
                 <div class="col-lg-5 d-flex justify-content-center flex-column" data-aos="fade-up">
-                    <h3>Employment Opportunities</h3>
-                    <p>Employers can access this skilled pool of youths to fill employment positions in their firms.</p>
+                    <h3 class="translatable">Employment Opportunities</h3>
+                    <p class="translatable">Employers can access this skilled pool of youths to fill employment positions in their firms.</p>
                     <ul>
-                        <li><i class="bi bi-check"></i> <span>We connect employers to skilled graduates</span></li>
-                        <li><i class="bi bi-check"></i><span>Employers can access this skilled pool of youths to fill employment positions in their firms.</span></li>
-                        <li><i class="bi bi-check"></i> <span>Employers can access this skilled pool of youths to fill employment positions in their firms.</span></li>
+                        <li><i class="bi bi-check"></i><span class="translatable">We connect employers to skilled graduates</span></li>
+                        <li><i class="bi bi-check"></i><span class="translatable">Employers can access this skilled pool of youths to fill employment positions in their firms.</span></li>
+                        <li><i class="bi bi-check"></i> <span class="translatable">Employers can access this skilled pool of youths to fill employment positions in their firms.</span></li>
                     </ul>
-                    <a href="{{ route('jobs.create') }}" class="btn btn-get-started align-self-start">Get Started</a>
+                    <a href="{{ route('jobs.create') }}" class="btn btn-get-started align-self-start translatable">Get Started</a>
                 </div>
             </div><!-- Features Item -->
 
@@ -203,9 +203,9 @@ Home @parent
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
                     <div class="text-center">
-                        <h3>Get Skilled Workers</h3>
-                        <p>Get skilled workers to fill employment positions in your firm.</p>
-                        <a href="{{ route('jobs.create') }}" class="cta-btn">Post a job</a>
+                        <h3 class="translatable">Get Skilled Workers</h3>
+                        <p class="translatable">Get skilled workers to fill employment positions in your firm.</p>
+                        <a href="{{ route('jobs.create') }}" class="cta-btn translatable">Post a job</a>
                     </div>
                 </div>
             </div>

@@ -76,7 +76,7 @@ Applicants Management
                     <h3 class="h4 mb-1"><strong>{{ $job->title }}</strong></h3>
                     <p class="mb-0 text-muted">{{ $job->description }}</p>
                 </div>
-                <span class="badge bg-primary">
+                <span class="badge bg-primary translatable">
                     {{ $job->applications_count }} Applicant{{ $job->applications_count != 1 ? 's' : '' }}
                 </span>
             </div>
@@ -87,8 +87,8 @@ Applicants Management
             <div class="card-body">
                 @if ($job->applications_count > 0)
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0"><strong>Applicant Details</strong></h5>
-                    <div class="text-muted">
+                    <h5 class="mb-0"><strong class="translatable">Applicant Details</strong></h5>
+                    <div class="text-muted translatable">
                         Showing {{ $job->applications->count() }} candidates
                     </div>
                 </div>
@@ -107,9 +107,9 @@ Applicants Management
                                             <h4 class="h5 mb-1">
                                                 <strong>{{ $item->applicant->first_name }} {{ $item->applicant->last_name }}</strong>
                                                 @if($item->status == 'selected')
-                                                <span class="status-badge selected-badge ms-2">Selected</span>
+                                                <span class="status-badge selected-badge ms-2 translatable">Selected</span>
                                                 @else
-                                                <span class="status-badge pending-badge ms-2">Pending</span>
+                                                <span class="status-badge pending-badge ms-2 translatable">Pending</span>
                                                 @endif
                                             </h4>
                                             
