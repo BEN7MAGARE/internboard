@@ -238,7 +238,8 @@
 
 
     <script>
-        const API_KEY = ;
+        localStorage.setItem('lang', 'en');
+        const API_KEY = 'AIzaSyD80KKPBPN0iJhdGZIlFgK1cPAS1jw1778';
 
         document.querySelectorAll('#language-select option').forEach(option => {
             option.textContent = `${option.dataset.flag} ${option.textContent}`;
@@ -247,12 +248,13 @@
         document.querySelectorAll('.lang-selector').forEach(function(selector) {
             selector.addEventListener('change', async function() {
                 const lang = this.value;
+                localStorage.setItem('lang', lang);
                 try {
                     const elements = document.querySelectorAll('.translatable');
-
+                    
                     for (const element of elements) {
                         const text = element.textContent;
-                        const translatedText = await translateText(text, lang);
+                        const translatedText = await translateText(text);
                         element.textContent = translatedText;
                     }
                 } catch (error) {
@@ -262,11 +264,11 @@
             });
         });
 
-        async function translateText(text, targetLanguage) {
-            if (targetLanguage === 'en') {
-                return text; // Skip translation for English
+        async function translateText(text) {
+            const lang = localStorage.getItem('lang');
+            if (lang === 'en') {
+                return text;
             }
-
             const url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
             const response = await fetch(url, {
                 method: 'POST',
@@ -275,13 +277,14 @@
                 },
                 body: JSON.stringify({
                     q: text,
-                    target: targetLanguage
+                    target: lang
                 })
             });
-
             const data = await response.json();
             return data.data.translations[0].translatedText;
         }
+
+        translateText();
     </script>
 
 

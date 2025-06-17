@@ -181,12 +181,10 @@
                     <div class="mb-3">
                         <label for="category_id" class="form-label">Category</label>
                         <select name="category_id" id="corporateCategory" class="form-control" required>
-                            <option value="">Select Category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
+                            
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="corporateName" required>

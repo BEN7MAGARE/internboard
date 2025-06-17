@@ -1,5 +1,6 @@
 (async function () {
     getCorporatesOptions('#corporateOptionsID');
+    getCategoriesOptions('#corporateCategory');
     const corporateCreateForm = document.getElementById('corporateCreateForm'),
         corporateCreateSubmit = document.getElementById('corporateCreateSubmit'),
         contactPersonCreateForm = document.getElementById('contactPersonCreateForm'),

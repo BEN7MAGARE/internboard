@@ -167,7 +167,7 @@ Home @parent
                     <p class="translatable">
                         We provide specially curated training on employability and entrepreneurship to youths in disadvantaged and informal settlements.
                     </p>
-                    <a href="{{ route('elearning') }}" class="btn btn-get-started">Access Training Materials</a>
+                    <a href="{{ route('elearning') }}" class="btn btn-get-started translatable">Access Training Materials</a>
                 </div>
                 <div class="col-lg-7 order-1 order-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
                     <div class="image-stack">
@@ -191,27 +191,26 @@ Home @parent
                     </ul>
                     <a href="{{ route('jobs.create') }}" class="btn btn-get-started align-self-start translatable">Get Started</a>
                 </div>
-            </div><!-- Features Item -->
-
+            </div>
         </div>
+    </section>
 
-    </section><!-- /Features Section -->
-
-    <section id="call-to-action" class="call-to-action section dark-background">
-
+    {{-- <section class="top-employers">
         <div class="container-fluid">
-            <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
-                <div class="col-xl-10">
-                    <div class="text-center">
-                        <h3 class="translatable">Get Skilled Workers</h3>
-                        <p class="translatable">Get skilled workers to fill employment positions in your firm.</p>
-                        <a href="{{ route('jobs.create') }}" class="cta-btn translatable">Post a job</a>
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="translatable">Top Employers</h2>
                 </div>
             </div>
         </div>
+        <div class="container-fluid">
+            <div class="row">
 
-    </section>
+                
+
+            </div>
+        </div>
+    </section> --}}
 </main>
 
 @endsection
