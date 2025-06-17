@@ -40,26 +40,11 @@ class ApplicationsController extends Controller
         return view('apply.index', compact('applications'));
     }
 
-
     public function collegeStudents()
     {
         if (auth()->user()->role === "college") {
             $students = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->with('profile')->paginate(10);
             return view('profile.collegestudents', compact('students'));
-        } else {
-            return redirect()->back()->with('errors', 'You are not authorised to access this resource');
-        }
-    }
-
-    public function collegeDashboard()
-    {
-        if (auth()->user()->role === "college") {
-            $studentscount = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->count();
-            $college_id = auth()->user()->college_id || NULL;
-            $applicationscount = DB::select("CALL sp_getschoolapplicantscount($college_id)");
-            $selectedcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'selected')");
-            $hiredcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'hired')");
-            return view('profile.collegedashboard', compact('studentscount', 'applicationscount', 'selectedcount', 'hiredcount'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
         }

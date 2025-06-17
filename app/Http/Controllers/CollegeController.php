@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCollegeRequest;
 use App\Models\College;
-use App\Models\User;
 use App\Models\Course;
+use App\Models\User;
+use App\Models\Student;
+use App\Models\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
 
 class CollegeController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->user = new User();
+        $this->application = new Application();
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +66,7 @@ class CollegeController extends Controller
         }
         User::where('id', auth()->user()->id)->update(['college_id' => $college->id]);
         DB::commit();
-        return json_encode(['status' => 'success', 'message' => $message]);
+        return json_encode(['status' => 'success', 'message' => $message, 'url' => '/profile']);
     }
 
     /**
@@ -115,8 +121,42 @@ class CollegeController extends Controller
         return json_encode(['status' => 'success', 'message' => 'College deleted successfully.']);
     }
 
-    public function getColleges() {
+    public function getColleges()
+    {
         $colleges = College::select('id', 'name')->get();
         return response()->json($colleges);
     }
+
+    public function students()
+    {
+        $students = Student::where('college_id',auth()->user()->college_id)->paginate(10);
+        return view('college.students', compact('students'));
+    }
+
+    public function applications()
+    {
+        if (auth()->user()->role === "college") {
+            $college_id = auth()->user()->college_id;
+            $students = $this->user->where('college_id', $college_id)->pluck('id');
+            $applications = $this->application->whereIn('user_id', $students)->with('applicant')->latest()->paginate(10);
+            return view('profile.schoolapplicants', compact('applications'));
+        } else {
+            return redirect()->back()->with('errors', 'You are not authorised to access this resource');
+        }
+    }
+
+    public function dashboard()
+    {
+        if (auth()->user()->role === "college") {
+            $studentscount = $this->user->where('role', 'student')->where('college_id', auth()->user()->college_id)->count();
+            $college_id = auth()->user()->college_id || NULL;
+            $applicationscount = DB::select("CALL sp_getschoolapplicantscount($college_id)");
+            $selectedcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'selected')");
+            $hiredcount = DB::select("CALL sp_gecollegetapplicantscountbystatus($college_id,'hired')");
+            return view('profile.collegedashboard', compact('studentscount', 'applicationscount', 'selectedcount', 'hiredcount'));
+        } else {
+            return redirect()->back()->with('errors', 'You are not authorised to access this resource');
+        }
+    }
+
 }

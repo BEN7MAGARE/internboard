@@ -16,7 +16,7 @@
                 <div class="card mt-5 mb-5">
 
                     <div class="card-header bg-white text-center">
-                        <h4 class="mb-2"><strong>Create Account</strong></h4>
+                        <h4 class="mb-2"><strong class="translatable">Create Account</strong></h4>
                     </div>
 
                     <form action="{{ route('register') }}" method="post" id="studentSignupForm">
@@ -34,7 +34,7 @@
                                 </div> --}}
 
                                 <div class="col-md-6 form-group">
-                                    <label for="firstName">First name</label>
+                                    <label for="firstName" class="translatable">First name</label>
                                     <input type="text" class="form-control form-control-lg" name="first_name"
                                         id="firstName" required>
                                 </div>
@@ -42,25 +42,25 @@
                                 <input type="hidden" name="role" value="{{ $role }}" id="userRole">
 
                                 <div class="col-md-6 form-group">
-                                    <label for="lastName">Last name</label>
+                                    <label for="lastName" class="translatable">Last name</label>
                                     <input type="text" class="form-control form-control-lg" name="last_name"
                                         id="lastName" required>
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email" class="translatable">Email</label>
                                     <input type="email" class="form-control form-control-lg" name="email" id="email"
                                         required>
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="phone">Phone</label>
+                                    <label for="phone" class="translatable">Phone</label>
                                     <input type="text" class="form-control form-control-lg" name="phone" id="phone"
                                         required>
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="password">Password</label>
+                                    <label for="password" class="translatable">Password</label>
                                     <div class="input-group">
                                         <input type="password"
                                             class="form-control @error('password') invalid-input:'' @enderror"
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="passwordConfirmation">Confirm Password</label>
+                                    <label for="passwordConfirmation" class="translatable">Confirm Password</label>
                                     <div class="input-group">
                                         <input type="password"
                                             class="form-control @error('password') invalid-input:'' @enderror"
@@ -91,12 +91,12 @@
                         <div id="studentfeedbackfeedback"></div>
 
                         <div class="card-footer bg-white d-flex align-items-center justify-content-between p-2">
-                            <a class="underline text-sm text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-red-800"
+                            <a class="translatable"
                                 href="{{ route('login') }}">
                                 {{ __('Already registered?') }}
                             </a>
 
-                            <button type="submit" class="btn btn-primary" id="studentSubmit">Submit</button>
+                            <button type="submit" class="btn btn-primary translatable" id="studentSubmit">Submit</button>
                         </div>
 
                     </form>

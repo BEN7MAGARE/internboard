@@ -17,16 +17,16 @@
 
     <!-- Password -->
     <div>
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label translatable">Password</label>
 
         <input id="password" class="form-control" type="password" name="password" required
             autocomplete="current-password" />
 
-        <span class="text-danger">{{ $errors->get('password') }}</span>
+        <span class="text-danger translatable">{{ $errors->get('password') }}</span>
     </div>
 
     <div class="flex justify-end mt-4">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary translatable">
             {{ __('Confirm') }}
         </button>
     </div>

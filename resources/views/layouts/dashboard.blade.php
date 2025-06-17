@@ -24,7 +24,10 @@
 
         <div class="bg-dark" id="sidebar">
             <div class="sidebar-header text-center">
-                <h5 class="logo">Daraja La Mafanikio</h5>
+                <a href="{{ url('/') }}">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
+                </a>
+                
                 {{-- <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo"> --}}
                 {{-- @if (auth()->user()->role === 'admin')
                 <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
@@ -41,6 +44,7 @@
                 @if (auth()->user()->role === 'worker')
                 <img src="{{ asset('profilepictures/' . auth()->user()->worker->image) }}" alt="Logo" class="img-fluid dashboard-logo">
                 @endif --}}
+                <p class="logo">Daraja La Mafanikio</p>
                 <p>({{ auth()->user()->role }})</p>
             </div>
 
@@ -81,7 +85,7 @@
                 @endif
 
                 @if (auth()->user()->role === 'college')
-                    <li class="list-group-item  {!! Request::is('students') ? 'active' : '' !!}">
+                    <li class="list-group-item  {!! Request::is('students') || Request::is('college-students') ? 'active' : '' !!}">
                         <a href="{{ route('students.index') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
                     </li>
 
@@ -129,7 +133,7 @@
                     <li class="{!! Request::is('categories') ? 'active' : '' !!}">
                         <a href="{{ route('categories.index') }}">
                             <i class="bi bi-list"></i>
-                            Job Categories
+                            Job Opportunities
                         </a>
                     </li>
                 @endif

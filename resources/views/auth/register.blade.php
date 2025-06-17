@@ -16,7 +16,7 @@
                     <div class="card mt-5 mb-5 radius-image p-2">
 
                         <div class="card-header bg-white text-center">
-                            <h4 class="mb-2"><strong>Sign up</strong></h4>
+                            <h4 class="mb-2"><strong class="translatable">Sign up</strong></h4>
                         </div>
 
                         <form action="{{ route('account.store') }}" method="post" id="signupForm">
@@ -25,7 +25,7 @@
                                 <div class="row">
 
                                     <div class="col-md-6 form-group">
-                                        <label for="firstName">First name</label>
+                                        <label for="firstName" class="translatable">First name</label>
                                         <input type="text"
                                             class="form-control @error('first_name') invalid-input:'' @enderror"
                                             name="first_name" id="firstName" required>
@@ -39,7 +39,7 @@
                                     <input type="hidden" name="role" value="{{ $role }}" id="userRole">
 
                                     <div class="col-md-6 form-group">
-                                        <label for="lastName">Last name</label>
+                                        <label for="lastName" class="translatable">Last name</label>
                                         <input type="text"
                                             class="form-control @error('last_name') invalid-input:'' @enderror"
                                             name="last_name" id="lastName" required>
@@ -51,7 +51,7 @@
                                     </div>
 
                                     <div class="col-md-6 form-group">
-                                        <label for="email">Email</label>
+                                        <label for="email" class="translatable">Email</label>
                                         <input type="email"
                                             class="form-control @error('email') invalid-input:'' @enderror" name="email"
                                             id="email" required>
@@ -63,7 +63,7 @@
                                     </div>
 
                                     <div class="col-md-6 form-group">
-                                        <label for="phone">Phone</label>
+                                        <label for="phone" class="translatable">Phone</label>
                                         <input type="text"
                                             class="form-control @error('phone') invalid-input:'' @enderror" name="phone"
                                             id="phone" required>
@@ -75,7 +75,7 @@
                                     </div>
 
                                     <div class="col-md-6 form-group">
-                                        <label for="password">Password</label>
+                                        <label for="password" class="translatable">Password</label>
                                         <div class="input-group">
                                             <input type="password"
                                                 class="form-control @error('password') invalid-input:'' @enderror"
@@ -93,7 +93,7 @@
                                     </div>
 
                                     <div class="col-md-6 form-group">
-                                        <label for="passwordConfirmation">Confirm Password</label>
+                                        <label for="passwordConfirmation" class="translatable">Confirm Password</label>
                                         <div class="input-group">
                                             <input type="password"
                                                 class="form-control @error('password') invalid-input:'' @enderror"
@@ -124,7 +124,7 @@
                                 </p>
 
                                 <button type="submit" class="btn btn-primary btn-md" id="userSubmit"><i
-                                        class="fa fa-server"></i> Submit </button>
+                                        class="fa fa-server"></i> <span class="translatable">Submit</span> </button>
                             </div>
                         </form>
                     </div>

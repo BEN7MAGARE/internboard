@@ -14,7 +14,7 @@
 
 @section('content')
     <main class="mt-3 p-2">
-        <section class="main-content">
+        <section class="content">
             <div class="row">
                 <div class="col-xl-12">
                         <div class="row mb-4">
@@ -55,9 +55,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
 
-                    <div class="card">
+                    <div class="card mt-2">
                         <div class="card-header bg-white d-flex justify-content-between">
                             <h5>Profile</h5>
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -187,7 +187,6 @@
                                 </div>
                             @endif
                         </div>
-
                     </div>
                 </div>
             </div>

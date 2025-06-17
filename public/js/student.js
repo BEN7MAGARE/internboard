@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    getCoursesOptions(['#courseId', '#studentFilterCourse']);
+    
     const studentCreateForm = document.getElementById('studentCreateForm'),
         studentFilterForm = document.getElementById('studentFilterForm'),
         createStudentToggle = document.getElementById('createStudentToggle'),
@@ -9,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createStudentToggle.addEventListener('click', function () {
         document.getElementById('userID').value = "";
-        document.getElementById('studentId').value = "";
+        document.getElementById('studentID').value = "";
         studentCreateForm.reset();
     });
 

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\Application;
+use App\Models\Student;
 
 class ProfileController extends Controller
 {
@@ -28,6 +29,7 @@ class ProfileController extends Controller
         $this->job = new Job();
         $this->corporate = new Corporate();
         $this->application = new Application();
+        $this->student = new Student();
     }
 
     function index()
@@ -73,6 +75,20 @@ class ProfileController extends Controller
         }else if(auth()->user()->role === "admin"){
             return view('profile.admin', [
                 'user' => $request->user(),
+            ]);
+        }elseif (auth()->user()->role === "college") {
+            $studentscount = Student::where('college_id', auth()->user()->college_id)->count();
+            $applicationscount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->count();
+            $selectedcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'selected')->count();
+            $interviewcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'interview')->count();
+            $hiredcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'hired')->count();
+            return view('profile.college', [
+                'user' => $request->user(),
+                'studentscount' => $studentscount,
+                'applicationscount' => $applicationscount,
+                'selectedcount' => $selectedcount,
+                'interviewcount' => $interviewcount,
+                'hiredcount' => $hiredcount,
             ]);
         }
     }

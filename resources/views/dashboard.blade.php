@@ -14,7 +14,7 @@
 @section('content')
     <section class="w3l-main-content">
         <main class="mt-3 p-2">
-            <section class="main-content">
+            <section class="content">
                 <div class="row">
 
                     <div class="col-md-3">

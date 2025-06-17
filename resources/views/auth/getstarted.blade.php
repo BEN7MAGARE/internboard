@@ -41,7 +41,7 @@
                     <div class="card mt-5 mb-5 p-4 radius-image">
 
                         <div class=" bg-white text-center">
-                            <h4 class="mb-2"><strong>Sign up to proceed</strong></h4>
+                            <h4 class="mb-2"><strong class="translatable">Sign up to proceed</strong></h4>
                         </div>
                         
                         <div class="row"><hr></div>
@@ -51,10 +51,10 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="corporateSelectionRadio" required value="corporate">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label" for="corporateSelectionRadio"><b>Join as
+                                        <label class="form-check-label translatable" for="corporateSelectionRadio"><b>Join as
                                                 corporate</b>
                                             <br>
-                                            <span>Looking to hire or employ the best talent.</span>
+                                            <span class="translatable">Looking to hire or employ the best talent.</span>
                                         </label>
                                     </div>
                                 </div>
@@ -63,9 +63,9 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="collegeSelectionRadio" required value="college">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label" for="collegeSelectionRadio"><b>Join as University /
+                                        <label class="form-check-label translatable" for="collegeSelectionRadio"><b>Join as University /
                                                 College</b> <br>
-                                            <span>Looking to get notified of opportunities when they arise.</span>
+                                            <span class="translatable">Looking to get notified of opportunities when they arise.</span>
                                         </label>
                                     </div>
                                 </div>
@@ -74,8 +74,8 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="userRoleSelection" required value="student">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label" for="userRoleSelection"><b>Join as Job Seeker</b> <br>
-                                            <span>Seeking access to internship / employment opportunities.</span>
+                                        <label class="form-check-label translatable" for="userRoleSelection"><b>Join as Job Seeker</b> <br>
+                                            <span class="translatable">Seeking access to internship / employment opportunities.</span>
                                         </label>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                         </form>
 
                         <div class="mt-2">
-                            <p>Already have an account? <a href="{{ route('login') }}"> Login</a></p>
+                            <p><span class="translatable">Already have an account?</span> <a href="{{ route('login') }}"> <span class="translatable">Login</span></a></p>
                         </div>
                     </div>
                 </div>

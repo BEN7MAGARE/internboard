@@ -265,7 +265,7 @@ function isValidEmail(email) {
 }
 
 function getCoursesOptions(target) {
-    $.getJSON("/coursesdata", function (courses) {
+    $.getJSON("/coursesdata", function (courses) {      
         let option = "<option value=''>Select Course</option>";        
         $.each(courses, function (key, value) {
             option +=

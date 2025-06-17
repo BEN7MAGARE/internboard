@@ -10,221 +10,307 @@
         createCollegeUserToggle = document.getElementById('createCollegeUserToggle'),
         courseCreateForm = document.getElementById("courseCreateForm"),
         courseCreateSubmit = document.getElementById("courseCreateSubmit"),
-        createCourseToggle = document.getElementById('createCourseToggle');
+        createCourseToggle = document.getElementById('createCourseToggle'),
+        collegeAltCreateForm = document.getElementById("collegeAltCreateForm");
 
-
-    document.getElementById('allCollegeSelect').addEventListener('click', function () {
-        const checkboxes = document.querySelectorAll('input[name="college_id[]"]');
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = this.checked;
+    if (document.getElementById('allCollegeSelect')) {
+        document.getElementById('allCollegeSelect').addEventListener('click', function () {
+            const checkboxes = document.querySelectorAll('input[name="college_id[]"]');
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = this.checked;
+            });
         });
-    });
+    }
 
-    createCollegeToggle.addEventListener('click', function () {
-        collegeCreateForm.reset();
-        document.getElementById('collegeID').value = '';
-    });
-    createCollegeUserToggle.addEventListener('click', function () {
-        collegeUserCreateForm.reset();
-        document.getElementById('collegeUserID').value = '';
-    });
+    if (createCollegeToggle) {
+        createCollegeToggle.addEventListener('click', function () {
+            collegeCreateForm.reset();
+            document.getElementById('collegeID').value = '';
+        });
+    }
+    if (createCollegeUserToggle) {
+        createCollegeUserToggle.addEventListener('click', function () {
+            collegeUserCreateForm.reset();
+            document.getElementById('collegeUserID').value = '';
+        });
+    }
 
-    createCourseToggle.addEventListener('click', function () {
-        courseCreateForm.reset();
-        document.getElementById('courseID').value = '';
-    });
+    if (createCourseToggle) {
+        createCourseToggle.addEventListener('click', function () {
+            courseCreateForm.reset();
+            document.getElementById('courseID').value = '';
+        });
+    }
 
-    collegeCreateForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        console.log(Object.fromEntries(formData.entries()));
-        const errors = [],
-            emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-            phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
+    if (collegeAltCreateForm) {
+        collegeAltCreateForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            console.log(Object.fromEntries(formData.entries()));
+            const errors = [],
+                emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
 
-        if (formData.get('name').length < 2) {
-            errors.push("Invalid company name");
-        }
-        if (!emailRegex.test(formData.get('email'))) {
-            errors.push("Invalid company email");
-        }
-        if (!phoneNumberRegex.test(formData.get('phone'))) {
-            errors.push("Invalid company phone");
-        }
-        if (formData.get('address').length < 2) {
-            errors.push("Invalid company address");
-        }
-        collegeCreateSubmit.disabled = true;
-        if (errors.length > 0) {
-            let p = "";
-            $.each(errors, function (key, value) {
-                p += value + '<br>';
-            });
-            showError(p, "#collegeFeedback");
-            collegeCreateSubmit.disabled = false;
-        } else {
-            const response = await fetch("/colleges", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    accept: "application/json",
-                }
-            });
-            if (response.ok) {
+            if (formData.get('name').length < 2) {
+                errors.push("Invalid company name");
+            }
+            if (!emailRegex.test(formData.get('email'))) {
+                errors.push("Invalid company email");
+            }
+            if (!phoneNumberRegex.test(formData.get('phone'))) {
+                errors.push("Invalid company phone");
+            }
+            if (formData.get('address').length < 2) {
+                errors.push("Invalid company address");
+            }
+            collegeCreateSubmit.disabled = true;
+            if (errors.length > 0) {
+                let p = "";
+                $.each(errors, function (key, value) {
+                    p += value + '<br>';
+                });
+                showError(p, "#collegeFeedback");
                 collegeCreateSubmit.disabled = false;
-                const result = await response.json();
-                document.getElementById('collegeID').value = "";
-                if (result.status === "success") {
+            } else {
+                const response = await fetch("/colleges", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        accept: "application/json",
+                    }
+                });
+                if (response.ok) {
+                    collegeCreateSubmit.disabled = false;
+                    const result = await response.json();
                     document.getElementById('collegeID').value = "";
-                    collegeCreateForm.reset();
-                    showSuccess(result.message, "#collegeFeedback");
+                    if (result.status === "success") {
+                        document.getElementById('collegeID').value = "";
+                        collegeCreateForm.reset();
+                        showSuccess(result.message, "#collegeFeedback");
+                        setTimeout(() => {
+                            window.location.href = result.url;
+                        }, 2000);
+                    } else {
+                        showError("An error occurred during the processing", "#collegeFeedback");
+                    }
+                } else if (response.status === 422) {
+                    collegeCreateSubmit.disabled = false;
+                    const errorData = await response.json();
+                    let errors = '';
+                    for (const key in errorData.errors) {
+                        errors += errorData.errors[key].join(' ') + '!<br>';
+                    }
+                    showError(errors, "#collegeFeedback");
+                } else if (response.status === 419) {
+                    collegeCreateSubmit.disabled = false;
+                    showError("You are not logged in", "#collegeFeedback");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
                 } else {
-                    showError("An error occurred during the processing", "#collegeFeedback");
+                    collegeCreateSubmit.disabled = false;
+                    showError("Error occurred during processing", "#collegeFeedback");
                 }
-            } else if (response.status === 422) {
-                collegeCreateSubmit.disabled = false;
-                const errorData = await response.json();
-                let errors = '';
-                for (const key in errorData.errors) {
-                    errors += errorData.errors[key].join(' ') + '!<br>';
-                }
-                showError(errors, "#collegeFeedback");
-            } else if (response.status === 419) {
-                collegeCreateSubmit.disabled = false;
-                showError("You are not logged in", "#collegeFeedback");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
-            } else {
-                collegeCreateSubmit.disabled = false;
-                showError("Error occurred during processing", "#collegeFeedback");
             }
-        }
-    });
+        });
+    }
+    if (collegeCreateForm) {
+        collegeCreateForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            console.log(Object.fromEntries(formData.entries()));
+            const errors = [],
+                emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
 
-    collegeUserCreateForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        console.log(Object.fromEntries(formData.entries()));
-        const errors = [],
-            emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-            phoneNumberRegex = /^\+254[17]\d{8}$/;
-
-        if (formData.get('first_name').length < 2) {
-            errors.push("Invalid first name");
-        }
-        if (formData.get('last_name').length < 2) {
-            errors.push("Invalid last name");
-        }
-        if (!emailRegex.test(formData.get('email'))) {
-            errors.push("Invalid email");
-        }
-        // if (!phoneNumberRegex.test(formData.get('phone'))) {
-        //     errors.push("Invalid phone number");
-        // }
-        collegeUserCreateSubmit.disabled = true;
-        if (errors.length > 0) {
-            let p = "";
-            $.each(errors, function (key, value) {
-                p += value + '<br>';
-            });
-            showError(p, "#collegeUserFeedback");
-            collegeUserCreateSubmit.disabled = false;
-        } else {
-            const response = await fetch("/college-user-store", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    accept: "application/json",
+            if (formData.get('name').length < 2) {
+                errors.push("Invalid company name");
+            }
+            if (!emailRegex.test(formData.get('email'))) {
+                errors.push("Invalid company email");
+            }
+            if (!phoneNumberRegex.test(formData.get('phone'))) {
+                errors.push("Invalid company phone");
+            }
+            if (formData.get('address').length < 2) {
+                errors.push("Invalid company address");
+            }
+            collegeCreateSubmit.disabled = true;
+            if (errors.length > 0) {
+                let p = "";
+                $.each(errors, function (key, value) {
+                    p += value + '<br>';
+                });
+                showError(p, "#collegeFeedback");
+                collegeCreateSubmit.disabled = false;
+            } else {
+                const response = await fetch("/colleges", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        accept: "application/json",
+                    }
+                });
+                if (response.ok) {
+                    collegeCreateSubmit.disabled = false;
+                    const result = await response.json();
+                    document.getElementById('collegeID').value = "";
+                    if (result.status === "success") {
+                        document.getElementById('collegeID').value = "";
+                        collegeCreateForm.reset();
+                        showSuccess(result.message, "#collegeFeedback");
+                    } else {
+                        showError("An error occurred during the processing", "#collegeFeedback");
+                    }
+                } else if (response.status === 422) {
+                    collegeCreateSubmit.disabled = false;
+                    const errorData = await response.json();
+                    let errors = '';
+                    for (const key in errorData.errors) {
+                        errors += errorData.errors[key].join(' ') + '!<br>';
+                    }
+                    showError(errors, "#collegeFeedback");
+                } else if (response.status === 419) {
+                    collegeCreateSubmit.disabled = false;
+                    showError("You are not logged in", "#collegeFeedback");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                } else {
+                    collegeCreateSubmit.disabled = false;
+                    showError("Error occurred during processing", "#collegeFeedback");
                 }
-            });
-            if (response.ok) {
+            }
+        });
+    }
+
+    if (collegeUserCreateForm) {
+        collegeUserCreateForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            console.log(Object.fromEntries(formData.entries()));
+            const errors = [],
+                emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                phoneNumberRegex = /^\+254[17]\d{8}$/;
+
+            if (formData.get('first_name').length < 2) {
+                errors.push("Invalid first name");
+            }
+            if (formData.get('last_name').length < 2) {
+                errors.push("Invalid last name");
+            }
+            if (!emailRegex.test(formData.get('email'))) {
+                errors.push("Invalid email");
+            }
+            // if (!phoneNumberRegex.test(formData.get('phone'))) {
+            //     errors.push("Invalid phone number");
+            // }
+            collegeUserCreateSubmit.disabled = true;
+            if (errors.length > 0) {
+                let p = "";
+                $.each(errors, function (key, value) {
+                    p += value + '<br>';
+                });
+                showError(p, "#collegeUserFeedback");
                 collegeUserCreateSubmit.disabled = false;
-                const result = await response.json();
-                console.log(result);
-                document.getElementById('collegeUserID').value = "";
-                if (result.status === "success") {
+            } else {
+                const response = await fetch("/college-user-store", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        accept: "application/json",
+                    }
+                });
+                if (response.ok) {
+                    collegeUserCreateSubmit.disabled = false;
+                    const result = await response.json();
+                    console.log(result);
                     document.getElementById('collegeUserID').value = "";
-                    collegeUserCreateForm.reset();
-                    showSuccess(result.message, "#collegeUserFeedback");
+                    if (result.status === "success") {
+                        document.getElementById('collegeUserID').value = "";
+                        collegeUserCreateForm.reset();
+                        showSuccess(result.message, "#collegeUserFeedback");
+                    } else {
+                        showError(result.message, "#collegeUserFeedback");
+                    }
+                } else if (response.status === 422) {
+                    collegeUserCreateSubmit.disabled = false;
+                    const errorData = await response.json();
+                    let errors = '';
+                    for (const key in errorData.errors) {
+                        errors += errorData.errors[key].join(' ') + '!<br>';
+                    }
+                    showError(errors, "#collegeUserFeedback");
+                } else if (response.status === 419) {
+                    collegeUserCreateSubmit.disabled = false;
+                    showError("You are not logged in", "#collegeUserFeedback");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
                 } else {
-                    showError(result.message, "#collegeUserFeedback");
+                    collegeUserCreateSubmit.disabled = false;
+                    showError("Error occurred during processing", "#collegeUserFeedback");
                 }
-            } else if (response.status === 422) {
-                collegeUserCreateSubmit.disabled = false;
-                const errorData = await response.json();
-                let errors = '';
-                for (const key in errorData.errors) {
-                    errors += errorData.errors[key].join(' ') + '!<br>';
-                }
-                showError(errors, "#collegeUserFeedback");
-            } else if (response.status === 419) {
-                collegeUserCreateSubmit.disabled = false;
-                showError("You are not logged in", "#collegeUserFeedback");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
-            } else {
-                collegeUserCreateSubmit.disabled = false;
-                showError("Error occurred during processing", "#collegeUserFeedback");
             }
-        }
-    });
+        });
+    }
 
-    courseCreateForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        console.log(Object.fromEntries(formData.entries()));
-        const errors = [];
-        if (formData.get('name').length < 2) {
-            errors.push("Invalid course name");
-        }
-        if (errors.length > 0) {
-            let p = "";
-            $.each(errors, function (key, value) {
-                p += value + '<br>';
-            });
-            showError(p, "#courseFeedback");
-        } else {
-            const response = await fetch("/courses", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    accept: "application/json",
-                }
-            });
-            if (response.ok) {
-                courseCreateSubmit.disabled = false;
-                const result = await response.json();
-                console.log(result);
-                document.getElementById('courseID').value = "";
-                if (result.status === "success") {
-                    document.getElementById('courseID').value = "";
-                    courseCreateForm.reset();
-                    showSuccess(result.message, "#courseFeedback");
-                } else {
-                    showError(result.message, "#courseFeedback");
-                }
-            } else if (response.status === 422) {
-                courseCreateSubmit.disabled = false;
-                const errorData = await response.json();
-                let errors = '';
-                for (const key in errorData.errors) {
-                    errors += errorData.errors[key].join(' ') + '!<br>';
-                }
-                showError(errors, "#courseFeedback");
-            } else if (response.status === 419) {
-                courseCreateSubmit.disabled = false;
-                showError("You are not logged in", "#courseFeedback");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
-            } else {
-                courseCreateSubmit.disabled = false;
-                showError("Error occurred during processing", "#courseFeedback");
+    if (courseCreateForm) {
+        courseCreateForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            console.log(Object.fromEntries(formData.entries()));
+            const errors = [];
+            if (formData.get('name').length < 2) {
+                errors.push("Invalid course name");
             }
-        }
-    });
+            if (errors.length > 0) {
+                let p = "";
+                $.each(errors, function (key, value) {
+                    p += value + '<br>';
+                });
+                showError(p, "#courseFeedback");
+            } else {
+                const response = await fetch("/courses", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        accept: "application/json",
+                    }
+                });
+                if (response.ok) {
+                    courseCreateSubmit.disabled = false;
+                    const result = await response.json();
+                    console.log(result);
+                    document.getElementById('courseID').value = "";
+                    if (result.status === "success") {
+                        document.getElementById('courseID').value = "";
+                        courseCreateForm.reset();
+                        showSuccess(result.message, "#courseFeedback");
+                    } else {
+                        showError(result.message, "#courseFeedback");
+                    }
+                } else if (response.status === 422) {
+                    courseCreateSubmit.disabled = false;
+                    const errorData = await response.json();
+                    let errors = '';
+                    for (const key in errorData.errors) {
+                        errors += errorData.errors[key].join(' ') + '!<br>';
+                    }
+                    showError(errors, "#courseFeedback");
+                } else if (response.status === 419) {
+                    courseCreateSubmit.disabled = false;
+                    showError("You are not logged in", "#courseFeedback");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                } else {
+                    courseCreateSubmit.disabled = false;
+                    showError("Error occurred during processing", "#courseFeedback");
+                }
+            }
+        });
+    }
 
 
     document.addEventListener('click', function (e) {
@@ -273,7 +359,7 @@
             const response = fetch(`/courses/${id}`);
             response.then((res) => res.json()).then((data) => {
                 console.log(data);
-                
+
                 document.getElementById('courseID').value = data.id;
                 document.getElementById('courseName').value = data.name;
                 document.getElementById('courseDescription').value = data.description;

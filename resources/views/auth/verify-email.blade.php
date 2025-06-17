@@ -23,7 +23,7 @@
                             <div class="col-md-12 text-center">
                                 <form action="{{ route('password.email') }}" method="post">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary translatable">
                                         Resend Verification Email
                                     </button>
                                 </form>
@@ -35,7 +35,7 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger translatable">
                                         {{ __('Log Out') }} <i class="fa fa-sign-out"></i>
                                     </button>
                                 </form>

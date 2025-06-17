@@ -13,7 +13,7 @@
 
 @section('content')
     <main class="mt-3 p-2">
-        <section class="main-content">
+        <section class="content">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">

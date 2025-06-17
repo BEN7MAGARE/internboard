@@ -54,9 +54,10 @@ Route::get('skills', [JobsController::class, 'skills'])->name('skils');
 Route::resource('applications', ApplicationsController::class);
 
 Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoolStudentApplications'])->name('college.applicants');
-Route::get('college-applications', [ApplicationsController::class, 'collegeApplications'])->name('college.applications');
-Route::get('college-dashboard', [ApplicationsController::class, 'collegeDashboard'])->name('college.dashboard');
+Route::get('college-applications', [CollegeController::class, 'applications'])->name('college.applications');
+Route::get('college-dashboard', [CollegeController::class, 'dashboard'])->name('college.dashboard');
 Route::get('collegesdata',[CollegeController::class,'getColleges']);
+Route::get('college-students', [CollegeController::class, 'students'])->name('college.students');
 
 Route::resource('corporates', CorporateController::class);
 Route::get('corporatesdata',[CorporateController::class,'getCorporates']);

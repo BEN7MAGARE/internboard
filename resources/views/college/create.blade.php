@@ -17,12 +17,12 @@
         <section class="mt-2 p-2">
             <div class="card mb-5 radius-image p-2">
 
-                <form action="{{ route('college.store') }}" method="post" id="collegeCreateForm">
+                <form action="{{ route('colleges.store') }}" method="post" id="collegeAltCreateForm">
                     @csrf
                     <div class="card-body">
                         <h5><b>Institution Details</b></h5>
                         <hr>
-
+                        <input type="hidden" name="id" id="collegeID" value="">
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for="companyName">Institution Name</label>
