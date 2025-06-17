@@ -16,7 +16,7 @@
         <section class="mt-2 p-2">
             <div class="card mb-5 radius-image p-2">
 
-                <div class="card-header bg-white">
+                <div class="card-header">
                     <h4 class="mb-2"><strong>Add Your Company/Business Details</strong></h4>
                 </div>
 
@@ -145,7 +145,7 @@
 
                     <div id="corporateFeedback"></div>
 
-                    <div class="card-footer bg-white text-end p-2">
+                    <div class="card-footer  text-end p-2">
                         <button type="submit" class="btn btn-primary btn-md" id="corporateCreateSubmit"><i
                                 class="fa fa-server"></i> Submit </button>
                     </div>

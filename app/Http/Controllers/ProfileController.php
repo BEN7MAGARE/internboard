@@ -40,19 +40,24 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         if (auth()->user()->role === "corporate") {
-            $jobscount = auth()->user()->corporate->jobs()->count();
-            $applicationscount = Application::whereHas('job', function ($query) {
-                $query->where('corporate_id', auth()->user()->corporate_id);
-            })->count();
-            $employedcount = Application::whereHas('job', function ($query) {
-                $query->where('corporate_id', auth()->user()->corporate_id);
-            })->where('status', 'employed')->count();
-            return view('profile.corporate', [
-                'user' => $request->user(),
-                'jobscount' => $jobscount,
-                'applicationscount' => $applicationscount,
-                'employedcount' => $employedcount,
-            ]);
+            if (auth()->user()->corporate) {
+                $jobscount = auth()->user()->corporate->jobs()->count();
+                $applicationscount = Application::whereHas('job', function ($query) {
+                    $query->where('corporate_id', auth()->user()->corporate_id);
+                })->count();
+                $employedcount = Application::whereHas('job', function ($query) {
+                    $query->where('corporate_id', auth()->user()->corporate_id);
+                })->where('status', 'employed')->count();
+                return view('profile.corporate', [
+                    'user' => $request->user(),
+                    'jobscount' => $jobscount,
+                    'applicationscount' => $applicationscount,
+                    'employedcount' => $employedcount,
+                ]);
+            }else{
+                return redirect()->route('corporates.create');
+            }
+            
         }elseif (auth()->user()->role === "student"||auth()->user()->role === "worker") {
             $applicationscount = Application::where('user_id', auth()->user()->id)->count();
             $selectedapplications = Application::where('user_id', auth()->user()->id)->where('status', 'selected')->count();

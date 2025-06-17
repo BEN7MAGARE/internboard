@@ -46,37 +46,75 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <div class="card-header bg-white d-flex justify-content-between">
-                        <h5>Profile</h5>
-                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#changePasswordModal"><i class="bi bi-lock"></i>Change Password</a>
-                    </div>
-                    <div class="card-body pt-3">
-
-                        <div class="corporate-section mb-2">
-                            <div class="row">
-                                @if (!empty(auth()->user()->corporate->logo))
-                                    <div class="col-md-7">
-
-                                        <div class="d-flex justify-content-between">
-                                            <h5>Corporate Details</h5>
-                                            <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
-                                                    class="bi bi-pencil-square"></i> Edit</a>
-                                        </div>
-
-                                        <div class="corporate">
-                                            <div class="row">
-
-                                                <div class="col-md-4">
-                                                    <div class="corporate-logo">
-                                                        <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}"
-                                                            alt="{{ auth()->user()->corporate->name }}" class="img-fluid">
+                    <div class="card mt-2">
+                        <div class="card-header d-flex justify-content-between">
+                            <h5>Profile</h5>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#changePasswordModal"><i class="bi bi-lock"></i>Change Password</a>
+                        </div>
+                        <div class="card-body pt-3">
+    
+                            <div class="corporate-section mb-2">
+                                <div class="row">
+                                    @if (!empty(auth()->user()->corporate->logo))
+                                        <div class="col-md-7">
+    
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Corporate Details</h5>
+                                                <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
+                                                        class="bi bi-pencil-square"></i> Edit</a>
+                                            </div>
+    
+                                            <div class="corporate">
+                                                <div class="row">
+    
+                                                    <div class="col-md-4">
+                                                        <div class="corporate-logo">
+                                                            <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}"
+                                                                alt="{{ auth()->user()->corporate->name }}" class="img-fluid">
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="col-md-8">
+                                                        <p class="mb-1"><strong>Name:</strong>
+                                                            {{ auth()->user()->corporate->name }}</p>
+                                                        <p class="mb-1"><strong>Email:</strong>
+                                                            {{ auth()->user()->corporate->email }}
+                                                        </p>
+                                                        <p class="mb-1"><strong>Address:</strong>
+                                                            {{ auth()->user()->corporate->address }}</p>
+                                                        <p class="mb-1"><strong>Phone:</strong>
+                                                            {{ auth()->user()->corporate->phone }}
+                                                        </p>
+                                                        <p class="mb-1"><strong>Category:</strong>
+                                                            {{ auth()->user()->corporate->category?->name }}
+                                                        </p>
+                                                        <p class="mb-1"><strong>Size:</strong>
+                                                            {{ auth()->user()->corporate->size }}
+                                                        </p>
+                                                        <p class="mb-1"><strong>Mission/Vision:</strong>
+                                                            {{ auth()->user()->corporate->mission_vision }}
+                                                        </p>
                                                     </div>
                                                 </div>
-
+    
+                                            </div>
+    
+                                        </div>
+                                    @else
+                                        <div class="col-md-7">
+    
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Corporate Details</h5>
+                                                <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
+                                                        class="bi bi-pencil-square"></i>
+                                                    Edit</a>
+                                            </div>
+    
+                                            <h5 class="mb-2">Corporate Details</h5>
+    
+                                            <div class="corporate">
                                                 <div class="col-md-8">
                                                     <p class="mb-1"><strong>Name:</strong>
                                                         {{ auth()->user()->corporate->name }}</p>
@@ -99,79 +137,43 @@
                                                     </p>
                                                 </div>
                                             </div>
-
+    
                                         </div>
-
-                                    </div>
-                                @else
-                                    <div class="col-md-7">
-
+                                    @endif
+    
+                                    <div class="col-md-5">
+    
                                         <div class="d-flex justify-content-between">
-                                            <h5>Corporate Details</h5>
-                                            <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
-                                                    class="bi bi-pencil-square"></i>
-                                                Edit</a>
+                                            <h5>User Details</h5>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
+                                                class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                                         </div>
-
-                                        <h5 class="mb-2">Corporate Details</h5>
-
-                                        <div class="corporate">
-                                            <div class="col-md-8">
-                                                <p class="mb-1"><strong>Name:</strong>
-                                                    {{ auth()->user()->corporate->name }}</p>
-                                                <p class="mb-1"><strong>Email:</strong>
-                                                    {{ auth()->user()->corporate->email }}
-                                                </p>
-                                                <p class="mb-1"><strong>Address:</strong>
-                                                    {{ auth()->user()->corporate->address }}</p>
-                                                <p class="mb-1"><strong>Phone:</strong>
-                                                    {{ auth()->user()->corporate->phone }}
-                                                </p>
-                                                <p class="mb-1"><strong>Category:</strong>
-                                                    {{ auth()->user()->corporate->category?->name }}
-                                                </p>
-                                                <p class="mb-1"><strong>Size:</strong>
-                                                    {{ auth()->user()->corporate->size }}
-                                                </p>
-                                                <p class="mb-1"><strong>Mission/Vision:</strong>
-                                                    {{ auth()->user()->corporate->mission_vision }}
-                                                </p>
-                                            </div>
+    
+                                        <div class="user text-center">
+                                            @if (auth()->user()->image !== null)
+                                                <img src="{{ asset('profilepictures/' . auth()->user()->image) }}"
+                                                    alt="{{ auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}"
+                                                    class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%;">
+                                            @endif
+                                            <p class="mb-1"><strong>Name:</strong>
+                                                {{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
+                                            </p>
+                                            <p class="mb-1"><strong>Gender:</strong> {{ auth()->user()->gender }}</p>
+                                            <p class="mb-1"><strong>Email:</strong> {{ auth()->user()->email }}</p>
+                                            <p class="mb-1"><strong>Address:</strong> {{ auth()->user()->address }}</p>
+                                            <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
                                         </div>
-
+    
                                     </div>
-                                @endif
-
-                                <div class="col-md-5">
-
-                                    <div class="d-flex justify-content-between">
-                                        <h5>User Details</h5>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
-                                            class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                                    </div>
-
-                                    <div class="user text-center">
-                                        @if (auth()->user()->image !== null)
-                                            <img src="{{ asset('profilepictures/' . auth()->user()->image) }}"
-                                                alt="{{ auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}"
-                                                class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%;">
-                                        @endif
-                                        <p class="mb-1"><strong>Name:</strong>
-                                            {{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
-                                        </p>
-                                        <p class="mb-1"><strong>Gender:</strong> {{ auth()->user()->gender }}</p>
-                                        <p class="mb-1"><strong>Email:</strong> {{ auth()->user()->email }}</p>
-                                        <p class="mb-1"><strong>Address:</strong> {{ auth()->user()->address }}</p>
-                                        <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
-                                    </div>
-
                                 </div>
+    
                             </div>
-
                         </div>
+    
                     </div>
-
                 </div>
+
+                
             </div>
         </section>
     </main>
@@ -311,5 +313,6 @@
 
 @section('footer_scripts')
     <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/profile.js') }}"></script>
 @endsection

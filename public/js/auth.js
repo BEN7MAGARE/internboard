@@ -65,22 +65,20 @@
             errors.push("Invalid phone number")
         }
         if (errors.length > 0) {
+            studentSubmit.prop({ disabled: false });
+            studentSubmit.html('<i class="fa fa-server"></i> Submit');
             let p = ""
             $.each(errors, function (key, value) {
                 p += value;
             });
             showError(p, "#userFeedback");
-            studentSubmit.prop({ disabled: false });
-            studentSubmit.html('<i class="fa fa-server"></i> Submit');
-        } else {
-            console.log(data);
             
+        } else {            
             $.post("/account/store", data)
                 .done(function (params) {
-                    studentSubmit.prop({ disabled: true });
+                    studentSubmit.prop({ disabled: false });
                     studentSubmit.html('<i class="fa fa-server"></i> Submit');
                     let result = JSON.parse(params);
-                    console.log(result.url);
                     if (result.status === "success") {
                         showSuccess(result.message, "#userFeedback");
                         $this.trigger("reset");
@@ -92,7 +90,7 @@
                     }
                 })
                 .fail(function (error) {
-                    studentSubmit.prop({ disabled: true });
+                    studentSubmit.prop({ disabled: false });
                     studentSubmit.html('<i class="fa fa-server"></i> Submit');
                     if (error.status == 422) {
                         var errors = "";
