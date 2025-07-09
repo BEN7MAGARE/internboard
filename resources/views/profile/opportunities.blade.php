@@ -75,5 +75,6 @@ Jobs
 
 @section('footer_scripts')
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
 <script src="{{ asset('js/profile.js') }}"></script>
 @endsection
