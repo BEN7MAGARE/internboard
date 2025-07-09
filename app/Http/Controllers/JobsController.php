@@ -18,7 +18,7 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('categories', 'skills', 'categoriesWithJobs', 'index', 'jobsLocations', 'show');
+        $this->middleware('auth')->except('categories','search','jsonSearch', 'skills', 'categoriesWithJobs', 'index', 'jobsLocations', 'show');
         $this->category = new Category();
         $this->job = new Job();
         $this->skill = new Skill();
@@ -190,7 +190,7 @@ class JobsController extends Controller
         $params = $request->all();
         $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
         $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
-        $locations = isset($params['location']) ? collect($params['location'])->filter(fn($value) => is_string($value))->values() : collect();
+        $locations = isset($params['location']) ? json_decode($params['location'], true) : [];
         $query = $this->job->query();
         if (!empty($params['category_id'])) {
             $query->where('category_id', $params['category_id']);
@@ -207,8 +207,8 @@ class JobsController extends Controller
         if (!empty($educationLevels)) {
             $query->whereIn('education_level', $educationLevels);
         }
-        if ($locations->isNotEmpty()) {
-            $query->whereIn('location', $locations->toArray());
+        if (!empty($locations)) {
+            $query->whereIn('location', $locations);
         }
         $jobs = $query->paginate(10);
 
@@ -220,18 +220,18 @@ class JobsController extends Controller
         $params = $request->all();
         $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
         $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
-        $locations = isset($params['location']) ? collect($params['location'])->filter(fn($value) => is_string($value))->values() : collect();
+        $locations = isset($params['location']) ? json_decode($params['location'], true) : [];
         $query = $this->job->query();
-        if (!empty($params['corporate_id'])) {
+        if (isset($params['corporate_id']) && $params['corporate_id'] !== null) {
             $query->where('corporate_id', $params['corporate_id']);
         }
-        if (!empty($params['category_id'])) {
+        if (isset($params['category_id']) && $params['category_id'] !== null) {
             $query->where('category_id', $params['category_id']);
         }
-        if (!empty($params['employment_type'])) {
-            $query->where('employment_type', $params['employment_type']);
+        if (isset($params['employment_type']) && $params['employment_type'] !== null) {
+            $query->where('type', $params['employment_type']);
         }
-        if (!empty($params['job_type'])) {
+        if (isset($params['job_type']) && $params['job_type'] !== null) {
             $query->where('job_type', $params['job_type']);
         }
         if (!empty($experienceLevels)) {
@@ -240,8 +240,8 @@ class JobsController extends Controller
         if (!empty($educationLevels)) {
             $query->whereIn('education_level', $educationLevels);
         }
-        if ($locations->isNotEmpty()) {
-            $query->whereIn('location', $locations->toArray());
+        if (!empty($locations)) {
+            $query->whereIn('location', $locations);
         }
         $jobs = $query->get();
         return response()->json($jobs);

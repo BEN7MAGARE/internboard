@@ -90,8 +90,7 @@
 
     <main id="main">
         <section class="main-content">
-            <hr>
-            <div class="page-title" data-aos="fade">
+            <div class="page-title mt-2" data-aos="fade">
                 <nav class="breadcrumbs">
                     <div class="container-fluid">
                         <h4 class="display-7 mb-0 text-danger">Find Your Next Opportunity</h1>
@@ -109,13 +108,13 @@
                                     <div class="row">
                                         @csrf
                                         <div class="col-md-3 mb-2">
-                                            <select name="category_id" id="searchCategoryID" class="form-select" required>
+                                            <select name="category_id" id="searchCategoryID" class="form-select">
 
                                             </select>
                                         </div>
 
                                         <div class="col-md-3 mb-2">
-                                            <select name="type" id="searchEmploymentType" class="form-select" required>
+                                            <select name="type" id="searchEmploymentType" class="form-select">
                                                 <option value="">Employment Type</option>
                                                 <option value="Internship">Internship</option>
                                                 <option value="Part-time">Part Time</option>
@@ -127,7 +126,7 @@
                                         </div>
 
                                         <div class="col-md-3 mb-2">
-                                            <select name="job_type" id="searchJobType" class="form-select" required>
+                                            <select name="job_type" id="searchJobType" class="form-select">
                                                 <option value="">Job Type</option>
                                                 <option value="Remote">Remote</option>
                                                 <option value="On-site">On-Site</option>
@@ -173,7 +172,7 @@
                                                     <h6>{{ $item->title }}</h6>
                                                 </div>
                                                 <div class="d-flex gap-2">
-                                                    <div class="text-center">
+                                                    <div class="text-center d-none d-md-block">
                                                         @if ($item->corporate->logo !== null)
                                                             <img src="{{ asset('corporate_logos/' . $item->corporate->logo) }}"
                                                                 alt="{{ $item->corporate->name }}"

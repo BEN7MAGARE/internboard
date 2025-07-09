@@ -169,6 +169,8 @@
     });
 
     function filterJobs() {
+        console.log('I was here');
+        
         let experience = $('input[name="experienceLevel"]:checked').map(function () {
             return $(this).val();
         }).get();
@@ -189,6 +191,8 @@
             location: JSON.stringify(locations)
         };
         $.post('/jobs-json-search', data).done(function (jobs) {
+            console.log(jobs);
+            
             if (jobs.length > 0) {
                 jobrendersection.html(composeJobs(jobs));
             } else {
