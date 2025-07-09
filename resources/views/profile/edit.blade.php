@@ -89,7 +89,7 @@
                                                 {{ $education[0]?->level . ' in ' . $education[0]?->course }}
                                             @endif</p>
                                             
-                                            <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}</p>
+                                            <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization .' '. auth()->user()->profile?->years_of_experience.' years' }}</p>
                                             <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
                                             <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
                                             <p class="mb-1"><b>Address</b>&nbsp;{{ auth()->user()->address }}</p>
