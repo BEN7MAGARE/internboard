@@ -151,7 +151,7 @@
                             <div>
                                 @if (count($jobs) <= 0)
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <strong>Holy guacamole!</strong> You may need to update your profile to see jobs
+                                        You may need to update your profile to see jobs
                                         that match your skill set <a href="{{ route('profile.edit') }}"
                                             class="btn btn-primary btn-sm">Update your Profile </a>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"

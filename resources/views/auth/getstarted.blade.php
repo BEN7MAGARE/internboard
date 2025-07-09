@@ -52,7 +52,7 @@
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="corporateSelectionRadio" required value="corporate">&nbsp;&nbsp;&nbsp;
                                         <label class="form-check-label translatable" for="corporateSelectionRadio"><b>Join as
-                                                corporate</b>
+                                                Employer</b>
                                             <br>
                                             <span class="translatable">Looking to hire or employ the best talent.</span>
                                         </label>
@@ -63,8 +63,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="collegeSelectionRadio" required value="college">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label translatable" for="collegeSelectionRadio"><b>Join as University /
-                                                College</b> <br>
+                                        <label class="form-check-label translatable" for="collegeSelectionRadio"><b>Join as College / University</b> <br>
                                             <span class="translatable">Looking to get notified of opportunities when they arise.</span>
                                         </label>
                                     </div>
