@@ -166,7 +166,7 @@
 @endsection
 
 
-<div class="modal fade" id="createCorporateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="createCorporateModal"c tabindex="-1"
     aria-labelledby="createCorporateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -280,13 +280,10 @@
                     <button type="submit" class="btn btn-primary" id="corporateContactPersonCreateSubmit">Save</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
-
-
-
-
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>

@@ -46,7 +46,7 @@
         collegeAltCreateForm.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(this);
-            console.log(Object.fromEntries(formData.entries()));
+            collegeCreateSubmit.disabled = true;
             const errors = [],
                 emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
                 phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
@@ -118,7 +118,6 @@
         collegeCreateForm.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(this);
-            console.log(Object.fromEntries(formData.entries()));
             const errors = [],
                 emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
                 phoneNumberRegex = /^(\+254|0)[17]\d{8}$/;
@@ -259,7 +258,6 @@
         courseCreateForm.addEventListener("submit", async function (event) {
             event.preventDefault();
             const formData = new FormData(this);
-            console.log(Object.fromEntries(formData.entries()));
             const errors = [];
             if (formData.get('name').length < 2) {
                 errors.push("Invalid course name");

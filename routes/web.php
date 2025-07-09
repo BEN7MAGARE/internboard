@@ -13,9 +13,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [ApplicationsController::class, 'welcome'])->name('home');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -107,3 +105,5 @@ Route::get('/refresh-csrf', function () {
 
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/training.php';
+

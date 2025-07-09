@@ -216,4 +216,58 @@
   }, 10 * 60 * 1000); // every 10 minutes
 
 
+  $("#job-slider").slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 6000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  });
+
+  $("#slider-job-home-prev").click(function () {
+    $("#job-slider").slick("slickPrev");
+  });
+  $("#slider-job-home-next").click(function () {
+    $("#job-slider").slick("slickNext");
+  });
+  $("#slider-job-home-prev").addClass("slick-disabled");
+  $("#job-slider").on("afterChange", function () {
+    if ($(".slick-prev").hasClass("slick-disabled")) {
+      $("#slider-job-home-prev").addClass("slick-disabled");
+    } else {
+      $("#slider-job-home-prev").removeClass("slick-disabled");
+    }
+    if ($(".slick-next").hasClass("slick-disabled")) {
+      $("#slider-job-home-next").addClass("slick-disabled");
+    } else {
+      $("#slider-job-home-next").removeClass("slick-disabled");
+    }
+  });
+
 })();

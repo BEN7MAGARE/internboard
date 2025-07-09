@@ -22,32 +22,21 @@ class CollegeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company.name' => 'required|string|min:2|max:255',
-            'company.email' => 'required|email|unique:colleges,email',
-            'company.phone' => 'required|regex:/^(\+254|0)[17]\d{8}$/|unique:colleges,phone',
-            'company.address' => 'required|string|min:2',
-            'user.first_name' => 'required|string|min:2|max:50',
-            'user.last_name' => 'required|string|min:2|max:50',
-            'user.role' => 'required|string',
-            'user.email' => 'required|email|unique:users,email',
-            'user.phone' => 'required|regex:/^(\+254|0)[17]\d{8}$/|unique:users,phone',
-            'user.password' => 'required|string|min:8|confirmed',
+            'name' => 'required|string|min:2|max:255',
+            'email' => 'required|email|unique:colleges,email',
+            'phone' => 'required|regex:/^(\+254|0)[17]\d{8}$/|unique:colleges,phone',
+            'address' => 'required|string|min:2',
         ];
     }
 
     public function messages()
     {
         return [
-            'company.name.required' => 'The company name is required.',
-            'company.email.required' => 'The company email is required.',
-            'company.email.unique' => 'This company email is already taken.',
-            'company.phone.regex' => 'Please enter a valid company phone number.',
-            'user.first_name.required' => 'First name is required.',
-            'user.last_name.required' => 'Last name is required.',
-            'user.email.required' => 'The user email is required.',
-            'user.email.unique' => 'This user email is already registered.',
-            'user.phone.regex' => 'Please enter a valid user phone number.',
-            'user.password.confirmed' => 'Password confirmation does not match.',
+            'name.required' => 'The name is required.',
+            'email.required' => 'The email is required.',
+            'email.unique' => 'This email is already taken.',
+            'phone.regex' => 'Please enter a valid phone number.',
+            
         ];
     }
 }

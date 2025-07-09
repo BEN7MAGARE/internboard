@@ -11,15 +11,29 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
+use App\Models\Corporate;
 
 class ApplicationsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("auth")->except('elearning');
+        $this->middleware("auth")->except('elearning', 'welcome');
         $this->application = new Application();
         $this->job = new Job();
         $this->user = new User();
+        $this->corporate = new Corporate();
+    }
+
+    public function welcome()
+    {
+        $jobs = $this->job->latest()->take(12)->get();
+        
+        $corporates = $this->corporate
+            ->withCount('jobs')
+            ->orderBy('jobs_count', 'desc')
+            ->take(10)
+            ->get();
+        return view('welcome', compact('jobs', 'corporates'));
     }
     /**
      * Display a listing of the resource.

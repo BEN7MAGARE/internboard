@@ -203,7 +203,7 @@ h6 {
     order: 1;
   }
 
-  #second-nav{
+  #second-nav {
     order: 2;
     margin-right: 3px;
   }
@@ -2933,4 +2933,131 @@ section,
 
 .salary span {
   margin-right: 2em;
+}
+
+.shadow-sm {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.company-logo {
+  width: 150px;
+  height: 130px;
+}
+
+.company-name {
+  font-size: 12px;
+}
+
+.slider-nav-main {
+  display: flex;
+  justify-content: right;
+  text-align: center;
+}
+
+.slider-nav-main div {
+  width: 6em;
+}
+
+.slider-nav-main div i {
+  font-size: 18px;
+}
+
+.slider-nav-main div i:nth-child(1) {
+  margin-right: .5em;
+}
+
+.slick-disabled {
+  opacity: 0.6;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 43%;
+}
+
+.slick-arrow {
+  width: 35px;
+  height: 50px;
+  line-height: 60px;
+  top: 43%;
+  border-radius: 5px;
+  color: #000;
+  z-index: 999;
+  background: #fff;
+  position: absolute;
+  font-size: 22px;
+  box-shadow: 5px 5px 15px rgb(0 0 0 / 15%);
+  cursor: pointer;
+  text-align: center;
+}
+
+
+/** Slick slider start**/
+.slick-slider-area {
+  position: relative;
+}
+
+.slick-slide-item {
+  padding: 0 15px !important;
+}
+
+.slick-arrow-buton {
+  position: absolute;
+  top: 43%;
+}
+
+.slick-arrow-buton {
+  width: 25px;
+  height: 40px;
+  line-height: 40px;
+  top: 43%;
+  border-radius: 5px;
+  color: #000;
+  z-index: 999;
+  background: #fff;
+  position: absolute;
+  font-size: 22px;
+  box-shadow: 5px 5px 15px rgb(0 0 0 / 15%);
+  cursor: pointer;
+  text-align: center;
+}
+
+.slick-next {
+  right: -15px;
+}
+
+.slick-prev {
+  left: -15px;
+}
+
+.slick-slide,
+.slick-slide:focus * {
+  outline: none !important;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+.sh-3.bg-active .navbar-expand-lg .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
+
+.brand-image {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 5px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.brand-image p {
+  font-size: 14px;
+  border-top: 2px solid #006544;
+  padding: 5px 0;
+  margin: 0;
 }

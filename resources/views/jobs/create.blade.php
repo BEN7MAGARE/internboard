@@ -107,10 +107,8 @@
 
                         <div class="col-md-6 form-group">
                             <label for="skills">Skills</label>
-
                             <div class="form-group">
                                 <select name="skills" id="skills" class="form-control" multiple style="width:100%;">
-
                                 </select>
                             </div>
                         </div>
