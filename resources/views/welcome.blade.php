@@ -64,8 +64,10 @@
                         </form>
                     </div>
                     <div class="mt-4" data-aos="fade-up" data-aos-delay="400">
-                        <h5 class="translatable">Get started quickly by industries</h5>
-                        <div class="mt-2 d-flex flex-wrap gap-3 gy-4" id="categoriesWithJobs"></div>
+                        {{-- @if (count())
+                            <h5 class="translatable">Get started quickly by industries</h5>
+                            <div class="mt-2 d-flex flex-wrap gap-3 gy-4" id="categoriesWithJobs"></div>
+                        @endif --}}
                     </div>
                 </div>
             </div>
