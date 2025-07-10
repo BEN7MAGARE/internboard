@@ -148,7 +148,7 @@
                             </div>
 
                             <div>
-                                @if (count($jobs) <= 0)
+                                {{-- @if (count($jobs) <= 0)
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                         You may need to update your profile to see jobs
                                         that match your skill set <a href="{{ route('profile.edit') }}"
@@ -156,7 +156,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                                             aria-label="Close"></button>
                                     </div>
-                                @else
+                                @else --}}
                                     <div id="jobrendersection">
 
                                         @foreach ($jobs as $item)
@@ -168,10 +168,13 @@
                                             @endphp
                                             <div class="job card bg-white rounded p-3 job-card"
                                                 data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
+
                                                 <div class="title">
                                                     <h6>{{ $item->title }}</h6>
                                                 </div>
+
                                                 <div class="d-flex gap-2">
+
                                                     <div class="text-center d-none d-md-block">
                                                         @if ($item->corporate->logo !== null)
                                                             <img src="{{ asset('corporate_logos/' . $item->corporate->logo) }}"
@@ -182,7 +185,9 @@
                                                             <p class="company-name"><i>{{ $item->corporate->name }}</i></p>
                                                         @endif
                                                     </div>
+
                                                     <div class="">
+                                                        
                                                         <div class="d-flex flex-wrap gap-2">
                                                             <span class="salary-badge p-1 rounded">Level:
                                                                 {{ $item->experience_level }}</span>
@@ -193,6 +198,7 @@
                                                             <span class="salary-badge p-1 rounded">Positions:
                                                                 {{ $item->no_of_positions }}</span>
                                                         </div>
+
                                                         <div class="desciption p-2">
                                                             @php
                                                                 $description = $item->description;
@@ -203,20 +209,26 @@
                                                                 <p>{{ $description }}</p>
                                                             @endif
                                                         </div>
+
                                                         <div class="skills ml-2">{!! $skilltext !!}</div>
+
                                                         <div class="location d-flex justify-content-between p-2">
+
                                                             <div>
                                                                 <small>
                                                                     <i class="bi bi-geo-alt-fill text-danger"></i>&nbsp;<span>{{ $item->location }}</span>
                                                                 </small>
                                                             </div>
+
                                                             <div>
                                                                 <small>Application Deadline:
                                                                     {!! $item->application_end_date !== null
                                                                         ? "<span class='text-danger'>" . date('j M Y', strtotime($item->application_end_date)) . '</span>'
                                                                         : "<span class='text-danger'>Not specified</span>" !!}</small>
                                                             </div>
+
                                                         </div>
+
                                                     </div>
                                                 </div>
 
@@ -234,7 +246,7 @@
                                             </div>
                                         </div>
                                     </section>
-                                @endif
+                                {{-- @endif --}}
 
                             </div>
                         </div>

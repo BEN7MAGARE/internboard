@@ -38,10 +38,11 @@
     $("body").on("click", ".job", function () {
         let job_id = $(this).data('id');
         let ref_no = $(this).data('ref_no');
+        console.log(ref_no);
+        console.log(job_id);
+        
         $("#jobDetailsModalToggle").modal("show");
-        $.getJSON('/jobs/' + ref_no, function (value) {
-            console.log(value);
-            
+        $.getJSON('/jobs/' + job_id, function (value) {
             $("#jobModalTitle").html("<b>" + value?.title + "</b>");
             let skill = '', requirements = JSON.parse(value.requirements), reqdiv = '',
                 qualifications = JSON.parse(value.qualifications), qualdiv = '',
@@ -191,8 +192,6 @@
             location: JSON.stringify(locations)
         };
         $.post('/jobs-json-search', data).done(function (jobs) {
-            console.log(jobs);
-            
             if (jobs.length > 0) {
                 jobrendersection.html(composeJobs(jobs));
             } else {

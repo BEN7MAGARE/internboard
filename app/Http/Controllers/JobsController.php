@@ -74,7 +74,6 @@ class JobsController extends Controller
         if (auth()->user()->role === 'corporate') {
             $validated['corporate_id'] = auth()->user()->corporate_id;
         }
-
         DB::beginTransaction();
         if (isset($validated['id']) || $validated['id'] !== null || $validated['id'] !== '') {
             $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
