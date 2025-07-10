@@ -166,6 +166,7 @@
                                                     $skilltext .= "<span>$skill->name</span>";
                                                 }
                                             @endphp
+                                            <a href="{{ route('jobs.show', $item->ref_no) }}">
                                             <div class="job card bg-white rounded p-3 job-card"
                                                 data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
 
@@ -233,6 +234,7 @@
                                                 </div>
 
                                             </div>
+                                            </a>
                                         @endforeach
 
                                     </div>

@@ -55,7 +55,7 @@
                                     <p><b>Requirements</b></p>
                                     <ul>
                                         @if ($job->requirements !== null)
-                                            @foreach ($job->requirements as $item)
+                                            @foreach (json_decode($job->requirements,true) as $item)
                                                 <li>{{ $item }}</li>
                                             @endforeach
                                         @else
@@ -68,7 +68,7 @@
                                     <p><b>Qualifications</b></p>
                                     <ul>
                                         @if ($job->qualifications !== null)
-                                            @foreach ($job->qualifications as $item)
+                                            @foreach (json_decode($job->qualifications,true) as $item)
                                                 <li>{{ $item }}</li>
                                             @endforeach
                                         @else
