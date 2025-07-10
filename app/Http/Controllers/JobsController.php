@@ -94,7 +94,7 @@ class JobsController extends Controller
     public function show(string $ref_no)
     {
         $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->first();
-        return json_encode($job);
+        return view('jobs.show', compact('job'));
     }
 
     public function edit($ref_no)
@@ -123,7 +123,7 @@ class JobsController extends Controller
             }
             return view('jobs.apply', compact('job', 'applied'));
         } else {
-            return redirect()->back()->with('errors', 'You are not authorised to access this resource.');
+            return redirect('/')->with('errors', 'You are not authorised to access this resource.');
         }
     }
 

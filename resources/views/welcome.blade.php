@@ -199,6 +199,7 @@
                                 }
                             }
                         @endphp
+                        <a href="{{ route('jobs.show', $item->ref_no) }}">
                         <div class="slide slide-box" data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
                             <div class="card p-3">
 
@@ -237,14 +238,13 @@
                                                 </small>
                                             </div>
                                         </div>
-
-
                                     </div>
 
                                 </div>
-
+                                
                             </div>
                         </div>
+                        </a>
                     @endforeach
                 </div>
                 <div class="slider-nav-main mt-1">
@@ -280,6 +280,7 @@
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>
+    <script src="{{ asset('js/job.js') }}"></script>
     <script>
         $(document).ready(function() {
             getCategoriesOptions(['#searchCategoryID']);
