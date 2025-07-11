@@ -107,8 +107,7 @@
 
                                         <div class="d-flex justify-content-between">
                                             <h5>User Details</h5>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
-                                                class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                            
                                         </div>
 
                                         <div class="user text-center">
@@ -126,7 +125,8 @@
                                             <p class="mb-1"><strong>Address:</strong> {{ auth()->user()->address }}</p>
                                             <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
                                         </div>
-
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
+                                        class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit Personal Information</a>
                                     </div>
                                 </div>
 
@@ -225,7 +225,7 @@
 
                             <div class="col-md-6 mb-2">
                                 <label>Gender</label>
-                                <select name="gender" id="gender" class="form-select">
+                                <select name="gender" id="userGender" class="form-select">
                                     <option value="">Select Gender</option>
                                     <option value="Male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
                                     <option value="Female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female

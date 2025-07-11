@@ -51,11 +51,10 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="corporateSelectionRadio" required value="corporate">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label translatable" for="corporateSelectionRadio"><b>Join as
+                                        <label class="form-check-label translatable" for="corporateSelectionRadio"><b class="translatable">Join as
                                                 Employer</b>
-                                            <br>
-                                            <span class="translatable">Looking to hire or employ the best talent.</span>
-                                        </label>
+                                        </label><br>
+                                        <span class="translatable">Looking to hire or employ the best talent.</span>
                                     </div>
                                 </div>
                                 <hr>
@@ -63,9 +62,9 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="collegeSelectionRadio" required value="college">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label translatable" for="collegeSelectionRadio"><b>Join as College / University</b> <br>
-                                            <span class="translatable">Looking to get notified of opportunities when they arise.</span>
-                                        </label>
+                                        <label class="form-check-label translatable" for="collegeSelectionRadio"><b class="translatable">Join as College / University</b>
+                                        </label><br>
+                                        <span class="translatable">Looking to get notified of opportunities when they arise.</span>
                                     </div>
                                 </div>
                                 <hr>
@@ -73,9 +72,9 @@
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="userRoleSelection" required value="student">&nbsp;&nbsp;&nbsp;
-                                        <label class="form-check-label translatable" for="userRoleSelection"><b>Join as Job Seeker</b> <br>
-                                            <span class="translatable">Seeking access to internship / employment opportunities.</span>
-                                        </label>
+                                        <label class="form-check-label translatable" for="userRoleSelection"><b class="translatable">Join as Job Seeker</b>
+                                        </label><br>
+                                        <span class="translatable">Seeking access to internship / employment opportunities.</span>
                                     </div>
                                 </div>
                             </div>

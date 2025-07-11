@@ -126,7 +126,7 @@
                     <li class="{!! Request::is('corporates') ? 'active' : '' !!}">
                         <a href="{{ route('corporates.index') }}">
                             <i class="bi bi-briefcase"></i>
-                            Corporates / Business
+                            Employers / Business
                         </a>
                     </li>
 

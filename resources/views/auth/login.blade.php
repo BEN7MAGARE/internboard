@@ -19,7 +19,7 @@ Sign in @parent
                 <div class="card mt-5 mb-5 radius-image p-4">
 
                     <div class="card-header bg-white text-center">
-                        <h4 class="mb-2"><strong>Sign In</strong></h4>
+                        <h4 class="mb-2"><strong class="translatable">Sign In</strong></h4>
                     </div>
 
                     <form action="{{ route('login') }}" method="post">

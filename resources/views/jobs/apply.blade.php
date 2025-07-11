@@ -12,9 +12,8 @@
 @section('content')
 <main class="main"> 
     <section class="main-content">
-        <hr>
         <div class="page-title" data-aos="fade">
-            <nav class="breadcrumbs">
+            <nav class="breadcrumbs mt-3">
                 <div class="container-fluid">
                     <ol>
                         <li><a href="/">Home</a></li>

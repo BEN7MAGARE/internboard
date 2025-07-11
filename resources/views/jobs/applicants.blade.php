@@ -175,7 +175,7 @@ Applicants Management
                     </div>
 
                     <!-- Cover Letter Modal -->
-                    <div class="modal fade" id="coverLetterModal{{ $item->id }}" tabindex="-1" aria-labelledby="coverLetterModalLabel{{ $item->id }}" aria-hidden="true">
+                    <div class="modal fade" id="coverLetterModal{{ $item->id }}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="coverLetterModalLabel{{ $item->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -198,6 +198,7 @@ Applicants Management
                             </div>
                         </div>
                     </div>
+                    
                     @endforeach
                 </div>
                 @else
