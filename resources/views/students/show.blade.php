@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 
 @section('title')
     Student Profile @parent

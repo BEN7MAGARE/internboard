@@ -119,6 +119,7 @@
 
                     <div class="nav-language">
                         <select class="lang-selector form-select text-primary">
+                            <option value="">Change Language</option>
                             <option value="en">English</option>
                             <option value="sw">Kiswahili</option>
                         </select>

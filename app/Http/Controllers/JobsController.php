@@ -181,6 +181,12 @@ class JobsController extends Controller
         }
     }
 
+    public function applicationsDetails($id)
+    {
+        $application = $this->application->with('applicant.profile')->where('id', $id)->first();
+        return json_encode($application);
+    }
+
     public function jobsLocations()
     {
         $locations = $this->job->select('location')->distinct()->pluck('location');

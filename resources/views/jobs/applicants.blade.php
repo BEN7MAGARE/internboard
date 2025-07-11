@@ -139,7 +139,7 @@ Applicants Management
                                             <p class="mb-1"><strong>Reason for applying:</strong> {{ $item->reason }}</p>
                                             <p class="mb-0"><strong>Cover letter:</strong> {{ Str::limit($item->cover_letter, 150) }}</p>
                                             @if (strlen($item->cover_letter) > 150)
-                                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#coverLetterModal{{ $item->id }}">Read more</a>
+                                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#applicationDetailsModal" data-id="{{$item->id}}" id="applicationDetailsToggle">Read more</a>
                                             @endif
                                         </div>
                                     </div>
@@ -169,31 +169,6 @@ Applicants Management
                                             <strong>{{ $item->status == 'selected' ? 'Selected' : 'Select Candidate' }}</strong>
                                         </label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cover Letter Modal -->
-                    <div class="modal fade" id="coverLetterModal{{ $item->id }}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="coverLetterModalLabel{{ $item->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="coverLetterModalLabel{{ $item->id }}">Cover Letter - {{ $item->applicant->first_name }} {{ $item->applicant->last_name }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <h6 class="fw-bold">Reason for Applying</h6>
-                                        <p>{{ $item->reason }}</p>
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-bold">Full Cover Letter</h6>
-                                        <p>{{ $item->cover_letter }}</p>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -236,10 +211,35 @@ Applicants Management
         </form>
     </div>
 </main>
+
+<div class="modal fade" id="applicationDetailsModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="coverLetterModalLabel{{ $item->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="coverLetterModalLabel{{ $item->id }}">Cover Letter - {{ $item->applicant->first_name }} {{ $item->applicant->last_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6 class="fw-bold">Reason for Applying</h6>
+                    <p id="applicationReason"></p>
+                </div>
+                <div>
+                    <h6 class="fw-bold">Full Cover Letter</h6>
+                    <p id="applicationCoverLetter"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('footer_scripts')
 <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/functions.js') }}"></script>
 <script src="{{ asset('js/job.js') }}"></script>
 <script>
     $(document).ready(function() {
@@ -267,6 +267,15 @@ Applicants Management
                 </div>
             `);
         });
+
+        $('body').on('click','#applicationDetailsToggle', function() {
+            const applicationid = $(this).data('id')
+            $.getJSON(`/application-details/${applicationid}`, function(data) {
+                $('#applicationDetailsModal').modal('show');
+                $('#applicationReason').html(data.reason);
+                $('#applicationCoverLetter').html(data.cover_letter);   
+            })
+        })
     });
 </script>
 @endsection

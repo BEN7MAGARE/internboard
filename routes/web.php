@@ -44,6 +44,7 @@ Route::post('jobs-json-search', [JobsController::class, 'jsonSearch'])->name('jo
 Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
 Route::get('job-applications/{ref_no}', [JobsController::class, 'applications'])->name('job.applications');
+Route::get('application-details/{id}', [JobsController::class, 'applicationsDetails'])->name('job.applications.details');
 Route::get('categoriesdata', [JobsController::class, 'categories']);
 Route::get('categories-with-jobs', [JobsController::class, 'categoriesWithJobs']);
 
@@ -80,7 +81,7 @@ Route::resource('courses', CourseController::class);
 Route::get('coursesdata',[CourseController::class,'getCourses']);
 Route::get('coursescategoriesdata',[CourseController::class,'getCourseCategories']);
 
-Route::get('student/{id}', [StudentController::class, 'show'])->name('student.details');
+Route::get('student/{id}', [StudentController::class, 'profile'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
 Route::get('download/{file}', [ApplicationsController::class, 'download'])->name('download.file');
 

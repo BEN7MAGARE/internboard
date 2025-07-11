@@ -89,6 +89,11 @@ class StudentController extends Controller
         return json_encode($student);
     }
 
+    function profile() {
+        $student = User::with(['profile', 'college', 'student'])->findOrFail(auth()->id());
+        return view('students.show', compact('student'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
