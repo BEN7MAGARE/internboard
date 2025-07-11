@@ -33,13 +33,22 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'category_id' => 'required',
-            'name' => 'required',
-            'description' => 'nullable',
-        ]);
-        Subcategory::create($validated);
-        return json_encode(['status' => 'success', 'message' => 'Subcategory created successfully']);
+        if (isset($request->id) && $request->id) {
+            $validated = $request->validate([
+                'name' => 'required',
+                'description' => 'nullable',
+            ]);
+            Subcategory::findOrFail($request->id)->update($validated);
+            return json_encode(['status' => 'success', 'message' => 'Subcategory updated successfully']);
+        } else {
+            $validated = $request->validate([
+                'category_id' => 'required',
+                'name' => 'required',
+                'description' => 'nullable',
+            ]);
+            $subcategory = Subcategory::create($validated);
+            return json_encode(['status' => 'success', 'message' => 'Subcategory created successfully']);
+        }
     }
 
     /**

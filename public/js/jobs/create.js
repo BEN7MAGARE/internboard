@@ -236,7 +236,7 @@
                     'X-CSRF-TOKEN': csrfToken,
                     'Accept': 'application/json'
                 }
-             });
+            });
             if (response.ok) {
                 const result = await response.json();
                 if (result.status === "success") {
@@ -330,34 +330,38 @@
         }
     });
 
-    addQualificationToggle.addEventListener('click', function () {
-        const qualification = jobQualification.value;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${qualification}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteQualificationToggle"><i class="bi bi-trash"></i></button></td>`;
-        jobQualificationsTableBody.append(tr);
-        jobQualification.value = '';
-        document.addEventListener('click', function (event) {
-            const deleteQualificationToggle = event.target.closest('#deleteQualificationToggle');
-            if (deleteQualificationToggle) {
-                event.preventDefault();
-                deleteQualificationToggle.closest('tr').remove();
-            }
+    if (addQualificationToggle) {
+        addQualificationToggle.addEventListener('click', function () {
+            const qualification = jobQualification.value;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${qualification}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteQualificationToggle"><i class="bi bi-trash"></i></button></td>`;
+            jobQualificationsTableBody.append(tr);
+            jobQualification.value = '';
+            document.addEventListener('click', function (event) {
+                const deleteQualificationToggle = event.target.closest('#deleteQualificationToggle');
+                if (deleteQualificationToggle) {
+                    event.preventDefault();
+                    deleteQualificationToggle.closest('tr').remove();
+                }
+            });
         });
-    });
+    }
 
-    addRequirementToggle.addEventListener('click', function () {
-        const requirement = jobRequirement.value,
-        tr = document.createElement('tr');
-        tr.innerHTML = `<td>${requirement}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteRequirementToggle"><i class="bi bi-trash"></i></button></td>`;
-        jobRequirementsTableBody.append(tr);
-        jobRequirement.value = '';
-        document.addEventListener('click', function (event) {
-            const deleteRequirementToggle = event.target.closest('#deleteRequirementToggle');
-            if (deleteRequirementToggle) {
-                event.preventDefault();
-                deleteRequirementToggle.closest('tr').remove();
-            }
+    if (addRequirementToggle) {
+        addRequirementToggle.addEventListener('click', function () {
+            const requirement = jobRequirement.value,
+                tr = document.createElement('tr');
+            tr.innerHTML = `<td>${requirement}</td><td><button type="button" class="btn btn-danger btn-sm" id="deleteRequirementToggle"><i class="bi bi-trash"></i></button></td>`;
+            jobRequirementsTableBody.append(tr);
+            jobRequirement.value = '';
+            document.addEventListener('click', function (event) {
+                const deleteRequirementToggle = event.target.closest('#deleteRequirementToggle');
+                if (deleteRequirementToggle) {
+                    event.preventDefault();
+                    deleteRequirementToggle.closest('tr').remove();
+                }
+            });
         });
-    });
+    }
 
 })();

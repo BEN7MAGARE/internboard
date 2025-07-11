@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Subcategory;
 use App\Models\Job;
+use App\Models\Subcategory;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -13,6 +13,7 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,13 +38,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'slug' => 'nullable',
-            'description' => 'nullable',
-        ]);
-        Category::create($validated);
-        return json_encode(['status' => 'success', 'message' => 'Category created successfully']);
+        if (isset($request->id) && $request->id) {
+            $validated = $request->validate([
+                'name' => 'required',
+                'description' => 'nullable',
+            ]);
+            $category = Category::findOrFail($request->id)->update($validated);
+            return json_encode(['status' => 'success', 'message' => 'Category updated successfully']);
+        } else {
+            $validated = $request->validate([
+                'name' => 'required',
+                'description' => 'nullable',
+            ]);
+            Category::create($validated);
+            return json_encode(['status' => 'success', 'message' => 'Category created successfully']);
+        }
     }
 
     /**
@@ -73,7 +82,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'slug' => 'nullable',
             'description' => 'nullable',
         ]);
         Category::findOrFail($id)->update($validated);

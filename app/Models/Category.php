@@ -5,13 +5,38 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasSlug;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory;
 
     protected $fillable = ['name', 'slug', 'description'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($category) {
+            $category->slug = self::generateUniqueSlug($category->name);
+        });
+
+        static::updating(function ($category) {
+            $category->slug = self::generateUniqueSlug($category->name);
+        });
+    }
+
+    public static function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $original = $slug;
+        $count = 1;
+
+        while (Category::where('slug', $slug)->exists()) {
+            $slug = $original . '-' . $count++;
+        }
+        return $slug;
+    }
 
     public function jobs(): HasMany
     {

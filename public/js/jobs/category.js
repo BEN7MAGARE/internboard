@@ -25,31 +25,27 @@ document.addEventListener('DOMContentLoaded', function () {
     createCategoryForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         const formData = new FormData(this);
-        const csrfToken = document.querySelector('input[name="_token"]').value;
+        const csrfToken = document.querySelector('input[name="_token"]').value;        
         try {
-            const response = await fetch(this.action, {
-                method: "POST",
+            const response = await fetch('/categories', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken,
-                    "Accept": "application/json" // Force Laravel to return JSON
+                    'X-CSRF-TOKEN': csrfToken,
                 },
-                body: JSON.stringify(Object.fromEntries(formData)),
+                body: formData,
             });
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
+            if (response.ok) {
                 const result = await response.json();
                 if (result.status === "success") {
                     showSuccess(result.message, "#categoryFeedback");
                     getCategoriesOptions('#categoryIDOptions');
                     createCategoryForm.reset();
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('createCategoryModal'));
-                    if (modal) modal.hide();
                 } else {
                     showError(result.message || "Submission failed", "#categoryFeedback");
                 }
             } else {
                 const text = await response.text();
+
                 showError("Unexpected response format:<br><code>" + text.substring(0, 200) + "</code>", "#categoryFeedback");
             }
         } catch (err) {
@@ -63,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(this);
         const csrfToken = document.querySelector("input[name='_token']").value;
+        console.log(Object.fromEntries(formData.entries()));
+        
         try {
             const response = await fetch('/subcategories', {
                 method: 'POST',
@@ -71,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: formData,
             });
-
             if (response.ok) {
                 const data = await response.json();
                 if (data.status === 'success') {
@@ -122,8 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (editSubcategoryToggle) {
             e.preventDefault();
             const subcategoryId = editSubcategoryToggle.dataset.id;
-            console.log(subcategoryId);
-
             let response = await fetch(`/subcategories/${subcategoryId}`);
             let result = await response.json();
             const subcategory = result.data;
@@ -131,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('subcategoryName').value = subcategory.name;
             document.getElementById('subcategoryDescription').value = subcategory.description;
             
-            const categoryIDOption = document.getElementById('categoryID').options;
+            const categoryIDOption = document.getElementById('categoryIDOptions').options;
             for (let i = 0; i < categoryIDOption.length; i++) {
                 if (categoryIDOption[i].value == subcategory.category_id) {
                     categoryIDOption[i].selected = true;
