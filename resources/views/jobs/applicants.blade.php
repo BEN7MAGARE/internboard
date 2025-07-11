@@ -212,11 +212,11 @@ Applicants Management
     </div>
 </main>
 
-<div class="modal fade" id="applicationDetailsModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="coverLetterModalLabel{{ $item->id }}" aria-hidden="true">
+<div class="modal fade" id="applicationDetailsModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="applicationDetailsModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="coverLetterModalLabel{{ $item->id }}">Cover Letter - {{ $item->applicant->first_name }} {{ $item->applicant->last_name }}</h5>
+                <h5 class="modal-title" id="modalTitleText"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -273,7 +273,8 @@ Applicants Management
             $.getJSON(`/application-details/${applicationid}`, function(data) {
                 $('#applicationDetailsModal').modal('show');
                 $('#applicationReason').html(data.reason);
-                $('#applicationCoverLetter').html(data.cover_letter);   
+                $('#applicationCoverLetter').html(data.cover_letter);  
+                $('#modalTitleText').text(`Cover Letter - ${data.applicant.first_name} ${data.applicant.last_name}`); 
             })
         })
     });
