@@ -265,7 +265,7 @@
                     @foreach ($corporates as $item)
                         <a href="/corporate/{{ $item->ref_no }}">
                             <div class="brand-image">
-                                <img src="{{ asset('images/' . $item->logo) }}" alt="{{ $item->name }}"
+                                <img src="{{ asset('images/' . $item->logo==null?'logoavatar.png':$item->logo) }}" alt="{{ $item->name }}"
                                     class="img-fluid" width="90px">
                             </div>
                         </a>
