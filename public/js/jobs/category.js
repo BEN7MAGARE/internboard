@@ -56,11 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createSubcategoryForm.addEventListener('submit', async function (event) {
         event.preventDefault();
-
         const formData = new FormData(this);
-        const csrfToken = document.querySelector("input[name='_token']").value;
-        console.log(Object.fromEntries(formData.entries()));
-        
+        const csrfToken = document.querySelector("input[name='_token']").value;        
         try {
             const response = await fetch('/subcategories', {
                 method: 'POST',

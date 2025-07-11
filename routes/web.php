@@ -74,6 +74,7 @@ Route::post('corporate-user-store', [UserController::class, 'corporateUserStore'
 Route::resource('categories', CategoryController::class);
 Route::get('categorysubs/{id}', [CategoryController::class, 'getSubCategories']);
 Route::resource('subcategories', SubcategoryController::class);
+Route::get('category/{slug}', [CategoryController::class, 'jobs'])->name('category.show');
 
 Route::resource('courses', CourseController::class);
 Route::get('coursesdata',[CourseController::class,'getCourses']);

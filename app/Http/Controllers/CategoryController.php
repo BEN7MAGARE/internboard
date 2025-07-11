@@ -66,6 +66,13 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function jobs(string $slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+        $jobs = Job::where('category_id', $category->id)->paginate(10);
+        return view('jobs.index', compact('category', 'jobs'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
