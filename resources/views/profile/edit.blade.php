@@ -17,45 +17,45 @@
         <section class="content">
             <div class="row">
                 <div class="col-xl-12">
-                        <div class="row mb-4">
-    
-                            <div class="col-md-3">
-                                <div class="card stat-card">
-                                    <div class="stat-number">
-                                        {{ $applicationscount }}
-                                    </div>
-                                    <div class="stat-label">Applications</div>
-                                </div>
-                            </div>
-    
-                            <div class="col-md-3">
-                                <div class="card stat-card" style="border-left-color: var(--success-color);">
-                                    <div class="stat-number" style="color: var(--success-color);">
-                                        {{ $selectedapplications }}
-                                    </div>
-                                    <div class="stat-label">Selected Apllication</div>
-                                </div>
-                            </div>
+                    <div class="row mb-4">
 
-                            <div class="col-md-3">
-                                <div class="card stat-card" style="border-left-color: var(--accent-color);">
-                                    <div class="stat-number" style="color: var(--accent-color);">
-                                        {{ $interviewapplications }}
-                                    </div>
-                                    <div class="stat-label">Interview Applications</div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="stat-number">
+                                    {{ $applicationscount }}
                                 </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="card stat-card" style="border-left-color: var(--accent-color);">
-                                    <div class="stat-number" style="color: var(--accent-color);">
-                                        {{ $hiredapplications }}
-                                    </div>
-                                    <div class="stat-label">Jobs</div>
-                                </div>
+                                <div class="stat-label">Applications</div>
                             </div>
                         </div>
-                    
+
+                        <div class="col-md-3">
+                            <div class="card stat-card" style="border-left-color: var(--success-color);">
+                                <div class="stat-number" style="color: var(--success-color);">
+                                    {{ $selectedapplications }}
+                                </div>
+                                <div class="stat-label">Selected Apllication</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card stat-card" style="border-left-color: var(--accent-color);">
+                                <div class="stat-number" style="color: var(--accent-color);">
+                                    {{ $interviewapplications }}
+                                </div>
+                                <div class="stat-label">Interview Applications</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card stat-card" style="border-left-color: var(--accent-color);">
+                                <div class="stat-number" style="color: var(--accent-color);">
+                                    {{ $hiredapplications }}
+                                </div>
+                                <div class="stat-label">Jobs</div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="card mt-2">
                         <div class="card-header bg-white d-flex justify-content-between">
@@ -72,53 +72,71 @@
                                 @endphp
                             @endif
 
-                            <div>
-                                <div class="text-end">
-                                    <a href="#" data-bs-toggle="modal" class="btn btn-primary btn-sm" data-bs-target="#updateProdileDetailsModal"> <i class="bi bi-pencil-square"></i> Update Profile</a>
-                                </div>
-
-                                <p class="small">{{ auth()->user()->profile?->summary }}</p>
-
-                                @if (auth()->user()->role === 'student')
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="mb-1"><b>Admission NO</b>&nbsp;{{ auth()->user()->student?->admision_number }}</p>
-                                            <p class="mb-1"><b>Full Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
-                                            <p class="mb-1"><b>Education</b>&nbsp;
-                                                @if (!is_null($education) && !empty($education))
-                                                {{ $education[0]?->level . ' in ' . $education[0]?->course }}
-                                            @endif</p>
-                                            
-                                            <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization .' '. auth()->user()->profile?->years_of_experience.' years' }}</p>
-                                            <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
-                                            <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
-                                            <p class="mb-1"><b>Address</b>&nbsp;{{ auth()->user()->address }}</p>
-                                            <p class="mb-1"><b>Home County</b>&nbsp;{{ auth()->user()->student?->county?->name }}</p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <p class="mb-1"><b>Reg Number</b>&nbsp;{{ auth()->user()->student?->reg_number }}</p>
-                                            <p class="mb-1"><b>College</b>&nbsp;{{ auth()->user()->student?->college?->name }}</p>
-                                            <p class="mb-1"><b>Course</b>&nbsp;{{ auth()->user()->student?->course?->name }}</p>
-                                            <p class="mb-1"><b>Year of Study</b>&nbsp;{{ auth()->user()->student?->year_of_study }}</p>
-                                            <p class="mb-1"><b>kin_name</b>&nbsp;{{ auth()->user()->student?->kin_name }}</p>
-                                            <p class="mb-1"><b>kin_phone</b>&nbsp;{{ auth()->user()->student?->kin_phone }}</p>
-                                            <p class="mb-1"><b>kin_email</b>&nbsp;{{ auth()->user()->student?->kin_email }}</p>
-                                            <p class="mb-1"><b>kin_relationship</b>&nbsp;{{ auth()->user()->student?->kin_relationship }}</p>
-                                        </div>
-                                    </div>
+                            <div class="text-end">
+                                <a href="#" data-bs-toggle="modal" class="btn btn-primary btn-sm"
+                                    data-bs-target="#updateProdileDetailsModal"> <i class="bi bi-pencil-square"></i> Update
+                                    Profile</a>
                             </div>
+
+                            <p class="small">{{ auth()->user()->profile?->summary }}</p>
+
+                            @if (auth()->user()->role === 'student')
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><b>Admission
+                                                NO</b>&nbsp;{{ auth()->user()->student?->admision_number }}</p>
+                                        <p class="mb-1"><b>Full
+                                                Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
+                                        <p class="mb-1"><b>Education</b>&nbsp;
+                                            @if (!is_null($education) && !empty($education))
+                                                {{ $education[0]?->level . ' in ' . $education[0]?->course }}
+                                            @endif
+                                        </p>
+                                        <p class="mb-1">
+                                            <b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . ' ' . auth()->user()->profile?->years_of_experience . ' years' }}
+                                        </p>
+                                        <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
+                                        <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
+                                        <p class="mb-1"><b>Address</b>&nbsp;{{ auth()->user()->address }}</p>
+                                        <p class="mb-1"><b>Home
+                                                County</b>&nbsp;{{ auth()->user()->student?->county?->name }}</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><b>Reg Number</b>&nbsp;{{ auth()->user()->student?->reg_number }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <b>College</b>&nbsp;{{ auth()->user()->student?->college?->name }}</p>
+                                        <p class="mb-1"><b>Course</b>&nbsp;{{ auth()->user()->student?->course?->name }}
+                                        </p>
+                                        <p class="mb-1"><b>Year of
+                                                Study</b>&nbsp;{{ auth()->user()->student?->year_of_study }}</p>
+                                        <p class="mb-1"><b>kin_name</b>&nbsp;{{ auth()->user()->student?->kin_name }}</p>
+                                        <p class="mb-1"><b>kin_phone</b>&nbsp;{{ auth()->user()->student?->kin_phone }}
+                                        </p>
+                                        <p class="mb-1"><b>kin_email</b>&nbsp;{{ auth()->user()->student?->kin_email }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <b>kin_relationship</b>&nbsp;{{ auth()->user()->student?->kin_relationship }}
+                                        </p>
+                                    </div>
+                                </div>
                             @endif
 
                             @if (auth()->user()->role === 'worker')
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="mb-1"><b>Full Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}</p>
+                                        <p class="mb-1"><b>Full
+                                                Name</b>&nbsp;{{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
+                                        </p>
                                         <p class="mb-1"><b>Education</b>&nbsp; @if (!is_null($education) && !empty($education))
-                                            {{ $education[0]?->level . ' in ' . $education[0]?->course }}
-                                        @endif</p>
-                                        
-                                        <p class="mb-1"><b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}</p>
+                                                {{ $education[0]?->level . ' in ' . $education[0]?->course }}
+                                            @endif
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <b>Specialization</b>&nbsp;{{ auth()->user()->profile?->level . ' ' . auth()->user()->profile?->specialization . auth()->user()->profile?->years_of_experience }}
+                                        </p>
                                         <p class="mb-1"><b>Phone</b>&nbsp;{{ auth()->user()->phone }}</p>
                                         <p class="mb-1"><b>Gender</b>&nbsp;{{ auth()->user()->gender }}</p>
                                         <p class="mb-1"><b>Email</b>&nbsp;{{ auth()->user()->email }}</p>
@@ -323,6 +341,7 @@
 
                         <div class="col-md-8 form-group mb-1" id="SkillsSection">
                             <label for="skills">Skills</label>
+                            <small><i class="bi bi-info-circle"></i>Select Multiple Skills</small>
                             <div class="form-group">
                                 <select name="skills" id="skillsSelect" class="form-control form-control-lg"
                                     data-control="select2" data-dropdown-parent="#SkillsSection" multiple

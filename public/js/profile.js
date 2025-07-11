@@ -2,7 +2,7 @@
     
     function getSkills() {
         $.getJSON("/skills", function (skills) {
-            let option = "<option value=''>Select One</option>";
+            let option = "<option value='' selected>Select Multiple</option>";
             $.each(skills, function (key, value) {
                 option +=
                     "<option value=" +

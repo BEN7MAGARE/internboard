@@ -63,11 +63,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="mt-4" data-aos="fade-up" data-aos-delay="400">
-                        {{-- @if (count())
-                            <h5 class="translatable">Get started quickly by industries</h5>
-                            <div class="mt-2 d-flex flex-wrap gap-3 gy-4" id="categoriesWithJobs"></div>
-                        @endif --}}
+                    <div class="mt-4" data-aos="fade-up" data-aos-delay="400" id="categoriesWithJobs">                            
                     </div>
                 </div>
             </div>
@@ -282,11 +278,6 @@
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>
-    <script src="{{ asset('js/job.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            getCategoriesOptions(['#searchCategoryID']);
-            getCategoriesWithJobs('#categoriesWithJobs');
-        });
-    </script>
+    <script src="{{ asset('js/welcome.js') }}"></script>
+    
 @endsection

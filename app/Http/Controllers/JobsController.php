@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\Skill;
 use App\Models\Subcategory;
+use App\Models\Corporate;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ class JobsController extends Controller
         $this->skill = new Skill();
         $this->application = new Application();
         $this->subCategory = new Subcategory();
+        $this->corporate = new Corporate();
     }
 
     public function index()
@@ -94,7 +96,8 @@ class JobsController extends Controller
     public function show(string $ref_no)
     {
         $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->first();
-        return view('jobs.show', compact('job'));
+        $corporate = $this->corporate->where('id', $job->corporate_id)->withCount('jobs')->first();
+        return view('jobs.show', compact('job', 'corporate'));
     }
 
     public function edit($ref_no)

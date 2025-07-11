@@ -24,10 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createCategoryForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-
         const formData = new FormData(this);
         const csrfToken = document.querySelector('input[name="_token"]').value;
-
         try {
             const response = await fetch(this.action, {
                 method: "POST",

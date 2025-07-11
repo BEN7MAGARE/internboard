@@ -167,10 +167,10 @@ return [
     'physicalAddress' => env('APP_PHYSICAL_ADDRESS', 'Sasio road, off Lunga Lunga Road, Opposite St Elizabeth Primary School – Mukuru'),
     'city' => env('APP_CITY', 'Nairobi'),
     'country' => env('APP_COUNTRY', 'Kenya'),
-    'phone' => env('APP_PHONE', '+254 712 345 678'),
+    'phone' => env('APP_PHONE', '+254 716 713 453'),
     'phone2' => env('APP_ALT_PHONE', '+254 716 598 791'),
     'email' => env('APP_EMAIL', 'info@darajalamafanikio.org'),
     'email2' => env('APP_ALT_EMAIL', 'spcoordinator@hotmail.com'),
-    'email3' => env('APP_ALT_EMAIL', 'info@darajalamafanikio.org'),
+    'email3' => env('APP_ALT_EMAIL', 'info@mukuruprojects.org'),
     'postal' => env('APP_POSTAL', 'P.O Box 26121 South B 00504, NAIROBI, KENYA'),
 ];

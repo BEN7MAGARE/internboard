@@ -59,22 +59,12 @@ function composeJobs(jobs) {
         });
         // Posted:${ moment(value.created_at).fromNow() }
         job +=
-            `<a href="/jobs/${value.ref_no}"><div class="job bg-white rounded" data-id="${value.id}"><div class="title p-2"><h5>${value.title}</h5></div><div class="salary p-2"><span>Monthly: ${value.salary_range}</span></div><div class="desciption"><p>${getsubstring(value.description)}</p></div><div class="skills p-2">${skill}</div>
-            <div class="location d-flex justify-content-between p-2"><div><small><i class="fa fa-map-marker"></i>&nbsp;<span>${value.location}</span></small></div><div><small>Application Deadline: ${(value.application_end_date !== null) ? "<span class='text-warning'>" + moment(value.application_end_date).format('Do MMM YYYY') + "</span>" : "<span class='text-warning'>Not specified</span>"}</small></div></div></div></a>`;
+            `<a href="/jobs/${value.ref_no}"><div class="job bg-white rounded" data-id="${value.id}"><div class="title p-2"><h5 class="translatable">${value.title}</h5></div><div class="salary p-2"><span class="translatable">Monthly: ${value.salary_range}</span></div><div class="desciption"><p class="translatable">${getsubstring(value.description)}</p></div><div class="skills p-2">${skill}</div>
+            <div class="location d-flex justify-content-between p-2"><div><small><i class="fa fa-map-marker"></i>&nbsp;<span>${value.location}</span></small></div><div><small class="translatable">Application Deadline: ${(value.application_end_date !== null) ? "<span class='text-warning'>" + moment(value.application_end_date).format('Do MMM YYYY') + "</span>" : "<span class='text-warning translatable'>Not specified</span>"}</small></div></div></div></a>`;
     });
     return job;
 }
 
-function getCategoriesWithJobs(target) {
-    $.getJSON("/categories-with-jobs", function (categories) {
-        let li = "";
-        $.each(categories, function (key, value) {
-            li +=
-                `<li><a href="/category/${value.slug}" class="list-group-item list-group-item-action" data-id="${value.id}">${value.name}</a></li>`;
-        });
-        $(target).html(li);
-    });
-}
 
 function getsubstring(string) {
     if (string.length > 150) {

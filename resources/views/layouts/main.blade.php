@@ -13,7 +13,8 @@
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -101,17 +102,20 @@
                     <li><a href="{{ route('about') }}"
                             class="{{ Request::url() == route('about') ? 'active' : '' }} translatable">About</a></li>
                     <li><a href="{{ route('elearning') }}"
-                            class="{{ Request::url() == route('elearning') ? 'active' : '' }} translatable">E-Learning</a></li>
+                            class="{{ Request::url() == route('elearning') ? 'active' : '' }} translatable">E-Learning</a>
+                    </li>
                     <li
                         class="dropdown {{ Request::url() == '/jobs' || Request::url() == '/jobs/create' ? 'active' : '' }}">
-                        <a href="#"><span class="translatable">Jobs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <a href="#"><span class="translatable">Jobs</span> <i
+                                class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="{{ route('jobs.index') }}" class="translatable">Job List</a></li>
                             <li><a href="{{ route('jobs.create') }}" class="translatable">Post a Job</a></li>
                         </ul>
                     </li>
                     <li><a href="{{ route('contact') }}"
-                            class="{{ Request::url() == route('contact') ? 'active' : '' }} translatable">Contact</a></li>
+                            class="{{ Request::url() == route('contact') ? 'active' : '' }} translatable">Contact</a>
+                    </li>
 
                     <div class="nav-language">
                         <select class="lang-selector form-select text-primary">
@@ -134,18 +138,21 @@
                     <a class="nav-link">
                         <a class="dropdown-toggle btn btn-outline-danger btn-sm mt-1 {{ Request::url() == '/profile' ? 'active' : '' }}"
                             href="#" data-bs-toggle="dropdown" aria-expanded="true" id="profileDropdown"><i
-                                class="bi bi-person-circle"></i>&nbsp;<span class="translatable">{{ auth()->user()->last_name }}</span>&nbsp;
+                                class="bi bi-person-circle"></i>&nbsp;<span
+                                class="translatable">{{ auth()->user()->last_name }}</span>&nbsp;
                             <i class="bi bi-angle-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
-                                        class="bi bi-person-circle"></i>&nbsp;<span class="translatable">My Profile</span></a></li>
+                                        class="bi bi-person-circle"></i>&nbsp;<span class="translatable">My
+                                        Profile</span></a></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a class="dropdown-item text-danger" href="route('logout')"
                                         onclick="event.preventDefault();
                             this.closest('form').submit();"><i
-                                            class="bi bi-box-arrow-right"></i>&nbsp;<span class="translatable">Log Out</span>
+                                            class="bi bi-box-arrow-right"></i>&nbsp;<span class="translatable">Log
+                                            Out</span>
                                     </a>
                                 </form>
                             </li>
@@ -198,8 +205,10 @@
                 <div class="col-lg-2 col-6 footer-links">
                     <h4>Our Services</h4>
                     <ul>
-                        <li><a href="#" class="translatable">Employability and Entrepreneurship Training</a></li>
-                        <li><a href="#" class="translatable">Linking TVET graduates to employment opportunities</a></li>
+                        <li><a href="#" class="translatable">Employability and Entrepreneurship Training</a>
+                        </li>
+                        <li><a href="#" class="translatable">Linking TVET graduates to employment
+                                opportunities</a></li>
                         <li><a href="#" class="translatable">Youth Empowerment</a></li>
                         <li><a href="#" class="translatable">Youth Empowerment</a></li>
                     </ul>
@@ -209,7 +218,9 @@
                     <h4>Contact Us</h4>
                     <p>{{ config('app.company') }}</p>
                     <p>{{ config('app.postal') }}</p>
-                    <p class="mt-2"><strong class="translatable">Phone:</strong> <span>{{ config('app.phone') }}</span></p>
+                    <p class="mt-2"><strong class="translatable">Phone:</strong>
+                        <span>{{ config('app.phone') }}</span>
+                    </p>
                     <p><strong class="translatable">Phone:</strong> <span>{{ config('app.phone2') }}</span></p>
                     <p><strong class="translatable">Email:</strong> <span>{{ config('app.email') }}</span></p>
                     <p><strong class="translatable">Email:</strong> <span>{{ config('app.email2') }}</span></p>
@@ -219,7 +230,8 @@
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span class="translatable">Copyright</span> <strong class="sitename translatable">Daraja La Mafanikio</strong>
+            <p>© <span class="translatable">Copyright</span> <strong class="sitename translatable">Daraja La
+                    Mafanikio</strong>
                 <span class="translatable">All Rights Reserved</span>
             </p>
         </div>
@@ -232,7 +244,6 @@
 
     <!-- Preloader -->
     <div id="preloader"></div>
-
 
     <script>
         localStorage.setItem('lang', 'en');
@@ -248,7 +259,7 @@
                 localStorage.setItem('lang', lang);
                 try {
                     const elements = document.querySelectorAll('.translatable');
-                    
+
                     for (const element of elements) {
                         const text = element.textContent;
                         const translatedText = await translateText(text);
@@ -281,8 +292,16 @@
             return data.data.translations[0].translatedText;
         }
 
-        translateText(localStorage.getItem('lang'));
-        
+        async function translateAll() {
+            const elements = document.querySelectorAll('.translatable');
+            for (const element of elements) {
+                const text = element.textContent;
+                const translatedText = await translateText(text);
+                element.textContent = translatedText;
+            }
+        }
+
+        translateAll();
     </script>
 
 

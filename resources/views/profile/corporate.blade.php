@@ -57,13 +57,10 @@
 
                             <div class="corporate-section mb-2">
                                 <div class="row">
-                                    @if (!empty(auth()->user()->corporate->logo))
                                         <div class="col-md-7">
 
-                                            <div class="d-flex justify-content-between">
-                                                <h5>Corporate Details</h5>
-                                                <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
-                                                        class="bi bi-pencil-square"></i> Edit</a>
+                                            <div class="">
+                                                <h5>Business Details</h5>
                                             </div>
 
                                             <div class="corporate">
@@ -71,7 +68,7 @@
 
                                                     <div class="col-md-4">
                                                         <div class="corporate-logo">
-                                                            <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}"
+                                                            <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo==null||auth()->user()->corporate->logo==''?'images/logoavatar.png':auth()->user()->corporate->logo) }}"
                                                                 alt="{{ auth()->user()->corporate->name }}"
                                                                 class="img-fluid">
                                                         </div>
@@ -100,47 +97,11 @@
                                                     </div>
                                                 </div>
 
+                                                <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
+                                                    class="bi bi-pencil-square"></i> Edit Business Details</a>
                                             </div>
 
                                         </div>
-                                    @else
-                                        <div class="col-md-7">
-
-                                            <div class="d-flex justify-content-between">
-                                                <h5>Corporate Details</h5>
-                                                <a href="{{ route('corporates.create') }}"
-                                                    class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>
-                                                    Edit</a>
-                                            </div>
-
-                                            <h5 class="mb-2">Corporate Details</h5>
-
-                                            <div class="corporate">
-                                                <div class="col-md-8">
-                                                    <p class="mb-1"><strong>Name:</strong>
-                                                        {{ auth()->user()->corporate->name }}</p>
-                                                    <p class="mb-1"><strong>Email:</strong>
-                                                        {{ auth()->user()->corporate->email }}
-                                                    </p>
-                                                    <p class="mb-1"><strong>Address:</strong>
-                                                        {{ auth()->user()->corporate->address }}</p>
-                                                    <p class="mb-1"><strong>Phone:</strong>
-                                                        {{ auth()->user()->corporate->phone }}
-                                                    </p>
-                                                    <p class="mb-1"><strong>Category:</strong>
-                                                        {{ auth()->user()->corporate->category?->name }}
-                                                    </p>
-                                                    <p class="mb-1"><strong>Size:</strong>
-                                                        {{ auth()->user()->corporate->size }}
-                                                    </p>
-                                                    <p class="mb-1"><strong>Mission/Vision:</strong>
-                                                        {{ auth()->user()->corporate->mission_vision }}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    @endif
 
                                     <div class="col-md-5">
 

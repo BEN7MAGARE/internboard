@@ -70,6 +70,7 @@ Route::resource('users', UserController::class);
 Route::post('college-user-store', [UserController::class, 'collegeUserStore'])->name('college.user.store');
 Route::post('corporate-user-store', [UserController::class, 'corporateUserStore'])->name('corporate.user.store');
 
+
 Route::resource('categories', CategoryController::class);
 Route::get('categorysubs/{id}', [CategoryController::class, 'getSubCategories']);
 Route::resource('subcategories', SubcategoryController::class);
