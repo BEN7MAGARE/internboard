@@ -97,12 +97,15 @@
                         </div>
 
                         <div class="col-md-4">
+                            
                             <div class="user p-3">
+                                @php
+                                    $logo = $corporate->logo == null || $corporate->logo == '' ? 'logoavatar.png' : $corporate->logo;
+                                @endphp
                                 <div class="text-center">
-                                    <img src="{{ asset('corporate_logos/' . $corporate->logo == null || $corporate->logo == '' ? 'images/logoavatar.png' : $corporate->logo) }}"
+                                    <img src="{{ asset('corporate_logos/' . $logo) }}"
                                         alt="{{ $corporate->name }}" class="img-fluid"
                                         style="width: 150px; height: 150px; border-radius: 50%;">
-
                                     <p class="mb-1">
                                         {{ $corporate->name }}
                                         <span>{{ $corporate->address }}</span>
@@ -110,6 +113,7 @@
                                 </div>
                                 <p class="p-2 translatable">Total Jobs Posted: {{ $corporate->jobs_count }}</p>
                             </div>
+
                         </div>
 
                     </div>

@@ -32,13 +32,13 @@ class JobRequest extends FormRequest
             'experience_level' => ['required', 'max:100'],
             'location' => ['required', 'max:255'],
             'education_level' => ['required', 'string'],
-            'skills' => ['required', 'json'],
+            'skills' => ['json'],
             'salary_range' => ['required', 'string'],
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'application_end_date' => ['nullable', 'string'],
-            'start_date' => ['required', 'string'],
-            'no_of_positions' => ['required', 'numeric'],
+            'application_end_date' => ['nullable', 'string', 'date_format:Y-m-d'],
+            'start_date' => ['required', 'string', 'date_format:Y-m-d'],
+            'no_of_positions' => ['required', 'numeric', 'min:1'],
             'requirements' => ['required', 'json'],
             'qualifications' => ['required', 'json']
         ];

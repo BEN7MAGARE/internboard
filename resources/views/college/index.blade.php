@@ -341,6 +341,11 @@
                         </div>
 
                         <div class="col-md-6 mb-2">
+                            <label for="altPhone" class="form-label">Alternative Phone</label>
+                            <input type="text" class="form-control" name="alt_phone" id="collegeUseraltPhone">
+                        </div>
+
+                        <div class="col-md-6 mb-2">
                             <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control" name="address" id="collegeUserAddress">
                         </div>

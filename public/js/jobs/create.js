@@ -1,5 +1,5 @@
 (function () {
-    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID']);
+    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID',"#skillCategoryID"]);
     getEmployerOptions(['#jobEmployerID', '#searchEmployerID']);
     getSkillsOption('#skills');
 
@@ -38,7 +38,8 @@
         jobQualification = document.getElementById('jobQualification'),
         jobRequirement = document.getElementById('jobRequirement'),
         jobQualificationsTableBody = document.getElementById('jobQualificationsTableBody'),
-        jobRequirementsTableBody = document.getElementById('jobRequirementsTableBody');
+        jobRequirementsTableBody = document.getElementById('jobRequirementsTableBody'),
+        createSkillForm = document.getElementById('createSkillForm');
 
     if (categoryID) {
         categoryID.addEventListener('change', function () {
@@ -94,12 +95,23 @@
             }
         });
     }
+
     const toggleStep2 = document.querySelectorAll('.toggleStep2');
     toggleStep2.forEach(function (toggleStep2) {
         toggleStep2.addEventListener('click', function (event) {
             event.preventDefault();
             $(".step-2").show();
             $(".step-1").hide();
+            $(".step-3").hide();
+        });
+    });
+
+    const toggleStep1 = document.querySelectorAll('.toggleStep1');
+    toggleStep1.forEach(function (toggleStep1) {
+        toggleStep1.addEventListener('click', function (event) {
+            event.preventDefault();
+            $(".step-1").show();
+            $(".step-2").hide();
             $(".step-3").hide();
         });
     });
@@ -363,5 +375,38 @@
             });
         });
     }
+
+    createSkillForm.addEventListener('submit', async function (event){
+        event.preventDefault();
+        const data = new FormData(this);
+        const response =await fetch('/skills', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
+                'Accept': 'application/json'
+            }
+        });        
+        if (response.ok) {
+            const result = await response.json();
+            if (result.status === "success") {
+                getSkillsOption('#skills');
+                showSuccess(result.message, "#skillFeedback");
+            } else {
+                showError(result.message, "#skillFeedback");
+            }
+        }else if (response.status === 422) {
+            const errorData = await response.json();
+            let errors = '';
+            for (const key in errorData.errors) {
+                errors += errorData.errors[key].join(' ') + '!<br>';
+            }
+            showError(errors, "#skillFeedback");
+        }else if (response.status === 419) {
+            showError("You are not logged in", "#skillFeedback");
+        }else {
+            showError("Error occurred during processing", "#skillFeedback");
+        }
+    });
 
 })();

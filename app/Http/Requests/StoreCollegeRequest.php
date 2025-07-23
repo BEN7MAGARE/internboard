@@ -27,7 +27,8 @@ class StoreCollegeRequest extends FormRequest
             'id' => ['nullable', 'exists:colleges,id'],
             'name' => ['required', 'string', 'max:60', 'unique:colleges,name,' . $this->id],
             'email' => ['required', 'string', 'email', 'max:80', 'unique:colleges,email,' . $this->id],
-            'phone' => ['required', 'string', 'max:60', 'unique:colleges,phone,' . $this->id],
+            'phone' => ['required', 'string', 'max:20', 'unique:colleges,phone,' . $this->id],
+            'alt_phone' => ['nullable', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'max:2048'],
         ];

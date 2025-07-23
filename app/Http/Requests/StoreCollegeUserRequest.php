@@ -30,6 +30,7 @@ class StoreCollegeUserRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->id,
             'phone' => 'required|unique:users,phone,' . $this->id,
+            'alt_phone' => 'nullable',
             'address' => 'nullable',
             'college_id' => 'nullable|exists:colleges,id',
             'role' => 'nullable',

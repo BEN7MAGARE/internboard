@@ -27,7 +27,7 @@
                 <a href="{{ url('/') }}">
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
                 </a>
-                
+
                 {{-- <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo"> --}}
                 {{-- @if (auth()->user()->role === 'admin')
                 <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
@@ -51,28 +51,44 @@
             <ul class="list-unstyled components">
 
                 <li class="list-group-item {!! Request::is('profile') ||
-                Request::is('corporate/create') ||
-                Request::is('corporate/edit') ||
-                Request::is('corporate')
+                Request::is('college/profile') ||
+                Request::is('college/profile') ||
+                Request::is('student/profile') ||
+                Request::is('admin/profile') ||
+                Request::is('employer-profile')
                     ? 'active'
                     : '' !!}">
                     <a href="{{ route('profile.edit') }}" aria-current="true">
                         <i class="bi bi-person"></i>&nbsp;My Profile
                     </a>
                 </li>
-                
+
                 @if (auth()->user()->role === 'corporate')
-                    <li class="{!! Request::is('profile-jobs') || Request::is('jobs/create') ? 'active' : '' !!}">
-                        <a href="{{ route('profile.jobs') }}">
+                    <li class="{!! Request::is('employer-jobs') || Request::has('job/edit') || Request::is('jobs/create') ? 'active' : '' !!}">
+                        <a href="{{ route('employer.jobs') }}">
                             <i class="bi bi-briefcase"></i>
                             My Jobs
                         </a>
                     </li>
 
-                    <li class="{!! Request::is('profile/applications') ? 'active' : '' !!}">
-                        <a href="{{ route('profile.applications') }}">
+                    <li class="{!! Request::is('employer-applications') ? 'active' : '' !!}">
+                        <a href="{{ route('employer.applications') }}">
                             <i class="bi bi-briefcase"></i>
                             Applications
+                        </a>
+                    </li>
+
+                    <li class="{!! Request::is('employer-products') ? 'active' : '' !!}">
+                        <a href="{{ route('employer.products') }}">
+                            <i class="bi bi-briefcase"></i>
+                        Products/Services
+                        </a>
+                    </li>
+
+                    <li class="{!! Request::is('employer/contacts') ? 'active' : '' !!}">
+                        <a href="{{ route('employer.contacts') }}">
+                            <i class="bi bi-briefcase"></i>
+                            Contacts
                         </a>
                     </li>
                 @endif
@@ -85,14 +101,20 @@
                 @endif
 
                 @if (auth()->user()->role === 'college')
-                    <li class="list-group-item  {!! Request::is('students') || Request::is('college-students') ? 'active' : '' !!}">
-                        <a href="{{ route('students.index') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
+                    <li class="list-group-item  {!! Request::is('college/students') ? 'active' : '' !!}">
+                        <a href="{{ route('college.students') }}"><i class="bi bi-people"></i>&nbsp;Students</a>
                     </li>
 
-                    <li class="list-group-item  {!! Request::is('college-applications') ? 'active' : '' !!}">
+                    <li class="list-group-item  {!! Request::is('college/applications') ? 'active' : '' !!}">
                         <a href="{{ route('college.applications') }}"><i
                                 class="bi bi-window"></i>&nbsp;Applications</a>
                     </li>
+
+                    <li class="list-group-item  {!! Request::is('college/contacts') ? 'active' : '' !!}">
+                        <a href="{{ route('college.contacts') }}"><i
+                                class="bi bi-window"></i>&nbsp;Contact Persons</a>
+                    </li>
+
                 @endif
 
                 @if (auth()->user()->role === 'admin')

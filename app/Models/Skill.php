@@ -10,6 +10,12 @@ class Skill extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'category_id',
+        'name',
+        'description',
+    ];
+
 
     public function jobs(): BelongsToMany
     {

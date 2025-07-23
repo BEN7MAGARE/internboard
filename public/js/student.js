@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     getCoursesOptions(['#courseId', '#studentFilterCourse']);
-    
+
     const studentCreateForm = document.getElementById('studentCreateForm'),
         studentFilterForm = document.getElementById('studentFilterForm'),
         createStudentToggle = document.getElementById('createStudentToggle'),
@@ -15,11 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('studentID').value = "";
         studentCreateForm.reset();
     });
-
-    // editStudentToggle.addEventListener('click', function () {
-    //     document.getElementById('userID').value = this.dataset.id;
-    //     document.getElementById('studentId').value = this.dataset.id;
-    // });
 
     allStudentSelect.addEventListener('change', function () {
         const checkboxes = document.querySelectorAll('input[name="student_id[]"]');
@@ -60,14 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 errors.push("Invalid kin email");
             }
         }
-        console.log(Object.fromEntries(formData.entries()));
-
         if (errors.length > 0) {
             showError(errors.join('!\u003cbr\u003e'), "#studentFeedback");
             return;
         } else {
             try {
-                const response = await fetch('/students', {
+                const response = await fetch('/students/store', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
@@ -113,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+
                 document.getElementById('userID').value = data.id;
                 document.getElementById('studentFirstName').value = data.first_name;
                 document.getElementById('studentMiddleName').value = data.middle_name;
@@ -123,44 +116,59 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('studentAddress').value = data.address;
                 const studentGenderOptions = document.getElementById('studentGender').options;
                 for (let i = 0; i < studentGenderOptions.length; i++) {
-                    if (studentGenderOptions[i].value === data.gender) {
+                    if (studentGenderOptions[i].value == data.gender) {
                         studentGenderOptions[i].selected = true;
                         break;
                     }
                 }
                 const studentTitleOptions = document.getElementById('studentTitle').options;
                 for (let i = 0; i < studentTitleOptions.length; i++) {
-                    if (studentTitleOptions[i].value === data.title) {
+                    if (studentTitleOptions[i].value == data.title) {
                         studentTitleOptions[i].selected = true;
                         break;
                     }
                 }
-                const courseOptions = document.getElementById('courseId').options;
-                for (let i = 0; i < courseOptions.length; i++) {
-                    if (courseOptions[i].value === data.course_id) {
+                const courseOptions = document.getElementById('courseId').options;                
+                for (let i = 0; i < courseOptions.length; i++) {                    
+                    if (courseOptions[i].value == data.student.course_id) {
                         courseOptions[i].selected = true;
                         break;
                     }
                 }
-                const collegeOptions = document.getElementById('collegeId').options;
-                for (let i = 0; i < collegeOptions.length; i++) {
-                    if (collegeOptions[i].value === data.college_id) {
-                        collegeOptions[i].selected = true;
-                        break;
+                if (document.getElementById('collegeId')) {
+                    const collegeOptions = document.getElementById('collegeId').options;
+                    for (let i = 0; i < collegeOptions.length; i++) {
+                        if (collegeOptions[i].value == data.college_id) {
+                            collegeOptions[i].selected = true;
+                            break;
+                        }
                     }
                 }
-                const countyOptions = document.getElementById('homeCountyId').options;
-                for (let i = 0; i < countyOptions.length; i++) {
-                    if (countyOptions[i].value === data.county_id) {
-                        countyOptions[i].selected = true;
-                        break;
+                if (document.getElementById('homeCountyId')) {
+                    const countyOptions = document.getElementById('homeCountyId').options;
+                    for (let i = 0; i < countyOptions.length; i++) {
+                        if (countyOptions[i].value == data.student.county_id) {
+                            countyOptions[i].selected = true;
+                            break;
+                        }
                     }
                 }
-                const yearOfStudyOptions = document.getElementById('yearOfStudy').options;
-                for (let i = 0; i < yearOfStudyOptions.length; i++) {
-                    if (yearOfStudyOptions[i].value === data.year_of_study) {
-                        yearOfStudyOptions[i].selected = true;
-                        break;
+                if (document.getElementById('yearOfStudy')) {
+                    const yearOfStudyOptions = document.getElementById('yearOfStudy').options;
+                    for (let i = 0; i < yearOfStudyOptions.length; i++) {
+                        if (yearOfStudyOptions[i].value == data.student.year_of_study) {
+                            yearOfStudyOptions[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                if (document.getElementById('level_of_study')) {
+                    const levelOfStudyOptions = document.getElementById('level_of_study').options;
+                    for (let i = 0; i < levelOfStudyOptions.length; i++) {
+                        if (levelOfStudyOptions[i].value === data.student.level_of_study) {
+                            levelOfStudyOptions[i].selected = true;
+                            break;
+                        }
                     }
                 }
                 if (data.student !== null) {
@@ -177,7 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             break;
                         }
                     }
-                    document.getElementById('admisionNumber').value = data.student.admision_number;
+                    if (document.getElementById('admisionNumber')) {
+                        document.getElementById('admisionNumber').value = data.student.admision_number;
+                    }
                     const courseLevelOptions = document.getElementById('courseLevel').options;
                     for (let i = 0; i < courseLevelOptions.length; i++) {
                         if (courseLevelOptions[i].value === data.student.course_level) {
@@ -249,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <td>${element.student.reg_number}</td>
                                     <td>${element.student.year_of_study}</td>
                                     <td class="d-flex gap-2">
-                                        <a href="${'/student/'+element.id}" target="_blank"
+                                        <a href="${'/student/' + element.id}" target="_blank"
                                             class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i></a>
                                         <a href="#" target="_blank" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createStudentModal" id="editStudentToggle" data-id="${element.id}"><i class="bi bi-pencil-square"></i></a>
                                     </td>`;

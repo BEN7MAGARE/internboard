@@ -143,6 +143,7 @@
                                 class="translatable">{{ auth()->user()->last_name }}</span>&nbsp;
                             <i class="bi bi-angle-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
+                            
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
                                         class="bi bi-person-circle"></i>&nbsp;<span class="translatable">My
                                         Profile</span></a></li>

@@ -30,6 +30,7 @@ class StoreCorporateUserRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->id,
             'phone' => 'required|unique:users,phone,' . $this->id,
+            'alt_phone' => 'nullable',
             'address' => 'nullable',
             'corporate_id' => 'nullable|exists:corporates,id',
             'role' => 'nullable',

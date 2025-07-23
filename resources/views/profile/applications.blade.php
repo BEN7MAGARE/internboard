@@ -82,8 +82,10 @@ Applications
                             <span class="badge bg-warning">Pending</span>
                             @elseif ($application->status == "accepted")
                             <span class="badge bg-success">Accepted</span>
-                            @else
+                            @elseif ($application->status == "rejected")
                             <span class="badge bg-danger">Rejected</span>
+                            @else
+                            <span class="badge bg-secondary">Pending</span>
                             @endif
                         </td>
                         <td>

@@ -28,11 +28,15 @@ class StoreCorporateRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:60', 'unique:corporates,name,' . $this->id],
             'email' => ['required', 'string', 'email', 'max:80', 'unique:corporates,email,' . $this->id],
-            'phone' => ['required', 'string', 'max:60', 'unique:corporates,phone,' . $this->id],
+            'phone' => ['required', 'string', 'max:20', 'unique:corporates,phone,' . $this->id],
+            'alt_phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
             'size' => ['nullable', 'string', 'max:60'],
             'mission_vision' => ['nullable', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'max:2048'],
+            'website' => ['required', 'string', 'max:255'],
+            'nature_of_business' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:255'],
         ];
     }
 

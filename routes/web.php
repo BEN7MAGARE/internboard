@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ApplicationsController;
 use App\Http\Controllers\CollegeController;
-use App\Http\Controllers\CorporateController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SkillController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', [ApplicationsController::class, 'welcome'])->name('home');
@@ -48,29 +49,23 @@ Route::get('application-details/{id}', [JobsController::class, 'applicationsDeta
 Route::get('categoriesdata', [JobsController::class, 'categories']);
 Route::get('categories-with-jobs', [JobsController::class, 'categoriesWithJobs']);
 
-Route::get('skills', [JobsController::class, 'skills'])->name('skils');
-
 Route::resource('applications', ApplicationsController::class);
 
 Route::get('college-applicants/{status}', [ApplicationsController::class, 'schoolStudentApplications'])->name('college.applicants');
-Route::get('college-applications', [CollegeController::class, 'applications'])->name('college.applications');
 Route::get('college-dashboard', [CollegeController::class, 'dashboard'])->name('college.dashboard');
 Route::get('collegesdata',[CollegeController::class,'getColleges']);
 Route::get('college-students', [CollegeController::class, 'students'])->name('college.students');
 
-Route::resource('corporates', CorporateController::class);
-Route::get('corporatesdata',[CorporateController::class,'getCorporates']);
+Route::resource('employer', EmployerController::class);
+Route::get('corporadata',[CorporateController::class,'getCorporates']);
 
 Route::resource('colleges', CollegeController::class);
-
-Route::resource('students', StudentController::class);
-Route::post('students/filter', [StudentController::class, 'filter'])->name('students.filter');
-Route::post('students/export', [StudentController::class, 'export'])->name('students.export');
+Route::resource('skills', SkillController::class);
+Route::get('skillsdata',[SkillController::class,'getSkills']);
 
 Route::resource('users', UserController::class);
 Route::post('college-user-store', [UserController::class, 'collegeUserStore'])->name('college.user.store');
 Route::post('corporate-user-store', [UserController::class, 'corporateUserStore'])->name('corporate.user.store');
-
 
 Route::resource('categories', CategoryController::class);
 Route::get('categorysubs/{id}', [CategoryController::class, 'getSubCategories']);
@@ -109,4 +104,7 @@ Route::get('/refresh-csrf', function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/training.php';
+require __DIR__ . '/employer.php';
+require __DIR__ . '/college.php';
+require __DIR__ . '/student.php';
 

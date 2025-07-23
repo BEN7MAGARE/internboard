@@ -57,57 +57,62 @@
 
                             <div class="corporate-section mb-2">
                                 <div class="row">
-                                        <div class="col-md-7">
+                                    <div class="col-md-7">
 
-                                            <div class="">
-                                                <h5>Business Details</h5>
-                                            </div>
+                                        <div class="">
+                                            <h5>Business Details</h5>
+                                        </div>
 
-                                            <div class="corporate">
-                                                <div class="row">
-
-                                                    <div class="col-md-4">
-                                                        <div class="corporate-logo">
-                                                            <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo==null||auth()->user()->corporate->logo==''?'images/logoavatar.png':auth()->user()->corporate->logo) }}"
-                                                                alt="{{ auth()->user()->corporate->name }}"
-                                                                class="img-fluid">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-8">
-                                                        <p class="mb-1"><strong>Name:</strong>
-                                                            {{ auth()->user()->corporate->name }}</p>
-                                                        <p class="mb-1"><strong>Email:</strong>
-                                                            {{ auth()->user()->corporate->email }}
-                                                        </p>
-                                                        <p class="mb-1"><strong>Address:</strong>
-                                                            {{ auth()->user()->corporate->address }}</p>
-                                                        <p class="mb-1"><strong>Phone:</strong>
-                                                            {{ auth()->user()->corporate->phone }}
-                                                        </p>
-                                                        <p class="mb-1"><strong>Category:</strong>
-                                                            {{ auth()->user()->corporate->category?->name }}
-                                                        </p>
-                                                        <p class="mb-1"><strong>Size:</strong>
-                                                            {{ auth()->user()->corporate->size }}
-                                                        </p>
-                                                        <p class="mb-1"><strong>Mission/Vision:</strong>
-                                                            {{ auth()->user()->corporate->mission_vision }}
-                                                        </p>
+                                        <div class="corporate">
+                                            <div class="row">
+                                                @php
+                                                    $logo =
+                                                        auth()->user()->corporate->logo == null ||
+                                                        auth()->user()->corporate->logo == ''
+                                                            ? 'logoavatar.png'
+                                                            : auth()->user()->corporate->logo;
+                                                @endphp
+                                                <div class="col-md-4">
+                                                    <div class="corporate-logo">
+                                                        <img src="{{ asset('corporate_logos/' . $logo) }}"
+                                                            alt="{{ auth()->user()->corporate->name }}" class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%;">
                                                     </div>
                                                 </div>
 
-                                                <a href="{{ route('corporates.create') }}" class="btn btn-primary btn-sm"><i
-                                                    class="bi bi-pencil-square"></i> Edit Business Details</a>
+                                                <div class="col-md-8">
+                                                    <p class="mb-1"><strong>Name:</strong>
+                                                        {{ auth()->user()->corporate->name }}</p>
+                                                    <p class="mb-1"><strong>Email:</strong>
+                                                        {{ auth()->user()->corporate->email }}
+                                                    </p>
+                                                    <p class="mb-1"><strong>Address:</strong>
+                                                        {{ auth()->user()->corporate->address }}</p>
+                                                    <p class="mb-1"><strong>Phone:</strong>
+                                                        {{ auth()->user()->corporate->phone }}
+                                                    </p>
+                                                    <p class="mb-1"><strong>Category:</strong>
+                                                        {{ auth()->user()->corporate->category?->name }}
+                                                    </p>
+                                                    <p class="mb-1"><strong>Size:</strong>
+                                                        {{ auth()->user()->corporate->size }}
+                                                    </p>
+                                                    <p class="mb-1"><strong>Mission/Vision:</strong>
+                                                        {{ auth()->user()->corporate->mission_vision }}
+                                                    </p>
+                                                </div>
                                             </div>
 
+                                            <a href="{{ route('employer.create') }}" class="btn btn-primary btn-sm"><i
+                                                    class="bi bi-pencil-square"></i> Edit Business Details</a>
                                         </div>
+
+                                    </div>
 
                                     <div class="col-md-5">
 
                                         <div class="d-flex justify-content-between">
                                             <h5>User Details</h5>
-                                            
+
                                         </div>
 
                                         <div class="user text-center">
@@ -126,7 +131,8 @@
                                             <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
                                         </div>
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
-                                        class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit Personal Information</a>
+                                            class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit Personal
+                                            Information</a>
                                     </div>
                                 </div>
 
@@ -136,11 +142,9 @@
                     </div>
                 </div>
 
-
             </div>
         </section>
     </main>
-
 
     <div class="modal fade" id="changePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">

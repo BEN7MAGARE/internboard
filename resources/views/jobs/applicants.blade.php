@@ -70,11 +70,11 @@ Applicants Management
 @section('content')
 <main class="container py-4">
     <div class="card mb-4">
-        <div class="card-header applicant-header">
+        <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h3 class="h4 mb-1"><strong>{{ $job->title }}</strong></h3>
-                    <p class="mb-0 text-muted">{{ $job->description }}</p>
+                    <p class="mb-0">{{ $job->description }}</p>
                 </div>
                 <span class="badge bg-primary translatable">
                     {{ $job->applications_count }} Applicant{{ $job->applications_count != 1 ? 's' : '' }}

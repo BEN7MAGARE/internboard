@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -32,11 +33,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'role',
         'phone',
+        'alt_phone',
         'email',
         'address',
         'password',
         'image',
     ];
+
+    use SoftDeletes;
 
     protected $hidden = [
         'password',

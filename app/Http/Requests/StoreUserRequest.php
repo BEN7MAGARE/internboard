@@ -29,6 +29,7 @@ class StoreUserRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|unique:users,phone',
+            'alt_phone' => 'nullable',
             'address' => 'nullable',
             'college_id' => 'nullable|exists:colleges,id',
             'corporate_id' => 'nullable|exists:corporates,id',

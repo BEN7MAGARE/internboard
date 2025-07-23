@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class CorporateController extends Controller
+class EmployerController extends Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class CorporateController extends Controller
     {
         $corporates = Corporate::withCount('jobs')->paginate(10);
         $corporatesusers = User::where('role', 'corporate')->paginate(10);
-        return view('corporate.index', compact('corporates', 'corporatesusers'));
+        return view('employer.index', compact('corporates', 'corporatesusers'));
     }
 
     /**
@@ -34,15 +34,26 @@ class CorporateController extends Controller
     {
         $categories = Category::all();
         if (auth()->user()->role === 'corporate') {
-            return view('corporate.create', compact('categories'));
+            return view('employer.create', compact('categories'));
         } else {
             return redirect('profile');
+        }
+    }
+
+    public function jobs()
+    {
+        if (auth()->user()->role === "corporate") {
+            $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->paginate(10);
+            return view('employer.jobs.index', compact('jobs'));
+        } else {
+            return redirect()->route('profile.edit');
         }
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreCorporateRequest $request)
     {
         $validated = $request->validated();

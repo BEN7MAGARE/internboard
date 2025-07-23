@@ -33,7 +33,6 @@
                     </a>
                 </div>
 
-
                 <div class="col-md-3">
                     <a href="{{ route('college.applications') }}">
                         <div class="card stat-card" style="border-left-color: var(--success-color);">
@@ -55,7 +54,6 @@
                         </div>
                     </a>
                 </div>
-
 
                 <div class="col-md-3">
                     <a href="{{ route('college.applications', 'hired') }}">
@@ -90,62 +88,68 @@
                                 </div>
 
                                 <div class="corporate">
-                                    <div class="col-md-8">
-                                        <p class="mb-1"><strong>Name:</strong>
-                                            {{ auth()->user()->college->name }}</p>
-                                        <p class="mb-1"><strong>Email:</strong>
-                                            {{ auth()->user()->college->email }}
-                                        </p>
-                                        <p class="mb-1"><strong>Address:</strong>
-                                            {{ auth()->user()->college->address }}</p>
-                                        <p class="mb-1"><strong>Phone:</strong>
-                                            {{ auth()->user()->college->phone }}
-                                        </p>
-                                        <p class="mb-1"><strong>Size:</strong>
-                                            {{ auth()->user()->college->size }}
-                                        </p>
-                                        <p class="mb-1"><strong>Mission/Vision:</strong>
-                                            {{ auth()->user()->college->mission_vision }}
-                                        </p>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="corporate-logo">
+                                                <img src="{{ asset('college_logos/' . auth()->user()->college->logo) }}"
+                                                    alt="{{ auth()->user()->college->name }}" class="img-fluid"
+                                                    style="width: 150px; height: 150px; border-radius: 50%;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="mb-1"><strong>Name:</strong>
+                                                {{ auth()->user()->college->name }}</p>
+                                            <p class="mb-1"><strong>Email:</strong>
+                                                {{ auth()->user()->college->email }}
+                                            </p>
+                                            <p class="mb-1"><strong>Address:</strong>
+                                                {{ auth()->user()->college->address }}</p>
+                                            <p class="mb-1"><strong>Phone:</strong>
+                                                {{ auth()->user()->college->phone }}
+                                            </p>
+                                            <p class="mb-1"><strong>Size:</strong>
+                                                {{ auth()->user()->college->size }}
+                                            </p>
+                                            <p class="mb-1"><strong>Mission/Vision:</strong>
+                                                {{ auth()->user()->college->mission_vision }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="col-md-5">
+
+                                    <div class="d-flex justify-content-between">
+                                        <h5>User Details</h5>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
+                                            class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                    </div>
+
+                                    <div class="user text-center">
+                                        @if (auth()->user()->image !== null)
+                                            <img src="{{ asset('profilepictures/' . auth()->user()->image) }}"
+                                                alt="{{ auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}"
+                                                class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%;">
+                                        @endif
+                                        <p class="mb-1"><strong>Name:</strong>
+                                            {{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
+                                        </p>
+                                        <p class="mb-1"><strong>Gender:</strong> {{ auth()->user()->gender }}</p>
+                                        <p class="mb-1"><strong>Email:</strong> {{ auth()->user()->email }}</p>
+                                        <p class="mb-1"><strong>Address:</strong> {{ auth()->user()->address }}</p>
+                                        <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            <div class="col-md-5">
-
-                                <div class="d-flex justify-content-between">
-                                    <h5>User Details</h5>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal"
-                                        class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                                </div>
-
-                                <div class="user text-center">
-                                    @if (auth()->user()->image !== null)
-                                        <img src="{{ asset('profilepictures/' . auth()->user()->image) }}"
-                                            alt="{{ auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}"
-                                            class="img-fluid" style="width: 150px; height: 150px; border-radius: 50%;">
-                                    @endif
-                                    <p class="mb-1"><strong>Name:</strong>
-                                        {{ auth()->user()->title . ' ' . auth()->user()->first_name . ' ' . auth()->user()->middle_name . ' ' . auth()->user()->last_name }}
-                                    </p>
-                                    <p class="mb-1"><strong>Gender:</strong> {{ auth()->user()->gender }}</p>
-                                    <p class="mb-1"><strong>Email:</strong> {{ auth()->user()->email }}</p>
-                                    <p class="mb-1"><strong>Address:</strong> {{ auth()->user()->address }}</p>
-                                    <p class="mb-1"><strong>Phone:</strong> {{ auth()->user()->phone }}</p>
-                                </div>
-
-                            </div>
                         </div>
-
                     </div>
-                </div>
 
-            </div>
+                </div>
         </section>
 
-
     </main>
-
 
     <div class="modal fade" id="changePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,7 +182,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="updateProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="financeModalLabel" aria-hidden="true">
@@ -280,10 +283,8 @@
     </div>
 @endsection
 
-
 @section('footer_scripts')
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/profile.js') }}"></script>
-
 @endsection

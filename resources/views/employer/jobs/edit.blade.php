@@ -22,7 +22,7 @@
     <main class="mt-3 p-2">
 
         <div class="card p-2">
-            <form action="{{ route('jobs.store') }}" id="createJobForm">
+            <form action="{{ route('jobs.store') }}" id="editJobForm">
                 @csrf
                 <div class="card-body  step-1">
                     <div class="row" id="jobFormSection">
@@ -119,7 +119,12 @@
 
                         <div class="col-md-6 form-group">
                             <label for="skills">Skills</label>
-
+                            <div class="d-flex justify-content-between">
+                                <i class="bi bi-info-circle-fill">Select multiple skills</i>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#createSkillModal"><i class="bi bi-plus" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Add Skill"></i></a>
+                            </div>
                             <div class="form-group">
                                 <select name="skills" id="skills" class="form-control" multiple style="width:100%;">
                                     @foreach ($skills as $skill)
@@ -151,8 +156,8 @@
 
                         <div class="col-md-6 form-group">
                             <label for="startDate">Application deadline</label>
-                            <input type="date" name="applicationEndDate" id="applicationEndDate" class="form-control"
-                                min="{{ date('Y-m-d') }}" required value="{{ $job->applicationEndDate }}">
+                            <input type="date" name="application_end_date" id="applicationEndDate" class="form-control"
+                                min="{{ date('Y-m-d') }}" required value="{{ $job->application_end_date }}">
                         </div>
 
                         <div class="col-md-6 form-group">
@@ -264,7 +269,43 @@
                 </div>
             </form>
         </div>
+        <div class="modal fade" id="createSkillModal" tabindex="-1" aria-labelledby="createSkillModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createSkillModalLabel">Create Skill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('skills.store') }}" method="POST" id="createSkillForm">
 
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="skillCategoryID" class="form-label">Category</label>
+                            <select name="category_id" id="skillCategoryID" class="form-control" required>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="skillName" class="form-label">Skill Name</label>
+                            <input type="text" class="form-control" id="skillName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="skillDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="skillDescription" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div id="skillFeedback"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
     </main>
 @endsection
 

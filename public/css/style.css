@@ -618,3 +618,46 @@ thead th {
         box-shadow: 0 0 0 10px inset
     }
 }
+
+.image-preview {
+    margin-top: 5px;
+}
+
+.image-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+
+.image-preview video {
+    width: 180px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.delete-btn {
+    position: relative;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(255, 0, 0, 0.7);
+    border: none;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.delete-btn:hover {
+    background-color: red;
+}
+
+.card-img-top{
+    max-height: 250px;
+    object-fit: cover;
+    object-position: center;
+}

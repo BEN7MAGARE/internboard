@@ -117,7 +117,7 @@ function getCountiesOptions(target) {
 }
 
 function getSkillsOption(target) {
-    $.getJSON("/skills", function (skills) {
+    $.getJSON("/skillsdata", function (skills) {
         let option = "<option value=''>Select One</option>";
         $.each(skills, function (key, value) {
             option +=

@@ -19,4 +19,6 @@ class Controller extends BaseController
     protected $college;
     protected $corporate;
     protected $subCategory;
+    protected $student;
+    protected $product;
 }

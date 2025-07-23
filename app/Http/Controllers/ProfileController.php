@@ -42,66 +42,18 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         if (auth()->user()->role === "corporate") {
-            if (auth()->user()->corporate) {
-                $jobscount = auth()->user()->corporate->jobs()->count();
-                $applicationscount = Application::whereHas('job', function ($query) {
-                    $query->where('corporate_id', auth()->user()->corporate_id);
-                })->count();
-                $employedcount = Application::whereHas('job', function ($query) {
-                    $query->where('corporate_id', auth()->user()->corporate_id);
-                })->where('status', 'employed')->count();
-                return view('profile.corporate', [
-                    'user' => $request->user(),
-                    'jobscount' => $jobscount,
-                    'applicationscount' => $applicationscount,
-                    'employedcount' => $employedcount,
-                ]);
-            }else{
-                return redirect()->route('corporates.create');
-            }
-            
+            return redirect()->route('employer.profile');
         }elseif (auth()->user()->role === "student"||auth()->user()->role === "worker") {
-            $applicationscount = Application::where('user_id', auth()->user()->id)->count();
-            $selectedapplications = Application::where('user_id', auth()->user()->id)->where('status', 'selected')->count();
-            $interviewapplications = Application::where('user_id', auth()->user()->id)->where('status', 'interview')->count();
-            $hiredapplications = Application::where('user_id', auth()->user()->id)->where('status', 'hired')->count();
-            return view('profile.edit', [
-                'user' => $request->user(),
-                'applicationscount' => $applicationscount,
-                'selectedapplications' => $selectedapplications,
-                'interviewapplications' => $interviewapplications,
-                'hiredapplications' => $hiredapplications,
-            ]);
+            return redirect()->route('student.profile');
         }else if(auth()->user()->role === "admin"){
             return view('profile.admin', [
                 'user' => $request->user(),
             ]);
-        }elseif (auth()->user()->role === "college") {
-            $studentscount = Student::where('college_id', auth()->user()->college_id)->count();
-            $applicationscount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->count();
-            $selectedcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'selected')->count();
-            $interviewcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'interview')->count();
-            $hiredcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'hired')->count();
-            return view('profile.college', [
-                'user' => $request->user(),
-                'studentscount' => $studentscount,
-                'applicationscount' => $applicationscount,
-                'selectedcount' => $selectedcount,
-                'interviewcount' => $interviewcount,
-                'hiredcount' => $hiredcount,
-            ]);
+        }elseif(auth()->user()->role === "college") {
+            return redirect()->route('college.profile');
         }
     }
 
-    function jobs()
-    {
-        if (auth()->user()->role === "corporate") {
-            $jobs = $this->job->where('corporate_id', auth()->user()->corporate_id)->withCount('applications')->latest()->paginate(10);
-            return view('corporate.jobs', compact('jobs'));
-        } else {
-            return redirect()->route('profile.edit');
-        }
-    }
 
     /**
      * Update the user's profile information.
@@ -227,13 +179,4 @@ class ProfileController extends Controller
         return json_encode(['status'=>'success','message'=>'Profile image changed successfully']);
     }
 
-    public function applications()
-    {
-        if (auth()->user()->role !== "corporate") {
-            return redirect()->route('profile.edit');
-        }
-        $applications = $this->application->whereIn('job_id', auth()->user()->corporate->jobs->pluck('id'))->with(['job:id,title', 'applicant:id,first_name,last_name,phone,email'])->paginate(10);
-        $jobs = $this->job->where('corporate_id', auth()->user()->corporate->id)->get();
-        return view('profile.applications', compact('applications', 'jobs'));
-    }
 }

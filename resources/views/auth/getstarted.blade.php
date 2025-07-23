@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="form-check">
                                         <input class="form-check-input mt-2" type="radio" name="userroleselection"
                                             id="userRoleSelection" required value="student">&nbsp;&nbsp;&nbsp;
@@ -76,7 +76,7 @@
                                         </label><br>
                                         <span class="translatable">Seeking access to internship / employment opportunities.</span>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <hr>
                             <div class="d-flex align-items-center justify-content-between mb-4">

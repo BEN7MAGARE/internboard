@@ -1,6 +1,7 @@
 (async function () {
     getCorporatesOptions('#corporateOptionsID');
     getCategoriesOptions('#corporateCategory');
+
     const corporateCreateForm = document.getElementById('corporateCreateForm'),
         corporateCreateSubmit = document.getElementById('corporateCreateSubmit'),
         contactPersonCreateForm = document.getElementById('contactPersonCreateForm'),
@@ -67,13 +68,15 @@
                 showError(p, "#corporateFeedback");
                 corporateCreateSubmit.disabled = false;
             } else {
-                const response = await fetch("/corporates", {
+                const response = await fetch("/employer", {
                     method: 'POST',
                     body: formData,
                 });
                 if (response.ok) {
                     corporateCreateSubmit.disabled = false;
                     let result = await response.json();
+                    console.log(result);
+
                     if (result.status === "success") {
                         showSuccess(result.message, "#corporateFeedback");
                         document.getElementById('corporateID').value = "";

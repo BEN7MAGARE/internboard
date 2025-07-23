@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\JobRequest;
 use App\Models\Application;
 use App\Models\Category;
+use App\Models\Corporate;
 use App\Models\Job;
 use App\Models\Skill;
 use App\Models\Subcategory;
-use App\Models\Corporate;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class JobsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('categories','search','jsonSearch', 'skills', 'categoriesWithJobs', 'index', 'jobsLocations', 'show');
+        $this->middleware('auth')->except('categories', 'search', 'jsonSearch', 'skills', 'categoriesWithJobs', 'index', 'jobsLocations', 'show');
         $this->category = new Category();
         $this->job = new Job();
         $this->skill = new Skill();
@@ -77,19 +77,19 @@ class JobsController extends Controller
             $validated['corporate_id'] = auth()->user()->corporate_id;
         }
         DB::beginTransaction();
-        if (isset($validated['id']) || $validated['id'] !== null || $validated['id'] !== '') {
+        if ($validated['id'] === null || $validated['id'] === '') {
             $job = $this->job->create(['ref_no' => strtoupper(Str::random(3)) . strtotime(now())] + $validated);
             $message = 'Job post added successfully';
         } else {
             $job = $this->job->find($validated['id'])->update($validated);
-            $message = 'Job post added successfully';
+            $message = 'Job post updated successfully';
         }
-
-        foreach (explode(',', json_decode($validated['skills'], true)) as $value) {
-            DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
+        if (isset($validated['skills'])) {
+            foreach (explode(',', json_decode($validated['skills'], true)) as $value) {
+                DB::table('job_skill')->insert(['job_id' => $job->id, 'skill_id' => $value]);
+            }
         }
         DB::commit();
-
         return json_encode(['status' => 'success', 'message' => $message]);
     }
 
@@ -106,7 +106,7 @@ class JobsController extends Controller
         $job = $this->job->where('ref_no', $ref_no)->orWhere('id', $ref_no)->first();
         $subCategories = $this->subCategory->get();
         $skills = $this->skill->get();
-        return view('jobs.edit', compact('job', 'categories', 'subCategories', 'skills'));
+        return view('employer.jobs.edit', compact('job', 'categories', 'subCategories', 'skills'));
     }
 
     public function jobs()
@@ -148,7 +148,7 @@ class JobsController extends Controller
         $filename = '';
         if ($request->hasFile('curriculum_vitae')) {
             $filename .= 'CV' . auth()->id() . $job->ref_no . strtotime(now()) . '.' . $request->file('curriculum_vitae')->getClientOriginalExtension();
-            $request->file('curriculum_vitae')->storeAs('applicant_resources/', $filename);
+            $request->file('curriculum_vitae')->move('applicant_resources/', $filename);
         }
         $fileNames = [];
         if (isset($request->files)) {

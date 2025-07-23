@@ -20,7 +20,7 @@
                     <h4 class="mb-2"><strong>Add Your Company/Business Details</strong></h4>
                 </div>
 
-                <form action="{{ route('corporates.store') }}" method="post" id="corporateCreateForm">
+                <form action="{{ route('employer.store') }}" method="post" id="corporateCreateForm">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -128,8 +128,53 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-6 mt-2">
+                                <label for="natureOfBusiness">Nature of Business</label>
+                                <select name="nature_of_business" id="natureOfBusiness"
+                                    class="form-select @error('nature_of_business') invalid-input:'' @enderror">
+                                    <option value="">Select Nature of Business</option>
+                                    <option value="Trading"
+                                        {{ auth()->user()->corporate?->nature_of_business == 'Trading' ? 'selected' : '' }}>Trading
+                                    </option>
+                                    <option value="Service"
+                                        {{ auth()->user()->corporate?->nature_of_business == 'Service' ? 'selected' : '' }}>Service
+                                    </option>
+                                    <option value="Manufacturing"
+                                        {{ auth()->user()->corporate?->nature_of_business == 'Manufacturing' ? 'selected' : '' }}>Manufacturing
+                                    </option>
+                                </select>
+                                @error('nature_of_business')
+                                    <div class="invalid-feedback">
+                                        <p class="text-danger">{{ $message }}</p>
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="col-md-12 mt-2">
-                                <label for="logo">Company Mission/Vision</label>
+                                <label for="website">Company Website</label>
+                                <input type="text" class="form-control @error('website') invalid-input:'' @enderror"
+                                    name="website" id="website" required
+                                    value="{{ auth()->user()->corporate?->website }}">
+                                @error('website')
+                                    <div class="invalid-feedback">
+                                        <p class="text-danger">{{ $message }}</p>
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <label for="description">Company Description</label>
+                                <textarea name="description" id="description"
+                                    class="form-control @error('description') invalid-input:'' @enderror">{{ auth()->user()->corporate?->description }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">
+                                        <p class="text-danger">{{ $message }}</p>
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 mt-2">
+                                <label for="mission_vision">Company Mission/Vision</label>
                                 <textarea name="mission_vision" id="mission_vision"
                                     class="form-control @error('mission_vision') invalid-input:'' @enderror">{{ auth()->user()->corporate?->mission_vision }}</textarea>
                                 @error('mission_vision')
@@ -140,7 +185,7 @@
                             </div>
 
                         </div>
-
+                        
                     </div>
 
                     <div id="corporateFeedback"></div>
