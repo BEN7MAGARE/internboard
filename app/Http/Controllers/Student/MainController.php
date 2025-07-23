@@ -105,7 +105,6 @@ class MainController extends Controller
         $student = User::with(['profile', 'college', 'student'])->findOrFail($id);
         return json_encode($student);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
