@@ -64,6 +64,13 @@
 
 @section('content')
     <main class="container py-4">
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can post your jobs here for advertisement
+            on our platform and get most qualied and talented applicants.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
         <div class="d-flex justify-content-between align-items-center mb-2">
             <a href="{{ route('jobs.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Post New Job
@@ -279,7 +286,7 @@
             });
 
             document.addEventListener('click', async function(e) {
-                const deleteJobToggle = e.target.getAttribute('id');                
+                const deleteJobToggle = e.target.getAttribute('id');
                 if (deleteJobToggle == "deleteJobToggle") {
                     e.preventDefault();
                     var jobid = e.target.dataset.jobid;

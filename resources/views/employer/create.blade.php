@@ -150,7 +150,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-12 mt-2">
+                            <div class="col-md-6 mt-2">
                                 <label for="website">Company Website</label>
                                 <input type="text" class="form-control @error('website') invalid-input:'' @enderror"
                                     name="website" id="website" required
@@ -162,7 +162,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-12 mt-2">
+                            <div class="col-md-6 mt-2">
                                 <label for="description">Company Description</label>
                                 <textarea name="description" id="description"
                                     class="form-control @error('description') invalid-input:'' @enderror">{{ auth()->user()->corporate?->description }}</textarea>

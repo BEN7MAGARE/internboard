@@ -21,6 +21,10 @@
     <main class="main">
         <section class="mt-2 p-2">
             <div class="mb-5 radius-image p-2">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can add your products/services/projects/portfolios here for advertisement on our platform
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class="text-end mb-4">
                     <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal"
                         id="addProductToggle">Add Product/Service</a>
@@ -38,7 +42,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $product->name }}
                                             @if (!is_null($product->price))
-                                                <span class="float-end text-primary">{{  number_format($product->price,2) }}</span>
+                                                <span
+                                                    class="float-end text-primary">{{ number_format($product->price, 2) }}</span>
                                             @endif
                                         </h5>
                                         <p class="card-text">{{ $product->description }}</p>

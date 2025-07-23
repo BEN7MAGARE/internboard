@@ -11,6 +11,10 @@
 @section('content')
     <main class="mt-3 p-2">
         <div class="card p-2">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can add persons who can help you manage your business activities on this platform. They will have access to your business information. and operations provided by this platform.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <div class="card-header">
                 <div class="d-flex justify-content-end gap-2">
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
