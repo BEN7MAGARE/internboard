@@ -251,7 +251,7 @@ class JobsController extends Controller
         if (!empty($locations)) {
             $query->whereIn('location', $locations);
         }
-        $jobs = $query->get();
+        $jobs = $query->with('corporate')->get();
         return response()->json($jobs);
     }
 }

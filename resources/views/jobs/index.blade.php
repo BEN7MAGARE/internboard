@@ -185,6 +185,9 @@
                                                         @else
                                                             <p class="company-name"><i>{{ $item->corporate->name }}</i></p>
                                                         @endif
+                                                        <div class="mt-2">
+                                                            <a href="{{ url('jobs/' . $item->ref_no . '/apply') }}" class="btn btn-primary btn-sm">Apply Now</a>
+                                                        </div>
                                                     </div>
 
                                                     <div class="">
@@ -241,7 +244,7 @@
 
                                     <section id="job-pagination" class="job-pagination section mt-3 bg-white p-2">
                                         <div class="container">
-                                            <div class="d-flex justify-content-center">
+                                            <div class="d-flex justify-content-center" id="jobPagination">
                                                 <ul>
                                                     {!! $jobs->links() !!}
                                                 </ul>

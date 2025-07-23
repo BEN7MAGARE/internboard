@@ -194,6 +194,7 @@
         $.post('/jobs-json-search', data).done(function (jobs) {
             if (jobs.length > 0) {
                 jobrendersection.html(composeJobs(jobs));
+                document.getElementById('jobPagination').innerHTML = ""
             } else {
                 jobrendersection.html(`<p class="text-danger">No results matched your search</p>`);
             }
