@@ -406,6 +406,55 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="importStudentsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import Students</h1>
+                    <button type="button" class="btn-close btn text-danger" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form action="{{ route('college.students.imports') }}" method="post" enctype="multipart/form-data" id="importStudentsForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="alert alert-info">
+                            <p>
+                                <strong>Note:</strong>
+                                <ul>
+                                    <li>The file should be in CSV format.</li>
+                                    <li>The file should contain the following columns: first_name, middle_name, last_name, email, phone, gender, course_code, year_of_study, course_level, reg_number, kin_name, kin_phone, kin_email, kin_relationship, sponsored</li>
+                                    <li>The file should be encoded in UTF-8.</li>
+                                </ul>
+                                <a href="{{ route('students.template.download') }}" target="_blank" class="btn btn-primary btn-sm">Download Template</a>
+                            </p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="importStudents">Import Students</label>
+                                    <input type="file" name="students" id="importStudents" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="studentImportFeedback"></div>
+
+                    <div class="modal-footer">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="importStudentsButton">Import</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('footer_scripts')

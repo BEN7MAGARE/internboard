@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         break;
                     }
                 }
-                const courseOptions = document.getElementById('courseId').options;                
-                for (let i = 0; i < courseOptions.length; i++) {                    
+                const courseOptions = document.getElementById('courseId').options;
+                for (let i = 0; i < courseOptions.length; i++) {
                     if (courseOptions[i].value == data.student.course_id) {
                         courseOptions[i].selected = true;
                         break;
@@ -281,6 +281,33 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.ok) {
             const data = await response.json();
             console.log(data);
+        }
+    });
+
+    const importStudentsForm = document.getElementById('importStudentsForm'),
+        importStudentsButton = document.getElementById('importStudentsButton');
+    importStudentsForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        importStudentsButton.disabled = true;
+        const formData = new FormData(this);
+        const response = await fetch('/college/students-import', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
+            },
+            body: formData,
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            showSuccess(data.message, "#studentImportFeedback");
+            importStudentsButton.disabled = false;
+        } else {
+            const error = await response.json();
+            console.log(error);
+            showError(error.message, "#studentImportFeedback");
+            importStudentsButton.disabled = false;
+
         }
     });
 });

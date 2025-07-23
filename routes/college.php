@@ -15,5 +15,8 @@ Route::middleware('college')->prefix('college')->group(function () {
 
     Route::get('students', [MainController::class, 'students'])->name('college.students');
     Route::get('applications', [MainController::class, 'applications'])->name('college.applications');
+    Route::post('students-import', [MainController::class, 'importStudents'])->name('college.students.imports');
+    Route::get('students-template-download', [MainController::class, 'downloadStudentsTemplate'])->name('students.template.download');
 
+    Route::get('courses',[MainController::class,'courses'])->name('college.courses');
 });

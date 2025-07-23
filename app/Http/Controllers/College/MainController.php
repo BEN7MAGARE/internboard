@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\College;
 
-use App\Http\Requests\StoreCollegeRequest;
+use App\Exports\StudentImport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCollegeRequest;
+use App\Imports\StudentDataImport;
 use App\Models\Application;
-use App\Models\User;
 use App\Models\College;
 use App\Models\Course;
 use App\Models\Student;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MainController extends Controller
 {
@@ -28,7 +33,7 @@ class MainController extends Controller
         $selectedcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'selected')->count();
         $interviewcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'interview')->count();
         $hiredcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'hired')->count();
-        return view('profile.college', [
+        return view('college.profile', [
             'user' => auth()->user(),
             'studentscount' => $studentscount,
             'applicationscount' => $applicationscount,
@@ -42,6 +47,12 @@ class MainController extends Controller
     {
         $students = User::where('role', 'student')->where('college_id', auth()->user()->college_id)->with(['profile', 'college', 'student'])->paginate(10);
         return view('college.students.index', compact('students'));
+    }
+
+    public function courses()
+    {
+        $courses = Course::paginate(10);
+        return view('college.courses.index', compact('courses'));
     }
 
     /**
@@ -149,7 +160,7 @@ class MainController extends Controller
         $colleges = College::select('id', 'name')->get();
         return response()->json($colleges);
     }
-    
+
     public function applications()
     {
         if (auth()->user()->role === 'college') {
@@ -173,6 +184,27 @@ class MainController extends Controller
             return view('profile.collegedashboard', compact('studentscount', 'applicationscount', 'selectedcount', 'hiredcount'));
         } else {
             return redirect()->back()->with('errors', 'You are not authorised to access this resource');
+        }
+    }
+
+    public function downloadStudentsTemplate()
+    {
+        return Excel::download(new StudentImport(), 'students_import_template.xlsx');
+    }
+
+    public function importStudents(Request $request)
+    {
+        $college_id = auth()->user()->college_id;
+        $request->validate([
+            'students' => 'required|file|mimes:xlsx,xls,csv|max:10240',  // Max 10MB
+        ]);
+        try {
+            Excel::import(new StudentDataImport($college_id), $request->file('students'));
+            return response()->json(['status' => 'success', 'message' => 'Students imported successfully.']);
+        } catch (\Exception $e) {
+            Log::error('Student import failed: ' . $e->getMessage());
+
+            return response()->json(['status' => 'error', 'message' => 'An error occurred while importing students. Please check the log.']);
         }
     }
 }

@@ -109,12 +109,16 @@
                         <a href="{{ route('college.applications') }}"><i
                                 class="bi bi-window"></i>&nbsp;Applications</a>
                     </li>
+                    
+                    <li class="list-group-item  {!! Request::is('college/courses') ? 'active' : '' !!}">
+                        <a href="{{ route('college.courses') }}"><i
+                                class="bi bi-window"></i>&nbsp;Courses</a>
+                    </li>
 
                     <li class="list-group-item  {!! Request::is('college/contacts') ? 'active' : '' !!}">
                         <a href="{{ route('college.contacts') }}"><i
                                 class="bi bi-window"></i>&nbsp;Contact Persons</a>
                     </li>
-
                 @endif
 
                 @if (auth()->user()->role === 'admin')

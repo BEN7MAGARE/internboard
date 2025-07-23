@@ -63,7 +63,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="mt-4" data-aos="fade-up" data-aos-delay="400" id="categoriesWithJobs">                            
+                    <div class="mt-4" data-aos="fade-up" data-aos-delay="400" id="categoriesWithJobs">
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     <div class="col-xl-5 content">
                         <h3 class="translatable">About Us</h3>
                         <h2>Daraja La Mafanikio - Bridge to Success</h2>
-                        <p class="translatable">We aim to allievate poverty in informal settlements by providing training
+                        <p class="translatable">We aim to elleviate poverty in informal settlements by providing training
                             and
                             imparting skills on employability and entrepreneurship curriculum to youths in disadvantaged and
                             informal settlements.</p>
@@ -239,7 +239,7 @@
                                     </div>
 
                                 </div>
-                                
+
                             </div>
                         </div>
                         </a>
@@ -274,11 +274,11 @@
             </div>
         </section>
     </main>
-    
+
 @endsection
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/welcome.js') }}"></script>
-    
+
 @endsection
