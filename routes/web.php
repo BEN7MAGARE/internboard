@@ -56,7 +56,7 @@ Route::get('college-dashboard', [CollegeController::class, 'dashboard'])->name('
 Route::get('collegesdata',[CollegeController::class,'getColleges']);
 Route::get('college-students', [CollegeController::class, 'students'])->name('college.students');
 
-Route::resource('employers', EmployerController::class);
+Route::resource('employer', EmployerController::class);
 Route::get('corporadata',[CorporateController::class,'getCorporates']);
 
 Route::resource('colleges', CollegeController::class);

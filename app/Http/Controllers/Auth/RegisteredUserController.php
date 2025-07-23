@@ -77,7 +77,7 @@ class RegisteredUserController extends Controller
         $url = '';
         switch ($validated['role']) {
             case 'corporate':
-                $url = '/corporates/create';
+                $url = '/employer/create';
                 break;
             case 'college':
                 $url = '/colleges/create';
