@@ -44,7 +44,7 @@ class ProfileController extends Controller
         if (auth()->user()->role === "corporate") {
             return redirect()->route('employer.profile');
         }elseif (auth()->user()->role === "student"||auth()->user()->role === "worker") {
-            return redirect()->route('student.profile');
+            return redirect()->route('students.profile');
         }else if(auth()->user()->role === "admin"){
             return view('profile.admin', [
                 'user' => $request->user(),
@@ -53,7 +53,6 @@ class ProfileController extends Controller
             return redirect()->route('college.profile');
         }
     }
-
 
     /**
      * Update the user's profile information.

@@ -31,7 +31,7 @@ class MainController extends Controller
         $interviewapplications = Application::where('user_id', auth()->user()->id)->where('status', 'interview')->count();
         $hiredapplications = Application::where('user_id', auth()->user()->id)->where('status', 'hired')->count();
         return view('students.profile', [
-            'user' => $request->user(),
+            'user' => auth()->user(),
             'applicationscount' => $applicationscount,
             'selectedapplications' => $selectedapplications,
             'interviewapplications' => $interviewapplications,

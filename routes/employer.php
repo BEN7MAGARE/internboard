@@ -5,7 +5,7 @@ use App\Http\Controllers\Employer\ProductController;
 
 Route::get('employer', [MainController::class, 'index'])->name('employer');
 Route::get('employer/create', [MainController::class, 'create'])->name('employer.create');
-Route::post('employer/store', [MainController::class, 'store'])->name('employer.store');
+// Route::post('employer/store', [MainController::class, 'store'])->name('employer.store');
 Route::get('employer/{id}/applicants', [MainController::class, 'applicants'])->name('employer.applicants');
 Route::get('employer-applications', [MainController::class, 'applications'])->name('employer.applications');
 
