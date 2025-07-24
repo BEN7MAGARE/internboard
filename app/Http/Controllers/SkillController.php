@@ -12,7 +12,7 @@ class SkillController extends Controller
      */
     public function index()
     {
-        return view('skills.index');
+        // return view('skills.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class SkillController extends Controller
      */
     public function create()
     {
-        return view('skills.create');
+        // return view('skills.create');
     }
 
     /**
