@@ -164,8 +164,8 @@
 
                             <div class="col-md-6 mt-2">
                                 <label for="description">Company Description</label>
-                                <textarea name="description" id="description"
-                                    class="form-control @error('description') invalid-input:'' @enderror">{{ auth()->user()->corporate?->description }}</textarea>
+                                <input type="text" name="description" id="description"
+                                    class="form-control @error('description') invalid-input:'' @enderror" value="{{ auth()->user()->corporate?->description }}">
                                 @error('description')
                                     <div class="invalid-feedback">
                                         <p class="text-danger">{{ $message }}</p>
@@ -175,8 +175,8 @@
 
                             <div class="col-md-12 mt-2">
                                 <label for="mission_vision">Company Mission/Vision</label>
-                                <textarea name="mission_vision" id="mission_vision"
-                                    class="form-control @error('mission_vision') invalid-input:'' @enderror">{{ auth()->user()->corporate?->mission_vision }}</textarea>
+                                <input type="text" name="mission_vision" id="mission_vision"
+                                    class="form-control @error('mission_vision') invalid-input:'' @enderror" value="{{ auth()->user()->corporate?->mission_vision }}">
                                 @error('mission_vision')
                                     <div class="invalid-feedback">
                                         <p class="text-danger">{{ $message }}</p>

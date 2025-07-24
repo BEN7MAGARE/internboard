@@ -72,9 +72,9 @@
                             <label for="experienceLevel">Experience Level</label>
                             <select name="experience_level" id="experienceLevel" class="form-select" required>
                                 <option value="">Select One</option>
-                                <option value="Entry">Entry Level</option>
-                                <option value="Intermediate">Intermediate Level</option>
-                                <option value="Expert">Expert Level</option>
+                                <option value="Entry">Entry Level 0-1 year</option>
+                                <option value="Intermediate">Intermediate Level 1-3 years</option>
+                                <option value="Expert">Expert Level 3+ years</option>
                             </select>
                         </div>
 
