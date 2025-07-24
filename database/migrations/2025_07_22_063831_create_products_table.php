@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Corporate::class)->constrained('corporates')->cascadeOnDelete();
             $table->string('name');
             $table->text('description');
-            $table->decimal('price', 10, 2)->default(0);
+            $table->decimal('price', 10, 2)->default(0)->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -21,6 +21,12 @@
 @section('content')
     <main class="mt-3 p-2">
 
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can post your jobs here for advertisement
+            on our platform and get most qualied and talented applicants.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <div class="card p-2">
             <form action="{{ route('jobs.store') }}" id="createJobForm">
                 @csrf
@@ -78,7 +84,7 @@
                         </div>
 
                     </div>
-
+                    <div id="step1Feedback"></div>
                     <div class="mt-2">
                         <div class="text-end">
                             {{-- <a class="btn btn-outline-primary" disabled id="toggleprevioussection"><i
@@ -154,8 +160,8 @@
 
                         <div class="col-md-6 form-group">
                             <label for="startDate">Application deadline</label>
-                            <input type="date" name="application_end_date" id="applicationEndDate" class="form-control"
-                                min="{{ date('Y-m-d') }}" required>
+                            <input type="date" name="application_end_date" id="applicationEndDate"
+                                class="form-control" min="{{ date('Y-m-d') }}" required>
                         </div>
 
                         <div class="col-md-6 form-group">

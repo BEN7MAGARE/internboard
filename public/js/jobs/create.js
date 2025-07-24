@@ -87,7 +87,7 @@
                 $.each(errors, function (key, value) {
                     p += value;
                 });
-                showError(p, "#jobFeedback");
+                showError(p, "#step1Feedback");
                 $this.prop("disabled", false);
             } else {
                 $(".step-1").hide();
@@ -96,6 +96,7 @@
         });
     }
 
+    
     const toggleStep2 = document.querySelectorAll('.toggleStep2');
     toggleStep2.forEach(function (toggleStep2) {
         toggleStep2.addEventListener('click', function (event) {
@@ -169,7 +170,6 @@
         searchJobForm.addEventListener('submit', async function (event) {
             event.preventDefault();
             const data = new FormData(this);
-            console.log(Object.fromEntries(data.entries()));
             const csrfToken = document.querySelector("input[name='_token']").value;
             data.append('_token', csrfToken);
             const response = await fetch('/jobs-json-search', {
@@ -282,7 +282,6 @@
         if (editJobToggle) {
             event.preventDefault();
             const jobId = editJobToggle.dataset.id;
-            console.log(jobId);
             const response = fetch(`/jobs/${jobId}`)
                 .then(response => response.json())
                 .then(data => {

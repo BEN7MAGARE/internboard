@@ -19,6 +19,7 @@ class Course extends Model
         'duration',
         'fees',
         'status',
+        'level_of_study',
     ];
 
     public function students(): HasMany

@@ -312,19 +312,19 @@
                                 <select name="level" id="jobLevel" class="form-select">
                                     <option value=" ">Select One</option>
                                     @if (auth()->user()->profile?->level === 'Beginner')
-                                        <option value="Beginner" selected>Beginner / Amature</option>
+                                        <option value="Beginner" selected>Beginner / Amature 0-1 year</option>
                                     @else
-                                        <option value="Beginner">Beginner / Amature</option>
+                                        <option value="Beginner">Beginner / Amature 0-1 year</option>
                                     @endif
                                     @if (auth()->user()->profile?->level === 'Intermediate')
-                                        <option value="Intermediate" selected>Intermediate</option>
+                                        <option value="Intermediate" selected>Intermediate 1-3 years</option>
                                     @else
-                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Intermediate">Intermediate 1-3 years</option>
                                     @endif
                                     @if (auth()->user()->profile?->level === 'Expert')
-                                        <option value="Expert" selected>Expert</option>
+                                        <option value="Expert" selected>Expert 3+ years</option>
                                     @else
-                                        <option value="Expert">Expert</option>
+                                        <option value="Expert">Expert 3+ years</option>
                                     @endif
                                 </select>
                             </div>

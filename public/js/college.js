@@ -82,10 +82,12 @@
                 if (response.ok) {
                     collegeCreateSubmit.disabled = false;
                     const result = await response.json();
+                    console.log(result);
+                    
                     document.getElementById('collegeID').value = "";
                     if (result.status === "success") {
                         document.getElementById('collegeID').value = "";
-                        collegeCreateForm.reset();
+                        collegeAltCreateForm.reset();
                         showSuccess(result.message, "#collegeFeedback");
                         setTimeout(() => {
                             window.location.href = result.url;
@@ -96,6 +98,8 @@
                 } else if (response.status === 422) {
                     collegeCreateSubmit.disabled = false;
                     const errorData = await response.json();
+                    console.log(errorData);
+                    
                     let errors = '';
                     for (const key in errorData.errors) {
                         errors += errorData.errors[key].join(' ') + '!<br>';

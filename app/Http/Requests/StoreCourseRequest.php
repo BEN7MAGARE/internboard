@@ -24,6 +24,7 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'nullable|exists:courses,id',
             'code' => 'nullable|string|max:50',
             'name' => 'required|string|max:150',
             'description' => 'nullable|string',
@@ -31,6 +32,7 @@ class StoreCourseRequest extends FormRequest
             'id' => 'nullable|exists:courses,id',
             'duration' => 'nullable|string|max:50',
             'fees' => 'nullable|numeric',
+            'level_of_study' => 'nullable|string|max:50',
         ];
     }
 
