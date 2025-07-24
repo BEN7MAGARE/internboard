@@ -89,8 +89,8 @@ class StudentController extends Controller
         return json_encode($student);
     }
 
-    function profile() {
-        $student = User::with(['profile', 'college', 'student'])->findOrFail(auth()->id());
+    public function profile($id) {
+        $student = User::with(['profile', 'college', 'student'])->findOrFail($id);
         return view('students.show', compact('student'));
     }
 

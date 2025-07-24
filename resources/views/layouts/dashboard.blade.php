@@ -85,7 +85,7 @@
                         </a>
                     </li>
 
-                    <li class="{!! Request::is('employer/contacts') ? 'active' : '' !!}">
+                    <li class="{!! Request::is('employer-contacts') ? 'active' : '' !!}">
                         <a href="{{ route('employer.contacts') }}">
                             <i class="bi bi-briefcase"></i>
                             Contacts
@@ -109,7 +109,7 @@
                         <a href="{{ route('college.applications') }}"><i
                                 class="bi bi-window"></i>&nbsp;Applications</a>
                     </li>
-                    
+
                     <li class="list-group-item  {!! Request::is('college/courses') ? 'active' : '' !!}">
                         <a href="{{ route('college.courses') }}"><i
                                 class="bi bi-window"></i>&nbsp;Courses</a>
