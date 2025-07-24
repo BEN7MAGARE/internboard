@@ -57,7 +57,7 @@ Route::get('collegesdata',[CollegeController::class,'getColleges']);
 Route::get('college-students', [CollegeController::class, 'students'])->name('college.students');
 
 Route::resource('employer', EmployerController::class);
-Route::get('corporadata',[CorporateController::class,'getCorporates']);
+Route::get('corporadata',[EmployerController::class,'getCorporates']);
 
 Route::resource('colleges', CollegeController::class);
 Route::resource('skills', SkillController::class);
@@ -76,7 +76,7 @@ Route::resource('courses', CourseController::class);
 Route::get('coursesdata',[CourseController::class,'getCourses']);
 Route::get('coursescategoriesdata',[CourseController::class,'getCourseCategories']);
 
-Route::get('student/{id}', [StudentController::class, 'profile'])->name('student.details');
+Route::get('student-public-prodile/{id}', [StudentController::class, 'profile'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
 Route::get('download/{file}', [ApplicationsController::class, 'download'])->name('download.file');
 
