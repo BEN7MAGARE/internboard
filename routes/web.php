@@ -76,7 +76,7 @@ Route::resource('courses', CourseController::class);
 Route::get('coursesdata',[CourseController::class,'getCourses']);
 Route::get('coursescategoriesdata',[CourseController::class,'getCourseCategories']);
 
-Route::get('student-public-prodile/{id}', [StudentController::class, 'profile'])->name('student.details');
+Route::get('student-public-profile/{id}', [StudentController::class, 'profile'])->name('student.details');
 Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downloadCV'])->name('application.cvdownload');
 Route::get('download/{file}', [ApplicationsController::class, 'download'])->name('download.file');
 
