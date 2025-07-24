@@ -20,7 +20,7 @@ class MainController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('student');
         $this->profile = Profile::class;
     }
 

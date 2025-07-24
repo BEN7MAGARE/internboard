@@ -137,6 +137,12 @@ class MainController extends Controller
         return json_encode($corporate);
     }
 
+    public function contactDetail(string $id)
+    {
+        $contact = User::findOrFail($id);
+        return json_encode($contact);
+    }
+
     public function contactShow(string $id)
     {
         $contact = User::findOrFail($id);

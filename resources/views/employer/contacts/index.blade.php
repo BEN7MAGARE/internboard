@@ -10,15 +10,20 @@
 
 @section('content')
     <main class="mt-3 p-2">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can add persons who can help you
+            manage your business activities on this platform. They will have access to your business information. and
+            operations provided by this platform.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <div class="card p-2">
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="bi bi-info-circle-fill"></i>&nbsp;<strong>Note:</strong> You can add persons who can help you manage your business activities on this platform. They will have access to your business information. and operations provided by this platform.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+
             <div class="card-header">
                 <div class="d-flex justify-content-end gap-2">
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createCorporateUserModal" id="createCorporateUserToggle"><i class="bi bi-plus"></i> Add
+                        data-bs-target="#createCorporateUserModal" id="createCorporateUserToggle"><i class="bi bi-plus"></i>
+                        Add
                         new</a>
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -44,6 +49,7 @@
                         <th>Address </th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Alt. Phone</th>
                         <th>Actions</th>
                     </thead>
 
@@ -57,12 +63,15 @@
                                 <td>{{ $item->address }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->phone }}</td>
+                                <td>{{ $item->alt_phone }}</td>
                                 <td>
                                     <a href="#" data-id="{{ $item->id }}" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#createCorporateUserModal" id=""><i
-                                            class="bi bi-pencil-square"></i></a>
-                                    <a href="{{ route('employer.contacts.show', $item->id) }}" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="#" class="btn btn-danger btn-sm" data-contactid="{{ $item->id }}" id="deleteContactToggle"><i class="bi bi-trash"></i></a>
+                                        data-bs-toggle="modal" data-bs-target="#createCorporateUserModal"
+                                        id="editContactToggle"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ route('employer.contacts.show', $item->id) }}"
+                                        class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i></a>
+                                    <a href="#" class="btn btn-danger btn-sm" data-contactid="{{ $item->id }}"
+                                        id="deleteContactToggle"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -75,7 +84,7 @@
 @endsection
 
 @section('footer_scripts')
-<div class="modal fade" id="createCorporateUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="createCorporateUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="createCorporateUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -100,7 +109,8 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="name" class="form-label">Middle Name</label>
-                                <input type="text" class="form-control" name="middle_name" id="corporateUserMiddleName">
+                                <input type="text" class="form-control" name="middle_name"
+                                    id="corporateUserMiddleName">
                             </div>
 
                             <div class="col-md-6 mb-2">

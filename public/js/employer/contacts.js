@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const corporateUserCreateForm = document.getElementById('corporateUserCreateForm');
-    const corporateUserCollegeID = document.getElementById('corporateUserCollegeID');
+    const corporateUserID = document.getElementById('corporateUserID');
     const corporateUserFirstName = document.getElementById('corporateUserFirstName');
     const corporateUserMiddleName = document.getElementById('corporateUserMiddleName');
     const corporateUserLastName = document.getElementById('corporateUserLastName');
@@ -8,7 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const corporateUserPhone = document.getElementById('corporateUserPhone');
     const corporateUserAddress = document.getElementById('corporateUserAddress');
     const corporateUserCreateSubmit = document.getElementById('corporateUserCreateSubmit'),
-        allContactSelect = document.getElementById('allContactSelect');
+        allContactSelect = document.getElementById('allContactSelect'),
+        createCorporateUserToggle = document.getElementById('createCorporateUserToggle');
+
+    createCorporateUserToggle.addEventListener('click', function () {
+        corporateUserCreateForm.reset();
+        corporateUserID.value = "";
+    });
 
     if (corporateUserCreateForm) {
         corporateUserCreateForm.addEventListener("submit", async function (event) {
@@ -88,6 +94,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('click', async function (event) {
+        const editContactToggle = event.target.closest('#editContactToggle');
+        if (editContactToggle) {
+            event.preventDefault();
+            const contactId = editContactToggle.dataset.id;
+            const response = await fetch(`/employer-contact-detail/${contactId}`);
+            if (response.ok) {
+                const data = await response.json();
+                corporateUserID.value = data.id;
+                corporateUserFirstName.value = data.first_name;
+                corporateUserMiddleName.value = data.middle_name;
+                corporateUserLastName.value = data.last_name;
+                corporateUserEmail.value = data.email;
+                corporateUserPhone.value = data.phone;
+                collegeUseraltPhone.value = data.alt_phone;
+                corporateUserAddress.value = data.address;
+            }
+        }
 
         const deleteContact = event.target.closest('#deleteContactToggle');
         if (deleteContact) {
@@ -129,5 +152,5 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     })
-    
+
 });
