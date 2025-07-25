@@ -128,12 +128,6 @@
                             Dashboard
                         </a>
                     </li>
-                    <li class="{!! Request::is('users') ? 'active' : '' !!}">
-                        <a href="{{ route('users.index') }}">
-                            <i class="bi bi-people"></i>
-                            Users
-                        </a>
-                    </li>
 
                     <li class="{!! Request::is('admin/students') ? 'active' : '' !!}">
                         <a href="{{ route('admin.students.index') }}">

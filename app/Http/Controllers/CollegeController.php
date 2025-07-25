@@ -21,7 +21,7 @@ class CollegeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('college');
+        $this->middleware('auth');
         $this->user = new User();
         $this->application = new Application();
     }
