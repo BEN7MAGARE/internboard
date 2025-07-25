@@ -180,105 +180,153 @@
             </div>
         </section>
 
-        <section id="" class="">
-            <div class="container-fluid" data-aos="fade-up">
-                <h2>Recent Jobs</h2>
-                <p>Check out the latest job opportunities</p>
-            </div>
-            <div class="container-fluid">
-
-                <div class="row bg-light pt-4 pb-4 slider" id="job-slider">
-                    @foreach ($jobs as $item)
-                        @php
-                            $skilltext = '';
-                            foreach ($item->skills as $key => $skill) {
-                                if ($key < 3) {
-                                    $skilltext .= "<span>$skill->name</span>";
-                                }
-                            }
-                        @endphp
-                        <a href="{{ route('jobs.show', $item->ref_no) }}">
-                        <div class="slide slide-box" data-id="{{ $item->id }}" data-ref_no="{{ $item->ref_no }}">
-                            <div class="card p-3">
-
-                                <div class="title">
-                                    <i class="text-danger">{{ $item->corporate->name }}</i>
-                                    <h6>{{ substr($item->title, 0, 70) . '...' }}</h6>
-                                </div>
-
-                                <div class="row gap-2">
-                                    <div class="col-md-12">
-                                        <div class="d-flex flex-wrap gap-2">
-                                            <span class="alert p-1 rounded alert-success">Salary:
-                                                {{ $item->salary_range }}</span>
-                                            <span class="alert p-1 rounded alert-success">Positions:
-                                                {{ $item->no_of_positions }}</span>
-                                        </div>
-
-                                        <div class="desciption p-2">
-                                            @php
-                                                $description = $item->description;
-                                            @endphp
-                                            @if (strlen($description) > 150)
-                                                <p>{{ substr($description, 0, 150) . ' . . . .' }}</p>
-                                            @else
-                                                <p>{{ $description }}</p>
-                                            @endif
-                                        </div>
-
-                                        <small class="skills ml-2">{!! $skilltext !!}</small>
-
-                                        <div class="location d-flex justify-content-between p-2">
-                                            <div>
-                                                <small>
-                                                    <i
-                                                        class="bi bi-geo-alt-fill text-danger"></i>&nbsp;<span>{{ $item->location }}</span>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        </a>
-                    @endforeach
+        @if (count($jobs))
+            <<section id="" class="">
+                <div class="container-fluid" data-aos="fade-up">
+                    <h2>Recent Jobs</h2>
+                    <p>Check out the latest job opportunities</p>
                 </div>
-                <div class="slider-nav-main mt-1">
-                    <div>
-                        <i class="bi bi-arrow-left-circle-fill text-danger" id="slider-job-home-prev"></i>
-                        <i class="bi bi-arrow-right-circle-fill text-danger" id="slider-job-home-next"></i>
+                <div class="container-fluid">
+
+                    <div class="row bg-light pt-4 pb-4 slider" id="job-slider">
+                        @foreach ($jobs as $item)
+                            @php
+                                $skilltext = '';
+                                foreach ($item->skills as $key => $skill) {
+                                    if ($key < 3) {
+                                        $skilltext .= "<span>$skill->name</span>";
+                                    }
+                                }
+                            @endphp
+                            <a href="{{ route('jobs.show', $item->ref_no) }}">
+                                <div class="card slide slide-box" data-id="{{ $item->id }}"
+                                    data-ref_no="{{ $item->ref_no }}">
+                                    <div class="card-body p-3">
+
+                                        <div class="title">
+                                            <i class="text-danger">{{ $item->corporate->name }}</i>
+                                            <h6>{{ strlen($item->title) > 50 ? substr($item->title, 0, 50) . '...' : $item->title }}
+                                            </h6>
+                                        </div>
+
+                                        <div class="row gap-2">
+                                            <div class="col-md-12">
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <span class="alert p-1 rounded alert-success">Salary:
+                                                        {{ $item->salary_range }}</span>
+                                                    <span class="alert p-1 rounded alert-success">Positions:
+                                                        {{ $item->no_of_positions }}</span>
+                                                </div>
+
+                                                <div class="desciption p-2">
+                                                    @php
+                                                        $description = $item->description;
+                                                    @endphp
+                                                    @if (strlen($description) > 150)
+                                                        <p>{{ substr($description, 0, 100) . ' . . . .' }}</p>
+                                                    @else
+                                                        <p>{{ $description }}</p>
+                                                    @endif
+                                                </div>
+
+                                                <small class="skills ml-2">{!! $skilltext !!}</small>
+
+                                                <div class="location d-flex justify-content-between p-2">
+                                                    <div>
+                                                        <small>
+                                                            <i
+                                                                class="bi bi-geo-alt-fill text-danger"></i>&nbsp;<span>{{ $item->location }}</span>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <div class="slider-nav-main mt-1">
+                        <div>
+                            <i class="bi bi-arrow-left-circle-fill text-danger" id="slider-job-home-prev"></i>
+                            <i class="bi bi-arrow-right-circle-fill text-danger" id="slider-job-home-next"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+                </section>
+        @endif
 
-        <section id="" class="">
-            <div class="container-fluid" data-aos="fade-up">
-                <h2>Top Employers</h2>
-                <p>Here are the employers who are committed to providing opportunities for youths in disadvantaged and
-                    informal settlements.</p>
-            </div>
-            <div class="container-fluid">
-                <div class="mt-4 d-flex align-item-center justify-content-center gap-2 flex-wrap" id="brandsSection">
-                    @foreach ($corporates as $item)
-                        <a href="/corporate/{{ $item->ref_no }}">
-                            <div class="brand-image">
-                                <img src="{{ asset('images/' . $item->logo==null?'logoavatar.png':$item->logo) }}" alt="{{ $item->name }}"
-                                    class="img-fluid" width="90px">
-                            </div>
-                        </a>
-                    @endforeach
+        @if (count($products))
+            <section id="products-services" class="">
+                <div class="container-fluid mb-4" data-aos="fade-up">
+                    <h2>Products and Services from our partners</h2>
+                    <p>Here are the products and services from our partners. </p>
                 </div>
-            </div>
-        </section>
-    </main>
+                <div class="container-fluid">
+                    <div class="row">
+                        @foreach ($products as $product)
+                            @php
+                                $images = json_decode($product->image, true);
+                            @endphp
+                            <div class="col-md-3 mb-2">
+                                <div class="card">
+                                    <img src="{{ asset('productimages/' . @$images[0]) }}" class="card-img-top img-fluid"
+                                        alt="{{ $product->name }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $product->name }}
+                                            @if (!is_null($product->price))
+                                                <span
+                                                    class="float-end text-primary">{{ number_format($product->price, 2) }}</span>
+                                            @endif
+                                        </h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                        <a href="#" class="btn btn-primary btn-sm"
+                                            data-productid="{{ $product->id }}" id="editProductToggle"><i
+                                                class="bi bi-pencil-square"></i></a>
+                                        <a href="#" class="btn btn-danger btn-sm"
+                                            data-productid="{{ $product->id }}" id="deleteProductToggle"><i
+                                                class="bi bi-trash"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="{{ route('employer.products') }}" class="btn btn-primary">View All Products</a>
+                    <a href="{{ route('employer.products') }}" class="btn btn-outline-primary">Advertise with us</a>
+                </div>
+            </section>
+        @endif
 
+        @if (count($corporates))
+            <section id="top-employers" class="">
+                <div class="container-fluid" data-aos="fade-up">
+                    <h2>Top Employers</h2>
+                    <p>Here are the employers who are committed to providing opportunities for youths in disadvantaged and
+                        informal settlements.</p>
+                </div>
+                <div class="container-fluid">
+                    <div class="mt-4 d-flex align-item-center justify-content-center gap-2 flex-wrap" id="brandsSection">
+                        @foreach ($corporates as $item)
+                            <a href="/corporate/{{ $item->ref_no }}">
+                                <div class="brand-image">
+                                    <img src="{{ asset('images/' . $item->logo == null ? 'logoavatar.png' : $item->logo) }}"
+                                        alt="{{ $item->name }}" class="img-fluid" width="90px">
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+    </main>
 @endsection
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/welcome.js') }}"></script>
-
 @endsection

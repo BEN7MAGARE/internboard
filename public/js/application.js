@@ -147,8 +147,8 @@
             data.append("job_id", jobID.val());
             data.append("preferred_pay", preferredPay.val());
             data.append("reason", applicationReason.val());
-            data.append("cover_letter", cover_letter.val());            
-            data.append("_method", "PUT");            
+            data.append("cover_letter", cover_letter.val());
+            data.append("_method", "PUT");
             if (curriculumVitae) {
                 data.append("curriculum_vitae", curriculumVitae.files[0]);
                 if (curriculumVitae.files[0].size > 1024 * 1024 * 2) {
@@ -218,6 +218,7 @@
             const response = await fetch(`/applications/${applicationId}`);
             const data = await response.json();
             if (response.ok) {
+                console.log(data);
                 document.getElementById('applicationReason').value = data.reason;
                 document.getElementById('cover_letter').value = data.cover_letter;
                 document.getElementById('applicationPrefferedPay').value = data.preferred_pay;

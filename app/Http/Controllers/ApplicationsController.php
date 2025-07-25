@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
 use App\Models\Corporate;
+use App\Models\Product;
 
 class ApplicationsController extends Controller
 {
@@ -26,14 +27,19 @@ class ApplicationsController extends Controller
 
     public function welcome()
     {
-        $jobs = $this->job->latest()->take(12)->get();
-        
+        $jobs = $this->job->where('approved', true)->latest()->take(12)->get();
+
         $corporates = $this->corporate
             ->withCount('jobs')
             ->orderBy('jobs_count', 'desc')
+            ->where('approved', true)
             ->take(10)
             ->get();
-        return view('welcome', compact('jobs', 'corporates'));
+        // $products = Product::latest()->take(8)->get();
+        $products = Product::whereHas('corporate', function ($query) {
+            $query->where('approved', true);
+        })->latest()->take(8)->get();
+        return view('welcome', compact('jobs', 'corporates', 'products'));
     }
     /**
      * Display a listing of the resource.

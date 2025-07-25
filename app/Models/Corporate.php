@@ -32,4 +32,9 @@ class Corporate extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'corporate_id', 'id');
+    }
 }

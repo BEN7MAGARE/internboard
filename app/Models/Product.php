@@ -16,4 +16,9 @@ class Product extends Model
         'image',
         'corporate_id',
     ];
+
+    public function corporate()
+    {
+        return $this->belongsTo(Corporate::class);
+    }
 }

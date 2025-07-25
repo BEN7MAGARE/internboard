@@ -13,6 +13,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MarketController;
 
 Route::get('/', [ApplicationsController::class, 'welcome'])->name('home');
 
@@ -105,6 +106,8 @@ Route::get('/refresh-csrf', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 
+Route::resource('market', MarketController::class);
+Route::post('market-search', [MarketController::class, 'search'])->name('market.search');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/training.php';

@@ -113,6 +113,11 @@
                             <li><a href="{{ route('jobs.create') }}" class="translatable">Post a Job</a></li>
                         </ul>
                     </li>
+                    
+                    <li>
+                        <a href="{{ route('market.index') }}" class="translatable">Marketplace</a>
+                    </li>
+
                     <li><a href="{{ route('contact') }}"
                             class="{{ Request::url() == route('contact') ? 'active' : '' }} translatable">Contact</a>
                     </li>
@@ -143,7 +148,7 @@
                                 class="translatable">{{ auth()->user()->last_name }}</span>&nbsp;
                             <i class="bi bi-angle-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-lg-start" data-bs-popper="dynamic">
-                            
+
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i
                                         class="bi bi-person-circle"></i>&nbsp;<span class="translatable">My
                                         Profile</span></a></li>
