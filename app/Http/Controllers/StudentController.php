@@ -27,15 +27,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role === 'college') {
-            $students = User::where('role', 'student')->where('college_id', auth()->user()->college_id)->with(['profile', 'college', 'student'])->paginate(10);
-            return view('students.index', compact('students'));
-        } else if (auth()->user()->role === 'admin') {
+
             $students = User::where('role', 'student')->with(['profile', 'college', 'student'])->paginate(10);
-            return view('students.index', compact('students'));
-        } else {
-            return redirect()->back()->with('errors', 'You are not authorised to access this resource');
-        }
+            return view('admin.students.index', compact('students'));
+
     }
 
     /**

@@ -17,7 +17,7 @@
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100 active" id="corporates-tab" data-bs-toggle="tab"
                             data-bs-target="#corporatesTab" type="button" role="tab" aria-controls="corporates"
-                            aria-selected="true">Corporates</button>
+                            aria-selected="true">Employers</button>
                     </li>
 
                     <li class="nav-item flex-fill" role="presentation">
@@ -181,7 +181,7 @@
                     <div class="mb-3">
                         <label for="category_id" class="form-label">Category</label>
                         <select name="category_id" id="corporateCategory" class="form-control" required>
-                            
+
                         </select>
                     </div>
 
@@ -240,7 +240,7 @@
                     <div class="mb-2">
                         <label for="corporateOptionsID" class="form-label">Corporate</label>
                         <select name="corporate_id" id="corporateOptionsID" class="form-control">
-                            
+
                         </select>
                     </div>
                     <div class="row">
@@ -256,7 +256,7 @@
                             <label for="corpContactPersonLastName" class="form-label">Last Name</label>
                             <input type="text" class="form-control" name="last_name" id="corpContactPersonLastName" required>
                         </div>
-                        
+
 
                         <div class="col-md-6 mb-2">
                             <label for="corpContactPersonEmail" class="form-label">Email</label>

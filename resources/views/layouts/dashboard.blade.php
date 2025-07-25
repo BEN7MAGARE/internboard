@@ -135,8 +135,8 @@
                         </a>
                     </li>
 
-                    <li class="{!! Request::is('students') ? 'active' : '' !!}">
-                        <a href="{{ route('students.index') }}">
+                    <li class="{!! Request::is('admin/students') ? 'active' : '' !!}">
+                        <a href="{{ route('admin.students.index') }}">
                             <i class="bi bi-people"></i>
                             Students
                         </a>

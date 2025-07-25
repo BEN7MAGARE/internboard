@@ -24,7 +24,7 @@ class EmployerController extends Controller
     {
         $corporates = Corporate::withCount('jobs')->paginate(10);
         $corporatesusers = User::where('role', 'corporate')->paginate(10);
-        return view('employer.index', compact('corporates', 'corporatesusers'));
+        return view('admin.employer.index', compact('corporates', 'corporatesusers'));
     }
 
     /**

@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('opportunities', [ProfileController::class, 'opportunities'])->name('profile.opportunities');
 });
 
+Route::get('admin/students', [StudentController::class, 'index'])->name('admin.students.index');
+Route::post('students-store', [StudentController::class, 'store'])->name('admin.students.store');
+
 Route::get('profile/applications', [ProfileController::class, 'applications'])->name('profile.applications');
 
 Route::view('contact', 'contact')->name('contact');
@@ -57,6 +60,7 @@ Route::get('collegesdata',[CollegeController::class,'getColleges']);
 Route::get('college-students', [CollegeController::class, 'students'])->name('college.students');
 
 Route::resource('employer', EmployerController::class);
+Route::get('employers', [EmployerController::class, 'index'])->name('employers.index');
 Route::get('corporadata',[EmployerController::class,'getCorporates']);
 Route::get('skills-by-category/{id}', [SkillController::class, 'skillsByCategory']);
 Route::resource('colleges', CollegeController::class);

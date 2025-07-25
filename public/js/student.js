@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         } else {
             try {
-                const response = await fetch('/students/store', {
+                const response = await fetch('/students-store', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
@@ -289,28 +289,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const importStudentsForm = document.getElementById('importStudentsForm'),
         importStudentsButton = document.getElementById('importStudentsButton');
-    importStudentsForm.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        importStudentsButton.disabled = true;
-        const formData = new FormData(this);
-        const response = await fetch('/college/students-import', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
-            },
-            body: formData,
-        });
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            showSuccess(data.message, "#studentImportFeedback");
-            importStudentsButton.disabled = false;
-        } else {
-            const error = await response.json();
-            console.log(error);
-            showError(error.message, "#studentImportFeedback");
-            importStudentsButton.disabled = false;
+    if (importStudentsForm) {
+        importStudentsForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            importStudentsButton.disabled = true;
+            const formData = new FormData(this);
+            const response = await fetch('/college/students-import', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
+                },
+                body: formData,
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                showSuccess(data.message, "#studentImportFeedback");
+                importStudentsButton.disabled = false;
+            } else {
+                const error = await response.json();
+                console.log(error);
+                showError(error.message, "#studentImportFeedback");
+                importStudentsButton.disabled = false;
 
-        }
-    });
+            }
+        });
+    }
+
 });
