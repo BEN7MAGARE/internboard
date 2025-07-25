@@ -112,7 +112,7 @@ Applicants Management
                                                 <span class="status-badge pending-badge ms-2 translatable">Pending</span>
                                                 @endif
                                             </h4>
-                                            
+
                                             @if (!is_null($item->profile))
                                             <p class="mb-1 text-muted">
                                                 <i class="fas fa-briefcase me-1"></i>
@@ -173,7 +173,7 @@ Applicants Management
                             </div>
                         </div>
                     </div>
-                    
+
                     @endforeach
                 </div>
                 @else
@@ -237,6 +237,7 @@ Applicants Management
 </div>
 @endsection
 
+
 @section('footer_scripts')
 <script src="{{ asset('js/select2.min.js') }}"></script>
 <script src="{{ asset('js/functions.js') }}"></script>
@@ -245,27 +246,14 @@ Applicants Management
     $(document).ready(function() {
         // Initialize tooltips
         $('[data-bs-toggle="tooltip"]').tooltip();
-        
+
         // Handle applicant selection toggle
         $('.applicantSelectToggle').change(function() {
             const applicantId = $(this).val();
             const isSelected = $(this).is(':checked');
-            
+
             // You can add AJAX call here to update status in real-time
             console.log(`Applicant ${applicantId} ${isSelected ? 'selected' : 'deselected'}`);
-        });
-        
-        // Form submission handling
-        $('#applicantsSelectForm').submit(function(e) {
-            e.preventDefault();
-            // Add your form submission logic here
-            $('#invitationFeedback').html(`
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>
-                    Invitations sent successfully to selected candidates!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            `);
         });
 
         $('body').on('click','#applicationDetailsToggle', function() {
@@ -273,10 +261,10 @@ Applicants Management
             $.getJSON(`/application-details/${applicationid}`, function(data) {
                 $('#applicationDetailsModal').modal('show');
                 $('#applicationReason').html(data.reason);
-                $('#applicationCoverLetter').html(data.cover_letter);  
-                $('#modalTitleText').text(`Cover Letter - ${data.applicant.first_name} ${data.applicant.last_name}`); 
+                $('#applicationCoverLetter').html(data.cover_letter);
+                $('#modalTitleText').text(`Cover Letter - ${data.applicant.first_name} ${data.applicant.last_name}`);
             })
-        })
+        });
     });
 </script>
 @endsection

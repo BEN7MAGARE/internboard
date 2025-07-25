@@ -40,7 +40,7 @@
     //     let ref_no = $(this).data('ref_no');
     //     console.log(ref_no);
     //     console.log(job_id);
-        
+
     //     $("#jobDetailsModalToggle").modal("show");
     //     $.getJSON('/jobs/' + job_id, function (value) {
     //         $("#jobModalTitle").html("<b>" + value?.title + "</b>");
@@ -171,7 +171,7 @@
 
     function filterJobs() {
         console.log('I was here');
-        
+
         let experience = $('input[name="experienceLevel"]:checked').map(function () {
             return $(this).val();
         }).get();
@@ -226,5 +226,62 @@
         let location = $(this).data('id');
         filterJobs();
     });
-    
+
+    const applicantsHireForm = $('#applicantsHireForm'),
+        applicantHireToggle = $('.applicantHireToggle'),
+        hireLetter = $('#hireLetter'), submitHire = $('#submitHire');
+
+    applicantsHireForm.on('submit', function (event) {
+        event.preventDefault();
+        const $this = $(this), applicants = [], errors = [];
+
+        applicantHireToggle.each(function (key, item) {
+            if ($(item).is(':checked')) {
+                applicants.push({ applicationid: $(item).val() })
+            }
+        });
+        submitHire.prop('disabled', true);
+        const data = {
+            applicants: JSON.stringify(applicants),
+            message: hireLetter.val()
+        }
+        if (applicants.length <= 0) {
+            errors.push("You have not selected applicants to hire");
+        }
+        if (hireLetter.val().length < 20) {
+            errors.push("Enter a valid hire letter");
+        }
+        if (errors.length > 0) {
+            showError(errors.join(', '), '#hireFeedback')
+            submitHire.prop('disabled', false);
+        } else {
+            console.log(data);
+
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+                },
+            });
+            $.ajax({
+                method: "POST",
+                url: "/applications-hire",
+                data: data,
+                success: function (params) {
+                    submitHire.prop('disabled', false);
+                    let result = JSON.parse(params);
+                    if (result.status === "success") {
+                        showSuccess(result.message, "#hireFeedback");
+                    } else {
+                        showError(result.message, "#hireFeedback");
+                    }
+                },
+                error: function (error) {
+                    submitHire.prop('disabled', false);
+                    console.error(error);
+                    showError("Error occurred during processing", "#hireFeedback");
+                },
+            });
+        }
+    });
+
 })();

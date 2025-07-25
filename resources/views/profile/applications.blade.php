@@ -77,17 +77,7 @@ Applications
                         <td>{{ $application->job->type }}</td>
                         <td>{{ $application->job->location }}</td>
                         <td>{{ $application->created_at->format('j M Y') }}</td>
-                        <td>
-                            @if ($application->status == "pending")
-                            <span class="badge bg-warning">Pending</span>
-                            @elseif ($application->status == "accepted")
-                            <span class="badge bg-success">Accepted</span>
-                            @elseif ($application->status == "rejected")
-                            <span class="badge bg-danger">Rejected</span>
-                            @else
-                            <span class="badge bg-secondary">Pending</span>
-                            @endif
-                        </td>
+                        <td>{{ $application->status }}</td>
                         <td>
                             <a href="{{ route('jobs.show', $application->job->id) }}" class="btn btn-primary btn-sm">View</a>
                         </td>

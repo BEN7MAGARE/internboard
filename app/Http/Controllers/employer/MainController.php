@@ -20,7 +20,6 @@ class MainController extends Controller
         $this->middleware('employer');
         $this->job = new Job();
     }
-
     public function profile()
     {
         if (auth()->user()->corporate) {
@@ -70,7 +69,7 @@ class MainController extends Controller
     {
         $applications = Application::whereHas('job', function ($query) {
             $query->where('corporate_id', auth()->user()->corporate_id);
-        })->with(['job:id,title', 'applicant:id,first_name,last_name,phone,email'])->paginate(10);
+        })->with(['job', 'applicant:id,first_name,last_name,phone,email'])->paginate(10);
         $jobs = $this->job->where('corporate_id', auth()->user()->corporate->id)->get();
         return view('profile.applications', compact('applications', 'jobs'));
     }
@@ -230,4 +229,12 @@ class MainController extends Controller
         $job = Job::find($id)->delete();
         return response()->json(["status"=>"success", "message"=>"Job deleted successfully."]);
     }
+
+    public function workers()
+    {
+        $workers = Application::where('status', 'hired')->whereHas('job', function ($query) {
+            $query->where('corporate_id', auth()->user()->corporate_id);
+        })->with('job', 'applicant')->paginate(10);
+        return view('employer.workers.index', compact('workers'));
+    }   
 }

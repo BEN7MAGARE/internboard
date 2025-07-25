@@ -70,7 +70,7 @@
             on our platform and get most qualied and talented applicants.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        
+
         <div class="d-flex justify-content-between align-items-center mb-2">
             <a href="{{ route('jobs.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Post New Job
@@ -96,12 +96,13 @@
                                         <li><a class="dropdown-item" href="{{ route('jobs.edit', $item->ref_no) }}"><i
                                                     class="bi bi-pencil-square me-2"></i>Edit</a>
                                         </li>
-                                        {{-- <li><a class="dropdown-item" href="{{ route('jobs.destroy', $item->id) }}"
-                                                onclick="return confirm('Are you sure you want to delete this job?')"><i
-                                                    class="bi bi-trash me-2"></i>Delete</a></li> --}}
-                                        <li><a class="dropdown-item"
+
+                                        <li><a class="dropdown-item text-info"
                                                 href="{{ route('job.applications', $item->ref_no) }}"><i
                                                     class="bi bi-people me-2"></i>View Applicants</a></li>
+                                        <li><a class="dropdown-item text-success"
+                                                href="{{ route('applications.selected', $item->ref_no) }}">
+                                                <i class="bi bi-check-circle me-2"></i>View Selected Applicants</a></li>
 
                                         <li><a class="dropdown-item text-danger"
                                                 href="{{ route('jobs.destroy', $item->id) }}"

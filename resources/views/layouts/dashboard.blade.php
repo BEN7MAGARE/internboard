@@ -23,27 +23,11 @@
     <div class="d-flex" id="wrapper">
 
         <div class="bg-dark" id="sidebar">
+
             <div class="sidebar-header text-center">
                 <a href="{{ url('/') }}">
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
                 </a>
-
-                {{-- <img src="{{ asset('images/dalma.jpg') }}" alt="Logo" class="img-fluid dashboard-logo"> --}}
-                {{-- @if (auth()->user()->role === 'admin')
-                <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid dashboard-logo">
-                @endif
-                @if (auth()->user()->role === 'corporate')
-                <img src="{{ asset('corporate_logos/' . auth()->user()->corporate->logo) }}" alt="Logo" class="img-fluid dashboard-logo">
-                @endif
-                @if (auth()->user()->role === 'college')
-                <img src="{{ asset('college_logos/' . auth()->user()->college->logo) }}" alt="Logo" class="img-fluid dashboard-logo">
-                @endif
-                @if (auth()->user()->role === 'student')
-                <img src="{{ asset('profilepictures/' . auth()->user()->student->image) }}" alt="Logo" class="img-fluid dashboard-logo">
-                @endif
-                @if (auth()->user()->role === 'worker')
-                <img src="{{ asset('profilepictures/' . auth()->user()->worker->image) }}" alt="Logo" class="img-fluid dashboard-logo">
-                @endif --}}
                 <p class="logo">Daraja La Mafanikio</p>
                 <p>({{ auth()->user()->role }})</p>
             </div>
@@ -75,6 +59,13 @@
                         <a href="{{ route('employer.applications') }}">
                             <i class="bi bi-briefcase"></i>
                             Applications
+                        </a>
+                    </li>
+
+                    <li class="{!! Request::is('employer-workers') ? 'active' : '' !!}">
+                        <a href="{{ route('employer.workers') }}">
+                            <i class="bi bi-people"></i>
+                            Workers
                         </a>
                     </li>
 
@@ -219,6 +210,7 @@
             </nav>
 
             @yield('content')
+
         </div>
     </div>
 

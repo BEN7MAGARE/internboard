@@ -90,6 +90,8 @@ Route::get('application-cvdownload/{id}', [ApplicationsController::class, 'downl
 Route::get('download/{file}', [ApplicationsController::class, 'download'])->name('download.file');
 
 Route::post('applications-select', [ApplicationsController::class, 'select'])->name('applications.select');
+Route::get('applications-selected/{ref_no}', [ApplicationsController::class, 'selected'])->name('applications.selected');
+Route::post('applications-hire', [ApplicationsController::class, 'hire'])->name('applications.hire');
 
 Route::get('elearning', [ApplicationsController::class, 'elearning'])->name('elearning');
 

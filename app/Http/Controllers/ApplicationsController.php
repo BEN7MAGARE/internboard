@@ -133,18 +133,37 @@ class ApplicationsController extends Controller
             $application->status = "selected";
             $application->invitationletter = $message;
             $application->update();
-            Mail::to($application->applicant->email, $application->applicant->first_name . ' ' . $application->applicant->last_name)
-                ->send(new Invitation("Interview Invitation", $message, $corporate->email, $corporate->name));
+            // Mail::to($application->applicant->email, $application->applicant->first_name . ' ' . $application->applicant->last_name)
+            //     ->send(new Invitation("Interview Invitation", $message, $corporate->email, $corporate->name));
         }
         return json_encode(['status' => 'success', 'message' => 'Applicants selected successfully']);
     }
 
+    public function selected($ref_no)
+    {
+        $job = $this->job->where('ref_no', $ref_no)->first();
+        $applications = $this->application->with('applicant', 'job')->where('job_id', $job->id)->where('status', 'selected')->paginate(10);
+        return view('employer.applications.selected', compact('applications', 'job'));
+    }
+
+    public function hire(Request $request)
+    {
+        $applicants = json_decode($request->applicants, true);
+        $message = $request->message;
+        foreach ($applicants as $key => $value) {
+            $application = $this->application->with('applicant')->find($value["applicationid"]);
+            $application->status = "hired";
+            $application->hire_message = $message;
+            $application->update();
+        }
+        return json_encode(['status' => 'success', 'message' => 'Applicant hired successfully']);
+    }
     public function elearning()
     {
         return view('comingsoon');
     }
 
-    public function counties()
+        public function counties()
     {
         $counties = DB::select("SELECT * FROM counties");
         return json_encode($counties);

@@ -22,3 +22,4 @@ Route::post('employer-product-store', [ProductController::class, 'store'])->name
 Route::delete('employer-product-destroy/{id}', [ProductController::class, 'destroy'])->name('employer.product.destroy');
 Route::post('employer-product-image-destroy/{id}', [ProductController::class, 'deleteProductImage'])->name('employer.product.image.destroy');
 
+Route::get('employer-workers', [MainController::class, 'workers'])->name('employer.workers');

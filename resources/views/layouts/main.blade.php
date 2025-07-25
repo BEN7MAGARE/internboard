@@ -113,7 +113,7 @@
                             <li><a href="{{ route('jobs.create') }}" class="translatable">Post a Job</a></li>
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a href="{{ route('market.index') }}" class="translatable">Marketplace</a>
                     </li>
@@ -136,6 +136,7 @@
             <nav class="d-flex justify-content-between gap-2" id="second-nav">
                 <a href="#" class="language-toggle">
                     <select class="lang-selector form-select text-primary">
+                        <option value="">Change Language</option>
                         <option value="en">English</option>
                         <option value="sw">Kiswahili</option>
                     </select>
