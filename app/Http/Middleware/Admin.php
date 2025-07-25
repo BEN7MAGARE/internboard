@@ -15,9 +15,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role !== 'admin') {
-            return redirect()->route('login')->with('errors', 'You are not authorised to access this resource');
+        if (auth()->user()) {
+            if (auth()->user()->role !== 'admin') {
+                return redirect()->route('login')->with('errors', 'You are not authorised to access this resource');
+            }
+            return $next($request);
         }
-        return $next($request);
+        return redirect()->route('login')->with('errors', 'You are not authorised to access this resource');
     }
 }

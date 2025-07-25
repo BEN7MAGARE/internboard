@@ -15,10 +15,12 @@ class Student
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (is_null(auth()->user()) || auth()->user()->role !== 'student') {
-            return redirect()->route('login')->with('errors', 'You are not logged in to access this resource');
-        }else{
+        if (auth()->user()) {
+            if (auth()->user()->role !== 'student') {
+                return redirect()->route('login')->with('errors', 'You are not logged in to access this resource');
+            }
             return $next($request);
         }
+        return redirect()->route('login')->with('errors', 'You are not logged in to access this resource');
     }
 }

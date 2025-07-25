@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 errors.push("Invalid kin email");
             }
         }
+        if (formData.get('course_id') == null || formData.get('course_id') == "") {
+            errors.push("Course is required");
+        }
         if (errors.length > 0) {
             showError(errors.join('!\u003cbr\u003e'), "#studentFeedback");
             return;
