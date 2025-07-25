@@ -30,7 +30,7 @@ Sign in @parent
                             <div class="row">
                                 <div class="col-md-12 form-group mb-2">
                                     <label for="email" class="translatable">Email</label>
-                                    <input type="email" class="form-control form-control-lg @error('email') invalid-input:'' @enderror" name="email" id="email" required>
+                                    <input type="email" class="form-control form-control-lg" name="email" id="email" required>
                                     @error('email')
                                     <div class="invalid-feedback">
                                         <p class="text-danger">{{ $message }}</p>
@@ -41,7 +41,7 @@ Sign in @parent
                                 <div class="col-md-12 form-group mb-2">
                                     <label for="password" class="translatable">Password</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control form-control-lg @error('password') invalid-input:'' @enderror" name="password" id="password" autocomplete="password" required>
+                                        <input type="password" class="form-control form-control-lg" name="password" id="password" autocomplete="password" required>
 
                                         <div class="input-group-text" id="showLoginPassword">
                                             <i class="bi bi-eye"></i>
