@@ -44,6 +44,7 @@
     if (categoryID) {
         categoryID.addEventListener('change', function () {
             getSubCategories(this.value, '#subcategoryID');
+            getCategorySkills(this.value,'#skills');
         });
     }
 
@@ -96,7 +97,14 @@
         });
     }
 
-    
+    async function getCategorySkills(categoryID, skillsInput) {
+        const response = await fetch(`/skills-by-category/${categoryID}`);
+        if (response.ok) {
+            const result = await response.json();
+            skillsInput.innerHTML = result.map(skill => `<option value="${skill.id}">${skill.name}</option>`).join('');
+        }
+    }
+
     const toggleStep2 = document.querySelectorAll('.toggleStep2');
     toggleStep2.forEach(function (toggleStep2) {
         toggleStep2.addEventListener('click', function (event) {
@@ -124,10 +132,10 @@
             educationLevel.value === "" ? errors.push("Education level is required") : null;
             salaryRange.value === "" ? errors.push("Salary range is required") : null;
             titleInput.value === "" ? errors.push("Title is required") : null;
-            descriptionInput.value === "" ? errors.push("Description is required") : null;
+            // descriptionInput.value === "" ? errors.push("Description is required") : null;
             noOfPositions.value === "" ? errors.push("No of positions is required") : null;
-            applicationEndDate.value === "" ? errors.push("Application end date is required") : null;
-            startDate.value === "" ? errors.push("Start date is required") : null;
+            // applicationEndDate.value === "" ? errors.push("Application end date is required") : null;
+            // startDate.value === "" ? errors.push("Start date is required") : null;
             if (errors.length > 0) {
                 let p = "";
                 $.each(errors, function (key, value) {
@@ -385,7 +393,7 @@
                 'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
                 'Accept': 'application/json'
             }
-        });        
+        });
         if (response.ok) {
             const result = await response.json();
             if (result.status === "success") {

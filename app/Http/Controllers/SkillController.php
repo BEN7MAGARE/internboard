@@ -93,4 +93,9 @@ class SkillController extends Controller
     {
         //
     }
+
+    public function skillsByCategory(string $id)
+    {
+        return response()->json(Skill::where('category_id', $id)->get());
+    }
 }

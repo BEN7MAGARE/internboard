@@ -58,7 +58,7 @@ Route::get('college-students', [CollegeController::class, 'students'])->name('co
 
 Route::resource('employer', EmployerController::class);
 Route::get('corporadata',[EmployerController::class,'getCorporates']);
-
+Route::get('skills-by-category/{id}', [SkillController::class, 'skillsByCategory']);
 Route::resource('colleges', CollegeController::class);
 Route::resource('skills', SkillController::class);
 Route::get('skillsdata',[SkillController::class,'getSkills']);

@@ -256,7 +256,7 @@
                             </div>
 
                             <div class="col-md-6 mb-2">
-                                <label>Profile Photo / Logo </label><br>
+                                <label>Profile Photo </label><br>
                                 <div class="input-group">
                                     <input type="file" class="form-control" name="profile" id="userProfilePhoto">
                                 </div>
