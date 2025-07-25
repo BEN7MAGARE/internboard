@@ -58,7 +58,7 @@ function composeJobs(jobs) {
             skill += "<span>" + item.name + "</span>";
         });
         console.log(value);
-        
+
         // Posted:${ moment(value.created_at).fromNow() }
         job += `<a href="/jobs/${value.ref_no}">
                                             <div class="job card bg-white rounded p-3 job-card"
@@ -79,7 +79,7 @@ function composeJobs(jobs) {
                                                     </div>
 
                                                     <div class="">
-                                                        
+
                                                         <div class="d-flex flex-wrap gap-2">
                                                             <span class="salary-badge p-1 rounded">Level:
                                                                 ${value.experience_level}</span>
@@ -220,7 +220,7 @@ function getSubCategories(categoryid, target) {
 }
 
 function getEmployerOptions(target) {
-    $.getJSON("/corporatesdata", function (corporates) {
+    $.getJSON("/employersdata", function (corporates) {
         let option = "<option value=''>Select Employer</option>";
         $.each(corporates, function (key, value) {
             option +=

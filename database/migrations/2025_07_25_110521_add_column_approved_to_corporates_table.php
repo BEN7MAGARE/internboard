@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('corporates', function (Blueprint $table) {
-            $table->boolean('approved')->default(false)->after('logo');
+            $table->boolean('approved')->default(false)->after('logo')->nullable();
         });
     }
 

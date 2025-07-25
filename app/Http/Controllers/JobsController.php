@@ -30,7 +30,7 @@ class JobsController extends Controller
 
     public function index()
     {
-        $query = $this->job->query();
+        $query = $this->job->query()->where('approved', true);
         if (auth()->check() && (auth()->user()->role === 'student' || auth()->user()->role === 'worker')) {
             $skills = auth()->user()->skills->pluck('id');
             if ($skills->isNotEmpty()) {
@@ -189,7 +189,7 @@ class JobsController extends Controller
 
     public function jobsLocations()
     {
-        $locations = $this->job->select('location')->distinct()->pluck('location');
+        $locations = $this->job->where('approved', true)->select('location')->distinct()->pluck('location');
         return $locations;
     }
 
@@ -199,7 +199,7 @@ class JobsController extends Controller
         $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
         $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
         $locations = isset($params['location']) ? json_decode($params['location'], true) : [];
-        $query = $this->job->query();
+        $query = $this->job->query()->where('approved', true);
         if (!empty($params['category_id'])) {
             $query->where('category_id', $params['category_id']);
         }
@@ -229,7 +229,7 @@ class JobsController extends Controller
         $experienceLevels = isset($params['experience_level']) && $params['experience_level'] !== null ? json_decode($params['experience_level'], true) : [];
         $educationLevels = isset($params['education_level']) && $params['education_level'] !== null ? json_decode($params['education_level'], true) : [];
         $locations = isset($params['location']) ? json_decode($params['location'], true) : [];
-        $query = $this->job->query();
+        $query = $this->job->query()->where('approved', true);
         if (isset($params['corporate_id']) && $params['corporate_id'] !== null) {
             $query->where('corporate_id', $params['corporate_id']);
         }
@@ -253,5 +253,15 @@ class JobsController extends Controller
         }
         $jobs = $query->with('corporate')->get();
         return response()->json($jobs);
+    }
+
+    public function approve(Request $request)
+    {
+        $ids = $request->input('ids');
+        $jobs = $this->job->whereIn('id', $ids)->get();
+        foreach ($jobs as $job) {
+            $job->update(['approved' => true]);
+        }
+        return json_encode(['status' => 'success', 'message' => 'Jobs approved successfully.']);
     }
 }

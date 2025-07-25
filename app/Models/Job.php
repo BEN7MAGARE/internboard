@@ -33,7 +33,8 @@ class Job extends Model
         'salary_range',
         'no_of_positions',
         'requirements',
-        'qualifications'
+        'qualifications',
+        'approved'
     ];
 
     protected $with = ['skills'];
@@ -50,7 +51,7 @@ class Job extends Model
      */
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class, 'job_skill', 'job_id', 'skill_id');   
+        return $this->belongsToMany(Skill::class, 'job_skill', 'job_id', 'skill_id');
     }
 
     public function user(): BelongsTo

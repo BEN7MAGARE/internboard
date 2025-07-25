@@ -131,6 +131,7 @@ class EmployerController extends Controller
     public function getCorporates()
     {
         $corporates = Corporate::withCount('jobs')
+            ->where('approved', true)
             ->orderBy('jobs_count', 'desc')
             ->get(['id', 'name']);
         return json_encode($corporates);
@@ -150,5 +151,15 @@ class EmployerController extends Controller
         DB::commit();
 
         return json_encode(['status' => 'success', 'message' => 'Business created successfully.']);
+    }
+
+    public function approve(Request $request)
+    {
+        $ids = $request->ids;
+        $corporates = Corporate::whereIn('id', $ids)->get();
+        foreach ($corporates as $corporate) {
+            $corporate->update(['approved' => true]);
+        }
+        return json_encode(['status' => 'success', 'message' => 'Corporates approved successfully.']);
     }
 }

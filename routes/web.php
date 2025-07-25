@@ -49,7 +49,10 @@ Route::post('jobs-json-search', [JobsController::class, 'jsonSearch'])->name('jo
 Route::get('jobs/{ref_no}/apply', [JobsController::class, 'apply']);
 Route::post('job/apply', [JobsController::class, 'applicationCreate'])->name('job.apply');
 Route::get('job-applications/{ref_no}', [JobsController::class, 'applications'])->name('job.applications');
+Route::post('jobs-approve', [JobsController::class, 'approve'])->name('jobs.approve');
+
 Route::get('application-details/{id}', [JobsController::class, 'applicationsDetails'])->name('job.applications.details');
+
 Route::get('categoriesdata', [JobsController::class, 'categories']);
 Route::get('categories-with-jobs', [JobsController::class, 'categoriesWithJobs']);
 
@@ -62,7 +65,8 @@ Route::get('college-students', [CollegeController::class, 'students'])->name('co
 
 Route::resource('employer', EmployerController::class);
 Route::get('employers', [EmployerController::class, 'index'])->name('employers.index');
-Route::get('corporadata',[EmployerController::class,'getCorporates']);
+Route::post('employers-approve', [EmployerController::class, 'approve'])->name('employer.approve');
+Route::get('employersdata',[EmployerController::class,'getCorporates']);
 Route::get('skills-by-category/{id}', [SkillController::class, 'skillsByCategory']);
 Route::resource('colleges', CollegeController::class);
 Route::resource('skills', SkillController::class);

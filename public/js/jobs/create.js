@@ -1,5 +1,5 @@
 (function () {
-    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID',"#skillCategoryID"]);
+    getCategoriesOptions(['#categoryIDOptions', '#categoryID', '#jobCategoryID', '#searchJobCategoryID', "#skillCategoryID"]);
     getEmployerOptions(['#jobEmployerID', '#searchEmployerID']);
     getSkillsOption('#skills');
 
@@ -44,7 +44,7 @@
     if (categoryID) {
         categoryID.addEventListener('change', function () {
             getSubCategories(this.value, '#subcategoryID');
-            getCategorySkills(this.value,'#skills');
+            getCategorySkills(this.value, '#skills');
         });
     }
 
@@ -382,38 +382,83 @@
             });
         });
     }
+    if (createSkillForm) {
 
-    createSkillForm.addEventListener('submit', async function (event){
-        event.preventDefault();
-        const data = new FormData(this);
-        const response =await fetch('/skills', {
-            method: 'POST',
-            body: data,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
-                'Accept': 'application/json'
+
+        createSkillForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const data = new FormData(this);
+            const response = await fetch('/skills', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector("input[name='_token']").value,
+                    'Accept': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const result = await response.json();
+                if (result.status === "success") {
+                    getSkillsOption('#skills');
+                    showSuccess(result.message, "#skillFeedback");
+                } else {
+                    showError(result.message, "#skillFeedback");
+                }
+            } else if (response.status === 422) {
+                const errorData = await response.json();
+                let errors = '';
+                for (const key in errorData.errors) {
+                    errors += errorData.errors[key].join(' ') + '!<br>';
+                }
+                showError(errors, "#skillFeedback");
+            } else if (response.status === 419) {
+                showError("You are not logged in", "#skillFeedback");
+            } else {
+                showError("Error occurred during processing", "#skillFeedback");
             }
         });
-        if (response.ok) {
-            const result = await response.json();
-            if (result.status === "success") {
-                getSkillsOption('#skills');
-                showSuccess(result.message, "#skillFeedback");
+    }
+
+    if (document.getElementById('allJobSelect')) {
+        document.getElementById('allJobSelect').addEventListener('click', function () {
+            const checkboxes = document.querySelectorAll('input[name="job_id[]"]');
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+
+    const approveJob = document.getElementById('approveJob');
+    const allJobSelect = document.getElementById('allJobSelect');
+    const jobSelect = document.getElementById('jobSelect');
+    if (approveJob) {
+        approveJob.addEventListener('click', async function (event) {
+            event.preventDefault();
+            const checkedBoxes = document.querySelectorAll('input[name="job_id[]"]:checked');
+            const ids = Array.from(checkedBoxes).map(checkbox => checkbox.value);
+            console.log(ids);
+
+            const response = await fetch('jobs-approve', {
+                method: 'POST',
+                body: JSON.stringify({ ids: ids }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                },
+            });
+            if (response.ok) {
+                const result = await response.json();
+                if (result.status === "success") {
+                    showSuccess(result.message, "#jobActionsFeedback");
+                } else {
+                    showError(result.message, "#jobActionsFeedback");
+                }
             } else {
-                showError(result.message, "#skillFeedback");
+                const error = await response.json();
+                console.log(error);
+                showError("Error occurred during processing", "#jobActionsFeedback");
             }
-        }else if (response.status === 422) {
-            const errorData = await response.json();
-            let errors = '';
-            for (const key in errorData.errors) {
-                errors += errorData.errors[key].join(' ') + '!<br>';
-            }
-            showError(errors, "#skillFeedback");
-        }else if (response.status === 419) {
-            showError("You are not logged in", "#skillFeedback");
-        }else {
-            showError("Error occurred during processing", "#skillFeedback");
-        }
-    });
+        });
+    }
 
 })();

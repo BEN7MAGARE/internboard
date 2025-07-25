@@ -29,8 +29,9 @@ class MarketController extends Controller
             ->orWhere('description', 'like', '%' . $request->search . '%')
             ->orWhereHas('corporate', function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->search . '%');
-            })->latest()->take(8)->get();
-        return view('market.index', compact('products'));
+            })->latest()->paginate(16);
+        $corporates = Corporate::where('approved', true)->get();
+        return view('market.index', compact('products', 'corporates'));
     }
 
     /**

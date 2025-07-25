@@ -11,7 +11,15 @@ class Corporate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','email','phone','address','logo','category_id','size','mission_vision','description','website','nature_of_business'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'logo',
+        'category_id',
+        'size',
+        'mission_vision','description','website','nature_of_business','approved'];
 
     public function jobs(): HasMany
     {

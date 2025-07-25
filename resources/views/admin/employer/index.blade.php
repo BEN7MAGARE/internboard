@@ -42,18 +42,21 @@
                                     Actions
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item text-danger" href="#" id="deleteCorporate"><i
-                                                class="bi bi-trash"></i>&nbsp;Delete</a></li>
+                                    <li><a class="dropdown-item text-success" href="#" id="approveCorporate"><i
+                                                class="bi bi-check-circle"></i>&nbsp;Approve</a></li>
                                     <li><a class="dropdown-item text-info" href="#" id="exportCorporate"><i
                                                 class="bi bi-file-earmark-excel"></i>&nbsp;Export</a></li>
+                                    <li><a class="dropdown-item text-danger" href="#" id="deleteCorporate"><i
+                                                class="bi bi-trash"></i>&nbsp;Delete</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="table-container">
+                            <div id="corporateActionsFeedback"></div>
                             <table class="table table-bordered table-sm table-hover table-striped scrollableTable">
                                 <thead>
                                     <tr>
-                                        <th scope="col"><input type="checkbox" name="corporate_id[]" value=""
+                                        <th scope="col"><input type="checkbox"
                                                 id="allCorporateSelect"></th>
                                         <th>#</th>
                                         <th>Category</th>
@@ -63,14 +66,15 @@
                                         <th>Address</th>
                                         <th>Size</th>
                                         <th>Jobs</th>
+                                        <th>Approved</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody id="corporateTableBody">
                                     @foreach ($corporates as $corporate)
                                         <tr>
-                                            <td><input type="checkbox" name="corporate_id[]" value="{{ $corporate->id }}">
+                                            <td><input type="checkbox" name="corporate_id[]" value="{{ $corporate->id }}" id="corporateSelect">
                                             </td>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $corporate->category?->name }}</td>
@@ -80,6 +84,7 @@
                                             <td>{{ $corporate->address }}</td>
                                             <td>{{ $corporate->size }}</td>
                                             <td>{{ $corporate->jobs_count }}</td>
+                                            <td>{{ $corporate->approved ? 'Yes' : 'No' }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                     id="editCorporateToggle" data-bs-toggle="modal"
@@ -115,8 +120,7 @@
                             <table class="table table-hover table-striped table-bordered table-sm scrollableTable">
                                 <thead>
                                     <tr>
-                                        <th scope="col"><input type="checkbox" name="corporate_user_id[]" value=""
-                                                id="allCorporateUserSelect"></th>
+                                        <th scope="col"><input type="checkbox" id="allCorporateUserSelect"></th>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Phone</th>
@@ -128,9 +132,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($corporatesusers as $user)
-                                        <tr>
+                                        <tr >
 
-                                            <td><input type="checkbox" name="corporate_user_id[]" value="{{ $user->id }}"></td>
+                                            <td><input type="checkbox"
+                                                    value="{{ $user->id }}" id="corporateUserSelect"></td>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                             <td>{{ $user->phone }}</td>
@@ -138,8 +143,10 @@
                                             <td>{{ $user->address }}</td>
                                             <td>{{ $user->corporate?->name }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-primary btn-sm" id="editContactPersonToggle" data-id="{{ $user->id }}"
-                                                data-bs-toggle="modal" data-bs-target="#createContactPersonModal"><i class="bi bi-pencil"></i></a>
+                                                <a href="#" class="btn btn-primary btn-sm"
+                                                    id="editContactPersonToggle" data-id="{{ $user->id }}"
+                                                    data-bs-toggle="modal" data-bs-target="#createContactPersonModal"><i
+                                                        class="bi bi-pencil"></i></a>
                                                 {{-- <form action="{{ route('users.destroy', $user->id) }}" method="POST"
                                                     style="display: inline;">
                                                     @csrf
@@ -162,128 +169,136 @@
                 </div>
 
             </div>
+
+            <div class="modal fade" id="createCorporateModal"c tabindex="-1"
+                aria-labelledby="createCorporateModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="createCorporateModalLabel">Create Corporate</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('employer.store') }}" method="POST" id="corporateCreateForm">
+                            @csrf
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="corporateID" value="">
+                                <div class="mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select name="category_id" id="corporateCategory" class="form-control" required>
+
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" name="name" id="corporateName"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" id="corporateEmail"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" name="phone" id="corporatePhone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" name="address" id="corporateAddress">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="logo" class="form-label">Logo</label>
+                                    <input type="file" class="form-control" name="logo" id="corporateLogo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="size" class="form-label">Size</label>
+                                    <input type="text" class="form-control" name="size" id="corporateSize">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mission_vision" class="form-label">Mission & Vision</label>
+                                    <textarea name="mission_vision" id="corporateMissionVision" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div id="corporateFeedback"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="corporateCreateSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="createContactPersonModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="createContactPersonModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="createContactPersonModalLabel">Create Contact Person</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('corporate.user.store') }}" method="POST" id="contactPersonCreateForm">
+                            @csrf
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="corporateContactPersonID" value="">
+                                <div class="mb-2">
+                                    <label for="corporateOptionsID" class="form-label">Corporate</label>
+                                    <select name="corporate_id" id="corporateOptionsID" class="form-control">
+
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonFirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" name="first_name"
+                                            id="corpContactPersonFirstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonMiddleName" class="form-label">Middle Name</label>
+                                        <input type="text" class="form-control" name="middle_name"
+                                            id="corpContactPersonMiddleName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonLastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" name="last_name"
+                                            id="corpContactPersonLastName" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email"
+                                            id="corpContactPersonEmail" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonPhone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" name="phone"
+                                            id="corpContactPersonPhone" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-2">
+                                        <label for="corpContactPersonAddress" class="form-label">Address</label>
+                                        <input type="text" class="form-control" name="address"
+                                            id="corpContactPersonAddress">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="corporateContactPersonFeedback"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary"
+                                    id="corporateContactPersonCreateSubmit">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
     </main>
 @endsection
-
-
-<div class="modal fade" id="createCorporateModal"c tabindex="-1"
-    aria-labelledby="createCorporateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createCorporateModalLabel">Create Corporate</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('employer.store') }}" method="POST" id="corporateCreateForm">
-                @csrf
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="corporateID" value="">
-                    <div class="mb-3">
-                        <label for="category_id" class="form-label">Category</label>
-                        <select name="category_id" id="corporateCategory" class="form-control" required>
-
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="corporateName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="corporateEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="corporatePhone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" id="corporateAddress">
-                    </div>
-                    <div class="mb-3">
-                        <label for="logo" class="form-label">Logo</label>
-                        <input type="file" class="form-control" name="logo" id="corporateLogo">
-                    </div>
-                    <div class="mb-3">
-                        <label for="size" class="form-label">Size</label>
-                        <input type="text" class="form-control" name="size" id="corporateSize">
-                    </div>
-                    <div class="mb-3">
-                        <label for="mission_vision" class="form-label">Mission & Vision</label>
-                        <textarea name="mission_vision" id="corporateMissionVision" class="form-control"></textarea>
-                    </div>
-                </div>
-                <div id="corporateFeedback"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="corporateCreateSubmit">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="createContactPersonModal" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="createContactPersonModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createContactPersonModalLabel">Create Contact Person</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('corporate.user.store') }}" method="POST" id="contactPersonCreateForm">
-                @csrf
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="corporateContactPersonID" value="">
-                    <div class="mb-2">
-                        <label for="corporateOptionsID" class="form-label">Corporate</label>
-                        <select name="corporate_id" id="corporateOptionsID" class="form-control">
-
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonFirstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="first_name" id="corpContactPersonFirstName" required>
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonMiddleName" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" name="middle_name" id="corpContactPersonMiddleName" required>
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonLastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" id="corpContactPersonLastName" required>
-                        </div>
-
-
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="corpContactPersonEmail" required>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonPhone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" name="phone" id="corpContactPersonPhone" required>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <label for="corpContactPersonAddress" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" id="corpContactPersonAddress">
-                        </div>
-                    </div>
-                </div>
-                <div id="corporateContactPersonFeedback"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="corporateContactPersonCreateSubmit">Save</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
 
 @section('footer_scripts')
     <script src="{{ asset('js/functions.js') }}"></script>

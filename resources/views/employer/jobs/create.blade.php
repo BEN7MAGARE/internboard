@@ -251,6 +251,8 @@
                 </div>
             </form>
         </div>
+
+        
         <div class="modal fade" id="createSkillModal" tabindex="-1" aria-labelledby="createSkillModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">

@@ -7,7 +7,7 @@
 @section('content')
     <main class="main">
 
-        <div class="page-title mt-5" data-aos="fade">
+        <div class="page-title mt-3" data-aos="fade">
             <div class="heading">
                 <div class="container-fluid mb-4">
                     <form action="{{ route('market.search') }}" method="get">

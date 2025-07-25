@@ -7,7 +7,10 @@
         contactPersonCreateForm = document.getElementById('contactPersonCreateForm'),
         contactPersonCreateSubmit = document.getElementById('contactPersonCreateSubmit'),
         createCorporateToggle = document.getElementById('createCorporateToggle'),
-        createContactPersonToggle = document.getElementById('createContactPersonToggle');
+        createContactPersonToggle = document.getElementById('createContactPersonToggle'),
+        approveCorporate = document.getElementById('approveCorporate'),
+        deleteCorporate = document.getElementById('deleteCorporate'),
+        exportCorporate = document.getElementById('exportCorporate');
 
     if (createCorporateToggle) {
         createCorporateToggle.addEventListener('click', function () {
@@ -188,6 +191,36 @@
                 }, 3000);
             } else {
                 showError("Error occurred during processing", "#corporateContactPersonFeedback");
+            }
+        });
+    }
+
+    if (approveCorporate) {
+        approveCorporate.addEventListener('click', async function (event) {
+            event.preventDefault();
+
+            const checkedBoxes = document.querySelectorAll('input[name="corporate_id[]"]:checked');
+            const ids = Array.from(checkedBoxes).map(checkbox => checkbox.value);
+            const response = await fetch('employers-approve', {
+                method: 'POST',
+                body: JSON.stringify({ ids: ids }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                if (data.status === "success") {
+                    showSuccess(data.message, "#corporateActionsFeedback");
+                } else {
+                    showError(data.message, "#corporateActionsFeedback");
+                }
+            } else {
+                const error = await response.json();
+                console.log(error);
+                showError("Error occurred during processing", "#corporateActionsFeedback");
             }
         });
     }
