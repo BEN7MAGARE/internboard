@@ -200,4 +200,18 @@ class MainController extends Controller
         };
         return response()->stream($callback, 200, $headers);
     }
+
+    public function contracts()
+    {
+        $contracts = Application::where('user_id', auth()->user()->id)->where('status', 'hired')->with(['job',
+        'job.corporate'])->get();
+        return view('student.contracts', compact('contracts'));
+    }
+
+    public function applications()
+    {
+        $applications = Application::where('user_id', auth()->user()->id)->with(['job', 'job.corporate'])->get();
+        return view('student.application', compact('applications'));
+    }
+
 }

@@ -121,3 +121,5 @@ require __DIR__ . '/employer.php';
 require __DIR__ . '/college.php';
 require __DIR__ . '/student.php';
 
+Route::post('checkappstatus', [ApplicationsController::class, 'checkAppStatus'])->name('checkappstatus');
+

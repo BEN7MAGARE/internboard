@@ -1,11 +1,23 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Applicants @parent
+    Workers @parent
 @endsection
+@section('header_styles')
+    <style>
+        .imgsection {
+            width: 100%;
+            height: 200px;
+        }
 
+        .imgsection img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+    </style>
 @section('subtitle')
-    Applicants Management
+    Workers
 @endsection
 
 @section('content')
@@ -19,15 +31,17 @@
                             $image = $worker->applicant->image ?? 'avatar.png';
                         @endphp
                         <div class="card">
-                            <img src="{{ asset('profilepictures/' . $image) }}" class="card-img-top img-fluid"
-                                alt="{{ $worker->applicant->first_name }} {{ $worker->applicant->last_name }}">
+                            <div class="imgsection">
+                                <img src="{{ asset('profilepictures/' . $image) }}" class="img-fluid"
+                                    alt="{{ $worker->applicant->first_name }} {{ $worker->applicant->last_name }}">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ $worker->applicant->first_name }}
                                     {{ $worker->applicant->last_name }}
                                 </h5>
                                 <p class="card-text">{{ $worker->job->title }}</p>
                                 <a href="#" class="btn btn-primary btn-sm" data-workerid="{{ $worker->id }}"
-                                    id="editWorkerToggle"><i class="bi bi-star-fill"></i> Review & Feedback</a>
+                                    id="editWorkerToggle"><i class="bi bi-star-fill"></i> Review&Feedback</a>
                                 <a href="#" class="btn btn-danger btn-sm" data-workerid="{{ $worker->id }}"
                                     id="terminateContractToggle"><i class="bi bi-camera-video-off-fill"></i> End
                                     Contract</a>

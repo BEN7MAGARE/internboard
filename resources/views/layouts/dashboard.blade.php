@@ -85,10 +85,16 @@
                 @endif
 
                 @if (auth()->user()->role === 'student')
-                    <li class="{!! Request::is('applications') ? 'active' : '' !!}">
-                        <a href="{{ route('applications.index') }}"><i class="bi bi-window"></i>&nbsp;My
+
+                    <li class="{!! Request::is('student-applications') ? 'active' : '' !!}">
+                        <a href="{{ route('student.applications') }}"><i class="bi bi-window"></i>&nbsp;My
                             Applications</a>
                     </li>
+
+                    <li class="{!! Request::is('student/contracts') ? 'active' : '' !!}">
+                        <a href="{{ route('student.contracts') }}"><i class="bi bi-window"></i>&nbsp;My Contracts</a>
+                    </li>
+
                 @endif
 
                 @if (auth()->user()->role === 'college')
@@ -180,10 +186,13 @@
                             {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
                         </span>
                     </div>
+                    @php
+$image = auth()->user()->image ?? 'avatar.png';
+@endphp
                     <div class="dropdown-center">
                         <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             @if (auth()->user()->image)
-                                <img src="{{ asset('profilepictures/' . auth()->user()->image) }}" alt=""
+                                <img src="{{ asset('profilepictures/' . $image) }}" alt=""
                                     class="img-fluid" id="profile-image">
                             @else
                                 <img src="{{ asset('profilepictures/avatar.png') }}" alt="" class="img-fluid"

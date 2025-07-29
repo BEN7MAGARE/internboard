@@ -3,15 +3,14 @@
 use App\Http\Controllers\Student\MainController;
 
 
-Route::prefix('students')->group(function () {
-    Route::get('profile', [MainController::class, 'profile'])->name('students.profile');
-    Route::get('students', [MainController::class, 'index'])->name('students.index');
-    Route::get('create', [MainController::class, 'create'])->name('students.create');
-    Route::post('store', [MainController::class, 'store'])->name('students.store');
-    Route::get('{id}', [MainController::class, 'show'])->name('students.show');
-    Route::get('{id}/edit', [MainController::class, 'edit'])->name('students.edit');
-    Route::put('{id}', [MainController::class, 'update'])->name('students.update');
-    Route::delete('destroy/{id}', [MainController::class, 'destroy'])->name('students.destroy');
-    Route::post('filter', [MainController::class, 'filter'])->name('students.filter');
-    Route::post('export', [MainController::class, 'export'])->name('students.export'); 
-});
+    Route::get('student-profile', [MainController::class, 'profile'])->name('student.profile');
+    Route::get('student-create', [MainController::class, 'create'])->name('student.create');
+    Route::post('student-store', [MainController::class, 'store'])->name('student.store');
+    Route::get('student/{id}', [MainController::class, 'show'])->name('student.show');
+    Route::get('student/{id}/edit', [MainController::class, 'edit'])->name('student.edit');
+    Route::put('student/{id}', [MainController::class, 'update'])->name('student.update');
+    Route::delete('student-destroy/{id}', [MainController::class, 'destroy'])->name('student.destroy');
+    Route::post('student-filter', [MainController::class, 'filter'])->name('student.filter');
+    Route::post('student-export', [MainController::class, 'export'])->name('student.export');
+    Route::get('student-contracts', [MainController::class, 'contracts'])->name('student.contracts');
+    Route::get('student-applications', [MainController::class, 'applications'])->name('student.applications');
