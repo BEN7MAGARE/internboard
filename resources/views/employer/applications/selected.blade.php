@@ -205,7 +205,7 @@
                                     <h5 class="mb-0"><i class="fas fa-envelope me-2"></i> Send Hire Letter</h5>
                                 </div>
                                 <div class="card-body">
-
+                                    <input type="hidden" name="job_id" id="job_id" value="{{ $job->id }}">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">

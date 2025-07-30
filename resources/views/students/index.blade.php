@@ -40,7 +40,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('students.filter') }}" method="post" id="studentFilterForm">
+                <form action="" method="post" id="studentFilterForm">
                     @csrf
                     <div class="row">
                         @if (auth()->user()->role === 'admin')
@@ -48,7 +48,7 @@
                                 <div class="input-group">
                                     <select name="college_id" class="form-select form-select-sm" id="studentFilterCollegeID">
                                         <option value="">Select College</option>
-                                       
+
                                     </select>
                                 </div>
                             </div>
@@ -60,11 +60,11 @@
                             <div class="input-group">
                                 <select name="course_id" class="form-select form-select-sm" id="studentFilterCourse">
                                     <option value="">Select Course</option>
-                                    
+
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-2 form-group mb-1">
                             <div class="input-group">
                                 <select name="level_of_study" class="form-select form-select-sm" id="level_of_study">
@@ -264,7 +264,7 @@
                             <label for="homeCountyId">Home County</label>
                             <div class="input-group">
                                 <select name="county_id" class="form-select form-select-sm" id="homeCountyId">
-                                    
+
                                 </select>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                                 <label for="collegeId">College</label>
                                 <div class="input-group">
                                     <select name="college_id" class="form-select form-select-sm" id="collegeId">
-                                       
+
                                     </select>
                                 </div>
                             </div>
@@ -299,7 +299,7 @@
                             <div class="input-group">
                                 <select name="course_id" class="form-select form-select-sm" id="courseId">
                                     <option value="">Select One</option>
-                                   
+
                                 </select>
                             </div>
                         </div>

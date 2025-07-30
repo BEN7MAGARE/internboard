@@ -38,7 +38,7 @@
 
             <div class="card-body pt-3">
 
-                <form action="{{ route('students.filter') }}" method="post" id="studentFilterForm">
+                <form action="" method="post" id="studentFilterForm">
                     @csrf
                     <div class="row">
 

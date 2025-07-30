@@ -40,7 +40,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('students.filter') }}" method="post" id="studentFilterForm">
+                <form action="" method="post" id="studentFilterForm">
                     @csrf
                     <div class="row">
                         @if (auth()->user()->role === 'admin')

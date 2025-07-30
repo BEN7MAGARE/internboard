@@ -216,7 +216,7 @@
     }
 
     const applicantsHireForm = $('#applicantsHireForm'),
-        applicantSelectToggle = $('.applicantSelectToggle'),
+        applicantHireToggle = $('.applicantHireToggle'),
         applicantsHireSubmit = $('#applicantsHireSubmit'),
         applicantsHireJobID = $('#applicantsHireJobID'),
         applicantsHireStartDate = $('#applicantsHireStartDate'),
@@ -229,8 +229,8 @@
         applicantsHireForm.on('submit', function (event) {
             event.preventDefault();
             const $this = $(this), errors = [], applicants = [];
-            
-            applicantSelectToggle.each(function (key, item) {
+
+            applicantHireToggle.each(function (key, item) {
                 if ($(item).is(':checked')) {
                     applicants.push({ application_id: $(item).val() })
                 }
