@@ -241,11 +241,14 @@ class MainController extends Controller
         return response()->json(["status"=>"success", "message"=>"Job deleted successfully."]);
     }
 
-    public function workers()
+    public function workersPage()
     {
+
         $workers = Application::where('status', 'hired')->whereHas('job', function ($query) {
             $query->where('corporate_id', auth()->user()->corporate_id);
         })->with('job', 'applicant')->paginate(10);
+
         return view('employer.workers.index', compact('workers'));
     }
+
 }

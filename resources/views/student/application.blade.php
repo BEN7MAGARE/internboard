@@ -141,7 +141,6 @@
                                         <h6>You have been hired for this job. Please wait for further instructions.</h6>
                                     </div>
                                     @endif
-                                    @if($application->status == 'rejected')
                                     <div class="application-content">
                                         <h6 class="text-muted mb-3">Application Details</h6>
 
