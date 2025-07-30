@@ -28,6 +28,7 @@ class CollegeController extends Controller
 
     public function profile()
     {
+        if (auth()->user()->college) {
         $studentscount = Student::where('college_id', auth()->user()->college_id)->count();
         $applicationscount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->count();
         $selectedcount = Application::whereIn('user_id', Student::where('college_id', auth()->user()->college_id)->pluck('id'))->where('status', 'selected')->count();
@@ -38,9 +39,12 @@ class CollegeController extends Controller
             'studentscount' => $studentscount,
             'applicationscount' => $applicationscount,
             'selectedcount' => $selectedcount,
-            'interviewcount' => $interviewcount,
-            'hiredcount' => $hiredcount,
-        ]);
+                'interviewcount' => $interviewcount,
+                'hiredcount' => $hiredcount,
+            ]);
+        } else {
+            return redirect()->route('college.create');
+        }
     }
 
     public function students()
