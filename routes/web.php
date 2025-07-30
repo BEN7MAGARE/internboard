@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('corporates', [ProfileController::class, 'corporates'])->name('profile.corporates');
     Route::get('opportunities', [ProfileController::class, 'opportunities'])->name('profile.opportunities');
 });
-
+Route::resource('students', StudentController::class);  
 Route::get('admin/students', [StudentController::class, 'index'])->name('admin.students.index');
 Route::post('students-store', [StudentController::class, 'store'])->name('admin.students.store');
 
