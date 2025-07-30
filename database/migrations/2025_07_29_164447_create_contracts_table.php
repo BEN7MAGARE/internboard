@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Application;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,8 +17,9 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->string('ref_no')->nullable();
-            $table->foreignIdFor(Application::class)->nullable();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(Job::class)->constrained();
+            $table->foreignIdFor(Application::class)->constrained()->nullable();
+            $table->foreignIdFor(User::class)->constrained();
             $table->string('terms')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

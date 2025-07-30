@@ -130,8 +130,14 @@
                         }
                     },
                     error: function (error) {
+                        if (error.status === 422) {
+                            let errors = error.responseJSON.errors;
+                            let errorMessages = Object.values(errors).map(error => error[0]).join(', ');
+                            showError(errorMessages, "#applyFeedback");
+                        } else {
+                            showError("Error occurred during processing", "#applyFeedback");
+                        }
                         jobApplySubmit.prop("disabled", false);
-                        showError("Error occurred during processing", "#applyFeedback");
                     },
                 });
             }
@@ -204,6 +210,80 @@
                         jobApplySubmit.prop("disabled", false);
                         showError("Error occurred during processing", "#applyFeedback");
                     },
+                });
+            }
+        });
+    }
+
+    const applicantsHireForm = $('#applicantsHireForm'),
+        applicantSelectToggle = $('.applicantSelectToggle'),
+        applicantsHireSubmit = $('#applicantsHireSubmit'),
+        applicantsHireJobID = $('#applicantsHireJobID'),
+        applicantsHireStartDate = $('#applicantsHireStartDate'),
+        applicantsHireRateType = $('#applicantsHireRateType'),
+        applicantsHireRateAmount = $('#applicantsHireRateAmount'),
+        applicantsHireTerms = $('#applicantsHireTerms'),
+        applicantsHireHireLetter = $('#applicantsHireHireLetter');
+
+    if (applicantsHireForm) {
+        applicantsHireForm.on('submit', function (event) {
+            event.preventDefault();
+            const $this = $(this), errors = [], applicants = [];
+            
+            applicantSelectToggle.each(function (key, item) {
+                if ($(item).is(':checked')) {
+                    applicants.push({ application_id: $(item).val() })
+                }
+            });
+            applicantsHireSubmit.prop('disabled', true);
+            const data = {
+                job_id: applicantsHireJobID.val(),
+                applicants: JSON.stringify(applicants),
+                start_date: applicantsHireStartDate.val(),
+                rate_type: applicantsHireRateType.val(),
+                rate_amount: applicantsHireRateAmount.val(),
+                terms: applicantsHireTerms.val(),
+                hireLetter: applicantsHireHireLetter.val()
+            }
+            if (applicants.length <= 0) {
+                errors.push("You have not selected applicants to hire");
+            }
+            if (errors.length > 0) {
+                showError(errors.join(', '), '#applicantsHireFeedback');
+                applicantsHireSubmit.prop('disabled', false);
+            } else {
+                console.log(data);
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+                    },
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "/applications-hire",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (params) {
+                        applicantsHireSubmit.prop("disabled", false);
+                        let result = JSON.parse(params);
+                        if (result.status === "success") {
+                            showSuccess(result.message, "#applicantsHireFeedback");
+                            $this.trigger("reset");
+                        } else {
+                            showError(result.message, "#applicantsHireFeedback");
+                        }
+                    },
+                    error: function (error) {
+                        applicantsHireSubmit.prop("disabled", false);
+                        if (error.status === 422) {
+                            let errors = error.responseJSON.errors;
+                            let errorMessages = Object.values(errors).map(error => error[0]).join(', ');
+                            showError(errorMessages, "#applicantsHireFeedback");
+                        } else {
+                            showError("Error occurred during processing", "#applicantsHireFeedback");
+                        }
+                    }
                 });
             }
         });

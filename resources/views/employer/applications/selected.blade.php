@@ -75,7 +75,7 @@
 @endsection
 
 @section('subtitle')
-    Applicants Management
+    Selected Applicants
 @endsection
 
 @section('content')
@@ -200,21 +200,64 @@
 
                     @if ($applications->count() > 0)
                         <div class="mt-4">
-                            <div class="card">
+                            <div class="">
                                 <div class="card-header bg-light">
                                     <h5 class="mb-0"><i class="fas fa-envelope me-2"></i> Send Hire Letter</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group mb-3">
-                                        <label for="hireLetter" class="form-label">Custom Hire Letter</label>
-                                        <textarea name="hireLetter" id="hireLetter" class="form-control" rows="5"
-                                            placeholder="Write a personalized hire letter for selected candidates..."></textarea>
-                                        <small class="text-muted">This message will be sent to all selected
-                                            candidates.</small>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="start_date" class="form-label">Start Date</label>
+                                                <input type="date" name="start_date" id="start_date"
+                                                    class="form-control" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="rate_type" class="form-label">Contract Type</label>
+                                                <select name="rate_type" id="rate_type" class="form-control" required>
+                                                    <option value="">Select Rate Type</option>
+                                                    <option value="hourly">Hourly</option>
+                                                    <option value="daily">Daily</option>
+                                                    <option value="weekly">Weekly</option>
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="yearly">Yearly</option>
+                                                    <option value="fixed">Fixed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="rate_amount" class="form-label">Payment Amount</label>
+                                                <input type="number" name="rate_amount" id="rate_amount"
+                                                    class="form-control" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="terms" class="form-label">Terms</label>
+                                                    <textarea name="terms" id="terms" class="form-control" rows="5" required
+                                                        placeholder="Write terms and conditions for the contract here..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="hireLetter" class="form-label">Custom Hire Letter</label>
+                                                <textarea name="hireLetter" id="hireLetter" class="form-control" rows="5"
+                                                    placeholder="Write a personalized hire letter for selected candidates..."></textarea>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div id="hireFeedback" class="mb-3"></div>
+                                    <div id="applicantsHireFeedback" class="mb-3"></div>
                                     <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary" id="submitHire">
+                                        <button type="submit" class="btn btn-primary btn-lg" id="applicantsHireSubmit">
                                             <i class="fas fa-paper-plane me-2"></i> Send Hire Letter
                                         </button>
                                     </div>
@@ -227,8 +270,8 @@
         </div>
     </main>
 
-    <div class="modal fade" id="applicationDetailsModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-        aria-labelledby="applicationDetailsModal" aria-hidden="true">
+    <div class="modal fade" id="applicationDetailsModal" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false" aria-labelledby="applicationDetailsModal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -256,7 +299,7 @@
 @section('footer_scripts')
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
-    <script src="{{ asset('js/job.js') }}"></script>
+    <script src="{{ asset('js/application.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Initialize tooltips

@@ -35,10 +35,10 @@
             <ul class="list-unstyled components">
 
                 <li class="list-group-item {!! Request::is('profile') ||
-                Request::is('college/profile') ||
-                Request::is('college/profile') ||
-                Request::is('student/profile') ||
-                Request::is('admin/profile') ||
+                Request::is('college-profile') ||
+                Request::is('college-profile') ||
+                Request::is('student-profile') ||
+                Request::is('admin-profile') ||
                 Request::is('employer-profile')
                     ? 'active'
                     : '' !!}">

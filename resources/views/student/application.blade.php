@@ -85,13 +85,17 @@
                     @php
                         $statusClass = match ($application->status) {
                             'pending' => 'warning',
+                            'selected' => 'primary',
+                            'hired' => 'success',
                             'rejected' => 'danger',
-                            default => 'success',
+                            default => 'warning',
                         };
                         $statusText = match ($application->status) {
                             'pending' => 'Under Review',
+                            'selected' => 'Selected',
+                            'hired' => 'Hired',
                             'rejected' => 'Not Selected',
-                            default => 'Hired',
+                            default => 'Pending',
                         };
                     @endphp
 
@@ -122,6 +126,22 @@
                             <div id="collapse{{ $loop->iteration }}" class="accordion-collapse collapse"
                                 data-bs-parent="#applicationsAccordion">
                                 <div class="accordion-body pt-0">
+                                    @if($application->status == 'selected')
+                                    <div class="alert alert-primary">
+                                        <h6>You have been selected for this job. Please wait for further instructions.</h6>
+                                        <p class="text-muted">
+                                            <strong>Interview Method:</strong> {{ $application->job->interview_method }} <br>
+                                            <strong>Interview Date:</strong> {{ $application->job->interview_date }} <br>
+                                            <strong>Interview Place:</strong> {{ $application->job->interview_place }} <br>
+                                        </p>
+                                    </div>
+                                    @endif
+                                    @if($application->status == 'hired')
+                                    <div class="alert alert-success">
+                                        <h6>You have been hired for this job. Please wait for further instructions.</h6>
+                                    </div>
+                                    @endif
+                                    @if($application->status == 'rejected')
                                     <div class="application-content">
                                         <h6 class="text-muted mb-3">Application Details</h6>
 
@@ -148,11 +168,11 @@
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#editApplicationModal"
                                                    class="btn btn-outline-secondary btn-sm"
                                                    data-id="{{ $application->id }}" id="editApplicationToggle">
-                                                    <i class="far fa-edit mr-1"></i> Edit
+                                                    <i class="bi bi-pencil-square mr-1"></i> Edit
                                                 </a>
                                                 <a href="#" class="btn btn-outline-danger btn-sm ml-2"
                                                    data-id="{{ $application->id }}" id="deleteApplicationToggle">
-                                                    <i class="far fa-trash-alt mr-1"></i> Delete
+                                                    <i class="bi bi-trash mr-1"></i> Delete
                                                 </a>
                                             </div>
                                         </div>
@@ -176,6 +196,65 @@
             </div>
         @endif
     </main>
+
+    <div class="modal" id="editApplicationModal" aria-hidden="true" aria-labelledby="editApplicationModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editApplicationModalToggleLabel">Edit Application</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="{{ route('job.apply') }}" method="post" enctype="multipart/form-data"
+                id="editApplicationForm">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="job_id" id="jobID" value="">
+                    <input type="hidden" name="id" id="applicationID" value="">
+                    <div class="card-body">
+
+                        <div class="row mb-2">
+                            <div class="col-md-12 form-group mb-4">
+                                <label for="prefferedpay" class="mb-2">Preffered Pay</label><br>
+                                <input type="text" class="form-control form-control-lg" name="preferred_pay"
+                                    id="applicationPrefferedPay" required>
+                            </div>
+
+                            <div class="col-md-12 form-group mb-4">
+                                <label for="applicationReason" class="mb-2">Why are you applying for this
+                                    job</label>
+                                <textarea class="form-control form-control-lg" name="reason" id="applicationReason"></textarea>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <label for="cover_letter" class="mb-2">Cover letter</label>
+                                <textarea name="cover_letter" id="cover_letter" class="form-control form-control-lg" rows="5"></textarea>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="otherFiles" class="mb-2">Attach other relavant
+                                    documents</label><br>
+                                <input type="file" name="files" id="applicationOtherFiles" multiple>
+                                <div id="filesError"></div>
+                            </div>
+
+                        </div>
+                        <div id="applyFeedback"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="card-footer bg-white d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary btn-md" id="jobApplySubmit">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('footer_scripts')

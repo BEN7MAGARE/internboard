@@ -82,29 +82,20 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input type="email" class="form-control"
                                        name="email" id="email" value="{{ old('email') }}" required autofocus>
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    <input type="password" class="form-control"
                                            name="password" id="password" required>
                                     <button class="btn btn-outline-secondary password-toggle" type="button" id="showLoginPassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
-                                @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+
                             </div>
 
                             <div class="mb-3 form-check">

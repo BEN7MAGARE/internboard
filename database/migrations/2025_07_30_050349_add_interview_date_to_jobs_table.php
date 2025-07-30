@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('jobs', function (Blueprint $table) {
             $table->date('interview_date')->nullable()->after('application_end_date');
+            $table->string('interview_method')->nullable()->after('interview_date');
+            $table->string('interview_place')->nullable()->after('interview_method');
         });
     }
 
@@ -23,6 +25,8 @@ return new class extends Migration
     {
         Schema::table('jobs', function (Blueprint $table) {
             $table->dropColumn('interview_date');
+            $table->dropColumn('interview_method');
+            $table->dropColumn('interview_place');
         });
     }
 };

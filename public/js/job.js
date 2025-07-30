@@ -110,65 +110,74 @@
 
     const applicantsSelectForm = $('#applicantsSelectForm'),
         applicantSelectToggle = $('.applicantSelectToggle'),
-        invitationLetter = $('#invitationLetter'), submitInvitation = $('#submitInvitation');
+        invitationLetter = $('#invitationLetter'), submitInvitation = $('#submitInvitation'),
+        interviewMethod = $('#interviewMethod'), interviewDate = $('#interviewDate'), interviewPlace = $('#interviewPlace'),
+        applicationsJobID = $('#applicationsJobID');
 
-    applicantsSelectForm.on('submit', function (event) {
-        event.preventDefault();
-        const $this = $(this), applicants = [], errors = [];
+    if (applicantsSelectForm.length > 0) {
+        applicantsSelectForm.on('submit', function (event) {
+            event.preventDefault();
+            const $this = $(this), applicants = [], errors = [];
 
-        applicantSelectToggle.each(function (key, item) {
-            if ($(item).is(':checked')) {
-                applicants.push({ applicationid: $(item).val() })
+                applicantSelectToggle.each(function (key, item) {
+                    if ($(item).is(':checked')) {
+                        applicants.push({ applicationid: $(item).val() })
+                    }
+                });
+            submitInvitation.prop('disabled', true);
+            const data = {
+                job_id: applicationsJobID.val(),
+                applicants: JSON.stringify(applicants),
+                message: invitationLetter.val(),
+                interview_method: interviewMethod.val(),
+                interview_date: interviewDate.val(),
+                interview_place: interviewPlace.val()
+            }
+            if (applicants.length <= 0) {
+                errors.push("You have not selected applicants to invite");
+            }
+            if (invitationLetter.val().length < 20) {
+                errors.push("Enter a valid invitation letter");
+            }
+            if (errors.length > 0) {
+                showError(errors.join(', '), '#invitationFeedback')
+                submitInvitation.prop('disabled', false);
+            } else {
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
+                    },
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "/applications-select",
+                    data: data,
+                    success: function (params) {
+                        submitInvitation.prop('disabled', false);
+                        let result = JSON.parse(params);
+                        if (result.status === "success") {
+                            showSuccess(result.message, "#invitationFeedback");
+                            $this.trigger("reset");
+                        } else {
+                            showError(result.message, "#invitationFeedback");
+                        }
+                    },
+                    error: function (error) {
+                        submitInvitation.prop('disabled', false);
+                        console.error(error);
+                        showError("Error occurred during processing", "#invitationFeedback");
+                    },
+                });
             }
         });
-        submitInvitation.prop('disabled', true);
-        const data = {
-            applicants: JSON.stringify(applicants),
-            message: invitationLetter.val()
-        }
-        if (applicants.length <= 0) {
-            errors.push("You have not selected applicants to invite");
-        }
-        if (invitationLetter.val().length < 20) {
-            errors.push("Enter a valid invitation letter");
-        }
-        if (errors.length > 0) {
-            showError(errors.join(', '), '#invitationFeedback')
-            submitInvitation.prop('disabled', false);
-        } else {
-            $.ajaxSetup({
-                headers: {
-                    "X-CSRF-TOKEN": $this.find("input[name='_token']").val(),
-                },
-            });
-            $.ajax({
-                method: "POST",
-                url: "/applications-select",
-                data: data,
-                success: function (params) {
-                    submitInvitation.prop('disabled', false);
-                    let result = JSON.parse(params);
-                    if (result.status === "success") {
-                        showSuccess(result.message, "#invitationFeedback");
-                        $this.trigger("reset");
-                    } else {
-                        showError(result.message, "#invitationFeedback");
-                    }
-                },
-                error: function (error) {
-                    submitInvitation.prop('disabled', false);
-                    console.error(error);
-                    showError("Error occurred during processing", "#invitationFeedback");
-                },
-            });
-        }
-    });
+    }
 
-    jobsSearchForm.on('submit', function (event) {
-        event.preventDefault();
-        filterJobs();
-    });
-
+    if (jobsSearchForm.length > 0) {
+        jobsSearchForm.on('submit', function (event) {
+            event.preventDefault();
+            filterJobs();
+        });
+    }
     function filterJobs() {
         console.log('I was here');
 

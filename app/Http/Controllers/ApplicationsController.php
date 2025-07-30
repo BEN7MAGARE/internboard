@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
 use App\Models\Corporate;
 use App\Models\Product;
+use App\Models\Contract;
 
 class ApplicationsController extends Controller
 {
@@ -123,6 +124,12 @@ class ApplicationsController extends Controller
 
     public function select(Request $request)
     {
+        $job_id = $request->job_id;
+        $job = $this->job->find($job_id);
+        $job->interview_method = $request->interview_method;
+        $job->interview_date = $request->interview_date;
+        $job->interview_place = $request->interview_place;
+        $job->update();
         $corporate = auth()->user()->corporate;
         $applicants = json_decode($request->applicants, true);
         $message = $request->message;
@@ -153,6 +160,18 @@ class ApplicationsController extends Controller
             $application->status = "hired";
             $application->hire_message = $message;
             $application->update();
+            Contract::create([
+                'user_id' => $application->user_id,
+                'job_id' => $application->job_id,
+                'application_id' => $application->id,
+                'terms' => $request->terms,
+                'start_date' => $request->start_date,
+                'rate_type' => $request->rate_type,
+                'rate_amount' => $request->rate_amount,
+                'progress_note' => $request->hireLetter,
+                'status' => 'pending',
+                'created_at' => now(),
+            ]);
         }
         return json_encode(['status' => 'success', 'message' => 'Applicant hired successfully']);
     }
