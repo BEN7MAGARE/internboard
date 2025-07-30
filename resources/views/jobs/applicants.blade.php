@@ -147,7 +147,7 @@ Applicants Management
 
                                 <div class="col-md-4">
                                     <div class="d-flex flex-wrap mb-3">
-                                        <a href="{{ route('student.details', $item->id) }}" class="btn btn-outline-primary action-btn" target="_blank">
+                                        <a href="{{ route('student.details', $item->applicant->id) }}" class="btn btn-outline-primary action-btn" target="_blank">
                                             <i class="fas fa-user me-1"></i> View Profile
                                         </a>
                                         <a href="{{ route('application.cvdownload', $item->id) }}" class="btn btn-outline-secondary action-btn" target="_blank">

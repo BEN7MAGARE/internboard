@@ -8,6 +8,7 @@ Route::get('employer/create', [MainController::class, 'create'])->name('employer
 // Route::post('employer/store', [MainController::class, 'store'])->name('employer.store');
 Route::get('employer/{id}/applicants', [MainController::class, 'applicants'])->name('employer.applicants');
 Route::get('employer-applications', [MainController::class, 'applications'])->name('employer.applications');
+Route::get('employer-job-applications/{ref_no}', [MainController::class, 'jobApplications'])->name('employer.job.applications');
 
 Route::get('employer-jobs', [MainController::class, 'jobs'])->name('employer.jobs');
 Route::get('employer-jobs-destroy/{id}',[MainController::class,'deleteJob'])->name('employer.jobs.destroy');

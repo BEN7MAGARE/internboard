@@ -71,7 +71,18 @@ class MainController extends Controller
             $query->where('corporate_id', auth()->user()->corporate_id);
         })->with(['job', 'applicant:id,first_name,last_name,phone,email'])->paginate(10);
         $jobs = $this->job->where('corporate_id', auth()->user()->corporate->id)->get();
-        return view('profile.applications', compact('applications', 'jobs'));
+        return view('employer.applications.index', compact('applications', 'jobs'));
+    }
+
+    public function jobApplications($ref_no)
+    {
+        $job = $this->job->with('applications.applicant.profile')->withCount('applications')->where('ref_no',
+        $ref_no)->first();
+        if ($job->corporate_id == auth()->user()->corporate_id) {
+        return view('jobs.applicants', compact('job'));
+        } else {
+        abort(405, 'You are not authorised to access this resource');
+        }
     }
 
     public function jobs()
@@ -236,5 +247,5 @@ class MainController extends Controller
             $query->where('corporate_id', auth()->user()->corporate_id);
         })->with('job', 'applicant')->paginate(10);
         return view('employer.workers.index', compact('workers'));
-    }   
+    }
 }

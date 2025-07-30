@@ -88,7 +88,6 @@
 
 @section('subtitle')
     <h1 class="h3 mb-0 text-gray-800">My Contracts</h1>
-    <p class="mb-4">View and manage your employment contracts</p>
 @endsection
 
 @section('content')

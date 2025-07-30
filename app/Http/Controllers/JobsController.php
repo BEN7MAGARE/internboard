@@ -170,17 +170,6 @@ class JobsController extends Controller
         $application->save();
         return json_encode(['status' => 'success', 'message' => 'Job application saved successfully']);
     }
-
-    public function applications($ref_no)
-    {
-        $job = $this->job->with('applications.applicant.profile')->withCount('applications')->where('ref_no', $ref_no)->first();
-        if ($job->corporate_id == auth()->user()->corporate_id) {
-            return view('jobs.applicants', compact('job'));
-        } else {
-            abort(405, 'You are not authorised to access this resource');
-        }
-    }
-
     public function applicationsDetails($id)
     {
         $application = $this->application->with('applicant.profile')->where('id', $id)->first();

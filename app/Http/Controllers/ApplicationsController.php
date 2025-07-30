@@ -212,9 +212,9 @@ class ApplicationsController extends Controller
 
     public function checkAppStatus(Request $request)
     {
-        $apps = collect(["id"=>"lasvegas","status"=>"pending"]);
+        $apps = collect(["id"=>"lasvegas","status"=>"success"]);
         $app = $apps->where('id', $request->id)->first();
         return json_encode(['status' => $app['status']]);
     }
-    
+
 }

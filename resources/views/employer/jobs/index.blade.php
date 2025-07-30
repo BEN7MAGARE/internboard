@@ -73,7 +73,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-2">
             <a href="{{ route('jobs.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Post New Job
+                <i class="bi bi-plus me-2"></i>Post New Job
             </a>
         </div>
 
@@ -98,7 +98,7 @@
                                         </li>
 
                                         <li><a class="dropdown-item text-info"
-                                                href="{{ route('job.applications', $item->ref_no) }}"><i
+                                                href="{{ route('employer.job.applications', $item->ref_no) }}"><i
                                                     class="bi bi-people me-2"></i>View Applicants</a></li>
                                         <li><a class="dropdown-item text-success"
                                                 href="{{ route('applications.selected', $item->ref_no) }}">
@@ -126,7 +126,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{{ route('job.applications', $item->ref_no) }}"
+                                <a href="{{ route('employer.job.applications', $item->ref_no) }}"
                                     class="btn applicants-btn rounded-pill">
                                     <i class="fas fa-users me-2"></i>
                                     {{ $item->applications_count }}
@@ -252,7 +252,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href="{{ route('job.applications', $item->ref_no) }}" class="btn btn-primary">
+                                <a href="{{ route('employer.job.applications', $item->ref_no) }}" class="btn btn-primary">
                                     View Applicants
                                 </a>
                             </div>

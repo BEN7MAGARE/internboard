@@ -1,118 +1,174 @@
 @extends('layouts.main')
 
-@section('title')
-Sign in @parent
-@endsection
+@section('title', 'Sign in')
 
 @section('header_styles')
 <link rel="stylesheet" href="{{ asset('css/iziToast.min.css') }}">
+<style>
+    .login-card {
+        max-width: 450px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 12px;
+    }
+    .login-header {
+        background: linear-gradient(135deg, #667eea 0%, #667eea 100%);
+        color: white;
+        border-radius: 12px 12px 0 0 !important;
+    }
+    .password-toggle {
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .password-toggle:hover {
+        background-color: #f8f9fa;
+    }
+    .auth-links a {
+        color: #667eea;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .auth-links a:hover {
+        color: #667eea;
+    }
+    .btn-login {
+        background: linear-gradient(135deg, #667eea 0%, #667eea 100%);
+        border: none;
+        padding: 10px 0;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .btn-login:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+</style>
 @endsection
 
 @section('content')
-<main class="main">
-    <hr>
-    <hr>
-    <hr>
-    <section class="w3l-main-content">
-        <div class="container d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <div class="card mt-5 mb-5 radius-image p-4">
-
-                    <div class="card-header bg-white text-center">
-                        <h4 class="mb-2"><strong class="translatable">Sign In</strong></h4>
+<main class="main bg-light">
+    <div class="container py-5 mt-5">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 col-lg-6">
+                <div class="card login-card">
+                    <div class="card-header login-header text-center py-4">
+                        <h4 class="mb-0 text-white"><strong>Sign In to Your Account</strong></h4>
                     </div>
 
-                    <form action="{{ route('login') }}" method="post">
-
+                    <form action="{{ route('login') }}" method="post" class="needs-validation" novalidate>
                         @csrf
-                        <div class="card-body">
+                        <div class="card-body p-4">
 
-                            <div class="row">
-                                <div class="col-md-12 form-group mb-2">
-                                    <label for="email" class="translatable">Email</label>
-                                    <input type="email" class="form-control form-control-lg" name="email" id="email" required>
-                                    @error('email')
+                            @if(session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('status') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            @if(session('message'))
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    {{ session('message') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                       name="email" id="email" value="{{ old('email') }}" required autofocus>
+                                @error('email')
                                     <div class="invalid-feedback">
-                                        <p class="text-danger">{{ $message }}</p>
+                                        {{ $message }}
                                     </div>
-                                    @enderror
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                           name="password" id="password" required>
+                                    <button class="btn btn-outline-secondary password-toggle" type="button" id="showLoginPassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
                                 </div>
-
-                                <div class="col-md-12 form-group mb-2">
-                                    <label for="password" class="translatable">Password</label>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control form-control-lg" name="password" id="password" autocomplete="password" required>
-
-                                        <div class="input-group-text" id="showLoginPassword">
-                                            <i class="bi bi-eye"></i>
-                                        </div>
-                                    </div>
-                                    @error('password')
+                                @error('password')
                                     <div class="invalid-feedback">
-                                        <p class="text-danger">{{ $message }}</p>
+                                        {{ $message }}
                                     </div>
-                                    @enderror
-                                </div>
+                                @enderror
+                            </div>
 
-                                <div class="form-group mt-2">
-                                    <label for="remember_me" class="inline-flex items-center">
-                                        <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-red-300 dark:border-red-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                                    </label>
-                                </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                                <label class="form-check-label" for="remember_me">Remember me</label>
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-login btn-primary">Sign In</button>
+                            </div>
+
+                            <div class="text-center mb-3">
+                                <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot password?</a>
+                            </div>
+
+                            <div class="text-center auth-links">
+                                <p class="mb-0">Don't have an account? <a href="{{ route('getstarted') }}">Create one</a></p>
                             </div>
                         </div>
-
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="error-list">
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-
-                        <div class="card-footer bg-white d-flex align-items-center justify-content-between p-2">
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
-                        </div>
                     </form>
-                    <hr>
-                    <div class="row p-2">
-                        <div class="col-md-6">
-                            <p><span class="translatable">No Account?</span> <a href="{{ route('getstarted') }}">Get Started</a></p>
-                        </div>
-                        <div class="col-md-6">
-                            @if (Route::has('password.request'))
-                            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-red-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                                <span class="translatable">Forgot your password?</span>
-                            </a>
-                            @endif
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 @endsection
 
 @section('footer_scripts')
 <script src="{{ asset('js/iziToast.min.js') }}"></script>
 <script>
-    (function() {
-        const showLoginPassword = $('#showLoginPassword');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Password toggle functionality
+        const showLoginPassword = document.getElementById('showLoginPassword');
+        const passwordInput = document.getElementById('password');
 
-        showLoginPassword.on("click", function() {
-            if ($('#password').attr("type") == "password") {
-                $('#password').attr("type", "text");
-                showLoginPassword.html('<i class="bi bi-eye-slash"></i>');
-            } else {
-                $('#password').attr("type", "password");
-                showLoginPassword.html('<i class="bi bi-eye"></i>');
-            }
+        showLoginPassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            const icon = showLoginPassword.querySelector('i');
+            icon.classList.toggle('bi-eye');
+            icon.classList.toggle('bi-eye-slash');
         });
-    })()
 
+        // Show session expiration message if redirected
+        @if(session()->has('session_expired'))
+            iziToast.warning({
+                title: 'Session Expired',
+                message: 'Your session has expired. Please login again.',
+                position: 'topRight'
+            });
+        @endif
+
+        // Form validation
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    });
 </script>
 @endsection
