@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Application;
+use App\Models\Contract;
 
 class MainController extends Controller
 {
@@ -203,8 +204,7 @@ class MainController extends Controller
 
     public function contracts()
     {
-        $contracts = Application::where('user_id', auth()->user()->id)->where('status', 'hired')->with(['job',
-        'job.corporate'])->get();
+        $contracts = Contract::where('user_id', auth()->user()->id)->with(['job','application', 'job.corporate'])->get();
         return view('student.contracts', compact('contracts'));
     }
 

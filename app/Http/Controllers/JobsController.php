@@ -151,7 +151,7 @@ class JobsController extends Controller
             $request->file('curriculum_vitae')->move('applicant_resources/', $filename);
         }
         $fileNames = [];
-        if (isset($request->files)) {
+        if (isset($request->files) && $request->files !== null && $request->files !== []) {
             foreach ($request->file('files') as $file) {
                 $fileName = auth()->id() . $job->ref_no . strtotime(now()) . '.' . $file->getClientOriginalExtension();  // or any other desired file name
                 $file->move('applicant_resources/', $fileName);
