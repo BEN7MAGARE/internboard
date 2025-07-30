@@ -46,6 +46,7 @@
                                     id="allStudentSelect">
                             </th>
                             <th>#</th>
+                            <th>Code</th>
                             <th>Category</th>
                             <th>Name</th>
                             <th>Level of Study</th>
@@ -62,6 +63,7 @@
                                 <tr>
                                     <td><input type="checkbox" name="student_id[]" value="{{ $item->id }}"></td>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $loop->code }}</td>
                                     <td>{{ $item->category?->name }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->level_of_study }}</td>
