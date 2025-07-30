@@ -205,20 +205,20 @@
                                     <h5 class="mb-0"><i class="fas fa-envelope me-2"></i> Send Hire Letter</h5>
                                 </div>
                                 <div class="card-body">
-                                    <input type="hidden" name="job_id" id="job_id" value="{{ $job->id }}">
+                                    <input type="hidden" name="job_id" id="jobID" value="{{ $job->id }}">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="start_date" class="form-label">Start Date</label>
-                                                <input type="date" name="start_date" id="start_date"
-                                                    class="form-control" required/>
+                                                <input type="date" name="start_date" id="startDate" class="form-control"
+                                                    required />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="rate_type" class="form-label">Contract Type</label>
-                                                <select name="rate_type" id="rate_type" class="form-control" required>
+                                                <select name="rate_type" id="rateType" class="form-control" required>
                                                     <option value="">Select Rate Type</option>
                                                     <option value="hourly">Hourly</option>
                                                     <option value="daily">Daily</option>
@@ -230,23 +230,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group mb-3">
                                                 <label for="rate_amount" class="form-label">Payment Amount</label>
-                                                <input type="number" name="rate_amount" id="rate_amount"
-                                                    class="form-control" required/>
+                                                <input type="number" name="rate_amount" id="rateAmount"
+                                                    class="form-control" required />
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="terms" class="form-label">Terms</label>
-                                                    <textarea name="terms" id="terms" class="form-control" rows="5" required
-                                                        placeholder="Write terms and conditions for the contract here..."></textarea>
-                                                </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="terms" class="form-label">Terms</label>
+                                                <textarea name="terms" id="jobTerms" class="form-control" rows="5" required
+                                                    placeholder="Write terms and conditions for the contract here..."></textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label for="hireLetter" class="form-label">Custom Hire Letter</label>

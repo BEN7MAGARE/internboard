@@ -10,6 +10,7 @@ class Contract extends Model
     use HasFactory;
 
     protected $fillable = [
+        'job_id',
         'application_id',
         'user_id',
         'ref_no',

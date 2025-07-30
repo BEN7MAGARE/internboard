@@ -218,12 +218,12 @@
     const applicantsHireForm = $('#applicantsHireForm'),
         applicantHireToggle = $('.applicantHireToggle'),
         applicantsHireSubmit = $('#applicantsHireSubmit'),
-        applicantsHireJobID = $('#applicantsHireJobID'),
-        applicantsHireStartDate = $('#applicantsHireStartDate'),
-        applicantsHireRateType = $('#applicantsHireRateType'),
-        applicantsHireRateAmount = $('#applicantsHireRateAmount'),
-        applicantsHireTerms = $('#applicantsHireTerms'),
-        applicantsHireHireLetter = $('#applicantsHireHireLetter');
+        applicantsHireJobID = $('#jobID'),
+        applicantsHireStartDate = $('#startDate'),
+        applicantsHireRateType = $('#rateType'),
+        applicantsHireRateAmount = $('#rateAmount'),
+        applicantsHireTerms = $('#jobTerms'),
+        applicantsHireHireLetter = $('#hireLetter');
 
     if (applicantsHireForm) {
         applicantsHireForm.on('submit', function (event) {
@@ -262,9 +262,8 @@
                     method: "POST",
                     url: "/applications-hire",
                     data: data,
-                    processData: false,
-                    contentType: false,
                     success: function (params) {
+                        console.log(params);
                         applicantsHireSubmit.prop("disabled", false);
                         let result = JSON.parse(params);
                         if (result.status === "success") {
@@ -275,6 +274,7 @@
                         }
                     },
                     error: function (error) {
+                        console.log(error);
                         applicantsHireSubmit.prop("disabled", false);
                         if (error.status === 422) {
                             let errors = error.responseJSON.errors;

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Job::class)->constrained();
             $table->foreignIdFor(Application::class)->constrained()->nullable();
             $table->foreignIdFor(User::class)->constrained();
-            $table->string('terms')->nullable();
+            $table->text('terms')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('rate_amount')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('rejection_note')->nullable();
             $table->string('rejected_at')->nullable();
             $table->string('progress')->nullable();
-            $table->string('progress_note')->nullable();
+            $table->text('progress_note')->nullable();
             $table->string('terminated')->nullable();
             $table->string('termination_note')->nullable();
             $table->string('terminated_at')->nullable();

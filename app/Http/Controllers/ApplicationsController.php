@@ -156,7 +156,7 @@ class ApplicationsController extends Controller
         $applicants = json_decode($request->applicants, true);
         $message = $request->message;
         foreach ($applicants as $key => $value) {
-            $application = $this->application->with('applicant')->find($value["applicationid"]);
+            $application = $this->application->with('applicant')->find($value["application_id"]);
             $application->status = "hired";
             $application->hire_message = $message;
             $application->update();
